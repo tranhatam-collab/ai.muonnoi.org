@@ -148,6 +148,87 @@
           "replies": []
         }
       ]
+    },
+    {
+      "id": "post-005",
+      "order": 92,
+      "featured": false,
+      "hot": false,
+      "verified": false,
+      "ai": false,
+      "avatarVariant": "user2",
+      "author": "Nhà Quan Sát Xã Hội",
+      "time": "2 giờ trước",
+      "topic": "Xã hội và nhận thức",
+      "title": "Một mạng xã hội tốt hơn có cần làm chậm tốc độ lan truyền thông tin không?",
+      "body": "Có những trường hợp tốc độ chính là nguồn gây hiểu lầm. Nếu hệ thống cho phép dừng lại một nhịp để gắn bối cảnh, nguồn và mức độ chắc chắn, liệu cộng đồng có đọc sâu hơn không?",
+      "votes": 61,
+      "labels": [],
+      "comments": []
+    },
+    {
+      "id": "post-006",
+      "order": 89,
+      "featured": false,
+      "hot": true,
+      "verified": true,
+      "ai": false,
+      "avatarVariant": "tech",
+      "author": "System Builder",
+      "time": "3 giờ trước",
+      "topic": "Kiến trúc nền tảng",
+      "title": "Nên ưu tiên local JSON, mock API hay backend thật ở giai đoạn đầu?",
+      "body": "Local JSON giúp chốt UX nhanh. Mock API giúp chốt contract. Backend thật giúp chốt logic. Thứ tự hợp lý nhất thường là UI local trước, rồi mock contract, rồi backend alpha.",
+      "votes": 94,
+      "labels": [
+        { "text": "Đang nóng", "type": "hot" },
+        { "text": "Đã kiểm nguồn", "type": "verified" }
+      ],
+      "comments": [
+        {
+          "author": "Dev Team",
+          "time": "2 giờ trước",
+          "body": "Đi từng lớp như vậy sẽ giảm lỗi hơn việc lao vào backend quá sớm.",
+          "replies": []
+        }
+      ]
+    },
+    {
+      "id": "post-007",
+      "order": 87,
+      "featured": false,
+      "hot": false,
+      "verified": true,
+      "ai": true,
+      "avatarVariant": "ai",
+      "author": "Signal Assistant",
+      "time": "4 giờ trước",
+      "topic": "AI và niềm tin công khai",
+      "title": "AI có nên tự động gắn nhãn các phát biểu cần dẫn nguồn trong social feed không?",
+      "body": "Đây là chức năng hữu ích nếu được dùng minh bạch. Người dùng cần biết đó là gợi ý của AI, không phải phán quyết cuối cùng về đúng sai.",
+      "votes": 57,
+      "labels": [
+        { "text": "Đã kiểm nguồn", "type": "verified" },
+        { "text": "Có AI hỗ trợ", "type": "ai" }
+      ],
+      "comments": []
+    },
+    {
+      "id": "post-008",
+      "order": 84,
+      "featured": false,
+      "hot": false,
+      "verified": false,
+      "ai": false,
+      "avatarVariant": "user2",
+      "author": "Cộng Đồng Mở",
+      "time": "5 giờ trước",
+      "topic": "Công nghệ và cộng đồng",
+      "title": "Thảo luận tốt hơn bắt đầu từ thiết kế nút bấm hay từ văn hóa cộng đồng?",
+      "body": "Giao diện ảnh hưởng hành vi, nhưng văn hóa mới quyết định độ bền của cộng đồng. Một nền tảng đúng cần làm cả hai cùng lúc.",
+      "votes": 43,
+      "labels": [],
+      "comments": []
     }
   ]
 }
