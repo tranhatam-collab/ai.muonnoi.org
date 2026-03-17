@@ -6,16 +6,15 @@
   <meta name="theme-color" content="#0b0f14" />
   <meta name="color-scheme" content="dark light" />
 
-  <title>AI Muôn Nơi | Mạng xã hội sự thật từ AI và công nghệ</title>
-  <meta name="description" content="AI Muôn Nơi là mạng xã hội thảo luận, chia sẻ góc nhìn, kiểm chứng thông tin và kết nối cộng đồng qua AI và công nghệ." />
+  <title>AI Muôn Nơi | Social Feed Alpha</title>
+  <meta name="description" content="Mạng xã hội sự thật từ AI và công nghệ. Social feed alpha với bài viết, bình luận, lọc tab và dữ liệu local JSON." />
   <meta name="robots" content="index,follow,max-image-preview:large" />
   <meta name="format-detection" content="telephone=no" />
 
   <meta property="og:title" content="AI Muôn Nơi" />
-  <meta property="og:description" content="Mạng xã hội sự thật từ AI và công nghệ." />
+  <meta property="og:description" content="Social feed alpha với thảo luận, bình luận và dữ liệu local JSON." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://ai.muonnoi.org/" />
-  <meta property="og:image" content="https://ai.muonnoi.org/og-cover.jpg" />
 
   <link rel="canonical" href="https://ai.muonnoi.org/" />
   <link rel="stylesheet" href="./style.css" />
@@ -39,29 +38,31 @@
         <a class="nav-item" href="#ai-tools">Công cụ AI</a>
       </nav>
 
-      <div class="side-panel">
-        <h3>Định hướng</h3>
-        <p>Thảo luận minh bạch, gắn nguồn, gắn bối cảnh, giảm nhiễu và tạo không gian đối thoại tốt hơn.</p>
-      </div>
+      <section class="side-panel">
+        <h3>Chế độ bảng tin</h3>
+        <p>Phiên bản alpha đang dùng dữ liệu local JSON để mô phỏng feed, comment, lọc tab và thảo luận động.</p>
+      </section>
 
-      <button class="primary-action">Tạo bài viết mới</button>
+      <button class="primary-action" id="scrollToComposerBtn">Tạo bài viết mới</button>
     </aside>
 
     <main class="content-column" id="feed">
       <header class="topbar">
         <div class="topbar-title">
           <h1>Bảng tin</h1>
-          <p>Các cuộc thảo luận nổi bật về AI, công nghệ, xã hội và sự thật dữ kiện.</p>
+          <p>Đọc, lọc và mở các cuộc thảo luận như một social app thật hơn.</p>
         </div>
 
-        <div class="topbar-actions">
-          <button class="ghost-btn">Mới nhất</button>
-          <button class="ghost-btn">Đang nóng</button>
-          <button class="ghost-btn">Đã kiểm nguồn</button>
+        <div class="topbar-actions" id="feedTabs">
+          <button class="ghost-btn tab-btn active" data-tab="all">Tất cả</button>
+          <button class="ghost-btn tab-btn" data-tab="hot">Đang nóng</button>
+          <button class="ghost-btn tab-btn" data-tab="latest">Mới nhất</button>
+          <button class="ghost-btn tab-btn" data-tab="verified">Đã kiểm nguồn</button>
+          <button class="ghost-btn tab-btn" data-tab="ai">Bài có AI</button>
         </div>
       </header>
 
-      <section class="composer-card">
+      <section class="composer-card" id="composerCard">
         <div class="composer-head">
           <div class="avatar user">T</div>
           <div class="composer-meta">
@@ -71,7 +72,7 @@
         </div>
 
         <div class="composer-box">
-          <textarea placeholder="Đăng góc nhìn, câu hỏi, phân tích hoặc chia sẻ một link cần thảo luận..."></textarea>
+          <textarea id="composerText" placeholder="Đăng góc nhìn, câu hỏi, phân tích hoặc chia sẻ một link cần thảo luận..."></textarea>
         </div>
 
         <div class="composer-tools">
@@ -83,204 +84,46 @@
           </div>
 
           <div class="composer-actions">
-            <button class="ghost-btn">Gắn link</button>
-            <button class="ghost-btn">Thêm chủ đề</button>
-            <button class="primary-btn">Đăng thảo luận</button>
+            <button class="ghost-btn" id="attachLinkBtn">Gắn link</button>
+            <button class="ghost-btn" id="addTopicBtn">Thêm chủ đề</button>
+            <button class="primary-btn" id="publishMockBtn">Đăng thảo luận</button>
           </div>
         </div>
       </section>
 
-      <section class="feed-list">
-        <article class="post-card featured">
-          <div class="post-header">
-            <div class="avatar mod">A</div>
-            <div class="post-meta">
-              <div class="post-userline">
-                <strong>AI Editorial</strong>
-                <span class="verified">Đã gắn nhãn AI</span>
-                <span class="dot">•</span>
-                <span>8 phút trước</span>
-              </div>
-              <div class="post-topic">Chủ đề: AI và niềm tin công khai</div>
-            </div>
-          </div>
-
-          <h2 class="post-title">Điều gì làm một cộng đồng thảo luận bằng AI trở nên đáng tin hơn mạng xã hội thông thường?</h2>
-
-          <p class="post-body">
-            Một mạng xã hội tốt hơn không chỉ nằm ở tốc độ đăng bài, mà nằm ở khả năng giữ ngữ cảnh, gắn nguồn, phân biệt ý kiến với dữ kiện, và làm cho phản biện trở nên hữu ích thay vì chỉ gây ồn. AI nên hỗ trợ làm rõ cuộc trò chuyện, không thay thế con người.
-          </p>
-
-          <div class="link-preview">
-            <div class="link-badge">Gợi ý chủ đề</div>
-            <div class="link-content">
-              <strong>Các trụ cột nền tảng cho social feed minh bạch</strong>
-              <span>Identity rõ ràng, nguồn dẫn chứng, moderation, phản biện có cấu trúc, bot được gắn nhãn.</span>
-            </div>
-          </div>
-
-          <div class="post-actions">
-            <button class="action-btn">▲ 248</button>
-            <button class="action-btn">💬 39 bình luận</button>
-            <button class="action-btn">↗ Chia sẻ</button>
-            <button class="action-btn">🔖 Lưu</button>
-          </div>
-
-          <div class="comment-thread">
-            <div class="comment-item">
-              <div class="avatar small">L</div>
-              <div class="comment-body">
-                <div class="comment-head">
-                  <strong>Lan Anh</strong>
-                  <span>6 phút trước</span>
-                </div>
-                <p>Điểm quan trọng nhất là phải tách rõ đâu là bài viết cảm nhận cá nhân và đâu là bài viết đang đưa ra khẳng định cần kiểm chứng.</p>
-                <div class="comment-actions">
-                  <button>Thích</button>
-                  <button>Phản hồi</button>
-                  <button>Trích dẫn</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="comment-item nested">
-              <div class="avatar small ai">AI</div>
-              <div class="comment-body">
-                <div class="comment-head">
-                  <strong>MuônNơi Assistant</strong>
-                  <span class="verified">Bot hỗ trợ</span>
-                  <span>4 phút trước</span>
-                </div>
-                <p>Tôi đề xuất mỗi bài có 3 nhãn: “góc nhìn”, “dữ kiện”, “cần đối chiếu thêm”. Như vậy người đọc sẽ hiểu bài theo đúng bản chất hơn.</p>
-                <div class="comment-actions">
-                  <button>Hữu ích</button>
-                  <button>Phản hồi</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="post-card">
-          <div class="post-header">
-            <div class="avatar user2">N</div>
-            <div class="post-meta">
-              <div class="post-userline">
-                <strong>Người Việt Muôn Nơi</strong>
-                <span class="dot">•</span>
-                <span>22 phút trước</span>
-              </div>
-              <div class="post-topic">Chủ đề: Công nghệ và cộng đồng</div>
-            </div>
-          </div>
-
-          <h2 class="post-title">Nếu AI tham gia moderation, cộng đồng nên cho AI quyền đến mức nào?</h2>
-
-          <p class="post-body">
-            AI có thể lọc spam, phát hiện lặp ý, gợi ý nguồn, gom chủ đề, nhưng quyết định cuối cùng về ẩn bài, cảnh báo hay khóa tài khoản có nên để con người xác nhận không?
-          </p>
-
-          <div class="post-actions">
-            <button class="action-btn">▲ 112</button>
-            <button class="action-btn">💬 17 bình luận</button>
-            <button class="action-btn">↗ Chia sẻ</button>
-            <button class="action-btn">🔖 Lưu</button>
-          </div>
-        </article>
-
-        <article class="post-card">
-          <div class="post-header">
-            <div class="avatar tech">K</div>
-            <div class="post-meta">
-              <div class="post-userline">
-                <strong>Kỹ Thuật Hệ Thống</strong>
-                <span class="verified">Contributor</span>
-                <span class="dot">•</span>
-                <span>1 giờ trước</span>
-              </div>
-              <div class="post-topic">Chủ đề: Kiến trúc nền tảng</div>
-            </div>
-          </div>
-
-          <h2 class="post-title">Feed đầu tiên nên ưu tiên Reddit-style hay Twitter-style?</h2>
-
-          <p class="post-body">
-            Reddit-style mạnh ở thread, chiều sâu và thảo luận theo chủ đề. Twitter-style mạnh ở nhịp nhanh, lan truyền và theo người dùng. Một social feed tốt cho AI Muôn Nơi nên kết hợp cả hai: bài chính rõ, bình luận sâu, luồng đọc thoáng.
-          </p>
-
-          <div class="mini-poll">
-            <div class="poll-row">
-              <span>Hybrid Feed</span>
-              <div class="poll-bar"><i style="width:72%"></i></div>
-              <b>72%</b>
-            </div>
-            <div class="poll-row">
-              <span>Twitter-style</span>
-              <div class="poll-bar"><i style="width:18%"></i></div>
-              <b>18%</b>
-            </div>
-            <div class="poll-row">
-              <span>Reddit-style</span>
-              <div class="poll-bar"><i style="width:10%"></i></div>
-              <b>10%</b>
-            </div>
-          </div>
-
-          <div class="post-actions">
-            <button class="action-btn">▲ 76</button>
-            <button class="action-btn">💬 24 bình luận</button>
-            <button class="action-btn">↗ Chia sẻ</button>
-            <button class="action-btn">🔖 Lưu</button>
-          </div>
-        </article>
+      <section class="feed-list" id="feedList">
+        <div class="loading-card">
+          <div class="loading-line w-40"></div>
+          <div class="loading-line w-90"></div>
+          <div class="loading-line w-75"></div>
+        </div>
       </section>
     </main>
 
     <aside class="sidebar right-sidebar">
       <section class="side-panel" id="trending">
         <h3>Xu hướng hôm nay</h3>
-        <ul class="trend-list">
-          <li><a href="#">#AIvaSuThat</a><span>1.2k bài viết</span></li>
-          <li><a href="#">#KiemChungThongTin</a><span>964 thảo luận</span></li>
-          <li><a href="#">#CongNgheCongDong</a><span>723 bình luận</span></li>
-          <li><a href="#">#SocialFeedMoi</a><span>401 phản hồi</span></li>
+        <ul class="trend-list" id="trendList">
+          <li><span>Đang tải dữ liệu...</span></li>
         </ul>
       </section>
 
       <section class="side-panel" id="discussions">
         <h3>Phòng thảo luận</h3>
-        <div class="room-card">
-          <strong>Phòng AI & Xã hội</strong>
-          <span>128 người đang theo dõi</span>
-        </div>
-        <div class="room-card">
-          <strong>Kiểm chứng dữ kiện</strong>
-          <span>64 người đang theo dõi</span>
-        </div>
-        <div class="room-card">
-          <strong>Kiến trúc social platform</strong>
-          <span>38 người đang theo dõi</span>
+        <div id="roomList">
+          <div class="room-card">
+            <strong>Đang tải...</strong>
+            <span>Vui lòng chờ</span>
+          </div>
         </div>
       </section>
 
       <section class="side-panel" id="community">
         <h3>Nhịp cộng đồng</h3>
-        <div class="stat-grid">
+        <div class="stat-grid" id="communityStats">
           <div class="stat-box">
-            <b>12.4k</b>
-            <span>Bài viết</span>
-          </div>
-          <div class="stat-box">
-            <b>48.2k</b>
-            <span>Bình luận</span>
-          </div>
-          <div class="stat-box">
-            <b>3.1k</b>
-            <span>Thành viên</span>
-          </div>
-          <div class="stat-box">
-            <b>92%</b>
-            <span>Tỷ lệ phản hồi</span>
+            <b>...</b>
+            <span>Đang tải</span>
           </div>
         </div>
       </section>
@@ -298,6 +141,47 @@
       </section>
     </aside>
   </div>
+
+  <template id="postTemplate">
+    <article class="post-card">
+      <div class="post-header">
+        <div class="avatar post-avatar">A</div>
+        <div class="post-meta">
+          <div class="post-userline">
+            <strong class="post-author">Tên tác giả</strong>
+            <span class="post-badge verified hidden">Đã gắn nhãn AI</span>
+            <span class="dot">•</span>
+            <span class="post-time">1 phút trước</span>
+          </div>
+          <div class="post-topic">Chủ đề: ...</div>
+        </div>
+      </div>
+
+      <div class="post-labels"></div>
+
+      <h2 class="post-title">Tiêu đề</h2>
+      <p class="post-body">Nội dung</p>
+
+      <div class="link-preview hidden">
+        <div class="link-badge">Link</div>
+        <div class="link-content">
+          <strong class="link-title">Tiêu đề link</strong>
+          <span class="link-desc">Mô tả link</span>
+        </div>
+      </div>
+
+      <div class="mini-poll hidden"></div>
+
+      <div class="post-actions">
+        <button class="action-btn vote-btn">▲ <span class="vote-count">0</span></button>
+        <button class="action-btn comment-toggle-btn">💬 <span class="comment-count">0</span> bình luận</button>
+        <button class="action-btn share-btn">↗ Chia sẻ</button>
+        <button class="action-btn save-btn">🔖 Lưu</button>
+      </div>
+
+      <div class="comment-thread hidden"></div>
+    </article>
+  </template>
 
   <script src="./site.js"></script>
 </body>
