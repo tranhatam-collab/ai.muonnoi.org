@@ -6,10 +6,10 @@
   <meta name="theme-color" content="#0b0f14" />
   <meta name="color-scheme" content="dark light" />
 
-  <title>AI Muôn Nơi | Mạng xã hội sự thật từ AI và công nghệ</title>
+  <title>AI Muôn Nơi | Nơi con người và AI cùng đối thoại rõ ràng hơn</title>
   <meta
     name="description"
-    content="AI Muôn Nơi là mạng xã hội thảo luận, chia sẻ góc nhìn, kiểm chứng dữ kiện và kết nối cộng đồng qua AI và công nghệ với social feed hiện đại, minh bạch và giàu chiều sâu."
+    content="AI Muôn Nơi là mạng xã hội thảo luận, phản biện và kiểm chứng với sự hỗ trợ của AI. Social feed hiện đại cho con người, cộng đồng và AI cùng nhìn rõ vấn đề hơn."
   />
   <meta name="robots" content="index,follow,max-image-preview:large" />
   <meta name="format-detection" content="telephone=no" />
@@ -18,10 +18,10 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
   <meta property="og:site_name" content="AI Muôn Nơi" />
-  <meta property="og:title" content="AI Muôn Nơi | Mạng xã hội sự thật từ AI và công nghệ" />
+  <meta property="og:title" content="AI Muôn Nơi | Nơi con người và AI cùng đối thoại rõ ràng hơn" />
   <meta
     property="og:description"
-    content="Không gian thảo luận mở, giàu chiều sâu, có AI hỗ trợ, ưu tiên bối cảnh, nguồn và chất lượng đối thoại."
+    content="Thảo luận, phản biện và kiểm chứng với sự hỗ trợ của AI trong một social feed hiện đại, minh bạch và giàu chiều sâu."
   />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://ai.muonnoi.org/" />
@@ -29,10 +29,10 @@
   <meta property="og:locale" content="vi_VN" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="AI Muôn Nơi | Mạng xã hội sự thật từ AI và công nghệ" />
+  <meta name="twitter:title" content="AI Muôn Nơi | Nơi con người và AI cùng đối thoại rõ ràng hơn" />
   <meta
     name="twitter:description"
-    content="Social feed alpha cho thảo luận, kiểm chứng, cộng đồng và AI."
+    content="Mạng xã hội sự thật từ AI và công nghệ với social feed, phản biện và AI sensemaking."
   />
   <meta name="twitter:image" content="https://ai.muonnoi.org/og-cover.jpg" />
 
@@ -41,75 +41,119 @@
 
   <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "AI Muôn Nơi",
-      "url": "https://ai.muonnoi.org/",
-      "description": "Mạng xã hội sự thật từ AI và công nghệ.",
-      "inLanguage": "vi-VN"
+      "@context":"https://schema.org",
+      "@type":"WebSite",
+      "name":"AI Muôn Nơi",
+      "url":"https://ai.muonnoi.org/",
+      "description":"Mạng xã hội thảo luận, phản biện và kiểm chứng với sự hỗ trợ của AI.",
+      "inLanguage":"vi-VN"
     }
   </script>
 </head>
 <body>
-  <div class="site-shell">
-    <aside class="sidebar left-sidebar" aria-label="Điều hướng chính">
-      <div class="brand-card">
-        <div class="brand-mark" aria-hidden="true">AI</div>
-        <div class="brand-copy">
+  <!-- GLOBAL HEADER -->
+  <header class="global-header" aria-label="Điều hướng toàn cục">
+    <div class="global-header__inner">
+      <!-- 1. Logo -->
+      <a class="global-brand" href="/" aria-label="AI Muôn Nơi">
+        <span class="global-brand__mark" aria-hidden="true">AI</span>
+        <span class="global-brand__text">
           <strong>AI Muôn Nơi</strong>
-          <span>Mạng xã hội sự thật từ AI và công nghệ</span>
-        </div>
+          <em>Nơi con người và AI cùng đối thoại rõ ràng hơn</em>
+        </span>
+      </a>
+
+      <!-- 2. Global Search -->
+      <div class="global-search">
+        <label class="hidden" for="globalSearchInput">Tìm kiếm toàn cục</label>
+        <input
+          id="globalSearchInput"
+          class="search-input"
+          type="search"
+          placeholder="Tìm bài viết, chủ đề, người dùng, phòng thảo luận..."
+          autocomplete="off"
+        />
       </div>
 
-      <nav class="main-nav" aria-label="Menu chính">
+      <!-- 3. Quick Actions -->
+      <div class="global-actions" aria-label="Hành động nhanh">
+        <button class="ghost-btn" type="button" id="globalAiAssistBtn">AI Assist</button>
+        <button class="primary-btn" type="button" id="globalCreatePostBtn">Tạo bài viết</button>
+      </div>
+
+      <!-- 4. User Area -->
+      <div class="global-user" aria-label="Tài khoản người dùng">
+        <button class="ghost-btn small-btn" type="button" id="globalNotificationsBtn">Thông báo</button>
+        <button class="ghost-btn small-btn" type="button" id="globalProfileBtn">Hồ sơ</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="site-shell">
+    <!-- LEFT RAIL -->
+    <aside class="sidebar left-sidebar" aria-label="Điều hướng bên trái">
+      <!-- 2.1 Primary Navigation -->
+      <nav class="main-nav" aria-label="Điều hướng chính">
         <a class="nav-item active" href="#feed">Bảng tin</a>
-        <a class="nav-item" href="#trending">Xu hướng</a>
-        <a class="nav-item" href="#discussions">Thảo luận</a>
-        <a class="nav-item" href="#community">Cộng đồng</a>
+        <a class="nav-item" href="#topics">Chủ đề</a>
+        <a class="nav-item" href="#rooms">Phòng thảo luận</a>
+        <a class="nav-item" href="#signals">Tín hiệu AI</a>
         <a class="nav-item" href="#ai-tools">Công cụ AI</a>
+        <a class="nav-item" href="#profile">Hồ sơ</a>
       </nav>
 
-      <section class="side-panel" aria-labelledby="left-intro-title">
-        <h3 id="left-intro-title">Tinh thần nền tảng</h3>
-        <p>
-          Đây là không gian ưu tiên đối thoại chất lượng, ý kiến có bối cảnh, dữ kiện có nhãn, AI có trách nhiệm
-          và cộng đồng có thể cùng nhau nhìn rõ vấn đề thay vì chỉ phản ứng theo nhịp ồn ào.
-        </p>
-      </section>
-
-      <section class="side-panel" aria-labelledby="left-goal-title">
-        <h3 id="left-goal-title">Bản alpha hiện tại</h3>
-        <p>
-          Phiên bản đầu đang dùng local JSON để mô phỏng trải nghiệm social feed thật hơn: có tab, tìm kiếm,
-          lọc chủ đề, mở comment động và nhịp cộng đồng trực quan trước khi nối API thật.
-        </p>
-      </section>
-
+      <!-- 2.2 Create Post Button -->
       <button class="primary-action" id="scrollToComposerBtn" type="button">
         Tạo bài viết mới
       </button>
+
+      <!-- 2.3 Short Mission Block -->
+      <section class="side-panel" aria-labelledby="mission-title">
+        <h3 id="mission-title">Tinh thần nền tảng</h3>
+        <p>
+          Nơi con người và AI cùng nhìn rõ vấn đề hơn, với trọng tâm là đối thoại chất lượng,
+          dữ kiện có bối cảnh và phản biện có ích.
+        </p>
+      </section>
+
+      <!-- 2.4 Secondary Links -->
+      <section class="side-panel" aria-labelledby="secondary-links-title">
+        <h3 id="secondary-links-title">Liên kết nền tảng</h3>
+        <nav class="secondary-links" aria-label="Liên kết phụ">
+          <a class="nav-item" href="#community-rules">Quy tắc cộng đồng</a>
+          <a class="nav-item" href="#how-ai-works">Cách AI hoạt động</a>
+          <a class="nav-item" href="#about-platform">Giới thiệu nền tảng</a>
+        </nav>
+      </section>
     </aside>
 
+    <!-- MAIN FEED COLUMN -->
     <main class="content-column" id="feed">
-      <header class="topbar">
+      <!-- 3.1 Feed Title Row -->
+      <section class="topbar" aria-label="Tiêu đề bảng tin">
         <div class="topbar-title">
           <h1>Bảng tin</h1>
-          <p>
-            Đọc, tìm kiếm, lọc và mở các cuộc thảo luận theo cách gần với social app thật hơn, nhưng vẫn giữ
-            trọng tâm là chiều sâu, sự rõ ràng và khả năng kiểm chứng.
-          </p>
+          <p>Thảo luận, phản biện và kiểm chứng với sự hỗ trợ của AI.</p>
         </div>
+        <div class="topbar-actions" aria-label="Tác vụ bảng tin">
+          <button class="ghost-btn small-btn" type="button" id="refreshFeedBtn">Làm mới</button>
+          <button class="ghost-btn small-btn" type="button" id="customizeFeedBtn">Tùy chỉnh feed</button>
+        </div>
+      </section>
 
-        <div class="topbar-actions" id="feedTabs" aria-label="Bộ lọc tab bảng tin">
-          <button class="ghost-btn tab-btn active" data-tab="all" type="button">Tất cả</button>
+      <!-- 3.2 Feed Mode Tabs -->
+      <section class="feed-mode-tabs" aria-label="Chế độ bảng tin">
+        <div class="topbar-actions" id="feedTabs">
+          <button class="ghost-btn tab-btn active" data-tab="all" type="button">Dành cho bạn</button>
           <button class="ghost-btn tab-btn" data-tab="hot" type="button">Đang nóng</button>
           <button class="ghost-btn tab-btn" data-tab="latest" type="button">Mới nhất</button>
           <button class="ghost-btn tab-btn" data-tab="verified" type="button">Đã kiểm nguồn</button>
-          <button class="ghost-btn tab-btn" data-tab="ai" type="button">Bài có AI</button>
+          <button class="ghost-btn tab-btn" data-tab="ai" type="button">AI tham gia</button>
         </div>
-      </header>
+      </section>
 
-      <section class="feed-controls" aria-label="Tìm kiếm và lọc bài viết">
+      <!-- 3.3 Search + Topic Filter Row -->
+      <section class="feed-controls" aria-label="Tìm kiếm và lọc chủ đề">
         <div class="search-wrap">
           <label class="hidden" for="feedSearchInput">Tìm kiếm bài viết</label>
           <input
@@ -119,9 +163,7 @@
             placeholder="Tìm theo tiêu đề, nội dung, tác giả, chủ đề..."
             autocomplete="off"
           />
-          <button class="clear-search-btn hidden" id="clearSearchBtn" type="button">
-            Xóa
-          </button>
+          <button class="clear-search-btn hidden" id="clearSearchBtn" type="button">Xóa</button>
         </div>
 
         <div class="topic-filter-wrap">
@@ -132,7 +174,32 @@
         </div>
       </section>
 
+      <!-- Topic Chips -->
+      <section class="topic-chips-row" aria-label="Bộ lọc nhanh theo nhãn">
+        <div class="tool-tags">
+          <span>AI</span>
+          <span>Verified</span>
+          <span>Longform</span>
+          <span>Poll</span>
+          <span>Debate</span>
+          <span>New Voices</span>
+        </div>
+      </section>
+
+      <!-- 3.4 Active Filter Summary -->
+      <section class="feed-toolbar" aria-label="Tóm tắt bộ lọc">
+        <div class="feed-toolbar-left">
+          <strong id="resultsCount">0 kết quả</strong>
+          <span id="activeSummary">Đang xem: tất cả</span>
+        </div>
+        <div class="feed-toolbar-right">
+          <button class="ghost-btn small-btn" id="resetFiltersBtn" type="button">Đặt lại bộ lọc</button>
+        </div>
+      </section>
+
+      <!-- 3.5 Composer -->
       <section class="composer-card" id="composerCard" aria-labelledby="composer-title">
+        <!-- 3.5.1 User Row -->
         <div class="composer-head">
           <div class="avatar user" aria-hidden="true">T</div>
           <div class="composer-meta">
@@ -141,42 +208,44 @@
           </div>
         </div>
 
+        <!-- 3.5.2 Main Input -->
         <div class="composer-box">
           <label class="hidden" for="composerText">Nội dung bài viết</label>
           <textarea
             id="composerText"
-            placeholder="Đăng góc nhìn, câu hỏi, phân tích hoặc chia sẻ một link cần thảo luận..."
+            placeholder="Chia sẻ một câu hỏi, một góc nhìn, một dữ kiện hoặc một điều bạn muốn cộng đồng cùng nhìn rõ hơn..."
           ></textarea>
         </div>
 
+        <!-- 3.5.3 AI Assist Row -->
+        <section class="composer-assist-row" aria-label="Công cụ AI hỗ trợ viết">
+          <div class="tool-tags">
+            <span>Tóm tắt lại</span>
+            <span>Làm rõ lập luận</span>
+            <span>Gợi ý tiêu đề</span>
+            <span>Gắn nhãn cần nguồn</span>
+          </div>
+        </section>
+
+        <!-- 3.5.4 Post Tools Row -->
         <div class="composer-tools">
-          <div class="tool-tags" aria-label="Chủ đề gợi ý">
-            <span>#AI</span>
-            <span>#XãHội</span>
-            <span>#KiểmChứng</span>
-            <span>#CôngNghệ</span>
+          <div class="tool-tags" aria-label="Công cụ bài viết">
+            <span id="attachLinkBtn">Gắn link</span>
+            <span id="addImageBtn">Thêm ảnh</span>
+            <span id="addPollBtn">Thêm poll</span>
+            <span id="addTopicBtn">Chọn chủ đề</span>
+            <span id="visibilityBtn">Chế độ hiển thị</span>
           </div>
 
+          <!-- 3.5.5 Submit Row -->
           <div class="composer-actions">
-            <button class="ghost-btn" id="attachLinkBtn" type="button">Gắn link</button>
-            <button class="ghost-btn" id="addTopicBtn" type="button">Thêm chủ đề</button>
+            <button class="ghost-btn" type="button" id="audienceBtn">Người xem</button>
             <button class="primary-btn" id="publishMockBtn" type="button">Đăng thảo luận</button>
           </div>
         </div>
       </section>
 
-      <section class="feed-toolbar" aria-label="Tóm tắt bộ lọc bảng tin">
-        <div class="feed-toolbar-left">
-          <strong id="resultsCount">0 kết quả</strong>
-          <span id="activeSummary">Đang xem: tất cả</span>
-        </div>
-        <div class="feed-toolbar-right">
-          <button class="ghost-btn small-btn" id="resetFiltersBtn" type="button">
-            Đặt lại bộ lọc
-          </button>
-        </div>
-      </section>
-
+      <!-- 3.6 Feed List -->
       <section class="feed-list" id="feedList" aria-live="polite">
         <div class="loading-card" aria-label="Đang tải bảng tin">
           <div class="loading-line w-40"></div>
@@ -185,23 +254,38 @@
         </div>
       </section>
 
+      <!-- 3.7 Load More -->
       <div class="load-more-wrap" id="loadMoreWrap">
-        <button class="load-more-btn hidden" id="loadMoreBtn" type="button">
-          Xem thêm bài viết
-        </button>
+        <button class="load-more-btn hidden" id="loadMoreBtn" type="button">Xem thêm bài viết</button>
       </div>
     </main>
 
-    <aside class="sidebar right-sidebar" aria-label="Thông tin bên phải">
+    <!-- RIGHT RAIL -->
+    <aside class="sidebar right-sidebar" aria-label="Thông tin tín hiệu và tiện ích">
+      <!-- 4.1 Signals Now -->
+      <section class="side-panel" id="signals" aria-labelledby="signals-title">
+        <h3 id="signals-title">Tín hiệu hôm nay</h3>
+        <div class="tool-card">
+          <strong>Bài đang tăng tốc thảo luận</strong>
+          <p>Những bài có nhịp bình luận tăng nhanh và đang thu hút phản biện mạnh.</p>
+        </div>
+        <div class="tool-card">
+          <strong>Bài cần đối chiếu thêm</strong>
+          <p>Các phát biểu được cộng đồng và AI gợi ý cần thêm nguồn hoặc ngữ cảnh.</p>
+        </div>
+      </section>
+
+      <!-- 4.2 Trending Topics -->
       <section class="side-panel" id="trending" aria-labelledby="trending-title">
-        <h3 id="trending-title">Xu hướng hôm nay</h3>
+        <h3 id="trending-title">Chủ đề nổi bật</h3>
         <ul class="trend-list" id="trendList">
           <li><span>Đang tải dữ liệu...</span></li>
         </ul>
       </section>
 
-      <section class="side-panel" id="discussions" aria-labelledby="rooms-title">
-        <h3 id="rooms-title">Phòng thảo luận</h3>
+      <!-- 4.3 Active Rooms -->
+      <section class="side-panel" id="rooms" aria-labelledby="rooms-title">
+        <h3 id="rooms-title">Phòng thảo luận đang hoạt động</h3>
         <div id="roomList">
           <div class="room-card">
             <strong>Đang tải...</strong>
@@ -210,6 +294,24 @@
         </div>
       </section>
 
+      <!-- 4.4 AI Tools -->
+      <section class="side-panel" id="ai-tools" aria-labelledby="tools-title">
+        <h3 id="tools-title">Công cụ AI</h3>
+        <div class="tool-card">
+          <strong>Tóm tắt bài dài</strong>
+          <p>Rút gọn thảo luận thành ý chính, bối cảnh, tranh luận và điểm còn mở.</p>
+        </div>
+        <div class="tool-card">
+          <strong>Gợi ý kiểm nguồn</strong>
+          <p>Phân biệt phát biểu cần dẫn nguồn với góc nhìn cá nhân hoặc suy luận mở rộng.</p>
+        </div>
+        <div class="tool-card">
+          <strong>Gom phản hồi tương tự</strong>
+          <p>Nhóm các bình luận gần nhau để người đọc nắm được cụm ý nhanh hơn.</p>
+        </div>
+      </section>
+
+      <!-- 4.5 Community Pulse -->
       <section class="side-panel" id="community" aria-labelledby="community-title">
         <h3 id="community-title">Nhịp cộng đồng</h3>
         <div class="stat-grid" id="communityStats">
@@ -219,30 +321,22 @@
           </div>
         </div>
       </section>
-
-      <section class="side-panel" id="ai-tools" aria-labelledby="tools-title">
-        <h3 id="tools-title">Công cụ AI</h3>
-
-        <div class="tool-card">
-          <strong>Tóm tắt bài dài</strong>
-          <p>
-            AI rút gọn thảo luận thành ý chính, bối cảnh, tranh luận và điểm còn mở để người đọc nắm nhanh mà
-            không mất mạch.
-          </p>
-        </div>
-
-        <div class="tool-card">
-          <strong>Gợi ý kiểm nguồn</strong>
-          <p>
-            Hệ thống phát hiện những phát biểu nên có nguồn hoặc nên phân biệt rõ giữa dữ kiện, suy luận và góc nhìn.
-          </p>
-        </div>
-      </section>
     </aside>
   </div>
 
+  <!-- MOBILE ONLY: Bottom Navigation -->
+  <nav class="mobile-bottom-nav" aria-label="Điều hướng mobile">
+    <a href="#feed">Home</a>
+    <a href="#globalSearchInput">Search</a>
+    <a href="#composerCard">Create</a>
+    <a href="#signals">Signals</a>
+    <a href="#profile">Profile</a>
+  </nav>
+
+  <!-- POST TEMPLATE -->
   <template id="postTemplate">
     <article class="post-card">
+      <!-- 3.6.1 Meta Header -->
       <div class="post-header">
         <div class="avatar post-avatar" aria-hidden="true">A</div>
 
@@ -254,15 +348,21 @@
             <span class="post-time">1 phút trước</span>
           </div>
 
+          <!-- 3.6.2 Topic Line -->
           <div class="post-topic">Chủ đề: ...</div>
         </div>
       </div>
 
+      <!-- 3.6.3 Labels -->
       <div class="post-labels"></div>
 
-      <h2 class="post-title">Tiêu đề</h2>
-      <p class="post-body">Nội dung</p>
+      <!-- 3.6.4 Title -->
+      <h2 class="post-title">Tiêu đề bài viết</h2>
 
+      <!-- 3.6.5 Body Preview -->
+      <p class="post-body">Nội dung bài viết</p>
+
+      <!-- 3.6.6 Optional Rich Content -->
       <div class="link-preview hidden">
         <div class="link-badge">Link</div>
         <div class="link-content">
@@ -273,15 +373,16 @@
 
       <div class="mini-poll hidden"></div>
 
+      <!-- 3.6.7 Action Bar -->
       <div class="post-actions">
-        <button class="action-btn vote-btn" type="button">▲ <span class="vote-count">0</span></button>
-        <button class="action-btn comment-toggle-btn" type="button">
-          💬 <span class="comment-count">0</span> bình luận
-        </button>
-        <button class="action-btn share-btn" type="button">↗ Chia sẻ</button>
-        <button class="action-btn save-btn" type="button">🔖 Lưu</button>
+        <button class="action-btn vote-btn" type="button">Hữu ích <span class="vote-count">0</span></button>
+        <button class="action-btn comment-toggle-btn" type="button">Bình luận <span class="comment-count">0</span></button>
+        <button class="action-btn share-btn" type="button">AI Reframe</button>
+        <button class="action-btn save-btn" type="button">Lưu</button>
+        <button class="action-btn post-share-btn" type="button">Chia sẻ</button>
       </div>
 
+      <!-- 3.6.8 Comment Preview / Thread -->
       <div class="comment-thread hidden"></div>
     </article>
   </template>
