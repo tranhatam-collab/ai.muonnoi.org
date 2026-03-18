@@ -2,12 +2,28 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    es2022: true
+    es2022: true,
+    node: true
   },
-  extends: ['eslint:recommended'],
+  extends: ["eslint:recommended"],
   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module'
+    ecmaVersion: "latest",
+    sourceType: "script"
   },
-  rules: {}
-}
+  ignorePatterns: [
+    "node_modules/",
+    "dist/",
+    ".wrangler/",
+    "data/feed.json"
+  ],
+  rules: {
+    "no-unused-vars": [
+      "warn",
+      {
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_"
+      }
+    ],
+    "no-console": "off"
+  }
+};
