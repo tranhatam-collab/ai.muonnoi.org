@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["ES2022", "DOM"],
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "strict": true,
-    "jsx": "react-jsx",
+    "noEmit": true,
     "skipLibCheck": true,
-    "esModuleInterop": true,
     "resolveJsonModule": true,
-    "types": []
-  }
+    "isolatedModules": true,
+    "allowJs": false,
+    "forceConsistentCasingInFileNames": true
+  },
+  "exclude": ["node_modules", "dist", ".wrangler"]
 }
