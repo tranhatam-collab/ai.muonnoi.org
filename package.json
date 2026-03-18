@@ -24,3 +24,26 @@
     "vite": "^5.4.1"
   }
 }
+---
+
+## `package.json`
+
+```json
+{
+  "name": "ai-muonnoi-org",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI Muon Noi root static social feed alpha on Cloudflare Pages",
+  "type": "module",
+  "scripts": {
+    "serve": "python3 -m http.server 8787",
+    "check:json": "node -e \"JSON.parse(require('fs').readFileSync('./data/feed.json','utf8')); console.log('feed.json OK')\"",
+    "check:wrangler": "node -e \"JSON.parse(require('fs').readFileSync('./wrangler.json','utf8')); console.log('wrangler.json OK')\"",
+    "check": "npm run check:json && npm run check:wrangler",
+    "format:check": "echo \"Prettier not enforced yet for static root stage\"",
+    "lint": "echo \"ESLint placeholder for static root stage\""
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
