@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Builder | AI Nhà Chung Flow</title>
+  <link rel="stylesheet" href="/assets/styles.css" />
+</head>
+<body>
+  <main class="shell shell-wide">
+    <section class="page-hero">
+      <div class="topbar">
+        <div>
+          <h1>Builder MVP</h1>
+          <p id="builderMeta" class="muted">Đang tải flow...</p>
+        </div>
+        <div class="topbar-actions">
+          <a href="/app/dashboard/" class="btn btn-secondary">Về dashboard</a>
+          <button id="logoutBtn" class="btn btn-secondary">Đăng xuất</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="builder-layout">
+      <!-- LEFT: NODE PALETTE -->
+      <aside class="card builder-sidebar">
+        <div class="section-head">
+          <div>
+            <h2>Node palette</h2>
+            <p class="muted">Bấm để chèn nhanh node vào flow JSON.</p>
+          </div>
+        </div>
+
+        <div class="status-row">
+          <span class="badge" id="flowIdBadge">Flow</span>
+          <span class="badge success">MVP Runtime</span>
+        </div>
+
+        <div class="palette-list">
+          <button class="palette-item" data-node-type="manual">
+            <strong>Manual Trigger</strong>
+            <span>trigger</span>
+          </button>
+
+          <button class="palette-item" data-node-type="transform">
+            <strong>Transform</strong>
+            <span>action</span>
+          </button>
+
+          <button class="palette-item" data-node-type="if">
+            <strong>If</strong>
+            <span>logic</span>
+          </button>
+
+          <button class="palette-item" data-node-type="response">
+            <strong>Response</strong>
+            <span>output</span>
+          </button>
+        </div>
+
+        <div style="height:16px"></div>
+
+        <div class="section-head">
+          <div>
+            <h2>Preset flow</h2>
+            <p class="muted">Tạo nhanh khung flow để test.</p>
+          </div>
+        </div>
+
+        <div class="quick-grid">
+          <button id="presetBlankBtn" class="quick-btn">Preset trống</button>
+          <button id="presetHelloBtn" class="quick-btn">Preset hello</button>
+          <button id="presetIfBtn" class="quick-btn">Preset if</button>
+        </div>
+
+        <div style="height:16px"></div>
+
+        <div class="section-head">
+          <div>
+            <h2>Trạng thái draft</h2>
+            <p class="muted">Theo dõi autosave theo thời gian thực.</p>
+          </div>
+        </div>
+
+        <div class="status-stack">
+          <span class="badge" id="autosaveBadge">Autosave: idle</span>
+          <span class="badge" id="lastSavedBadge">Lần lưu cuối: -</span>
+        </div>
+      </aside>
+
+      <!-- CENTER: EDITOR -->
+      <section class="card builder-main">
+        <div class="section-head">
+          <div>
+            <h2>Definition JSON</h2>
+            <p class="muted">Chỉnh flow JSON trực tiếp để lưu, validate, preview và run ngay.</p>
+          </div>
+        </div>
+
+        <textarea id="definitionInput" class="code-box"></textarea>
+
+        <div class="toolbar">
+          <button id="formatJsonBtn" class="btn btn-secondary">Format JSON</button>
+          <button id="saveBuilderBtn" class="btn btn-secondary">Lưu flow</button>
+          <button id="saveDraftBtn" class="btn btn-secondary">Lưu draft</button>
+          <button id="validateBtn" class="btn btn-secondary">Validate</button>
+          <button id="previewBtn" class="btn btn-secondary">Preview</button>
+          <button id="runBtn" class="btn btn-primary">Run</button>
+        </div>
+      </section>
+
+      <!-- RIGHT: RESULT + HISTORY -->
+      <aside class="builder-right">
+        <section class="card">
+          <div class="section-head">
+            <div>
+              <h2>Kết quả</h2>
+              <p class="muted">Tóm tắt thao tác mới nhất và execution hiện tại.</p>
+            </div>
+          </div>
+
+          <div class="kpi-grid" style="margin-bottom:14px;">
+            <div class="kpi">
+              <b id="summaryAction">-</b>
+              <span>Action gần nhất</span>
+            </div>
+            <div class="kpi">
+              <b id="summaryStatus">-</b>
+              <span>Trạng thái</span>
+            </div>
+            <div class="kpi">
+              <b id="summaryExecution">-</b>
+              <span>Execution ID</span>
+            </div>
+            <div class="kpi">
+              <b id="summaryFlow">-</b>
+              <span>Flow ID</span>
+            </div>
+          </div>
+
+          <pre id="resultBox" class="result-box result-box-tall">Đang chờ thao tác...</pre>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <div>
+              <h2>Execution history</h2>
+              <p class="muted">Lịch sử run của flow hiện tại trong phiên local.</p>
+            </div>
+            <div class="row-actions">
+              <button id="reloadHistoryBtn" class="btn btn-secondary">Làm mới</button>
+            </div>
+          </div>
+
+          <div id="historyList" class="list-stack compact-list">
+            <p class="muted">Chưa có execution nào.</p>
+          </div>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <script src="/assets/api.js"></script>
+  <script src="/assets/auth.js"></script>
+  <script src="/assets/builder.js"></script>
+</body>
+</html>
