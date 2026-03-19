@@ -2,6 +2,7 @@ const API_BASE =
   window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
     ? "http://localhost:8787/api"
     : "https://api.ai.muonnoi.org/api";
+window.API_BASE = API_BASE;
 const API_TIMEOUT_MS = 15000;
 
 function buildUrl(path) {
