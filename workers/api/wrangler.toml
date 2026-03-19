@@ -1,0 +1,14 @@
+name = "ai-muonnoi-flow-api"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+
+[vars]
+ENVIRONMENT = "development"
+
+[[d1_databases]]
+binding = "iai_flow_db"
+database_name = "iai-flow-db"
+database_id = "73993529-9b2e-42c2-8d40-5b05525ecf4b"
+
+[dev]
+port = 8787

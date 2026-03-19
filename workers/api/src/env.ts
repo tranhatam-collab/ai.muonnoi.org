@@ -1,13 +1,7 @@
 export interface Env {
-  DB: D1Database
+  iai_flow_db: D1Database
 
-  // KV optional (chưa dùng MVP nhưng chuẩn bị sẵn)
-  KV?: KVNamespace
-
-  // ENV
   ENVIRONMENT?: string
   SESSION_SECRET: string
-
-  // domain
   APP_DOMAIN?: string
 }

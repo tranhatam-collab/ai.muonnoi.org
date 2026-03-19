@@ -1,0 +1,11 @@
+{
+  "name": "ai-muonnoi-flow-api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --config wrangler.toml",
+    "d1:migrate:local": "wrangler d1 execute iai-flow-db --local --file=./migrations/0001_mvp_init.sql --config wrangler.toml",
+    "d1:migrate:auth": "wrangler d1 execute iai-flow-db --local --file=./migrations/0002_auth_init.sql --config wrangler.toml",
+    "d1:tables:local": "wrangler d1 execute iai-flow-db --local --command=\"SELECT name FROM sqlite_master WHERE type='table';\" --config wrangler.toml"
+  }
+}
