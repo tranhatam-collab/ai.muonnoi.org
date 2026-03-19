@@ -4,6 +4,7 @@ compatibility_date = "2025-01-01"
 
 [vars]
 ENVIRONMENT = "development"
+SESSION_SECRET = "dev-secret-change-in-production"
 
 [[d1_databases]]
 binding = "iai_flow_db"

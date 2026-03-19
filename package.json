@@ -5,7 +5,7 @@
   "description": "AI Muon Noi root static social feed alpha with flow MVP backend",
   "type": "module",
   "scripts": {
-    "serve": "python3 -m http.server 8787",
+    "serve": "python3 -m http.server 8080",
     "check:json": "node -e \"JSON.parse(require('fs').readFileSync('./data/feed.json','utf8')); console.log('feed.json OK')\"",
     "check:wrangler": "node -e \"JSON.parse(require('fs').readFileSync('./wrangler.json','utf8')); console.log('wrangler.json OK')\"",
     "check": "npm run check:json && npm run check:wrangler",
