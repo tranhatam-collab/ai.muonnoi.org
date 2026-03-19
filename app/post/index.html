@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bài viết | AI Muôn Nơi</title>
+  <link rel="stylesheet" href="/style.css" />
+  <style>
+    .page-wrap { max-width: 720px; margin: 0 auto; padding: 24px 16px; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 0.85rem; text-decoration: none; margin-bottom: 20px; }
+    .back-link:hover { color: var(--accent); }
+    .post-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; margin-bottom: 20px; }
+    .post-meta-top { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--accent); color: #000; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0; }
+    .author-name { font-weight: 600; font-size: 0.95rem; }
+    .post-time { font-size: 0.78rem; color: var(--muted); }
+    .post-topic { font-size: 0.78rem; color: var(--accent-3); }
+    .post-title { font-size: 1.4rem; font-weight: 700; margin: 0 0 14px; line-height: 1.35; }
+    .post-body { font-size: 0.95rem; line-height: 1.7; color: var(--text-2); white-space: pre-wrap; }
+    .post-actions { display: flex; gap: 10px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); flex-wrap: wrap; }
+    .action-btn { background: var(--bg-3); border: 1px solid var(--line); border-radius: var(--radius-xs); padding: 8px 16px; color: var(--text-2); font-size: 0.85rem; cursor: pointer; transition: all var(--transition-fast); }
+    .action-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .action-btn.voted { background: rgba(125,211,252,.1); border-color: var(--accent); color: var(--accent); }
+    .ai-summary-box { margin-top: 16px; background: rgba(125,211,252,.06); border: 1px solid rgba(125,211,252,.2); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 0.88rem; line-height: 1.6; color: var(--accent-3); display: none; }
+    .ai-summary-box.visible { display: block; }
+    .comments-section { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; }
+    .comments-section h3 { font-size: 1rem; margin: 0 0 18px; }
+    .comment-form { display: flex; gap: 10px; margin-bottom: 20px; }
+    .comment-form textarea { flex: 1; background: var(--bg-3); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 10px 13px; color: var(--text); font-size: 0.9rem; font-family: inherit; resize: none; height: 72px; }
+    .comment-form textarea:focus { outline: none; border-color: var(--accent); }
+    .comment-submit { background: var(--accent); color: #000; border: none; border-radius: var(--radius-sm); padding: 0 18px; font-weight: 700; font-size: 0.85rem; cursor: pointer; }
+    .comment-item { padding: 14px 0; border-bottom: 1px solid var(--line); }
+    .comment-item:last-child { border-bottom: none; }
+    .comment-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .comment-avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--purple); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; }
+    .comment-author { font-size: 0.88rem; font-weight: 600; }
+    .comment-time { font-size: 0.76rem; color: var(--muted); }
+    .comment-body { font-size: 0.9rem; line-height: 1.6; color: var(--text-2); padding-left: 40px; }
+    .empty { color: var(--muted); font-size: 0.88rem; }
+    .loading-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; }
+    .error-state { color: var(--danger); font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <div class="page-wrap">
+    <a class="back-link" href="/">← Về bảng tin</a>
+    <div id="postArea"><div class="loading-card"><p class="empty">Đang tải bài viết...</p></div></div>
+    <div id="commentsArea" style="display:none">
+      <div class="comments-section">
+        <h3 id="commentsTitle">Bình luận</h3>
+        <div class="comment-form" id="commentForm" style="display:none">
+          <textarea id="commentInput" placeholder="Viết bình luận của bạn..."></textarea>
+          <button class="comment-submit" id="commentSubmit">Gửi</button>
+        </div>
+        <div id="commentList"><p class="empty">Đang tải bình luận...</p></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/assets/api.js"></script>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const postId = params.get("id");
+
+    function timeAgo(ms) {
+      const d = Date.now() - ms;
+      if (d < 60000) return "vừa xong";
+      if (d < 3600000) return Math.floor(d / 60000) + " phút trước";
+      if (d < 86400000) return Math.floor(d / 3600000) + " giờ trước";
+      return Math.floor(d / 86400000) + " ngày trước";
+    }
+
+    let currentUser = null;
+    let voted = false;
+
+    async function init() {
+      if (!postId) { document.getElementById("postArea").innerHTML = '<p class="error-state">Không tìm thấy bài viết.</p>'; return; }
+
+      // Check auth
+      try {
+        const r = await fetch(window.API_BASE + "/me", { credentials: "include" });
+        if (r.ok) { const d = await r.json(); currentUser = d.data; }
+      } catch (_) {}
+
+      const res = await fetch(window.API_BASE + "/posts/" + postId, { credentials: "include" });
+      if (!res.ok) { document.getElementById("postArea").innerHTML = '<p class="error-state">Không tìm thấy bài viết.</p>'; return; }
+      const data = await res.json();
+      const p = data.data;
+
+      document.title = p.title + " | AI Muôn Nơi";
+
+      document.getElementById("postArea").innerHTML = `
+        <div class="post-card">
+          <div class="post-meta-top">
+            <div class="avatar">${(p.author_name || "?")[0].toUpperCase()}</div>
+            <div>
+              <div class="author-name">${p.author_name || "Ẩn danh"}</div>
+              <div class="post-time">${timeAgo(p.created_at)} ${p.topic ? '• <span class="post-topic">' + p.topic + '</span>' : ''}</div>
+            </div>
+          </div>
+          <h1 class="post-title">${p.title}</h1>
+          <div class="post-body">${p.body || ""}</div>
+          <div class="ai-summary-box" id="aiSummary"></div>
+          <div class="post-actions">
+            <button class="action-btn ${p.user_voted ? 'voted' : ''}" id="voteBtn">Hữu ích <span id="voteCount">${p.vote_count || 0}</span></button>
+            <button class="action-btn" id="aiBtn">AI Tóm tắt</button>
+            <button class="action-btn" id="shareBtn">Chia sẻ</button>
+          </div>
+        </div>
+      `;
+      voted = !!p.user_voted;
+
+      document.getElementById("voteBtn").addEventListener("click", async () => {
+        if (!currentUser) { window.location.href = "/app/login/"; return; }
+        const res = await fetch(window.API_BASE + "/posts/" + postId + "/vote", { method: "POST", credentials: "include" });
+        const data = await res.json();
+        if (data.ok) {
+          voted = !voted;
+          document.getElementById("voteBtn").classList.toggle("voted", voted);
+          document.getElementById("voteCount").textContent = data.data?.vote_count ?? parseInt(document.getElementById("voteCount").textContent) + (voted ? 1 : -1);
+        }
+      });
+
+      document.getElementById("aiBtn").addEventListener("click", async () => {
+        const box = document.getElementById("aiSummary");
+        if (box.classList.contains("visible")) { box.classList.remove("visible"); return; }
+        box.textContent = "AI đang tóm tắt...";
+        box.classList.add("visible");
+        try {
+          const res = await fetch(window.API_BASE + "/ai/summarize", {
+            method: "POST", credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text: p.title + "\n\n" + p.body, post_id: p.id }),
+          });
+          const data = await res.json();
+          box.textContent = data.data?.summary || "Không có kết quả.";
+        } catch (e) { box.textContent = "Lỗi: " + e.message; }
+      });
+
+      document.getElementById("shareBtn").addEventListener("click", () => {
+        if (navigator.share) { navigator.share({ title: p.title, url: location.href }); }
+        else { navigator.clipboard.writeText(location.href); alert("Đã copy link!"); }
+      });
+
+      // Load comments
+      document.getElementById("commentsArea").style.display = "block";
+      if (currentUser) document.getElementById("commentForm").style.display = "flex";
+      loadComments();
+    }
+
+    async function loadComments() {
+      const res = await fetch(window.API_BASE + "/posts/" + postId + "/comments", { credentials: "include" });
+      const data = await res.json();
+      const items = data.data || [];
+      document.getElementById("commentsTitle").textContent = `Bình luận (${items.length})`;
+      const el = document.getElementById("commentList");
+      if (!items.length) { el.innerHTML = '<p class="empty">Chưa có bình luận nào. Hãy là người đầu tiên!</p>'; return; }
+      el.innerHTML = items.map(c => `
+        <div class="comment-item">
+          <div class="comment-top">
+            <div class="comment-avatar">${(c.author_name || "?")[0].toUpperCase()}</div>
+            <span class="comment-author">${c.author_name || "Ẩn danh"}</span>
+            <span class="comment-time">${timeAgo(c.created_at)}</span>
+          </div>
+          <div class="comment-body">${c.body}</div>
+        </div>
+      `).join("");
+    }
+
+    document.getElementById("commentSubmit")?.addEventListener("click", async () => {
+      const body = document.getElementById("commentInput").value.trim();
+      if (!body) return;
+      const btn = document.getElementById("commentSubmit");
+      btn.disabled = true;
+      const res = await fetch(window.API_BASE + "/posts/" + postId + "/comments", {
+        method: "POST", credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ body }),
+      });
+      const data = await res.json();
+      if (data.ok) { document.getElementById("commentInput").value = ""; loadComments(); }
+      btn.disabled = false;
+    });
+
+    init();
+  </script>
+</body>
+</html>

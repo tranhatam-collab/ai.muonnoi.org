@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Đăng ký | AI Muôn Nơi</title>
+  <link rel="stylesheet" href="/style.css" />
+  <style>
+    body { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .auth-wrap { width: 100%; max-width: 420px; padding: 24px; }
+    .auth-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 32px; }
+    .auth-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+    .auth-logo .mark { background: var(--accent); color: #000; font-weight: 800; font-size: 1.1rem; padding: 8px 12px; border-radius: 10px; }
+    .auth-logo h1 { font-size: 1.2rem; margin: 0; }
+    .auth-logo p { margin: 0; font-size: 0.82rem; color: var(--muted); }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 6px; }
+    .form-group input { width: 100%; background: var(--bg-3); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px 14px; color: var(--text); font-size: 0.95rem; font-family: inherit; transition: border-color var(--transition-fast); }
+    .form-group input:focus { outline: none; border-color: var(--accent); }
+    .submit-btn { width: 100%; background: var(--accent); color: #000; border: none; border-radius: var(--radius-sm); padding: 13px; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: opacity var(--transition-fast); margin-top: 8px; }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .auth-links { text-align: center; margin-top: 20px; font-size: 0.85rem; color: var(--muted); }
+    .auth-links a { color: var(--accent); text-decoration: none; }
+    .msg { margin-top: 14px; font-size: 0.85rem; color: var(--muted); text-align: center; min-height: 20px; }
+    .msg.error { color: var(--danger); }
+    .msg.success { color: var(--success); }
+  </style>
+</head>
+<body>
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <div class="mark">AI</div>
+        <div>
+          <h1>AI Muôn Nơi</h1>
+          <p>Tạo tài khoản để tham gia cộng đồng</p>
+        </div>
+      </div>
+
+      <form id="registerForm">
+        <div class="form-group">
+          <label for="nameInput">Tên hiển thị</label>
+          <input id="nameInput" type="text" placeholder="Họ và tên của bạn" required autocomplete="name" />
+        </div>
+        <div class="form-group">
+          <label for="usernameInput">Username (tùy chọn)</label>
+          <input id="usernameInput" type="text" placeholder="@username" autocomplete="username" />
+        </div>
+        <div class="form-group">
+          <label for="emailInput">Email</label>
+          <input id="emailInput" type="email" placeholder="you@example.com" required autocomplete="email" />
+        </div>
+        <div class="form-group">
+          <label for="passwordInput">Mật khẩu</label>
+          <input id="passwordInput" type="password" placeholder="Ít nhất 6 ký tự" required autocomplete="new-password" />
+        </div>
+        <button id="submitBtn" type="submit" class="submit-btn">Tạo tài khoản</button>
+      </form>
+
+      <p id="msg" class="msg"></p>
+
+      <div class="auth-links">
+        Đã có tài khoản? <a href="/app/login/">Đăng nhập</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="/assets/api.js"></script>
+  <script>
+    const form = document.getElementById("registerForm");
+    const nameInput = document.getElementById("nameInput");
+    const usernameInput = document.getElementById("usernameInput");
+    const emailInput = document.getElementById("emailInput");
+    const passwordInput = document.getElementById("passwordInput");
+    const submitBtn = document.getElementById("submitBtn");
+    const msg = document.getElementById("msg");
+
+    function setMsg(text, type = "") {
+      msg.textContent = text;
+      msg.className = "msg" + (type ? " " + type : "");
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      setMsg("Đang tạo tài khoản...");
+
+      try {
+        const body = {
+          name: nameInput.value.trim(),
+          email: emailInput.value.trim(),
+          password: passwordInput.value,
+        };
+        const u = usernameInput.value.trim();
+        if (u) body.username = u.replace(/^@/, "");
+
+        const res = await fetch(window.API_BASE + "/register", {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+        const data = await res.json();
+
+        if (data.ok) {
+          setMsg("Tạo tài khoản thành công! Đang chuyển hướng...", "success");
+          setTimeout(() => { window.location.href = "/"; }, 1200);
+        } else {
+          setMsg(data.error || "Đăng ký thất bại", "error");
+          submitBtn.disabled = false;
+        }
+      } catch (err) {
+        setMsg(err.message || "Lỗi kết nối", "error");
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

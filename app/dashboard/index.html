@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard | AI Nhà Chung Flow</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <main class="shell">
+    <section class="page-hero">
+      <div class="topbar">
+        <div>
+          <h1>Dashboard</h1>
+          <p id="meLine" class="muted">Đang tải người dùng...</p>
+        </div>
+        <div class="topbar-actions">
+          <button id="createFlowBtn" class="btn btn-primary">Tạo flow mới</button>
+          <button id="logoutBtn" class="btn btn-secondary">Đăng xuất</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid-dashboard">
+      <section class="card">
+        <div class="section-head">
+          <div>
+            <h2>Danh sách flow</h2>
+            <p class="muted">Các flow hiện có trong hệ MVP.</p>
+          </div>
+        </div>
+
+        <div id="flowsList" class="list-stack">
+          <p class="muted">Đang tải flows...</p>
+        </div>
+      </section>
+
+      <aside class="card">
+        <div class="section-head">
+          <div>
+            <h2>Tổng quan nhanh</h2>
+            <p class="muted">Tình trạng phiên làm việc hiện tại.</p>
+          </div>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi">
+            <b id="kpiFlows">0</b>
+            <span>Số flow</span>
+          </div>
+          <div class="kpi">
+            <b id="kpiUser">1</b>
+            <span>User hiện tại</span>
+          </div>
+          <div class="kpi">
+            <b>4</b>
+            <span>Node MVP</span>
+          </div>
+          <div class="kpi">
+            <b>Local</b>
+            <span>Môi trường</span>
+          </div>
+        </div>
+
+        <div style="height:16px"></div>
+
+        <div class="section-head">
+          <div>
+            <h2>Hành động nhanh</h2>
+            <p class="muted">Các mẫu khởi tạo nhanh để test.</p>
+          </div>
+        </div>
+
+        <div class="quick-grid">
+          <button class="quick-btn" data-template="blank">Flow trống</button>
+          <button class="quick-btn" data-template="hello">Hello flow</button>
+          <button class="quick-btn" data-template="if">If flow</button>
+          <button class="quick-btn" data-template="response">Response flow</button>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="/assets/api.js"></script>
+  <script src="/assets/auth.js"></script>
+  <script>
+    const meLine = document.getElementById("meLine");
+    const flowsList = document.getElementById("flowsList");
+    const createFlowBtn = document.getElementById("createFlowBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const kpiFlows = document.getElementById("kpiFlows");
+
+    async function loadDashboard() {
+      const me = await window.Auth.requireAuth();
+      if (!me) return;
+
+      meLine.textContent = `${me.name} • ${me.email}`;
+
+      try {
+        const result = await window.API.get("/flows");
+        const flows = result?.data || [];
+
+        kpiFlows.textContent = String(flows.length);
+
+        if (!flows.length) {
+          flowsList.innerHTML = '<p class="muted">Chưa có flow nào.</p>';
+          return;
+        }
+
+        flowsList.innerHTML = flows.map((flow) => `
+          <article class="list-item">
+            <div>
+              <strong>${flow.name}</strong>
+              <div class="list-meta">Flow ID: ${flow.id}</div>
+            </div>
+            <div class="row-actions">
+              <a class="btn btn-secondary" href="/app/builder/?id=${flow.id}">Mở builder</a>
+            </div>
+          </article>
+        `).join("");
+      } catch (error) {
+        flowsList.innerHTML = `<p class="error">${error.message}</p>`;
+      }
+    }
+
+    async function createFlow(name) {
+      try {
+        const result = await window.API.post("/flows", { name });
+        const id = result?.data?.id;
+        if (id) {
+          window.location.href = `/app/builder/?id=${id}`;
+        }
+      } catch (error) {
+        alert(error.message || "Tạo flow thất bại");
+      }
+    }
+
+    createFlowBtn.addEventListener("click", async () => {
+      await createFlow("Flow mới từ dashboard");
+    });
+
+    document.querySelectorAll(".quick-btn").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const key = button.dataset.template || "blank";
+        const nameMap = {
+          blank: "Flow trống",
+          hello: "Hello flow",
+          if: "If flow",
+          response: "Response flow"
+        };
+        await createFlow(nameMap[key] || "Flow mới");
+      });
+    });
+
+    logoutBtn.addEventListener("click", () => {
+      window.Auth.logoutAndRedirect();
+    });
+
+    loadDashboard();
+  </script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Công cụ AI | AI Muôn Nơi</title>
+  <link rel="stylesheet" href="/style.css" />
+  <style>
+    .page-wrap { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 0.85rem; text-decoration: none; margin-bottom: 20px; }
+    .back-link:hover { color: var(--accent); }
+    .page-header { margin-bottom: 28px; }
+    .page-header h1 { font-size: 1.5rem; margin: 0 0 6px; }
+    .page-header p { margin: 0; color: var(--muted); font-size: 0.88rem; }
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 16px; margin-bottom: 32px; }
+    .tool-panel { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; }
+    .tool-panel h3 { font-size: 1rem; margin: 0 0 6px; }
+    .tool-panel .tool-desc { font-size: 0.84rem; color: var(--muted); margin-bottom: 16px; }
+    .tool-input { width: 100%; background: var(--bg-3); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 11px 13px; color: var(--text); font-size: 0.9rem; font-family: inherit; resize: vertical; min-height: 90px; margin-bottom: 10px; }
+    .tool-input:focus { outline: none; border-color: var(--accent); }
+    .run-btn { background: var(--accent); color: #000; border: none; border-radius: var(--radius-sm); padding: 9px 20px; font-weight: 700; font-size: 0.88rem; cursor: pointer; }
+    .run-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .tool-result { margin-top: 14px; background: var(--bg-3); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 13px; font-size: 0.88rem; line-height: 1.6; min-height: 60px; color: var(--text-2); display: none; }
+    .tool-result.visible { display: block; }
+    .queue-section { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; }
+    .queue-section h2 { font-size: 1.1rem; margin: 0 0 16px; }
+    .queue-item { background: var(--bg-3); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 10px; }
+    .queue-meta { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; }
+    .queue-type { font-size: 0.78rem; color: var(--accent-3); font-family: monospace; }
+    .queue-status { font-size: 0.78rem; padding: 2px 8px; border-radius: 20px; }
+    .queue-status.pending { background: rgba(251,191,36,.1); color: var(--warning); }
+    .queue-status.approved { background: rgba(52,211,153,.1); color: var(--success); }
+    .queue-status.rejected { background: rgba(248,113,113,.1); color: var(--danger); }
+    .queue-body { font-size: 0.87rem; color: var(--text-2); margin-bottom: 10px; }
+    .queue-actions { display: flex; gap: 8px; }
+    .approve-btn { background: none; border: 1px solid var(--success); color: var(--success); border-radius: 8px; padding: 5px 12px; font-size: 0.8rem; cursor: pointer; }
+    .reject-btn { background: none; border: 1px solid var(--danger); color: var(--danger); border-radius: 8px; padding: 5px 12px; font-size: 0.8rem; cursor: pointer; }
+    .empty { color: var(--muted); font-size: 0.88rem; }
+    .jobs-section { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; margin-top: 16px; }
+    .jobs-section h2 { font-size: 1.1rem; margin: 0 0 16px; }
+    .job-row { display: flex; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 0.86rem; }
+    .job-type { font-family: monospace; color: var(--accent-3); }
+    .job-status { padding: 2px 8px; border-radius: 20px; font-size: 0.76rem; }
+    .job-status.pending { background: rgba(251,191,36,.1); color: var(--warning); }
+    .job-status.done { background: rgba(52,211,153,.1); color: var(--success); }
+    .job-status.failed { background: rgba(248,113,113,.1); color: var(--danger); }
+  </style>
+</head>
+<body>
+  <div class="page-wrap">
+    <a class="back-link" href="/">← Về bảng tin</a>
+    <div class="page-header">
+      <h1>Công cụ AI</h1>
+      <p>Tóm tắt, kiểm chứng và phân tích nội dung bằng AI.</p>
+    </div>
+
+    <div class="tools-grid">
+      <!-- Summarize -->
+      <div class="tool-panel">
+        <h3>Tóm tắt bài viết</h3>
+        <p class="tool-desc">Nhập nội dung bài viết để AI rút gọn thành ý chính, bối cảnh và điểm mở.</p>
+        <textarea class="tool-input" id="summarizeInput" placeholder="Dán nội dung bài viết vào đây..."></textarea>
+        <button class="run-btn" id="summarizeBtn">Tóm tắt ngay</button>
+        <div class="tool-result" id="summarizeResult"></div>
+      </div>
+
+      <!-- Verify -->
+      <div class="tool-panel">
+        <h3>Kiểm chứng tuyên bố</h3>
+        <p class="tool-desc">Nhập một tuyên bố hoặc câu cần kiểm nguồn — AI sẽ phân tích mức độ cần xác minh.</p>
+        <textarea class="tool-input" id="verifyInput" placeholder="Nhập tuyên bố hoặc câu cần kiểm chứng..."></textarea>
+        <button class="run-btn" id="verifyBtn">Phân tích</button>
+        <div class="tool-result" id="verifyResult"></div>
+      </div>
+    </div>
+
+    <!-- Moderation Queue -->
+    <div class="queue-section">
+      <h2>Hàng đợi kiểm duyệt AI</h2>
+      <div id="queueList"><p class="empty">Đang tải hàng đợi...</p></div>
+    </div>
+
+    <!-- AI Jobs -->
+    <div class="jobs-section">
+      <h2>AI Jobs gần đây</h2>
+      <div id="jobList"><p class="empty">Đang tải jobs...</p></div>
+    </div>
+  </div>
+
+  <script src="/assets/api.js"></script>
+  <script>
+    // SUMMARIZE
+    document.getElementById("summarizeBtn").addEventListener("click", async () => {
+      const text = document.getElementById("summarizeInput").value.trim();
+      if (!text) return;
+      const btn = document.getElementById("summarizeBtn");
+      const result = document.getElementById("summarizeResult");
+      btn.disabled = true;
+      result.textContent = "AI đang tóm tắt...";
+      result.classList.add("visible");
+      try {
+        const res = await fetch(window.API_BASE + "/ai/summarize", {
+          method: "POST", credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text }),
+        });
+        const data = await res.json();
+        result.textContent = data.data?.summary || data.error || "Không có kết quả.";
+      } catch (e) {
+        result.textContent = "Lỗi: " + e.message;
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    // VERIFY
+    document.getElementById("verifyBtn").addEventListener("click", async () => {
+      const text = document.getElementById("verifyInput").value.trim();
+      if (!text) return;
+      const btn = document.getElementById("verifyBtn");
+      const result = document.getElementById("verifyResult");
+      btn.disabled = true;
+      result.textContent = "AI đang phân tích...";
+      result.classList.add("visible");
+      try {
+        const res = await fetch(window.API_BASE + "/ai/verify", {
+          method: "POST", credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text }),
+        });
+        const data = await res.json();
+        const r = data.data;
+        if (r) {
+          result.textContent = `Mức độ cần xác minh: ${r.needs_verification ? "CÓ" : "KHÔNG"}\n\nĐộ tin cậy: ${r.confidence || "—"}\n\nPhân tích: ${r.reasoning || "—"}`;
+        } else {
+          result.textContent = data.error || "Không có kết quả.";
+        }
+      } catch (e) {
+        result.textContent = "Lỗi: " + e.message;
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    // MODERATION QUEUE
+    async function loadQueue() {
+      const res = await fetch(window.API_BASE + "/ai/moderation-queue", { credentials: "include" });
+      if (res.status === 401) { window.location.href = "/app/login/"; return; }
+      const data = await res.json();
+      const items = data.data || [];
+      const el = document.getElementById("queueList");
+      if (!items.length) { el.innerHTML = '<p class="empty">Hàng đợi trống.</p>'; return; }
+      el.innerHTML = items.map(q => `
+        <div class="queue-item" id="qi-${q.id}">
+          <div class="queue-meta">
+            <span class="queue-type">${q.content_type}</span>
+            <span class="queue-status ${q.status}">${q.status}</span>
+          </div>
+          <div class="queue-body">${q.ai_result ? JSON.stringify(q.ai_result).substring(0, 200) : "Chưa có kết quả AI"}</div>
+          ${q.status === "pending" ? `
+          <div class="queue-actions">
+            <button class="approve-btn" onclick="decide(${q.id}, 'approved')">Chấp nhận</button>
+            <button class="reject-btn" onclick="decide(${q.id}, 'rejected')">Từ chối</button>
+          </div>` : ""}
+        </div>
+      `).join("");
+    }
+
+    window.decide = async (id, decision) => {
+      await fetch(window.API_BASE + "/ai/moderation-queue/" + id, {
+        method: "PUT", credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ decision }),
+      });
+      loadQueue();
+    };
+
+    // AI JOBS
+    async function loadJobs() {
+      const res = await fetch(window.API_BASE + "/ai/jobs", { credentials: "include" });
+      const data = await res.json();
+      const items = data.data || [];
+      const el = document.getElementById("jobList");
+      if (!items.length) { el.innerHTML = '<p class="empty">Chưa có job nào.</p>'; return; }
+      el.innerHTML = items.map(j => `
+        <div class="job-row">
+          <span class="job-type">${j.job_type}</span>
+          <span style="flex:1;color:var(--muted)">#${j.content_id}</span>
+          <span class="job-status ${j.status}">${j.status}</span>
+        </div>
+      `).join("");
+    }
+
+    loadQueue();
+    loadJobs();
+  </script>
+</body>
+</html>

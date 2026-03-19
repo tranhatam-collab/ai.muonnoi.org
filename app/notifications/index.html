@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Thông báo | AI Muôn Nơi</title>
+  <link rel="stylesheet" href="/style.css" />
+  <style>
+    .page-wrap { max-width: 720px; margin: 0 auto; padding: 24px 16px; }
+    .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+    .page-header h1 { font-size: 1.5rem; margin: 0; }
+    .notif-list { display: flex; flex-direction: column; gap: 8px; }
+    .notif-item { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; display: flex; gap: 14px; align-items: flex-start; transition: background var(--transition-fast); }
+    .notif-item.unread { background: var(--card-2); border-color: var(--accent-2); }
+    .notif-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 6px; }
+    .notif-dot.read { background: transparent; border: 1px solid var(--line); }
+    .notif-content { flex: 1; }
+    .notif-msg { font-size: 0.92rem; margin-bottom: 4px; }
+    .notif-time { font-size: 0.78rem; color: var(--muted); }
+    .mark-all-btn { background: none; border: 1px solid var(--line); border-radius: var(--radius-xs); padding: 7px 14px; color: var(--text-2); font-size: 0.82rem; cursor: pointer; }
+    .mark-all-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .empty-state { text-align: center; padding: 60px 20px; color: var(--muted); }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 0.85rem; text-decoration: none; margin-bottom: 20px; }
+    .back-link:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="page-wrap">
+    <a class="back-link" href="/">← Về bảng tin</a>
+    <div class="page-header">
+      <h1>Thông báo</h1>
+      <button id="markAllBtn" class="mark-all-btn">Đánh dấu tất cả đã đọc</button>
+    </div>
+    <div id="notifList" class="notif-list">
+      <div class="empty-state">Đang tải thông báo...</div>
+    </div>
+  </div>
+
+  <script src="/assets/api.js"></script>
+  <script>
+    const list = document.getElementById("notifList");
+    const markAllBtn = document.getElementById("markAllBtn");
+
+    function timeAgo(ms) {
+      const diff = Date.now() - ms;
+      if (diff < 60000) return "vừa xong";
+      if (diff < 3600000) return Math.floor(diff / 60000) + " phút trước";
+      if (diff < 86400000) return Math.floor(diff / 3600000) + " giờ trước";
+      return Math.floor(diff / 86400000) + " ngày trước";
+    }
+
+    async function load() {
+      try {
+        const res = await fetch(window.API_BASE + "/notifications", { credentials: "include" });
+        if (!res.ok) {
+          if (res.status === 401) { window.location.href = "/app/login/"; return; }
+          throw new Error("Lỗi tải thông báo");
+        }
+        const data = await res.json();
+        const items = data.data || [];
+        if (!items.length) {
+          list.innerHTML = '<div class="empty-state">Chưa có thông báo nào.</div>';
+          return;
+        }
+        list.innerHTML = items.map(n => `
+          <div class="notif-item ${n.is_read ? '' : 'unread'}">
+            <div class="notif-dot ${n.is_read ? 'read' : ''}"></div>
+            <div class="notif-content">
+              <div class="notif-msg">${n.message}</div>
+              <div class="notif-time">${timeAgo(n.created_at)}</div>
+            </div>
+          </div>
+        `).join("");
+      } catch (err) {
+        list.innerHTML = `<div class="empty-state">${err.message}</div>`;
+      }
+    }
+
+    markAllBtn.addEventListener("click", async () => {
+      await fetch(window.API_BASE + "/notifications/read-all", { method: "POST", credentials: "include" });
+      load();
+    });
+
+    load();
+  </script>
+</body>
+</html>

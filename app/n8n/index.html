@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>n8n Kết nối | AI Muôn Nơi</title>
+  <link rel="stylesheet" href="/style.css" />
+  <style>
+    .page-wrap { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 0.85rem; text-decoration: none; margin-bottom: 20px; }
+    .back-link:hover { color: var(--accent); }
+    .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+    .page-header h1 { font-size: 1.5rem; margin: 0; }
+    .page-header p { margin: 4px 0 0; color: var(--muted); font-size: 0.88rem; }
+    .tabs { display: flex; gap: 4px; background: var(--bg-3); border-radius: var(--radius-sm); padding: 4px; margin-bottom: 24px; width: fit-content; }
+    .tab-btn { background: none; border: none; border-radius: 10px; padding: 8px 18px; color: var(--muted); font-size: 0.88rem; cursor: pointer; transition: all var(--transition-fast); }
+    .tab-btn.active { background: var(--accent); color: #000; font-weight: 700; }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 16px; }
+    .card h3 { margin: 0 0 16px; font-size: 1rem; }
+    .form-row { display: flex; gap: 10px; margin-bottom: 12px; }
+    .form-row input { flex: 1; background: var(--bg-3); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 10px 13px; color: var(--text); font-size: 0.9rem; font-family: inherit; }
+    .form-row input:focus { outline: none; border-color: var(--accent); }
+    .add-btn { background: var(--accent); color: #000; border: none; border-radius: var(--radius-sm); padding: 10px 18px; font-weight: 700; font-size: 0.88rem; cursor: pointer; white-space: nowrap; }
+    .item-list { display: flex; flex-direction: column; gap: 8px; }
+    .item-row { display: flex; align-items: center; gap: 12px; background: var(--bg-3); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px 14px; }
+    .item-row .item-info { flex: 1; }
+    .item-row .item-name { font-size: 0.9rem; font-weight: 600; }
+    .item-row .item-meta { font-size: 0.78rem; color: var(--muted); margin-top: 2px; word-break: break-all; }
+    .del-btn { background: none; border: 1px solid var(--danger); color: var(--danger); border-radius: 8px; padding: 5px 10px; font-size: 0.78rem; cursor: pointer; }
+    .test-btn { background: none; border: 1px solid var(--accent); color: var(--accent); border-radius: 8px; padding: 5px 10px; font-size: 0.78rem; cursor: pointer; }
+    .badge { display: inline-block; font-size: 0.72rem; padding: 2px 8px; border-radius: 20px; margin-right: 6px; }
+    .badge.active { background: rgba(52,211,153,.15); color: var(--success); }
+    .key-display { font-family: monospace; font-size: 0.8rem; background: var(--bg); padding: 2px 6px; border-radius: 6px; color: var(--accent-3); }
+    .empty { color: var(--muted); font-size: 0.88rem; padding: 12px 0; }
+    .msg { font-size: 0.84rem; margin-top: 8px; color: var(--muted); min-height: 18px; }
+    .msg.error { color: var(--danger); }
+    .msg.success { color: var(--success); }
+    .log-row { font-size: 0.82rem; padding: 8px 0; border-bottom: 1px solid var(--line); display: flex; gap: 12px; }
+    .log-row .log-event { color: var(--accent-3); font-family: monospace; }
+    .log-row .log-time { color: var(--muted); flex-shrink: 0; }
+  </style>
+</head>
+<body>
+  <div class="page-wrap">
+    <a class="back-link" href="/">← Về bảng tin</a>
+    <div class="page-header">
+      <div>
+        <h1>n8n Kết nối</h1>
+        <p>Quản lý kết nối n8n, webhook và theo dõi trigger log.</p>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="connections">Kết nối</button>
+      <button class="tab-btn" data-tab="webhooks">Webhooks</button>
+      <button class="tab-btn" data-tab="log">Trigger Log</button>
+    </div>
+
+    <!-- CONNECTIONS -->
+    <div class="panel active" id="panel-connections">
+      <div class="card">
+        <h3>Thêm kết nối n8n mới</h3>
+        <div class="form-row">
+          <input id="connName" type="text" placeholder="Tên kết nối (vd: n8n production)" />
+          <input id="connUrl" type="url" placeholder="URL n8n instance (https://...)" />
+          <button class="add-btn" id="addConnBtn">Thêm</button>
+        </div>
+        <p id="connMsg" class="msg"></p>
+      </div>
+      <div class="card">
+        <h3>Danh sách kết nối</h3>
+        <div id="connList" class="item-list"><p class="empty">Đang tải...</p></div>
+      </div>
+    </div>
+
+    <!-- WEBHOOKS -->
+    <div class="panel" id="panel-webhooks">
+      <div class="card">
+        <h3>Thêm webhook n8n</h3>
+        <div class="form-row">
+          <input id="hookName" type="text" placeholder="Tên webhook" />
+          <input id="hookUrl" type="url" placeholder="Webhook URL từ n8n" />
+          <input id="hookEvent" type="text" placeholder="Sự kiện (vd: post_created)" />
+          <button class="add-btn" id="addHookBtn">Thêm</button>
+        </div>
+        <p id="hookMsg" class="msg"></p>
+      </div>
+      <div class="card">
+        <h3>Danh sách webhook</h3>
+        <div id="hookList" class="item-list"><p class="empty">Đang tải...</p></div>
+      </div>
+    </div>
+
+    <!-- LOG -->
+    <div class="panel" id="panel-log">
+      <div class="card">
+        <h3>Lịch sử trigger</h3>
+        <div id="logList"><p class="empty">Đang tải log...</p></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/assets/api.js"></script>
+  <script>
+    // TABS
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById("panel-" + btn.dataset.tab).classList.add("active");
+        if (btn.dataset.tab === "log") loadLog();
+      });
+    });
+
+    function setMsg(id, text, type = "") {
+      const el = document.getElementById(id);
+      el.textContent = text;
+      el.className = "msg" + (type ? " " + type : "");
+    }
+
+    function timeAgo(ms) {
+      const d = Date.now() - ms;
+      if (d < 60000) return "vừa xong";
+      if (d < 3600000) return Math.floor(d / 60000) + " phút trước";
+      return Math.floor(d / 3600000) + " giờ trước";
+    }
+
+    // CONNECTIONS
+    async function loadConns() {
+      const res = await fetch(window.API_BASE + "/n8n/connections", { credentials: "include" });
+      if (res.status === 401) { window.location.href = "/app/login/"; return; }
+      const data = await res.json();
+      const items = data.data || [];
+      const el = document.getElementById("connList");
+      if (!items.length) { el.innerHTML = '<p class="empty">Chưa có kết nối nào.</p>'; return; }
+      el.innerHTML = items.map(c => `
+        <div class="item-row">
+          <div class="item-info">
+            <div class="item-name"><span class="badge active">active</span>${c.name}</div>
+            <div class="item-meta">${c.n8n_url} &nbsp; Key: <span class="key-display">${c.webhook_key}</span></div>
+          </div>
+          <button class="del-btn" onclick="deleteConn(${c.id})">Xóa</button>
+        </div>
+      `).join("");
+    }
+
+    document.getElementById("addConnBtn").addEventListener("click", async () => {
+      const name = document.getElementById("connName").value.trim();
+      const url = document.getElementById("connUrl").value.trim();
+      if (!name || !url) { setMsg("connMsg", "Cần điền tên và URL", "error"); return; }
+      setMsg("connMsg", "Đang thêm...");
+      const res = await fetch(window.API_BASE + "/n8n/connections", {
+        method: "POST", credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, n8n_url: url }),
+      });
+      const data = await res.json();
+      if (data.ok) { setMsg("connMsg", "Đã thêm kết nối!", "success"); document.getElementById("connName").value = ""; document.getElementById("connUrl").value = ""; loadConns(); }
+      else setMsg("connMsg", data.error || "Lỗi", "error");
+    });
+
+    window.deleteConn = async (id) => {
+      if (!confirm("Xóa kết nối này?")) return;
+      await fetch(window.API_BASE + "/n8n/connections/" + id, { method: "DELETE", credentials: "include" });
+      loadConns();
+    };
+
+    // WEBHOOKS
+    async function loadHooks() {
+      const res = await fetch(window.API_BASE + "/n8n/webhooks", { credentials: "include" });
+      const data = await res.json();
+      const items = data.data || [];
+      const el = document.getElementById("hookList");
+      if (!items.length) { el.innerHTML = '<p class="empty">Chưa có webhook nào.</p>'; return; }
+      el.innerHTML = items.map(h => `
+        <div class="item-row">
+          <div class="item-info">
+            <div class="item-name">${h.name} <span style="color:var(--muted);font-size:.8rem">• ${h.event_type}</span></div>
+            <div class="item-meta">${h.webhook_url}</div>
+          </div>
+          <button class="test-btn" onclick="testHook(${h.id})">Test</button>
+          <button class="del-btn" onclick="deleteHook(${h.id})">Xóa</button>
+        </div>
+      `).join("");
+    }
+
+    document.getElementById("addHookBtn").addEventListener("click", async () => {
+      const name = document.getElementById("hookName").value.trim();
+      const url = document.getElementById("hookUrl").value.trim();
+      const event = document.getElementById("hookEvent").value.trim();
+      if (!name || !url || !event) { setMsg("hookMsg", "Cần điền đủ thông tin", "error"); return; }
+      const res = await fetch(window.API_BASE + "/n8n/webhooks", {
+        method: "POST", credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, webhook_url: url, event_type: event }),
+      });
+      const data = await res.json();
+      if (data.ok) { setMsg("hookMsg", "Đã thêm webhook!", "success"); loadHooks(); }
+      else setMsg("hookMsg", data.error || "Lỗi", "error");
+    });
+
+    window.deleteHook = async (id) => {
+      if (!confirm("Xóa webhook này?")) return;
+      await fetch(window.API_BASE + "/n8n/webhooks/" + id, { method: "DELETE", credentials: "include" });
+      loadHooks();
+    };
+
+    window.testHook = async (id) => {
+      setMsg("hookMsg", "Đang test...");
+      const res = await fetch(window.API_BASE + "/n8n/webhooks/" + id + "/test", { method: "POST", credentials: "include" });
+      const data = await res.json();
+      setMsg("hookMsg", data.ok ? "Test thành công!" : (data.error || "Lỗi"), data.ok ? "success" : "error");
+    };
+
+    // LOG
+    async function loadLog() {
+      const res = await fetch(window.API_BASE + "/n8n/trigger-log", { credentials: "include" });
+      const data = await res.json();
+      const items = data.data || [];
+      const el = document.getElementById("logList");
+      if (!items.length) { el.innerHTML = '<p class="empty">Chưa có log nào.</p>'; return; }
+      el.innerHTML = items.map(l => `
+        <div class="log-row">
+          <span class="log-event">${l.event_type}</span>
+          <span style="flex:1;color:var(--text-2)">${l.webhook_name || "—"}</span>
+          <span style="color:${l.status === 'success' ? 'var(--success)' : 'var(--danger)'}">${l.status}</span>
+          <span class="log-time">${timeAgo(l.triggered_at)}</span>
+        </div>
+      `).join("");
+    }
+
+    loadConns();
+    loadHooks();
+  </script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hồ sơ | AI Muôn Nơi</title>
+  <link rel="stylesheet" href="/style.css" />
+  <style>
+    .page-wrap { max-width: 720px; margin: 0 auto; padding: 24px 16px; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 0.85rem; text-decoration: none; margin-bottom: 20px; }
+    .back-link:hover { color: var(--accent); }
+    .profile-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px; margin-bottom: 20px; }
+    .profile-top { display: flex; align-items: center; gap: 18px; margin-bottom: 20px; }
+    .profile-avatar { width: 72px; height: 72px; border-radius: 50%; background: var(--accent); color: #000; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: 800; flex-shrink: 0; }
+    .profile-name { font-size: 1.3rem; font-weight: 700; }
+    .profile-username { color: var(--muted); font-size: 0.9rem; }
+    .profile-role { display: inline-block; background: rgba(125,211,252,.12); color: var(--accent-3); font-size: 0.75rem; padding: 3px 10px; border-radius: 20px; margin-top: 6px; }
+    .form-section { margin-top: 20px; }
+    .form-section h3 { font-size: 1rem; margin-bottom: 14px; color: var(--text-2); }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 0.83rem; color: var(--muted); margin-bottom: 5px; }
+    .form-group input, .form-group textarea { width: 100%; background: var(--bg-3); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 11px 13px; color: var(--text); font-size: 0.93rem; font-family: inherit; }
+    .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--accent); }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+    .save-btn { background: var(--accent); color: #000; border: none; border-radius: var(--radius-sm); padding: 11px 24px; font-size: 0.93rem; font-weight: 700; cursor: pointer; }
+    .save-btn:disabled { opacity: 0.5; }
+    .msg { font-size: 0.84rem; margin-top: 10px; color: var(--muted); }
+    .msg.success { color: var(--success); }
+    .msg.error { color: var(--danger); }
+    .logout-btn { background: none; border: 1px solid var(--danger); color: var(--danger); border-radius: var(--radius-sm); padding: 9px 18px; font-size: 0.85rem; cursor: pointer; margin-top: 16px; }
+  </style>
+</head>
+<body>
+  <div class="page-wrap">
+    <a class="back-link" href="/">← Về bảng tin</a>
+
+    <div class="profile-card">
+      <div class="profile-top">
+        <div class="profile-avatar" id="avatarEl">?</div>
+        <div>
+          <div class="profile-name" id="profileName">Đang tải...</div>
+          <div class="profile-username" id="profileUsername"></div>
+          <div class="profile-role" id="profileRole"></div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Cập nhật hồ sơ</h3>
+        <form id="profileForm">
+          <div class="form-group">
+            <label>Tên hiển thị</label>
+            <input id="nameInput" type="text" placeholder="Họ và tên" />
+          </div>
+          <div class="form-group">
+            <label>Username</label>
+            <input id="usernameInput" type="text" placeholder="@username" />
+          </div>
+          <div class="form-group">
+            <label>Giới thiệu bản thân</label>
+            <textarea id="bioInput" placeholder="Nói một chút về bản thân..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Avatar URL</label>
+            <input id="avatarInput" type="url" placeholder="https://..." />
+          </div>
+          <button type="submit" class="save-btn" id="saveBtn">Lưu thay đổi</button>
+          <p id="msg" class="msg"></p>
+        </form>
+      </div>
+    </div>
+
+    <button id="logoutBtn" class="logout-btn">Đăng xuất</button>
+  </div>
+
+  <script src="/assets/api.js"></script>
+  <script>
+    const profileName = document.getElementById("profileName");
+    const profileUsername = document.getElementById("profileUsername");
+    const profileRole = document.getElementById("profileRole");
+    const avatarEl = document.getElementById("avatarEl");
+    const nameInput = document.getElementById("nameInput");
+    const usernameInput = document.getElementById("usernameInput");
+    const bioInput = document.getElementById("bioInput");
+    const avatarInput = document.getElementById("avatarInput");
+    const saveBtn = document.getElementById("saveBtn");
+    const msg = document.getElementById("msg");
+
+    function setMsg(text, type = "") {
+      msg.textContent = text;
+      msg.className = "msg" + (type ? " " + type : "");
+    }
+
+    async function load() {
+      const res = await fetch(window.API_BASE + "/me", { credentials: "include" });
+      if (!res.ok) { window.location.href = "/app/login/"; return; }
+      const data = await res.json();
+      const u = data.data;
+      profileName.textContent = u.name;
+      profileUsername.textContent = u.username ? "@" + u.username : u.email;
+      profileRole.textContent = u.role || "member";
+      avatarEl.textContent = (u.name || "?")[0].toUpperCase();
+      nameInput.value = u.name || "";
+      usernameInput.value = u.username || "";
+      bioInput.value = u.bio || "";
+      avatarInput.value = u.avatar_url || "";
+    }
+
+    document.getElementById("profileForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      saveBtn.disabled = true;
+      setMsg("Đang lưu...");
+      try {
+        const res = await fetch(window.API_BASE + "/me/profile", {
+          method: "PUT",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: nameInput.value.trim(),
+            username: usernameInput.value.trim().replace(/^@/, ""),
+            bio: bioInput.value.trim(),
+            avatar_url: avatarInput.value.trim(),
+          }),
+        });
+        const data = await res.json();
+        if (data.ok) {
+          setMsg("Đã lưu thành công!", "success");
+          load();
+        } else {
+          setMsg(data.error || "Lỗi lưu", "error");
+        }
+      } catch (err) {
+        setMsg(err.message, "error");
+      } finally {
+        saveBtn.disabled = false;
+      }
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      await fetch(window.API_BASE + "/logout", { method: "POST", credentials: "include" });
+      window.location.href = "/app/login/";
+    });
+
+    load();
+  </script>
+</body>
+</html>

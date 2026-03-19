@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Đăng nhập | AI Nhà Chung Flow</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <main class="shell shell-center">
+    <section class="card auth-card">
+      <div class="brand-block">
+        <div class="brand-mark">AI</div>
+        <div>
+          <h1>AI Nhà Chung Flow</h1>
+          <p>Đăng nhập để vào dashboard và builder MVP.</p>
+        </div>
+      </div>
+
+      <form id="loginForm" class="form-stack">
+        <label>
+          <span>Email</span>
+          <input id="email" type="email" value="admin@nhachung.org" required />
+        </label>
+
+        <label>
+          <span>Mật khẩu</span>
+          <input id="password" type="password" value="123456" required />
+        </label>
+
+        <button id="loginBtn" type="submit" class="btn btn-primary">Đăng nhập</button>
+      </form>
+
+      <div style="height:16px"></div>
+
+      <section class="card" style="padding:14px;border-radius:16px;background:rgba(255,255,255,.02);">
+        <div class="section-head" style="margin-bottom:10px;">
+          <div>
+            <h3 style="font-size:1rem;">Thông tin test local</h3>
+            <p class="muted">Dùng tài khoản đã seed trong local D1.</p>
+          </div>
+        </div>
+        <div class="list-meta">Email: <strong>admin@nhachung.org</strong></div>
+        <div class="list-meta">Password: <strong>123456</strong></div>
+      </section>
+
+      <p id="loginMessage" class="message muted">Sẵn sàng đăng nhập.</p>
+      <p style="text-align:center;margin-top:14px;font-size:.84rem;color:var(--muted)">
+        Chưa có tài khoản? <a href="/app/register/" style="color:var(--accent);text-decoration:none">Đăng ký ngay</a>
+      </p>
+    </section>
+  </main>
+
+  <script src="/assets/api.js"></script>
+  <script src="/assets/auth.js"></script>
+  <script>
+    const form = document.getElementById("loginForm");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const loginBtn = document.getElementById("loginBtn");
+    const message = document.getElementById("loginMessage");
+
+    async function bootstrap() {
+      try {
+        const me = await window.Auth.getCurrentUser();
+        if (me) {
+          message.textContent = "Phiên đăng nhập còn hiệu lực. Đang chuyển vào dashboard...";
+          window.location.href = "/app/dashboard/";
+        }
+      } catch (_error) {
+        // chưa login thì ở lại trang login
+      }
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      loginBtn.disabled = true;
+      message.textContent = "Đang đăng nhập...";
+
+      try {
+        const result = await window.Auth.login(email, password);
+        if (result?.ok) {
+          message.textContent = "Đăng nhập thành công. Đang chuyển...";
+          window.location.href = "/app/dashboard/";
+          return;
+        }
+        message.textContent = result?.error || "Đăng nhập thất bại";
+      } catch (error) {
+        message.textContent = error.message || "Đăng nhập thất bại";
+      } finally {
+        loginBtn.disabled = false;
+      }
+    });
+
+    bootstrap();
+  </script>
+</body>
+</html>
