@@ -1,5 +1,11 @@
 const COOKIE_NAME = "ai_nhachung_session"
 
+function shouldUseSecureCookie(appDomain?: string, explicitFlag?: string): boolean {
+  if (explicitFlag === "true") return true
+  if (explicitFlag === "false") return false
+  return Boolean(appDomain && appDomain !== "localhost")
+}
+
 export function getSessionCookie(request: Request): string | null {
   const cookieHeader = request.headers.get("Cookie")
   if (!cookieHeader) return null
@@ -14,22 +20,54 @@ export function getSessionCookie(request: Request): string | null {
   return null
 }
 
-export function buildSessionCookie(sessionId: string, maxAgeSeconds = 60 * 60 * 24 * 7): string {
-  return [
+export function buildSessionCookie(
+  sessionId: string,
+  options?: {
+    appDomain?: string
+    cookieSecure?: string
+    sameSite?: string
+    maxAgeSeconds?: number
+  }
+): string {
+  const parts = [
     `${COOKIE_NAME}=${encodeURIComponent(sessionId)}`,
     "Path=/",
     "HttpOnly",
-    "SameSite=Lax",
-    `Max-Age=${maxAgeSeconds}`
-  ].join("; ")
+    `SameSite=${options?.sameSite || "Lax"}`,
+    `Max-Age=${options?.maxAgeSeconds ?? 60 * 60 * 24 * 7}`
+  ]
+
+  if (options?.appDomain) {
+    parts.push(`Domain=${options.appDomain}`)
+  }
+
+  if (shouldUseSecureCookie(options?.appDomain, options?.cookieSecure)) {
+    parts.push("Secure")
+  }
+
+  return parts.join("; ")
 }
 
-export function buildClearSessionCookie(): string {
-  return [
+export function buildClearSessionCookie(options?: {
+  appDomain?: string
+  cookieSecure?: string
+  sameSite?: string
+}): string {
+  const parts = [
     `${COOKIE_NAME}=`,
     "Path=/",
     "HttpOnly",
-    "SameSite=Lax",
+    `SameSite=${options?.sameSite || "Lax"}`,
     "Max-Age=0"
-  ].join("; ")
+  ]
+
+  if (options?.appDomain) {
+    parts.push(`Domain=${options.appDomain}`)
+  }
+
+  if (shouldUseSecureCookie(options?.appDomain, options?.cookieSecure)) {
+    parts.push("Secure")
+  }
+
+  return parts.join("; ")
 }

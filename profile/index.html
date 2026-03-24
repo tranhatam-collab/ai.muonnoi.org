@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hồ sơ | Nhà Chung</title>
+  <meta name="description" content="Xem hồ sơ thành viên, bài viết gần đây và thông báo cá nhân trên Nhà Chung." />
+  <link rel="canonical" href="https://nhachung.org/profile/" />
+  <link rel="stylesheet" href="/assets/styles.css" />
+</head>
+<body>
+  <main class="shell">
+    <section class="page-hero">
+      <div class="topbar">
+        <div>
+          <h1>Hồ sơ thành viên</h1>
+          <p id="heroSubtitle" class="muted">Đang tải hồ sơ...</p>
+        </div>
+        <div class="topbar-actions">
+          <a class="btn btn-secondary" href="/">Về trang chủ</a>
+          <a class="btn btn-secondary" href="/docs/#onboarding">Docs</a>
+          <a id="adminLink" class="btn btn-secondary hidden" href="/app/dashboard/">App nội bộ</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="split-grid">
+      <section class="content-stack">
+        <section class="card">
+          <div class="section-head">
+            <div>
+              <h2 id="profileName">Đang tải...</h2>
+              <p id="profileHandle" class="muted"></p>
+            </div>
+          </div>
+
+          <div class="meta-row">
+            <span id="profileEmail" class="meta-pill hidden"></span>
+            <span id="profileVerified" class="meta-pill hidden">Đã xác thực</span>
+            <span id="profilePosts" class="meta-pill">0 bài viết</span>
+            <span id="profileFollowers" class="meta-pill">0 người theo dõi</span>
+            <span id="profileFollowing" class="meta-pill">0 đang theo dõi</span>
+          </div>
+
+          <div style="height:16px"></div>
+          <p id="profileBio" class="article-body">Chưa có mô tả.</p>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <div>
+              <h2>Bài viết gần đây</h2>
+              <p class="muted">Các bài thảo luận gần nhất của thành viên này.</p>
+            </div>
+          </div>
+
+          <div id="recentPosts" class="article-list">
+            <p class="muted">Đang tải bài viết...</p>
+          </div>
+        </section>
+      </section>
+
+      <aside class="content-stack">
+        <section id="editCard" class="card hidden">
+          <div class="section-head">
+            <div>
+              <h2>Cập nhật hồ sơ</h2>
+              <p class="muted">Chỉnh tên, username, bio và avatar cho tài khoản của bạn.</p>
+            </div>
+          </div>
+
+          <form id="profileForm" class="form-stack">
+            <label>
+              <span>Tên hiển thị</span>
+              <input id="formName" type="text" maxlength="80" />
+            </label>
+
+            <label>
+              <span>Username</span>
+              <input id="formUsername" type="text" maxlength="24" />
+            </label>
+
+            <label>
+              <span>Avatar URL</span>
+              <input id="formAvatar" type="url" />
+            </label>
+
+            <label>
+              <span>Bio</span>
+              <textarea id="formBio" maxlength="280"></textarea>
+            </label>
+
+            <button id="saveProfileBtn" type="submit" class="btn btn-primary">Lưu hồ sơ</button>
+          </form>
+
+          <p id="profileMessage" class="message muted">Bạn có thể chỉnh hồ sơ bất cứ lúc nào.</p>
+        </section>
+
+        <section id="notificationsCard" class="card hidden">
+          <div class="section-head">
+            <div>
+              <h2>Thông báo</h2>
+              <p class="muted">Các hoạt động mới liên quan đến bạn.</p>
+            </div>
+            <div class="row-actions">
+              <button id="markAllReadBtn" class="btn btn-secondary" type="button">Đánh dấu đã đọc</button>
+            </div>
+          </div>
+
+          <div id="notificationsList" class="list-stack">
+            <p class="muted">Đang tải thông báo...</p>
+          </div>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <script src="/assets/api.js"></script>
+  <script src="/assets/auth.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const requestedId = params.get("id");
+    const heroSubtitle = document.getElementById("heroSubtitle");
+    const adminLink = document.getElementById("adminLink");
+    const profileName = document.getElementById("profileName");
+    const profileHandle = document.getElementById("profileHandle");
+    const profileEmail = document.getElementById("profileEmail");
+    const profileVerified = document.getElementById("profileVerified");
+    const profilePosts = document.getElementById("profilePosts");
+    const profileFollowers = document.getElementById("profileFollowers");
+    const profileFollowing = document.getElementById("profileFollowing");
+    const profileBio = document.getElementById("profileBio");
+    const recentPosts = document.getElementById("recentPosts");
+    const editCard = document.getElementById("editCard");
+    const notificationsCard = document.getElementById("notificationsCard");
+    const notificationsList = document.getElementById("notificationsList");
+    const profileForm = document.getElementById("profileForm");
+    const saveProfileBtn = document.getElementById("saveProfileBtn");
+    const profileMessage = document.getElementById("profileMessage");
+    const markAllReadBtn = document.getElementById("markAllReadBtn");
+    const formName = document.getElementById("formName");
+    const formUsername = document.getElementById("formUsername");
+    const formAvatar = document.getElementById("formAvatar");
+    const formBio = document.getElementById("formBio");
+
+    let currentUser = null;
+    let currentProfile = null;
+    let isSelf = false;
+
+    function escHtml(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function formatDate(value) {
+      return new Date(value).toLocaleString("vi-VN");
+    }
+
+    function renderProfile(profile, me) {
+      currentProfile = profile;
+      isSelf = Boolean(me && profile && me.id === profile.id);
+
+      profileName.textContent = profile.name || "Thành viên Nhà Chung";
+      profileHandle.textContent = profile.username ? `@${profile.username}` : "Chưa đặt username";
+      profileBio.textContent = profile.bio || "Thành viên này chưa cập nhật bio.";
+      profilePosts.textContent = `${profile.post_count || 0} bài viết`;
+      profileFollowers.textContent = `${profile.follower_count || 0} người theo dõi`;
+      profileFollowing.textContent = `${profile.following_count || 0} đang theo dõi`;
+      profileVerified.classList.toggle("hidden", !profile.is_verified);
+
+      if (isSelf) {
+        heroSubtitle.textContent = "Hồ sơ và thông báo cá nhân của bạn.";
+        profileEmail.classList.remove("hidden");
+        profileEmail.textContent = me.email;
+        editCard.classList.remove("hidden");
+        notificationsCard.classList.remove("hidden");
+        formName.value = me.name || "";
+        formUsername.value = me.username || "";
+        formAvatar.value = me.avatar_url || "";
+        formBio.value = me.bio || "";
+      } else {
+        heroSubtitle.textContent = "Thông tin công khai và bài viết gần đây của thành viên này.";
+        profileEmail.classList.add("hidden");
+      }
+
+      if (me && window.Auth.canAccessApp(me)) {
+        adminLink.classList.remove("hidden");
+      }
+
+      const posts = profile.recent_posts || [];
+      if (!posts.length) {
+        recentPosts.innerHTML = '<p class="muted">Chưa có bài viết nào được hiển thị.</p>';
+        return;
+      }
+
+      recentPosts.innerHTML = posts.map((post) => `
+        <a class="article-link" href="/post/?id=${post.id}">
+          <strong>${escHtml(post.title)}</strong>
+          <span>${escHtml(post.topic || "Không gắn chủ đề")} • ${post.vote_count || 0} vote • ${post.comment_count || 0} bình luận • ${formatDate(post.created_at)}</span>
+        </a>
+      `).join("");
+    }
+
+    async function loadNotifications() {
+      if (!isSelf) return;
+
+      try {
+        const result = await window.API.get("/notifications");
+        const items = result?.data || [];
+
+        if (!items.length) {
+          notificationsList.innerHTML = '<p class="muted">Bạn chưa có thông báo nào.</p>';
+          return;
+        }
+
+        notificationsList.innerHTML = items.map((item) => {
+          const refLink =
+            item.ref_type === "post" && item.ref_id
+              ? `/post/?id=${item.ref_id}`
+              : "/profile/";
+
+          return `
+            <article class="list-item">
+              <div>
+                <strong>${escHtml(item.message || item.type)}</strong>
+                <div class="list-meta">${escHtml(item.actor_name || "Hệ thống")} • ${formatDate(item.created_at)}</div>
+              </div>
+              <div class="row-actions">
+                <a class="btn btn-secondary" href="${refLink}">Mở</a>
+              </div>
+            </article>
+          `;
+        }).join("");
+      } catch (error) {
+        notificationsList.innerHTML = `<p class="error">${escHtml(error.message || "Không thể tải thông báo")}</p>`;
+      }
+    }
+
+    async function loadProfile() {
+      try {
+        currentUser = await window.Auth.getCurrentUser();
+      } catch (_error) {
+        currentUser = null;
+      }
+
+      const targetId = requestedId || (currentUser ? String(currentUser.id) : "");
+      if (!targetId) {
+        heroSubtitle.textContent = "Bạn cần đăng nhập để xem hồ sơ của chính mình.";
+        profileName.textContent = "Chưa đăng nhập";
+        profileHandle.textContent = "";
+        profileBio.textContent = "Đăng nhập để theo dõi bài viết đã lưu, thông báo và cập nhật hồ sơ.";
+        recentPosts.innerHTML = '<a class="btn btn-primary" href="/login/?next=/profile/">Đăng nhập ngay</a>';
+        return;
+      }
+
+      const [publicProfile, me] = await Promise.all([
+        window.API.get(`/users/${targetId}`),
+        currentUser ? Promise.resolve({ ok: true, data: currentUser }) : Promise.resolve(null)
+      ]);
+
+      renderProfile(publicProfile.data, me?.data || null);
+      await loadNotifications();
+    }
+
+    profileForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      saveProfileBtn.disabled = true;
+      profileMessage.textContent = "Đang lưu hồ sơ...";
+
+      try {
+        const result = await window.API.put("/me/profile", {
+          name: formName.value.trim(),
+          username: formUsername.value.trim(),
+          avatar_url: formAvatar.value.trim(),
+          bio: formBio.value.trim()
+        });
+
+        currentUser = result?.data || currentUser;
+        profileMessage.textContent = "Đã cập nhật hồ sơ.";
+        await loadProfile();
+      } catch (error) {
+        profileMessage.textContent = error.message || "Cập nhật hồ sơ thất bại";
+      } finally {
+        saveProfileBtn.disabled = false;
+      }
+    });
+
+    markAllReadBtn.addEventListener("click", async () => {
+      markAllReadBtn.disabled = true;
+      try {
+        await window.API.post("/notifications/read-all", {});
+        await loadNotifications();
+      } catch (_error) {
+        // ignore
+      } finally {
+        markAllReadBtn.disabled = false;
+      }
+    });
+
+    loadProfile().catch((error) => {
+      heroSubtitle.textContent = error.message || "Không thể tải hồ sơ.";
+      recentPosts.innerHTML = `<p class="error">${escHtml(error.message || "Không thể tải hồ sơ")}</p>`;
+    });
+  </script>
+</body>
+</html>

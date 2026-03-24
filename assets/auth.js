@@ -6,10 +6,28 @@ async function getCurrentUser() {
   return result.data;
 }
 
+function canAccessApp(user) {
+  return Boolean(user?.can_access_app);
+}
+
 async function requireAuth(redirectTo = "/app/login/") {
   try {
     const user = await getCurrentUser();
     return user;
+  } catch (_error) {
+    window.location.href = redirectTo;
+    return null;
+  }
+}
+
+async function requireAppAccess(redirectTo = "/app/login/") {
+  try {
+    const user = await getCurrentUser();
+    if (canAccessApp(user)) {
+      return user;
+    }
+    window.location.href = "/profile/";
+    return null;
   } catch (_error) {
     window.location.href = redirectTo;
     return null;
@@ -30,8 +48,10 @@ async function logoutAndRedirect(redirectTo = "/app/login/") {
 }
 
 window.Auth = {
+  canAccessApp,
   getCurrentUser,
   requireAuth,
+  requireAppAccess,
   login,
   logoutAndRedirect
 };

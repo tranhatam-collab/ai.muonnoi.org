@@ -1,15 +1,16 @@
-# ai.muonnoi.org
+# nhachung.org
 
-Mạng xã hội thảo luận và chia sẻ sự thật từ AI và công nghệ.
+Social feed public beta cho thảo luận, phản biện và kiểm chứng với sự hỗ trợ của AI.
 
 ## Kiến trúc
 
-- Frontend: React + Vite
+- Frontend public: static HTML/CSS/JS
+- Frontend admin-lite: static app shell trong `/app/*`
 - Backend: Cloudflare Workers
 - Database: Cloudflare D1
-- Media: R2
-- Realtime: Durable Objects
-- Jobs: Cloudflare Queues
-- Automation: n8n + AI Dev Tools
+- Automation: n8n + AI APIs
 
 ## Cấu trúc repo
+- `/`: homepage public, route `login`, `profile`, `post`, `docs`
+- `/app`: dashboard và builder nội bộ sau đăng nhập app access
+- `/workers/api`: Cloudflare Worker API cho auth, social, AI, n8n, flows

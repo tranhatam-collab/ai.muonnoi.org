@@ -1,9 +1,14 @@
-name = "ai-muonnoi-flow-api"
+name = "nhachung-api"
 main = "src/index.ts"
 compatibility_date = "2025-01-01"
 
 [vars]
 ENVIRONMENT = "development"
+APP_DOMAIN = "nhachung.org"
+APP_ORIGIN = "https://nhachung.org"
+API_ORIGIN = "https://api.nhachung.org"
+DOCS_ORIGIN = "https://nhachung.org/docs"
+COOKIE_SECURE = "true"
 
 [[d1_databases]]
 binding = "iai_flow_db"

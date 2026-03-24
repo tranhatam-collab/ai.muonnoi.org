@@ -3,23 +3,20 @@ import { router } from "./router"
 import { corsHeaders } from "./lib/response"
 
 export default {
-  async fetch(request: Request, env: Env, _ctx: ExecutionContext): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const origin = request.headers.get("Origin")
 
     if (request.method.toUpperCase() === "OPTIONS") {
       return new Response(null, {
         status: 204,
-        headers: {
-          ...corsHeaders(origin)
-        }
+        headers: { ...corsHeaders(origin, env) }
       })
     }
 
     try {
-      return await router(request, env)
+      return await router(request, env, ctx)
     } catch (error) {
       console.error("FATAL ERROR:", error)
-
       return new Response(
         JSON.stringify({
           ok: false,
@@ -30,7 +27,7 @@ export default {
           status: 500,
           headers: {
             "Content-Type": "application/json; charset=utf-8",
-            ...corsHeaders(origin)
+            ...corsHeaders(origin, env)
           }
         }
       )

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Dashboard | AI Nhà Chung Flow</title>
+  <title>Dashboard | Nhà Chung Admin Lite</title>
   <link rel="stylesheet" href="/assets/styles.css" />
 </head>
 <body>
@@ -15,6 +15,8 @@
           <p id="meLine" class="muted">Đang tải người dùng...</p>
         </div>
         <div class="topbar-actions">
+          <a href="/docs/#admin-lite" class="btn btn-secondary">Docs</a>
+          <a href="/" class="btn btn-secondary">Public site</a>
           <button id="createFlowBtn" class="btn btn-primary">Tạo flow mới</button>
           <button id="logoutBtn" class="btn btn-secondary">Đăng xuất</button>
         </div>
@@ -26,7 +28,7 @@
         <div class="section-head">
           <div>
             <h2>Danh sách flow</h2>
-            <p class="muted">Các flow hiện có trong hệ MVP.</p>
+            <p class="muted">Các flow nội bộ đang có trong hệ thống.</p>
           </div>
         </div>
 
@@ -50,15 +52,15 @@
           </div>
           <div class="kpi">
             <b id="kpiUser">1</b>
-            <span>User hiện tại</span>
+            <span>App operator</span>
           </div>
           <div class="kpi">
             <b>4</b>
-            <span>Node MVP</span>
+            <span>Node cơ bản</span>
           </div>
           <div class="kpi">
-            <b>Local</b>
-            <span>Môi trường</span>
+            <b>V1</b>
+            <span>Phiên bản</span>
           </div>
         </div>
 
@@ -67,13 +69,13 @@
         <div class="section-head">
           <div>
             <h2>Hành động nhanh</h2>
-            <p class="muted">Các mẫu khởi tạo nhanh để test.</p>
+            <p class="muted">Các mẫu khởi tạo nhanh để bắt đầu builder.</p>
           </div>
         </div>
 
         <div class="quick-grid">
           <button class="quick-btn" data-template="blank">Flow trống</button>
-          <button class="quick-btn" data-template="hello">Hello flow</button>
+          <button class="quick-btn" data-template="hello">Flow chào</button>
           <button class="quick-btn" data-template="if">If flow</button>
           <button class="quick-btn" data-template="response">Response flow</button>
         </div>
@@ -91,7 +93,7 @@
     const kpiFlows = document.getElementById("kpiFlows");
 
     async function loadDashboard() {
-      const me = await window.Auth.requireAuth();
+      const me = await window.Auth.requireAppAccess();
       if (!me) return;
 
       meLine.textContent = `${me.name} • ${me.email}`;
@@ -144,7 +146,7 @@
         const key = button.dataset.template || "blank";
         const nameMap = {
           blank: "Flow trống",
-          hello: "Hello flow",
+          hello: "Flow chào",
           if: "If flow",
           response: "Response flow"
         };

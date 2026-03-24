@@ -3,46 +3,40 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Đăng nhập | AI Nhà Chung Flow</title>
+  <title>Đăng nhập App | Nhà Chung</title>
   <link rel="stylesheet" href="/assets/styles.css" />
 </head>
 <body>
   <main class="shell shell-center">
     <section class="card auth-card">
       <div class="brand-block">
-        <div class="brand-mark">AI</div>
+        <div class="brand-mark">NC</div>
         <div>
-          <h1>AI Nhà Chung Flow</h1>
-          <p>Đăng nhập để vào dashboard và builder MVP.</p>
+          <h1>Nhà Chung Admin Lite</h1>
+          <p>Đăng nhập để vào dashboard và builder nội bộ.</p>
         </div>
       </div>
 
       <form id="loginForm" class="form-stack">
         <label>
           <span>Email</span>
-          <input id="email" type="email" value="admin@nhachung.org" required />
+          <input id="email" type="email" autocomplete="email" required />
         </label>
 
         <label>
           <span>Mật khẩu</span>
-          <input id="password" type="password" value="123456" required />
+          <input id="password" type="password" autocomplete="current-password" required />
         </label>
 
         <button id="loginBtn" type="submit" class="btn btn-primary">Đăng nhập</button>
       </form>
 
-      <div style="height:16px"></div>
-
-      <section class="card" style="padding:14px;border-radius:16px;background:rgba(255,255,255,.02);">
-        <div class="section-head" style="margin-bottom:10px;">
-          <div>
-            <h3 style="font-size:1rem;">Thông tin test local</h3>
-            <p class="muted">Dùng tài khoản đã seed trong local D1.</p>
-          </div>
-        </div>
-        <div class="list-meta">Email: <strong>admin@nhachung.org</strong></div>
-        <div class="list-meta">Password: <strong>123456</strong></div>
-      </section>
+      <p class="helper-text">Tài khoản thành viên thường sẽ được chuyển về khu vực public và không có quyền vào app nội bộ.</p>
+      <div class="inline-actions">
+        <a class="btn btn-secondary" href="/">Về trang chủ</a>
+        <a class="btn btn-secondary" href="/login/">Đăng nhập public</a>
+        <a class="btn btn-secondary" href="/docs/#admin-lite">Docs admin</a>
+      </div>
 
       <p id="loginMessage" class="message muted">Sẵn sàng đăng nhập.</p>
     </section>
@@ -61,6 +55,11 @@
       try {
         const me = await window.Auth.getCurrentUser();
         if (me) {
+          if (!window.Auth.canAccessApp(me)) {
+            message.textContent = "Tài khoản này không có quyền vào app nội bộ. Đang chuyển về hồ sơ...";
+            window.location.href = "/profile/";
+            return;
+          }
           message.textContent = "Phiên đăng nhập còn hiệu lực. Đang chuyển vào dashboard...";
           window.location.href = "/app/dashboard/";
         }
@@ -80,7 +79,12 @@
 
       try {
         const result = await window.Auth.login(email, password);
-        if (result?.ok) {
+        if (result?.ok && result?.data) {
+          if (!window.Auth.canAccessApp(result.data)) {
+            message.textContent = "Tài khoản này không có quyền vào app nội bộ. Đang chuyển về hồ sơ...";
+            window.location.href = "/profile/";
+            return;
+          }
           message.textContent = "Đăng nhập thành công. Đang chuyển...";
           window.location.href = "/app/dashboard/";
           return;

@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AI Nhà Chung Flow</title>
+  <title>Nhà Chung Admin Lite</title>
   <link rel="stylesheet" href="/assets/styles.css" />
 </head>
 <body>
   <main class="shell shell-center">
     <section class="card auth-card">
       <div class="brand-block">
-        <div class="brand-mark">AI</div>
+        <div class="brand-mark">NC</div>
         <div>
-          <h1>AI Nhà Chung Flow</h1>
+          <h1>Nhà Chung Admin Lite</h1>
           <p>Đang kiểm tra phiên đăng nhập và chuyển hướng...</p>
         </div>
       </div>
@@ -30,6 +30,11 @@
       try {
         const me = await window.Auth.getCurrentUser();
         if (me) {
+          if (!window.Auth.canAccessApp(me)) {
+            bootMessage.textContent = "Tài khoản này không có quyền vào app nội bộ. Đang chuyển về hồ sơ...";
+            window.location.href = "/profile/";
+            return;
+          }
           bootMessage.textContent = "Đã nhận diện phiên đăng nhập. Đang vào dashboard...";
           window.location.href = "/app/dashboard/";
           return;

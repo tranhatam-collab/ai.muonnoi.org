@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Đăng nhập | Nhà Chung</title>
+  <meta name="description" content="Đăng nhập hoặc tạo tài khoản Nhà Chung để tham gia thảo luận, lưu bài viết và nhận thông báo." />
+  <link rel="canonical" href="https://nhachung.org/login/" />
+  <link rel="stylesheet" href="/assets/styles.css" />
+</head>
+<body>
+  <main class="shell">
+    <section class="page-hero">
+      <div class="brand-block">
+        <div class="brand-mark">NC</div>
+        <div>
+          <h1>Nhà Chung</h1>
+          <p>Đăng nhập để tham gia thảo luận, lưu bài viết và theo dõi thông báo.</p>
+        </div>
+      </div>
+      <div class="inline-actions">
+        <a class="btn btn-secondary" href="/">Về trang chủ</a>
+        <a class="btn btn-secondary" href="/docs/#onboarding">Cách bắt đầu</a>
+        <a class="btn btn-secondary" href="/app/login/">Đăng nhập app nội bộ</a>
+      </div>
+    </section>
+
+    <section class="split-grid">
+      <section class="card">
+        <div class="section-head">
+          <div>
+            <h2>Đăng nhập</h2>
+            <p class="muted">Dùng tài khoản hiện có để tiếp tục.</p>
+          </div>
+        </div>
+
+        <form id="loginForm" class="form-stack">
+          <label>
+            <span>Email</span>
+            <input id="loginEmail" type="email" autocomplete="email" required />
+          </label>
+
+          <label>
+            <span>Mật khẩu</span>
+            <input id="loginPassword" type="password" autocomplete="current-password" required />
+          </label>
+
+          <button id="loginBtn" type="submit" class="btn btn-primary">Đăng nhập</button>
+        </form>
+
+        <p id="loginMessage" class="message muted">Sẵn sàng đăng nhập.</p>
+      </section>
+
+      <section class="card">
+        <div class="section-head">
+          <div>
+            <h2>Tạo tài khoản</h2>
+            <p class="muted">Tạo tài khoản thành viên để đăng bài và theo dõi thảo luận.</p>
+          </div>
+        </div>
+
+        <form id="registerForm" class="form-stack">
+          <label>
+            <span>Tên hiển thị</span>
+            <input id="registerName" type="text" maxlength="80" required />
+          </label>
+
+          <div class="field-grid">
+            <label>
+              <span>Email</span>
+              <input id="registerEmail" type="email" autocomplete="email" required />
+            </label>
+
+            <label>
+              <span>Username</span>
+              <input id="registerUsername" type="text" maxlength="24" placeholder="tam_vd" />
+            </label>
+          </div>
+
+          <label>
+            <span>Mật khẩu</span>
+            <input id="registerPassword" type="password" autocomplete="new-password" minlength="8" required />
+          </label>
+
+          <button id="registerBtn" type="submit" class="btn btn-primary">Tạo tài khoản</button>
+        </form>
+
+        <p class="helper-text">Username là tùy chọn. Nếu nhập, chỉ dùng chữ thường, số và dấu gạch dưới.</p>
+        <p id="registerMessage" class="message muted">Tạo tài khoản mới để bắt đầu.</p>
+      </section>
+    </section>
+  </main>
+
+  <script src="/assets/api.js"></script>
+  <script src="/assets/auth.js"></script>
+  <script>
+    const next = new URLSearchParams(window.location.search).get("next");
+    const loginForm = document.getElementById("loginForm");
+    const loginEmail = document.getElementById("loginEmail");
+    const loginPassword = document.getElementById("loginPassword");
+    const loginBtn = document.getElementById("loginBtn");
+    const loginMessage = document.getElementById("loginMessage");
+
+    const registerForm = document.getElementById("registerForm");
+    const registerName = document.getElementById("registerName");
+    const registerEmail = document.getElementById("registerEmail");
+    const registerUsername = document.getElementById("registerUsername");
+    const registerPassword = document.getElementById("registerPassword");
+    const registerBtn = document.getElementById("registerBtn");
+    const registerMessage = document.getElementById("registerMessage");
+
+    function resolveNext(user) {
+      if (next && next.startsWith("/")) {
+        if (next.startsWith("/app/") && !(user && window.Auth.canAccessApp(user))) {
+          return "/profile/";
+        }
+        return next;
+      }
+      return user && window.Auth.canAccessApp(user) ? "/app/dashboard/" : "/profile/";
+    }
+
+    async function bootstrap() {
+      try {
+        const me = await window.Auth.getCurrentUser();
+        if (me) {
+          window.location.href = resolveNext(me);
+        }
+      } catch (_error) {
+        // stay on page
+      }
+    }
+
+    loginForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      loginBtn.disabled = true;
+      loginMessage.textContent = "Đang đăng nhập...";
+
+      try {
+        const result = await window.Auth.login(loginEmail.value.trim(), loginPassword.value);
+        if (result?.ok && result?.data) {
+          window.location.href = resolveNext(result.data);
+          return;
+        }
+        loginMessage.textContent = result?.error || "Đăng nhập thất bại";
+      } catch (error) {
+        loginMessage.textContent = error.message || "Đăng nhập thất bại";
+      } finally {
+        loginBtn.disabled = false;
+      }
+    });
+
+    registerForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      registerBtn.disabled = true;
+      registerMessage.textContent = "Đang tạo tài khoản...";
+
+      try {
+        const result = await window.API.post("/register", {
+          name: registerName.value.trim(),
+          email: registerEmail.value.trim(),
+          username: registerUsername.value.trim(),
+          password: registerPassword.value
+        });
+
+        if (result?.ok && result?.data) {
+          window.location.href = resolveNext(result.data);
+          return;
+        }
+        registerMessage.textContent = result?.error || "Tạo tài khoản thất bại";
+      } catch (error) {
+        registerMessage.textContent = error.message || "Tạo tài khoản thất bại";
+      } finally {
+        registerBtn.disabled = false;
+      }
+    });
+
+    bootstrap();
+  </script>
+</body>
+</html>

@@ -1,16 +1,22 @@
 import type { Env } from "../env"
 import { json } from "../lib/response"
+import { getCurrentUser } from "../security/session"
+import { canAccessApp } from "../security/permission"
 
 export async function handleFlows(request: Request, env: Env): Promise<Response> {
   const origin = request.headers.get("Origin")
   const method = request.method.toUpperCase()
+  const user = await getCurrentUser(request, env)
+
+  if (!user) return json({ ok: false, error: "Chưa đăng nhập" }, 401, origin, env)
+  if (!canAccessApp(user)) return json({ ok: false, error: "Không có quyền truy cập app nội bộ" }, 403, origin, env)
 
   if (method === "GET") {
     const result = await env.iai_flow_db
       .prepare("SELECT id, name, created_at FROM flows ORDER BY id DESC")
       .all()
 
-    return json({ ok: true, data: result.results ?? [] }, 200, origin)
+    return json({ ok: true, data: result.results ?? [] }, 200, origin, env)
   }
 
   if (method === "POST") {
@@ -37,10 +43,10 @@ export async function handleFlows(request: Request, env: Env): Promise<Response>
         name,
         created_at: createdAt
       }
-    }, 201, origin)
+    }, 201, origin, env)
   }
 
-  return json({ ok: false, error: "Method Not Allowed" }, 405, origin)
+  return json({ ok: false, error: "Method Not Allowed" }, 405, origin, env)
 }
 
 export async function handleFlowById(
@@ -49,6 +55,10 @@ export async function handleFlowById(
   flowId: string
 ): Promise<Response> {
   const origin = request.headers.get("Origin")
+  const user = await getCurrentUser(request, env)
+
+  if (!user) return json({ ok: false, error: "Chưa đăng nhập" }, 401, origin, env)
+  if (!canAccessApp(user)) return json({ ok: false, error: "Không có quyền truy cập app nội bộ" }, 403, origin, env)
 
   const result = await env.iai_flow_db
     .prepare("SELECT id, name, definition_json, created_at FROM flows WHERE id = ?1 LIMIT 1")
@@ -56,10 +66,10 @@ export async function handleFlowById(
     .first()
 
   if (!result) {
-    return json({ ok: false, error: "Flow not found" }, 404, origin)
+    return json({ ok: false, error: "Flow not found" }, 404, origin, env)
   }
 
-  return json({ ok: true, data: result }, 200, origin)
+  return json({ ok: true, data: result }, 200, origin, env)
 }
 
 export async function handleRunFlow(
@@ -68,6 +78,10 @@ export async function handleRunFlow(
   flowId: string
 ): Promise<Response> {
   const origin = request.headers.get("Origin")
+  const user = await getCurrentUser(request, env)
+
+  if (!user) return json({ ok: false, error: "Chưa đăng nhập" }, 401, origin, env)
+  if (!canAccessApp(user)) return json({ ok: false, error: "Không có quyền truy cập app nội bộ" }, 403, origin, env)
 
   const flow = await env.iai_flow_db
     .prepare("SELECT id, name FROM flows WHERE id = ?1 LIMIT 1")
@@ -75,7 +89,7 @@ export async function handleRunFlow(
     .first()
 
   if (!flow) {
-    return json({ ok: false, error: "Flow not found" }, 404, origin)
+    return json({ ok: false, error: "Flow not found" }, 404, origin, env)
   }
 
   const startedAt = Date.now()
@@ -84,7 +98,7 @@ export async function handleRunFlow(
     .prepare(
       "INSERT INTO execution_logs (flow_id, status, output_json, created_at) VALUES (?1, ?2, ?3, ?4)"
     )
-    .bind(flowId, "success", JSON.stringify({ message: "MVP run OK" }), startedAt)
+    .bind(flowId, "success", JSON.stringify({ message: "Flow đã chạy xong" }), startedAt)
     .run()
 
   return json({
@@ -93,8 +107,8 @@ export async function handleRunFlow(
       execution_id: insert.meta?.last_row_id ?? null,
       flow_id: flowId,
       status: "success",
-      output: { message: "MVP run OK" },
+      output: { message: "Flow đã chạy xong" },
       created_at: startedAt
     }
-  }, 200, origin)
+  }, 200, origin, env)
 }

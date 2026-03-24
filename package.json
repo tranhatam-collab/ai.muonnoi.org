@@ -1,15 +1,15 @@
 {
-  "name": "ai-muonnoi-org",
+  "name": "nhachung-org",
   "version": "0.1.0",
   "private": true,
-  "description": "AI Muon Noi root static social feed alpha with flow MVP backend",
+  "description": "Nhachung.org public beta with static social feed, docs, and Cloudflare Worker API",
   "type": "module",
   "scripts": {
-    "serve": "python3 -m http.server 8787",
+    "serve": "python3 -m http.server 8080",
     "check:json": "node -e \"JSON.parse(require('fs').readFileSync('./data/feed.json','utf8')); console.log('feed.json OK')\"",
     "check:wrangler": "node -e \"JSON.parse(require('fs').readFileSync('./wrangler.json','utf8')); console.log('wrangler.json OK')\"",
     "check": "npm run check:json && npm run check:wrangler",
-    "lint": "echo \"ESLint placeholder for static root stage\""
+    "lint": "echo \"No root lint task is configured for the static public shell\""
   },
   "engines": {
     "node": ">=20.0.0"

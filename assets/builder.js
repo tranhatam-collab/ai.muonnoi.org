@@ -1,5 +1,5 @@
 (async function () {
-  const me = await window.Auth.requireAuth();
+  const me = await window.Auth.requireAppAccess();
   if (!me) return;
 
   const params = new URLSearchParams(window.location.search);
@@ -50,7 +50,7 @@
     hello: {
       nodes: [
         { id: "trigger", type: "manual" },
-        { id: "set", type: "transform", data: { text: "Hello MVP" } },
+        { id: "set", type: "transform", data: { text: "Xin chào Nhà Chung" } },
         { id: "output", type: "response" }
       ],
       edges: [

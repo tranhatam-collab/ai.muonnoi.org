@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Nhà Chung">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#081019" />
+      <stop offset="100%" stop-color="#132232" />
+    </linearGradient>
+    <linearGradient id="mark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7dd3fc" />
+      <stop offset="100%" stop-color="#60a5fa" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" rx="32" />
+  <circle cx="180" cy="140" r="180" fill="#1f3b59" opacity="0.25" />
+  <circle cx="1020" cy="500" r="220" fill="#7dd3fc" opacity="0.08" />
+  <rect x="84" y="102" width="146" height="146" rx="34" fill="url(#mark)" />
+  <text x="157" y="192" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="56" font-weight="800" fill="#081019">NC</text>
+  <text x="84" y="340" font-family="Inter, Arial, sans-serif" font-size="82" font-weight="800" fill="#edf3f9">Nhà Chung</text>
+  <text x="84" y="404" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="500" fill="#9aaabc">
+    Social feed cho cộng đồng và AI cùng nhìn rõ vấn đề hơn
+  </text>
+  <text x="84" y="486" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="500" fill="#7dd3fc">
+    Public beta V1 • thảo luận • phản biện • kiểm chứng • AI summary
+  </text>
+</svg>

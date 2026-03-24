@@ -1,5 +1,7 @@
 import type { Env } from "../env"
 import { json } from "../lib/response"
+import { canAccessApp } from "../security/permission"
+import { getCurrentUser } from "../security/session"
 
 export async function handleBuilderUpdate(
   request: Request,
@@ -7,6 +9,9 @@ export async function handleBuilderUpdate(
   flowId: string
 ): Promise<Response> {
   const origin = request.headers.get("Origin")
+  const user = await getCurrentUser(request, env)
+  if (!user) return json({ ok: false, error: "Chưa đăng nhập" }, 401, origin, env)
+  if (!canAccessApp(user)) return json({ ok: false, error: "Không có quyền truy cập app nội bộ" }, 403, origin, env)
   const body = await request.json().catch(() => ({} as Record<string, unknown>))
   const definition =
     typeof body.definition_json === "string"
@@ -24,7 +29,7 @@ export async function handleBuilderUpdate(
       flow_id: flowId,
       updated: true
     }
-  }, 200, origin)
+  }, 200, origin, env)
 }
 
 export async function handleBuilderValidate(
@@ -33,6 +38,9 @@ export async function handleBuilderValidate(
   flowId: string
 ): Promise<Response> {
   const origin = request.headers.get("Origin")
+  const user = await getCurrentUser(request, _env)
+  if (!user) return json({ ok: false, error: "Chưa đăng nhập" }, 401, origin, _env)
+  if (!canAccessApp(user)) return json({ ok: false, error: "Không có quyền truy cập app nội bộ" }, 403, origin, _env)
   const body = await request.json().catch(() => ({} as Record<string, unknown>))
   const definition = body.definition_json ?? { nodes: [], edges: [] }
 
@@ -49,7 +57,7 @@ export async function handleBuilderValidate(
       valid,
       errors: valid ? [] : ["definition_json phải có nodes[] và edges[]"]
     }
-  }, 200, origin)
+  }, 200, origin, _env)
 }
 
 export async function handleBuilderPreview(
@@ -58,6 +66,9 @@ export async function handleBuilderPreview(
   flowId: string
 ): Promise<Response> {
   const origin = request.headers.get("Origin")
+  const user = await getCurrentUser(request, _env)
+  if (!user) return json({ ok: false, error: "Chưa đăng nhập" }, 401, origin, _env)
+  if (!canAccessApp(user)) return json({ ok: false, error: "Không có quyền truy cập app nội bộ" }, 403, origin, _env)
   const body = await request.json().catch(() => ({} as Record<string, unknown>))
   const definition = body.definition_json ?? { nodes: [], edges: [] }
 
@@ -68,8 +79,8 @@ export async function handleBuilderPreview(
       preview: {
         nodes: Array.isArray(definition.nodes) ? definition.nodes.length : 0,
         edges: Array.isArray(definition.edges) ? definition.edges.length : 0,
-        message: "Preview MVP OK"
+        message: "Preview sẵn sàng"
       }
     }
-  }, 200, origin)
+  }, 200, origin, _env)
 }
