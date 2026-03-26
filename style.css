@@ -1470,6 +1470,108 @@ textarea:focus-visible{
   }
 }
 
+/* =========================================================
+   SITE.JS DYNAMIC CLASSES
+   ========================================================= */
+
+/* Vote button */
+.vote-btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  color: var(--muted);
+  font-size: .88rem;
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+}
+.vote-btn:hover{ color: var(--accent); border-color: var(--accent); }
+.vote-btn.voted{ color: var(--accent); border-color: var(--accent); background: rgba(96,165,250,.08); }
+.vote-icon{ font-style: normal; }
+.vote-count{ font-weight: 600; }
+
+/* Save button state */
+.save-btn.saved{ color: var(--accent); }
+
+/* Verified author mark */
+.verified-mark{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  background: var(--success);
+  color: #000;
+  font-size: .65rem;
+  font-weight: 700;
+  border-radius: 50%;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+/* BEM post-label variants (aliases for .hot/.verified/.ai) */
+.post-label--hot{ background: rgba(251,191,36,.08); border-color: rgba(251,191,36,.18); color: var(--warning); }
+.post-label--verified{ color: var(--success); }
+.post-label--ai{ background: rgba(167,139,250,.08); border-color: rgba(167,139,250,.18); color: var(--purple); }
+
+/* Inline comment item (site.js dynamic render) */
+.comment{
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.comment .comment-body{
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--panel-2);
+}
+.comment-text{
+  margin: 4px 0 0;
+  font-size: .88rem;
+  color: var(--text-2);
+}
+.comment-meta{
+  margin-top: 6px;
+  font-size: .76rem;
+  color: var(--muted);
+}
+
+/* Small avatar variant */
+.avatar.small{
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  font-size: .72rem;
+  border-radius: 50%;
+}
+
+/* Comment form button (site.js uses .primary-btn .small-btn) */
+.comment-form .primary-btn{
+  align-self: flex-end;
+}
+
+/* comment-input alias */
+.comment-input{
+  flex: 1;
+  background: var(--bg-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 9px 12px;
+  color: var(--text);
+  font: inherit;
+  font-size: .88rem;
+  resize: none;
+  height: 64px;
+  transition: border-color var(--transition-fast);
+}
+.comment-input:focus{ outline: none; border-color: var(--accent); }
+
 @media (max-width: 640px){
   .site-shell{
     width: min(calc(100% - 16px), var(--max-width));
