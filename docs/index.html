@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Tài liệu | Nhà Chung</title>
-  <meta name="description" content="Tài liệu V1 của Nhà Chung: onboarding, cách AI hoạt động, moderation, quyền riêng tư, terms, admin lite, builder, n8n, FAQ và troubleshooting." />
+  <meta name="description" content="Tài liệu V1 của Nhà Chung: onboarding, cách AI hoạt động, moderation, quyền riêng tư, terms, admin lite, builder, flow.muonnoi.org, FAQ và troubleshooting." />
   <link rel="canonical" href="https://nhachung.org/docs/" />
   <link rel="stylesheet" href="/assets/styles.css" />
 </head>
@@ -36,7 +36,7 @@
         <a href="#moderation">Moderation</a>
         <a href="#admin-lite">Admin lite</a>
         <a href="#builder">Builder</a>
-        <a href="#integrations">n8n & webhook</a>
+        <a href="#integrations">flow.muonnoi.org</a>
         <a href="#faq">FAQ</a>
         <a href="#troubleshooting">Troubleshooting</a>
       </aside>
@@ -82,7 +82,7 @@
             <li>Cookie phiên được dùng để duy trì đăng nhập và bảo vệ thao tác người dùng.</li>
             <li>Hồ sơ public không hiển thị email của thành viên cho người khác.</li>
             <li>Thông báo và dữ liệu tài khoản chỉ hiển thị cho chính chủ sau đăng nhập.</li>
-            <li>Tích hợp AI và webhook chỉ nên dùng trên dữ liệu mà bạn có quyền xử lý.</li>
+            <li>Tích hợp AI và Flow API chỉ nên dùng trên dữ liệu mà bạn có quyền xử lý.</li>
           </ul>
         </section>
 
@@ -123,11 +123,12 @@
         </section>
 
         <section id="integrations" class="docs-section">
-          <h2>n8n & webhook</h2>
+          <h2>flow.muonnoi.org & callback nội bộ</h2>
           <ul>
-            <li>Kết nối n8n và webhook là tính năng nội bộ sau đăng nhập app.</li>
-            <li>Outbound webhooks có trigger cho `post_created`, `comment_added`, `vote_milestone`, `flow_run`, `user_registered`.</li>
-            <li>Inbound webhooks dùng key của connection để xác thực.</li>
+            <li>Nhà Chung gọi `flow.muonnoi.org` để chạy automation; không mở webhook tool public trong V1.</li>
+            <li>Kết nối Flow API và callback nội bộ là tính năng nội bộ sau đăng nhập app.</li>
+            <li>Outbound triggers gồm `post_created`, `comment_added`, `vote_milestone`, `flow_run`, `user_registered`.</li>
+            <li>Inbound callbacks dùng connection key để xác thực và chỉ phục vụ app nội bộ.</li>
           </ul>
         </section>
 
@@ -146,7 +147,7 @@
             <li>Nếu đăng nhập thành công nhưng không vào app nội bộ, kiểm tra lại role của tài khoản.</li>
             <li>Nếu AI summary báo không khả dụng, khả năng cao AI API chưa được cấu hình hoặc đang tạm lỗi.</li>
             <li>Nếu feed không tải được từ API, site sẽ fallback sang dữ liệu local `feed.json` để tránh trắng trang.</li>
-            <li>Nếu n8n webhook test thất bại, kiểm tra `webhook_url`, connection key và response log trong app.</li>
+            <li>Nếu Flow trigger test thất bại, kiểm tra `flow_id`, `api_base_url`, `FLOW_API_KEY` và response log trong app.</li>
           </ul>
         </section>
       </section>

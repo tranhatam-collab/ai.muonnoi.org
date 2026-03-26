@@ -9,6 +9,7 @@ APP_ORIGIN = "https://nhachung.org"
 API_ORIGIN = "https://api.nhachung.org"
 DOCS_ORIGIN = "https://nhachung.org/docs"
 COOKIE_SECURE = "true"
+FLOW_API_URL = "https://api.flow.muonnoi.org"
 
 [[d1_databases]]
 binding = "iai_flow_db"
