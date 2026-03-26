@@ -16,6 +16,7 @@ export interface Env {
   AI_API_URL?: string
   AI_API_KEY?: string
 
-  // n8n inbound signing
-  N8N_SIGNING_SECRET?: string
+  // Flow API integration
+  FLOW_API_URL?: string
+  FLOW_API_KEY?: string
 }

@@ -31,7 +31,7 @@ export function corsHeaders(origin?: string | null, env?: Env): Record<string, s
   return {
     "Access-Control-Allow-Origin": allowOrigin,
     "Access-Control-Allow-Credentials": "true",
-    "Access-Control-Allow-Headers": "Content-Type, X-Webhook-Key",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Connection-Key, X-Webhook-Key",
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
     "Vary": "Origin"
   }

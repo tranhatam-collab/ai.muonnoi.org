@@ -12,7 +12,7 @@ import { createSession, deleteSession, getCurrentUser } from "../security/sessio
 import { buildClearSessionCookie, buildSessionCookie, getSessionCookie } from "../security/auth-cookie"
 import { canAccessApp } from "../security/permission"
 import { isPasswordHashSupported, verifyPassword } from "../security/password"
-import { fireWebhooks } from "../lib/webhooks"
+import { fireFlowTriggers } from "../lib/webhooks"
 
 function serializeUser(user: Awaited<ReturnType<typeof getCurrentUser>> | NonNullable<Awaited<ReturnType<typeof findUserById>>>) {
   if (!user) return null
@@ -195,7 +195,7 @@ export async function handleRegister(
   if (!userId) return json({ ok: false, error: "Không thể tạo tài khoản" }, 500, origin, env)
 
   ctx.waitUntil(
-    fireWebhooks(env, ctx, "user_registered", { user_id: userId, email, username })
+    fireFlowTriggers(env, ctx, "user_registered", { user_id: userId, email, username })
   )
 
   const sessionId = await createSession(env, userId)

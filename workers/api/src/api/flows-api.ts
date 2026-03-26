@@ -1,4 +1,5 @@
 import type { Env } from "../env"
+import { fireFlowTriggers } from "../lib/webhooks"
 import { json } from "../lib/response"
 import { getCurrentUser } from "../security/session"
 import { canAccessApp } from "../security/permission"
@@ -75,6 +76,7 @@ export async function handleFlowById(
 export async function handleRunFlow(
   request: Request,
   env: Env,
+  ctx: ExecutionContext,
   flowId: string
 ): Promise<Response> {
   const origin = request.headers.get("Origin")
@@ -100,6 +102,15 @@ export async function handleRunFlow(
     )
     .bind(flowId, "success", JSON.stringify({ message: "Flow đã chạy xong" }), startedAt)
     .run()
+
+  ctx.waitUntil(
+    fireFlowTriggers(env, ctx, "flow_run", {
+      flow_id: flowId,
+      execution_id: insert.meta?.last_row_id ?? null,
+      user_id: user.id,
+      status: "success"
+    })
+  )
 
   return json({
     ok: true,

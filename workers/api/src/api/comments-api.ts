@@ -2,7 +2,7 @@ import type { Env } from "../env"
 import { json } from "../lib/response"
 import { checkRateLimit } from "../lib/rate-limit"
 import { getCurrentUser } from "../security/session"
-import { fireWebhooks } from "../lib/webhooks"
+import { fireFlowTriggers } from "../lib/webhooks"
 
 export async function handleComments(
   request: Request,
@@ -96,7 +96,7 @@ export async function handleComments(
     }
 
     ctx.waitUntil(
-      fireWebhooks(env, ctx, "comment_added", {
+      fireFlowTriggers(env, ctx, "comment_added", {
         comment_id: commentId, post_id: Number(postId), user_id: user.id, body: text
       })
     )

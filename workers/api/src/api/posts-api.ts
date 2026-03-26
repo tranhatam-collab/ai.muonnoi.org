@@ -4,7 +4,7 @@ import { checkRateLimit } from "../lib/rate-limit"
 import { getCurrentUser } from "../security/session"
 import { PAGE_SIZE, getCursorFromUrl, encodeCursor } from "../lib/pagination"
 import { runAiModeration } from "../lib/ai"
-import { fireWebhooks } from "../lib/webhooks"
+import { fireFlowTriggers } from "../lib/webhooks"
 
 function isValidHttpUrl(value: string): boolean {
   try {
@@ -199,7 +199,7 @@ export async function handlePosts(
 
     ctx.waitUntil(runAiModeration(env, postId, `${title} ${text}`))
     ctx.waitUntil(
-      fireWebhooks(env, ctx, "post_created", {
+      fireFlowTriggers(env, ctx, "post_created", {
         post_id: postId, user_id: user.id, title, topic, is_ai: false
       })
     )
@@ -293,12 +293,12 @@ export async function handleVotePost(
   await env.iai_flow_db.prepare("UPDATE posts SET vote_count = vote_count + 1 WHERE id = ?1").bind(postId).run()
   const updated = await env.iai_flow_db.prepare("SELECT vote_count FROM posts WHERE id = ?1").bind(postId).first<{ vote_count: number }>()
 
-  // Check vote milestones for n8n
+  // Check vote milestones for Flow API triggers
   const count = updated?.vote_count ?? 0
   const milestones = [10, 50, 100, 500]
   if (milestones.includes(count)) {
     ctx.waitUntil(
-      fireWebhooks(env, ctx, "vote_milestone", {
+      fireFlowTriggers(env, ctx, "vote_milestone", {
         post_id: Number(postId),
         vote_count: count,
         milestone: count

@@ -33,8 +33,8 @@ async function incrementTopicCount(env: Env, slug: string): Promise<void> {
     .run()
 }
 
-async function validateWebhookKey(env: Env, request: Request): Promise<boolean> {
-  const key = request.headers.get("X-Webhook-Key")
+async function validateConnectionKey(env: Env, request: Request): Promise<boolean> {
+  const key = request.headers.get("X-Connection-Key") || request.headers.get("X-Webhook-Key")
   if (!key) return false
 
   const conn = await env.iai_flow_db
@@ -45,11 +45,11 @@ async function validateWebhookKey(env: Env, request: Request): Promise<boolean> 
   return conn !== null
 }
 
-export async function handleN8nAutoPost(request: Request, env: Env): Promise<Response> {
+export async function handleFlowAutoPost(request: Request, env: Env): Promise<Response> {
   const origin = request.headers.get("Origin")
 
-  if (!(await validateWebhookKey(env, request))) {
-    return json({ ok: false, error: "Invalid webhook key" }, 401, origin, env)
+  if (!(await validateConnectionKey(env, request))) {
+    return json({ ok: false, error: "Invalid connection key" }, 401, origin, env)
   }
 
   const body = await request.json().catch(() => ({} as Record<string, unknown>))
@@ -88,11 +88,11 @@ export async function handleN8nAutoPost(request: Request, env: Env): Promise<Res
   return json({ ok: true, data: { post_id: result.meta?.last_row_id } }, 201, origin, env)
 }
 
-export async function handleN8nNotify(request: Request, env: Env): Promise<Response> {
+export async function handleFlowNotify(request: Request, env: Env): Promise<Response> {
   const origin = request.headers.get("Origin")
 
-  if (!(await validateWebhookKey(env, request))) {
-    return json({ ok: false, error: "Invalid webhook key" }, 401, origin, env)
+  if (!(await validateConnectionKey(env, request))) {
+    return json({ ok: false, error: "Invalid connection key" }, 401, origin, env)
   }
 
   const body = await request.json().catch(() => ({} as Record<string, unknown>))
@@ -102,18 +102,18 @@ export async function handleN8nNotify(request: Request, env: Env): Promise<Respo
   if (!userId || !message) return json({ ok: false, error: "user_id và message là bắt buộc" }, 400, origin, env)
 
   await env.iai_flow_db
-    .prepare("INSERT INTO notifications (user_id, type, message, is_read, created_at) VALUES (?1,'n8n_trigger',?2,0,?3)")
+    .prepare("INSERT INTO notifications (user_id, type, message, is_read, created_at) VALUES (?1,'flow_event',?2,0,?3)")
     .bind(userId, message, Date.now())
     .run()
 
   return json({ ok: true }, 200, origin, env)
 }
 
-export async function handleN8nModerate(request: Request, env: Env): Promise<Response> {
+export async function handleFlowModerate(request: Request, env: Env): Promise<Response> {
   const origin = request.headers.get("Origin")
 
-  if (!(await validateWebhookKey(env, request))) {
-    return json({ ok: false, error: "Invalid webhook key" }, 401, origin, env)
+  if (!(await validateConnectionKey(env, request))) {
+    return json({ ok: false, error: "Invalid connection key" }, 401, origin, env)
   }
 
   const body = await request.json().catch(() => ({} as Record<string, unknown>))
@@ -131,3 +131,7 @@ export async function handleN8nModerate(request: Request, env: Env): Promise<Res
 
   return json({ ok: true }, 200, origin, env)
 }
+
+export const handleN8nAutoPost = handleFlowAutoPost
+export const handleN8nNotify = handleFlowNotify
+export const handleN8nModerate = handleFlowModerate

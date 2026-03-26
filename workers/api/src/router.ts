@@ -15,11 +15,16 @@ import { handleUserProfile, handleFollow } from "./api/users-api"
 import { handleNotifications, handleNotificationCount, handleMarkAllRead } from "./api/notifications-api"
 
 import {
+  handleFlowConnections, handleFlowConnectionById,
+  handleFlowTriggers, handleFlowTriggerById, handleFlowTriggerTest, handleFlowTriggerLog,
   handleN8nConnections, handleN8nConnectionById,
   handleN8nWebhooks, handleN8nWebhookById, handleN8nWebhookTest, handleN8nTriggerLog
 } from "./api/n8n-api"
 import { handleAiSummarize, handleAiVerify, handleModerationQueue, handleModerationDecision, handleAiJobs } from "./api/ai-api"
-import { handleN8nAutoPost, handleN8nNotify, handleN8nModerate } from "./api/webhook-inbound-api"
+import {
+  handleFlowAutoPost, handleFlowNotify, handleFlowModerate,
+  handleN8nAutoPost, handleN8nNotify, handleN8nModerate
+} from "./api/webhook-inbound-api"
 
 export async function router(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
   const url = new URL(request.url)
@@ -82,7 +87,25 @@ export async function router(request: Request, env: Env, ctx: ExecutionContext):
   if (path === "/api/notifications/count" && method === "GET") return handleNotificationCount(request, env)
   if (path === "/api/notifications/read-all" && method === "POST") return handleMarkAllRead(request, env)
 
-  // N8N
+  // FLOW API
+  if (path === "/api/flow/connections" && (method === "GET" || method === "POST")) {
+    return handleFlowConnections(request, env)
+  }
+  const flowConnMatch = path.match(/^\/api\/flow\/connections\/([^/]+)$/)
+  if (flowConnMatch && method === "DELETE") return handleFlowConnectionById(request, env, flowConnMatch[1])
+
+  if (path === "/api/flow/triggers" && (method === "GET" || method === "POST")) {
+    return handleFlowTriggers(request, env)
+  }
+  const flowTriggerMatch = path.match(/^\/api\/flow\/triggers\/([^/]+)$/)
+  if (flowTriggerMatch && method === "DELETE") return handleFlowTriggerById(request, env, flowTriggerMatch[1])
+
+  const flowTestMatch = path.match(/^\/api\/flow\/triggers\/([^/]+)\/test$/)
+  if (flowTestMatch && method === "POST") return handleFlowTriggerTest(request, env, flowTestMatch[1])
+
+  if (path === "/api/flow/trigger-log" && method === "GET") return handleFlowTriggerLog(request, env)
+
+  // LEGACY N8N ALIASES
   if (path === "/api/n8n/connections" && (method === "GET" || method === "POST")) {
     return handleN8nConnections(request, env)
   }
@@ -109,7 +132,12 @@ export async function router(request: Request, env: Env, ctx: ExecutionContext):
   const modDecisionMatch = path.match(/^\/api\/ai\/moderation-queue\/([^/]+)$/)
   if (modDecisionMatch && method === "PUT") return handleModerationDecision(request, env, modDecisionMatch[1])
 
-  // INBOUND WEBHOOKS
+  // INTERNAL FLOW CALLBACKS
+  if (path === "/api/internal/flow/auto-post" && method === "POST") return handleFlowAutoPost(request, env)
+  if (path === "/api/internal/flow/notify" && method === "POST") return handleFlowNotify(request, env)
+  if (path === "/api/internal/flow/moderate" && method === "POST") return handleFlowModerate(request, env)
+
+  // LEGACY INBOUND WEBHOOK ALIASES
   if (path === "/api/webhooks/n8n/auto-post" && method === "POST") return handleN8nAutoPost(request, env)
   if (path === "/api/webhooks/n8n/notify" && method === "POST") return handleN8nNotify(request, env)
   if (path === "/api/webhooks/n8n/moderate" && method === "POST") return handleN8nModerate(request, env)
@@ -121,7 +149,7 @@ export async function router(request: Request, env: Env, ctx: ExecutionContext):
   if (flowMatch && method === "GET") return handleFlowById(request, env, flowMatch[1])
 
   const runMatch = path.match(/^\/api\/flows\/([^/]+)\/run$/)
-  if (runMatch && method === "POST") return handleRunFlow(request, env, runMatch[1])
+  if (runMatch && method === "POST") return handleRunFlow(request, env, ctx, runMatch[1])
 
   const execMatch = path.match(/^\/api\/executions\/([^/]+)$/)
   if (execMatch && method === "GET") return handleExecutionById(request, env, execMatch[1])
