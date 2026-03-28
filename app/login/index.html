@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Đăng nhập App | Nhà Chung</title>
+  <link rel="stylesheet" href="/assets/styles.css" />
+</head>
+<body>
+  <main class="shell shell-center">
+    <section class="card auth-card">
+      <div class="brand-block">
+        <div class="brand-mark">NC</div>
+        <div>
+          <h1>Nhà Chung Admin Lite</h1>
+          <p>Đăng nhập để vào dashboard và builder nội bộ.</p>
+        </div>
+      </div>
+
+      <form id="loginForm" class="form-stack">
+        <label>
+          <span>Email</span>
+          <input id="email" type="email" autocomplete="email" required />
+        </label>
+
+        <label>
+          <span>Mật khẩu</span>
+          <input id="password" type="password" autocomplete="current-password" required />
+        </label>
+
+        <button id="loginBtn" type="submit" class="btn btn-primary">Đăng nhập</button>
+      </form>
+
+      <p class="helper-text">Tài khoản thành viên thường sẽ được chuyển về khu vực public và không có quyền vào app nội bộ.</p>
+      <div class="inline-actions">
+        <a class="btn btn-secondary" href="/">Về trang chủ</a>
+        <a class="btn btn-secondary" href="/login/">Đăng nhập public</a>
+        <a class="btn btn-secondary" href="/docs/#admin-lite">Docs admin</a>
+      </div>
+
+      <p id="loginMessage" class="message muted">Sẵn sàng đăng nhập.</p>
+    </section>
+  </main>
+
+  <script src="/assets/api.js"></script>
+  <script src="/assets/auth.js"></script>
+  <script>
+    const form = document.getElementById("loginForm");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const loginBtn = document.getElementById("loginBtn");
+    const message = document.getElementById("loginMessage");
+
+    async function bootstrap() {
+      try {
+        const me = await window.Auth.getCurrentUser();
+        if (me) {
+          if (!window.Auth.canAccessApp(me)) {
+            message.textContent = "Tài khoản này không có quyền vào app nội bộ. Đang chuyển về hồ sơ...";
+            window.location.href = "/profile/";
+            return;
+          }
+          message.textContent = "Phiên đăng nhập còn hiệu lực. Đang chuyển vào dashboard...";
+          window.location.href = "/app/dashboard/";
+        }
+      } catch (_error) {
+        // chưa login thì ở lại trang login
+      }
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      loginBtn.disabled = true;
+      message.textContent = "Đang đăng nhập...";
+
+      try {
+        const result = await window.Auth.login(email, password);
+        if (result?.ok && result?.data) {
+          if (!window.Auth.canAccessApp(result.data)) {
+            message.textContent = "Tài khoản này không có quyền vào app nội bộ. Đang chuyển về hồ sơ...";
+            window.location.href = "/profile/";
+            return;
+          }
+          message.textContent = "Đăng nhập thành công. Đang chuyển...";
+          window.location.href = "/app/dashboard/";
+          return;
+        }
+        message.textContent = result?.error || "Đăng nhập thất bại";
+      } catch (error) {
+        message.textContent = error.message || "Đăng nhập thất bại";
+      } finally {
+        loginBtn.disabled = false;
+      }
+    });
+
+    bootstrap();
+  </script>
+</body>
+</html>

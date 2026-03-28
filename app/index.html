@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Nhà Chung Admin Lite</title>
+  <link rel="stylesheet" href="/assets/styles.css" />
+</head>
+<body>
+  <main class="shell shell-center">
+    <section class="card auth-card">
+      <div class="brand-block">
+        <div class="brand-mark">NC</div>
+        <div>
+          <h1>Nhà Chung Admin Lite</h1>
+          <p>Đang kiểm tra phiên đăng nhập và chuyển hướng...</p>
+        </div>
+      </div>
+
+      <p id="bootMessage" class="message muted">Đang khởi động ứng dụng...</p>
+    </section>
+  </main>
+
+  <script src="/assets/api.js"></script>
+  <script src="/assets/auth.js"></script>
+  <script>
+    const bootMessage = document.getElementById("bootMessage");
+
+    async function boot() {
+      try {
+        const me = await window.Auth.getCurrentUser();
+        if (me) {
+          if (!window.Auth.canAccessApp(me)) {
+            bootMessage.textContent = "Tài khoản này không có quyền vào app nội bộ. Đang chuyển về hồ sơ...";
+            window.location.href = "/profile/";
+            return;
+          }
+          bootMessage.textContent = "Đã nhận diện phiên đăng nhập. Đang vào dashboard...";
+          window.location.href = "/app/dashboard/";
+          return;
+        }
+      } catch (_error) {
+        // ignore
+      }
+
+      bootMessage.textContent = "Chưa đăng nhập. Đang chuyển tới login...";
+      window.location.href = "/app/login/";
+    }
+
+    boot();
+  </script>
+</body>
+</html>

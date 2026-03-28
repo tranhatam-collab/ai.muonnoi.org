@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tài liệu | Nhà Chung</title>
+  <meta name="description" content="Tài liệu V1 của Nhà Chung: onboarding, cách AI hoạt động, moderation, quyền riêng tư, terms, admin lite, builder, flow.muonnoi.org, FAQ và troubleshooting." />
+  <link rel="canonical" href="https://nhachung.org/docs/" />
+  <link rel="stylesheet" href="/assets/styles.css" />
+</head>
+<body>
+  <main class="shell">
+    <section class="page-hero">
+      <div class="topbar">
+        <div>
+          <h1>Tài liệu Nhà Chung V1</h1>
+          <p>Toàn bộ tài liệu thiết yếu cho người dùng public beta và app nội bộ.</p>
+        </div>
+        <div class="topbar-actions">
+          <a class="btn btn-secondary" href="/">Về trang chủ</a>
+          <a class="btn btn-secondary" href="/login/">Đăng nhập</a>
+          <a class="btn btn-secondary" href="/app/login/">App nội bộ</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="docs-layout">
+      <aside class="card docs-nav">
+        <h2>Điều hướng</h2>
+        <a href="#overview">Tổng quan</a>
+        <a href="#onboarding">Onboarding</a>
+        <a href="#ai-overview">AI hoạt động</a>
+        <a href="#community-rules">Quy tắc cộng đồng</a>
+        <a href="#privacy">Quyền riêng tư</a>
+        <a href="#terms">Điều khoản</a>
+        <a href="#moderation">Moderation</a>
+        <a href="#admin-lite">Admin lite</a>
+        <a href="#builder">Builder</a>
+        <a href="#integrations">flow.muonnoi.org</a>
+        <a href="#faq">FAQ</a>
+        <a href="#troubleshooting">Troubleshooting</a>
+      </aside>
+
+      <section class="content-stack">
+        <section id="overview" class="docs-section">
+          <h2>Tổng quan</h2>
+          <p>Nhà Chung là social product tập trung vào thảo luận rõ ràng, kiểm chứng, phản biện có ích và AI hỗ trợ sensemaking. V1 public beta gồm feed công khai, tài khoản thành viên, post/comment/vote/save, AI summary, hồ sơ cá nhân và app nội bộ cho nhóm vận hành.</p>
+        </section>
+
+        <section id="onboarding" class="docs-section">
+          <h2>Onboarding</h2>
+          <ul>
+            <li>Mở <a class="app-link" href="/">trang chủ</a> để xem feed, chủ đề nổi bật và thảo luận mới.</li>
+            <li>Đăng ký tại <a class="app-link" href="/login/">login</a> để tạo tài khoản thành viên.</li>
+            <li>Sau khi đăng nhập bạn có thể đăng bài, bình luận, lưu bài viết và nhận thông báo.</li>
+            <li>Hồ sơ cá nhân ở <a class="app-link" href="/profile/">profile</a> cho phép cập nhật tên, username, bio và xem thông báo.</li>
+          </ul>
+        </section>
+
+        <section id="ai-overview" class="docs-section">
+          <h2>AI hoạt động ra sao</h2>
+          <ul>
+            <li>AI summary là công cụ hỗ trợ đọc nhanh, không thay thế bài gốc.</li>
+            <li>Hệ thống moderation AI có thể gắn nhãn hoặc đưa nội dung vào hàng chờ review nếu phát hiện rủi ro.</li>
+            <li>Khi AI chưa được cấu hình hoặc đang lỗi, UI sẽ hiển thị trạng thái fail-safe thay vì trả dữ liệu giả.</li>
+          </ul>
+        </section>
+
+        <section id="community-rules" class="docs-section">
+          <h2>Quy tắc cộng đồng</h2>
+          <ul>
+            <li>Tấn công cá nhân, spam, lừa đảo và phát tán nội dung độc hại bị cấm.</li>
+            <li>Phát biểu như dữ kiện nên có nguồn hoặc ngữ cảnh đủ rõ.</li>
+            <li>Không lạm dụng AI để tạo hàng loạt nội dung rác hoặc thao túng thảo luận.</li>
+            <li>Khi phản biện, ưu tiên chất lượng lập luận hơn cường độ cảm xúc.</li>
+          </ul>
+        </section>
+
+        <section id="privacy" class="docs-section">
+          <h2>Quyền riêng tư</h2>
+          <ul>
+            <li>Cookie phiên được dùng để duy trì đăng nhập và bảo vệ thao tác người dùng.</li>
+            <li>Hồ sơ public không hiển thị email của thành viên cho người khác.</li>
+            <li>Thông báo và dữ liệu tài khoản chỉ hiển thị cho chính chủ sau đăng nhập.</li>
+            <li>Tích hợp AI và Flow API chỉ nên dùng trên dữ liệu mà bạn có quyền xử lý.</li>
+          </ul>
+        </section>
+
+        <section id="terms" class="docs-section">
+          <h2>Điều khoản</h2>
+          <ul>
+            <li>Người dùng chịu trách nhiệm với nội dung mình đăng.</li>
+            <li>Nhà Chung có thể giới hạn hoặc khóa tài khoản vi phạm quy tắc cộng đồng.</li>
+            <li>Các tính năng public beta có thể thay đổi để cải thiện độ ổn định và an toàn.</li>
+          </ul>
+        </section>
+
+        <section id="moderation" class="docs-section">
+          <h2>Moderation</h2>
+          <ul>
+            <li>Moderation queue dành cho `admin` hoặc `moderator` trong app nội bộ.</li>
+            <li>Nội dung bị AI gắn cờ không tự động xóa; nó được đưa vào hàng chờ để review thủ công.</li>
+            <li>Quyết định moderation hiện có các trạng thái `approved`, `rejected`, `escalated`.</li>
+          </ul>
+        </section>
+
+        <section id="admin-lite" class="docs-section">
+          <h2>Admin Lite</h2>
+          <ul>
+            <li>`/app/*` là khu vực nội bộ, yêu cầu tài khoản có quyền app access.</li>
+            <li>Dashboard hiện tập trung vào flow inventory và thao tác tạo nhanh flow.</li>
+            <li>Tài khoản thành viên public đăng nhập được vào site nhưng không vào được app nội bộ.</li>
+          </ul>
+        </section>
+
+        <section id="builder" class="docs-section">
+          <h2>Builder</h2>
+          <ul>
+            <li>Builder cho phép sửa `definition_json`, lưu draft, validate, preview và chạy flow nội bộ.</li>
+            <li>Autosave hoạt động trên draft của flow hiện tại.</li>
+            <li>Builder hiện là admin-lite tool, không phải public feature.</li>
+          </ul>
+        </section>
+
+        <section id="integrations" class="docs-section">
+          <h2>flow.muonnoi.org & callback nội bộ</h2>
+          <ul>
+            <li>Nhà Chung gọi `flow.muonnoi.org` để chạy automation; không mở webhook tool public trong V1.</li>
+            <li>Kết nối Flow API và callback nội bộ là tính năng nội bộ sau đăng nhập app.</li>
+            <li>Outbound triggers gồm `post_created`, `comment_added`, `vote_milestone`, `flow_run`, `user_registered`.</li>
+            <li>Inbound callbacks dùng connection key để xác thực và chỉ phục vụ app nội bộ.</li>
+          </ul>
+        </section>
+
+        <section id="faq" class="docs-section">
+          <h2>FAQ</h2>
+          <ul>
+            <li>Tôi có cần tài khoản để đọc feed không? Không, nhưng cần tài khoản để tương tác.</li>
+            <li>Vì sao tôi không vào được `/app/`? Vì tài khoản của bạn chưa có quyền app nội bộ.</li>
+            <li>AI summary có luôn đúng không? Không. Đây là công cụ hỗ trợ đọc nhanh, không thay thế việc đọc và kiểm chứng bài gốc.</li>
+          </ul>
+        </section>
+
+        <section id="troubleshooting" class="docs-section">
+          <h2>Troubleshooting</h2>
+          <ul>
+            <li>Nếu đăng nhập thành công nhưng không vào app nội bộ, kiểm tra lại role của tài khoản.</li>
+            <li>Nếu AI summary báo không khả dụng, khả năng cao AI API chưa được cấu hình hoặc đang tạm lỗi.</li>
+            <li>Nếu feed không tải được từ API, site sẽ fallback sang dữ liệu local `feed.json` để tránh trắng trang.</li>
+            <li>Nếu Flow trigger test thất bại, kiểm tra `flow_id`, `api_base_url`, `FLOW_API_KEY` và response log trong app.</li>
+          </ul>
+        </section>
+      </section>
+    </section>
+  </main>
+</body>
+</html>

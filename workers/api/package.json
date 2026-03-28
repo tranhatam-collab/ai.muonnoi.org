@@ -1,0 +1,19 @@
+{
+  "name": "nhachung-api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --config wrangler.toml",
+    "d1:migrate:local": "wrangler d1 execute iai-flow-db --local --file=./migrations/0001_mvp_init.sql --config wrangler.toml",
+    "d1:migrate:auth": "wrangler d1 execute iai-flow-db --local --file=./migrations/0002_auth_init.sql --config wrangler.toml",
+    "d1:migrate:seed": "wrangler d1 execute iai-flow-db --local --file=./migrations/0003_seed_admin.sql --config wrangler.toml",
+    "d1:migrate:social": "wrangler d1 execute iai-flow-db --local --file=./migrations/0004_social_core.sql --config wrangler.toml",
+    "d1:migrate:flow-ai": "wrangler d1 execute iai-flow-db --local --file=./migrations/0005_n8n_ai.sql --config wrangler.toml",
+    "d1:migrate:v1": "wrangler d1 execute iai-flow-db --local --file=./migrations/0006_v1_security.sql --config wrangler.toml",
+    "d1:migrate:all:local": "npm run d1:migrate:local && npm run d1:migrate:auth && npm run d1:migrate:seed && npm run d1:migrate:social && npm run d1:migrate:flow-ai && npm run d1:migrate:v1",
+    "d1:tables:local": "wrangler d1 execute iai-flow-db --local --command=\"SELECT name FROM sqlite_master WHERE type='table';\" --config wrangler.toml"
+  },
+  "devDependencies": {
+    "wrangler": "^4.75.0"
+  }
+}
