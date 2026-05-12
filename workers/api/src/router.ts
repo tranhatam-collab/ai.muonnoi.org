@@ -13,6 +13,7 @@ import { handleComments, handleDeleteComment, handleVoteComment } from "./api/co
 import { handleTopics, handleRooms, handleTrending } from "./api/topics-api"
 import { handleUserProfile, handleFollow } from "./api/users-api"
 import { handleNotifications, handleNotificationCount, handleMarkAllRead } from "./api/notifications-api"
+import { handleMobilePushRegister } from "./api/mobile-api"
 
 import {
   handleFlowConnections, handleFlowConnectionById,
@@ -25,6 +26,8 @@ import {
   handleFlowAutoPost, handleFlowNotify, handleFlowModerate,
   handleN8nAutoPost, handleN8nNotify, handleN8nModerate
 } from "./api/webhook-inbound-api"
+import { handlePaymentCreateIntent, handlePaymentGetById, handlePaymentWebhook } from "./api/payment-api"
+import { handleEmailSend, handleEmailGetById } from "./api/email-api"
 
 export async function router(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
   const url = new URL(request.url)
@@ -34,8 +37,19 @@ export async function router(request: Request, env: Env, ctx: ExecutionContext):
 
   // HEALTH
   if (path === "/api/health") {
-    return json({ ok: true, service: "nhachung-api", time: Date.now() }, 200, origin, env)
+    return json({ ok: true, service: "ai-muonnoi-api", time: Date.now() }, 200, origin, env)
   }
+
+  // PAYMENT
+  if (path === "/api/payment/create-intent" && method === "POST") return handlePaymentCreateIntent(request, env)
+  if (path === "/api/webhook/payment" && method === "POST") return handlePaymentWebhook(request, env)
+  const paymentIdMatch = path.match(/^\/api\/payment\/([^/]+)$/)
+  if (paymentIdMatch && method === "GET") return handlePaymentGetById(request, env, paymentIdMatch[1])
+
+  // EMAIL (internal system use)
+  if (path === "/api/email/send" && method === "POST") return handleEmailSend(request, env)
+  const emailIdMatch = path.match(/^\/api\/email\/([^/]+)$/)
+  if (emailIdMatch && method === "GET") return handleEmailGetById(request, env, emailIdMatch[1])
 
   // AUTH
   if (path === "/api/login" && method === "POST") return handleLogin(request, env)
@@ -86,6 +100,9 @@ export async function router(request: Request, env: Env, ctx: ExecutionContext):
   if (path === "/api/notifications" && method === "GET") return handleNotifications(request, env)
   if (path === "/api/notifications/count" && method === "GET") return handleNotificationCount(request, env)
   if (path === "/api/notifications/read-all" && method === "POST") return handleMarkAllRead(request, env)
+
+  // MOBILE APP BRIDGE
+  if (path === "/api/mobile/push/register" && method === "POST") return handleMobilePushRegister(request, env)
 
   // FLOW API
   if (path === "/api/flow/connections" && (method === "GET" || method === "POST")) {
