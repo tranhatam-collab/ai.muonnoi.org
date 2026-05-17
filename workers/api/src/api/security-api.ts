@@ -198,6 +198,33 @@ export async function handleRegister(
     fireFlowTriggers(env, ctx, "user_registered", { user_id: userId, email, username })
   )
 
+  // Send welcome email (non-blocking)
+  if (env.MAIL_API_KEY) {
+    const mailBase = (env.MAIL_API_BASE_URL ?? "https://mail.iai.one/v1").replace(/\/+$/, "")
+    const workspaceId = env.MAIL_API_WORKSPACE_ID ?? "muonnoi.org"
+    const welcomeHtml = `<p>Chào <strong>${name.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</strong>,</p><p>Tài khoản <strong>${(username ?? email).replace(/</g, "&lt;").replace(/>/g, "&gt;")}</strong> đã được tạo thành công trên Muon Noi.</p>`
+    ctx.waitUntil(
+      fetch(`${mailBase}/send`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${env.MAIL_API_KEY}`,
+          "X-Workspace-Id": workspaceId
+        },
+        body: JSON.stringify({
+          to: email,
+          from: env.EMAIL_FROM_NOREPLY ?? "Muon Noi <noreply@muonnoi.org>",
+          subject: "Chào mừng bạn đến Muon Noi!",
+          text: `Chào ${name},\nTài khoản ${username ?? email} đã được tạo thành công trên Muon Noi.`,
+          html: welcomeHtml,
+          message_idempotency_key: `welcome_${userId}`
+        })
+      }).catch((err) => {
+        console.error("[auth] welcome email failed:", err instanceof Error ? err.message : String(err))
+      })
+    )
+  }
+
   const sessionId = await createSession(env, userId)
 
   return new Response(

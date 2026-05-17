@@ -28,6 +28,8 @@ import {
 } from "./api/webhook-inbound-api"
 import { handlePaymentCreateIntent, handlePaymentGetById, handlePaymentWebhook } from "./api/payment-api"
 import { handleEmailSend, handleEmailGetById } from "./api/email-api"
+import { handleMagicLinkRequest, handleMagicLinkVerify } from "./api/magic-link-api"
+import { handleGoogleAuthStart, handleGoogleAuthCallback } from "./api/google-oauth-api"
 
 export async function router(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
   const url = new URL(request.url)
@@ -57,6 +59,14 @@ export async function router(request: Request, env: Env, ctx: ExecutionContext):
   if (path === "/api/logout" && method === "POST") return handleLogout(request, env)
   if (path === "/api/me" && method === "GET") return handleMe(request, env)
   if (path === "/api/me/profile" && method === "PUT") return handleUpdateProfile(request, env)
+
+  // MAGIC-LINK AUTH
+  if (path === "/api/auth/magic-link/request" && method === "POST") return handleMagicLinkRequest(request, env)
+  if (path === "/api/auth/magic-link/verify" && method === "GET") return handleMagicLinkVerify(request, env)
+
+  // GOOGLE OAUTH
+  if (path === "/api/auth/google/start" && method === "GET") return handleGoogleAuthStart(request, env)
+  if (path === "/api/auth/google/callback" && method === "GET") return handleGoogleAuthCallback(request, env)
 
   // SOCIAL: POSTS
   if (path === "/api/posts" && (method === "GET" || method === "POST")) {

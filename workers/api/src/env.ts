@@ -36,4 +36,22 @@ export interface Env {
   EMAIL_FROM?: string
   EMAIL_FROM_NOREPLY?: string
   SUPPORT_EMAIL?: string
+
+  // Automated publish pipeline (set via: wrangler secret put PUBLISH_API_TOKEN)
+  PUBLISH_API_TOKEN?: string
+  // Publisher system user ID (defaults to 1 — the seeded admin user)
+  PUBLISH_SYSTEM_USER_ID?: string
+
+  // Mail workspace
+  MAIL_API_WORKSPACE_ID?: string
+
+  // Magic-link auth
+  MAGIC_LINK_SECRET?: string
+
+  // Google OAuth (IAI ONE shared client)
+  GOOGLE_CLIENT_ID?: string
+  GOOGLE_CLIENT_SECRET?: string
+  GOOGLE_OAUTH_STATE_SECRET?: string
+  GOOGLE_REDIRECT_URI?: string
+  GOOGLE_AUTH_REDIRECT_URL?: string
 }

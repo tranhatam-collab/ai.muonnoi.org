@@ -5,8 +5,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Đăng nhập | Nhà Chung</title>
   <meta name="description" content="Đăng nhập hoặc tạo tài khoản Nhà Chung để tham gia thảo luận, lưu bài viết và nhận thông báo." />
-  <link rel="canonical" href="https://nhachung.org/login/" />
+  <link rel="canonical" href="https://ai.muonnoi.org/login/" />
   <link rel="stylesheet" href="/assets/styles.css" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Đăng nhập | Nhà Chung" />
+  <meta property="og:description" content="Đăng nhập hoặc tạo tài khoản Nhà Chung để tham gia thảo luận, lưu bài viết và nhận thông báo." />
+  <meta property="og:url" content="https://ai.muonnoi.org/login/" />
+  <meta property="og:image" content="https://ai.muonnoi.org/assets/og-cover.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
 </head>
 <body>
   <main class="shell">
@@ -23,6 +29,34 @@
         <a class="btn btn-secondary" href="/docs/#onboarding">Cách bắt đầu</a>
         <a class="btn btn-secondary" href="/app/login/">Đăng nhập app nội bộ</a>
       </div>
+    </section>
+
+    <!-- Google OAuth + Magic Link -->
+    <section class="card" style="margin-bottom:1.5rem">
+      <div class="section-head">
+        <div>
+          <h2>Đăng nhập nhanh</h2>
+          <p class="muted">Không cần mật khẩu.</p>
+        </div>
+      </div>
+
+      <div class="form-stack">
+        <a class="btn btn-secondary" href="https://api.muonnoi.org/api/auth/google/start" style="display:flex;align-items:center;gap:0.5rem;justify-content:center">
+          <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 01-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z"/></svg>
+          Đăng nhập bằng Google
+        </a>
+      </div>
+
+      <hr style="margin:1.25rem 0;border:none;border-top:1px solid var(--border,#e2e8f0)" />
+
+      <form id="magicLinkForm" class="form-stack">
+        <label>
+          <span>Email</span>
+          <input id="magicLinkEmail" type="email" autocomplete="email" placeholder="you@example.com" required />
+        </label>
+        <button id="magicLinkBtn" type="submit" class="btn btn-secondary">Gửi liên kết đăng nhập</button>
+      </form>
+      <p id="magicLinkMessage" class="message muted"></p>
     </section>
 
     <section class="split-grid">
@@ -173,6 +207,39 @@
         registerBtn.disabled = false;
       }
     });
+
+    // Magic link form
+    const magicLinkForm = document.getElementById("magicLinkForm");
+    const magicLinkEmail = document.getElementById("magicLinkEmail");
+    const magicLinkBtn = document.getElementById("magicLinkBtn");
+    const magicLinkMessage = document.getElementById("magicLinkMessage");
+
+    magicLinkForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      magicLinkBtn.disabled = true;
+      magicLinkMessage.textContent = "Đang gửi liên kết...";
+      try {
+        const result = await window.API.post("/auth/magic-link/request", {
+          email: magicLinkEmail.value.trim()
+        });
+        if (result?.ok) {
+          magicLinkMessage.textContent = "Đã gửi! Kiểm tra email của bạn để lấy liên kết đăng nhập.";
+          magicLinkEmail.value = "";
+        } else {
+          magicLinkMessage.textContent = result?.error || "Gửi thất bại. Vui lòng thử lại.";
+        }
+      } catch (error) {
+        magicLinkMessage.textContent = error.message || "Lỗi. Vui lòng thử lại.";
+      } finally {
+        magicLinkBtn.disabled = false;
+      }
+    });
+
+    // Show OAuth error if redirected back with ?error=
+    const oauthError = new URLSearchParams(window.location.search).get("error");
+    if (oauthError) {
+      magicLinkMessage.textContent = "Đăng nhập Google thất bại (" + oauthError + "). Vui lòng thử lại.";
+    }
 
     bootstrap();
   </script>
