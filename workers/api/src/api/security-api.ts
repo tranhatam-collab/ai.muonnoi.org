@@ -180,7 +180,7 @@ export async function handleRegister(
     return json({ ok: false, error: "Email đã được sử dụng" }, 409, origin, env)
   }
 
-  let userId: number | null = null
+  let userId: string | null = null
 
   try {
     userId = await createUser(env, email, name, password, username)

@@ -2,7 +2,7 @@ import type { Env } from "../env"
 import { hashPassword } from "./password"
 
 export interface AuthUser {
-  id: number
+  id: string | number
   email: string
   name: string
   username?: string
@@ -48,7 +48,7 @@ export async function findUserBySessionId(env: Env, sessionId: string): Promise<
       `SELECT u.id, u.email, u.name, u.username, u.avatar_url, u.bio, u.role, u.is_verified
        FROM sessions s
        INNER JOIN users u ON u.id = s.user_id
-       WHERE s.id = ?1 AND s.expires_at > ?2
+       WHERE s.token = ?1 AND s.expires_at > ?2
        LIMIT 1`
     )
     .bind(sessionId, now)
@@ -56,7 +56,7 @@ export async function findUserBySessionId(env: Env, sessionId: string): Promise<
   return row ?? null
 }
 
-export async function findUserById(env: Env, userId: number): Promise<AuthUser | null> {
+export async function findUserById(env: Env, userId: string | number): Promise<AuthUser | null> {
   const row = await env.iai_flow_db
     .prepare("SELECT id, email, name, username, avatar_url, bio, role, is_verified FROM users WHERE id = ?1 LIMIT 1")
     .bind(userId)
@@ -70,25 +70,26 @@ export async function createUser(
   name: string,
   password: string,
   username?: string
-): Promise<number | null> {
+): Promise<string | null> {
   const hashed = await hashPassword(password)
   const normalizedUsername = username && username.trim() ? username.trim() : null
   const now = Date.now()
-  const result = await env.iai_flow_db
+  const newId = crypto.randomUUID()
+  await env.iai_flow_db
     .prepare(
       `INSERT INTO users (
-        email, name, password, password_hash, password_salt, password_algo,
-        username, role, is_verified, created_at
-      ) VALUES (?1, ?2, '', ?3, ?4, ?5, ?6, 'member', 0, ?7)`
+        id, email, name, password, password_hash, password_salt, password_algo,
+        username, role, is_verified, created_at, updated_at
+      ) VALUES (?1, ?2, ?3, '', ?4, ?5, ?6, ?7, 'member', 0, ?8, ?8)`
     )
-    .bind(email, name, hashed.hash, hashed.salt, hashed.algorithm, normalizedUsername, now)
+    .bind(newId, email, name, hashed.hash, hashed.salt, hashed.algorithm, normalizedUsername, now)
     .run()
-  return result.meta?.last_row_id ?? null
+  return newId
 }
 
 export async function setUserPasswordHash(
   env: Env,
-  userId: number,
+  userId: string | number,
   password: string
 ): Promise<void> {
   const hashed = await hashPassword(password)
@@ -108,7 +109,7 @@ export async function setUserPasswordHash(
 
 export async function updateUserProfile(
   env: Env,
-  userId: number,
+  userId: string | number,
   fields: { username?: string; bio?: string; avatar_url?: string; name?: string }
 ): Promise<void> {
   const parts: string[] = []

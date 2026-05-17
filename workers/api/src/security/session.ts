@@ -6,14 +6,14 @@ function createSessionId(): string {
   return crypto.randomUUID()
 }
 
-export async function createSession(env: Env, userId: number): Promise<string> {
+export async function createSession(env: Env, userId: string | number): Promise<string> {
   const sessionId = createSessionId()
   const now = Date.now()
   const expiresAt = now + 7 * 24 * 60 * 60 * 1000
 
   await env.iai_flow_db
     .prepare(
-      "INSERT INTO sessions (id, user_id, created_at, expires_at) VALUES (?1, ?2, ?3, ?4)"
+      "INSERT INTO sessions (token, user_id, created_at, expires_at) VALUES (?1, ?2, ?3, ?4)"
     )
     .bind(sessionId, userId, now, expiresAt)
     .run()
@@ -23,7 +23,7 @@ export async function createSession(env: Env, userId: number): Promise<string> {
 
 export async function deleteSession(env: Env, sessionId: string): Promise<void> {
   await env.iai_flow_db
-    .prepare("DELETE FROM sessions WHERE id = ?1")
+    .prepare("DELETE FROM sessions WHERE token = ?1")
     .bind(sessionId)
     .run()
 }
