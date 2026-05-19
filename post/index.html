@@ -5,8 +5,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Bài viết | Nhà Chung</title>
   <meta name="description" content="Xem chi tiết bài viết, bình luận và tín hiệu AI trên Nhà Chung." />
-  <link rel="canonical" href="https://nhachung.org/post/" />
+  <link rel="canonical" href="https://ai.muonnoi.org/post/" />
   <link rel="stylesheet" href="/assets/styles.css" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Bài viết | Nhà Chung" />
+  <meta property="og:description" content="Xem chi tiết bài viết, bình luận và tín hiệu AI trên Nhà Chung." />
+  <meta property="og:url" content="https://ai.muonnoi.org/post/" />
+  <meta property="og:image" content="https://ai.muonnoi.org/assets/og-cover.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
 </head>
 <body>
   <main class="shell">
@@ -202,7 +208,7 @@
 
       authorCard.innerHTML = `
         <strong>${escHtml(post.author || "Ẩn danh")}</strong>
-        <div class="list-meta">${post.author_verified ? "Đã xác thực" : "Chưa xác thực"} • ${post.is_ai ? "AI tham gia" : "Thành viên"}</div>
+        <div class="list-meta">${post.author_verified ? "Đã xác thực" : "Chưa xác thực"}, ${post.is_ai ? "AI tham gia" : "Thành viên"}</div>
         <a class="app-link" href="/profile/?id=${post.user_id}">Xem hồ sơ</a>
       `;
     }

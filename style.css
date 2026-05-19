@@ -252,6 +252,12 @@ label.hidden{
   border-radius: 12px;
 }
 
+.demo-link-btn{
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
 .ghost-btn:hover,
 .ghost-btn.active{
   background: rgba(125,211,252,.08);

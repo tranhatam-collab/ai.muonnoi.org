@@ -1,4 +1,4 @@
-const COOKIE_NAME = "ai_nhachung_session"
+const COOKIE_NAME = "ai_muonnoi_session"
 
 function shouldUseSecureCookie(appDomain?: string, explicitFlag?: string): boolean {
   if (explicitFlag === "true") return true

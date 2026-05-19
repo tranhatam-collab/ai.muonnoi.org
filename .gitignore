@@ -31,3 +31,4 @@ pnpm-debug.log*
 
 # local tool worktrees
 .claude/
+.pages-deploy/

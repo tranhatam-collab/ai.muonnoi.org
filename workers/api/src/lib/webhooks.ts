@@ -55,9 +55,9 @@ export async function fireFlowTriggers(
       runRemoteFlow(env, row.id, url, {
         event,
         payload,
-        source: "nhachung.org",
+        source: "ai.muonnoi.org",
         triggered_at: Date.now(),
-        triggered_by: "nhachung-api"
+        triggered_by: "ai-muonnoi-api"
       })
     )
   }

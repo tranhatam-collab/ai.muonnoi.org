@@ -3,9 +3,11 @@ import type { Env } from "../env"
 const DEFAULT_ALLOWED_ORIGINS = [
   "http://localhost:8080",
   "http://localhost:5173",
-  "https://nhachung.org",
-  "https://www.nhachung.org",
-  "https://docs.nhachung.org"
+  "https://app.muonnoi.org",
+  "https://www.app.muonnoi.org",
+  "https://ai.muonnoi.org",
+  "https://api.muonnoi.org",
+  "https://docs.muonnoi.org"
 ]
 
 function getAllowedOrigins(env?: Env): string[] {

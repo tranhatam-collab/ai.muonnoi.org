@@ -1,18 +1,18 @@
 const API_BASE =
   window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
     ? "http://localhost:8787/api"
-    : "https://api.nhachung.org/api";
+    : "https://api.muonnoi.org/api";
 const API_TIMEOUT_MS = 15000;
 
 window.API_BASE = API_BASE;
 window.APP_ORIGIN =
   window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
     ? "http://localhost:8080"
-    : "https://nhachung.org";
+    : "https://ai.muonnoi.org";
 window.DOCS_ORIGIN =
   window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
     ? "http://localhost:8080/docs/"
-    : "https://nhachung.org/docs/";
+    : "https://docs.muonnoi.org/";
 
 function buildUrl(path) {
   if (!path.startsWith("/")) {

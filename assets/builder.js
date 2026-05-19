@@ -225,7 +225,7 @@
       const flow = flowRes?.data;
       const draft = draftRes?.data;
 
-      builderMeta.textContent = `Flow #${flow.id} • ${flow.name}`;
+      builderMeta.textContent = `Flow #${flow.id}, ${flow.name}`;
 
       let definition = presets.blank;
 

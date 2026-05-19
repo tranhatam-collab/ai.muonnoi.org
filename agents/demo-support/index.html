@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Agent Demo 1 | Support Triage</title>
+  <meta name="description" content="Public demo Agent hỗ trợ phân loại ticket và trả lời gợi ý." />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; font-family: Inter, system-ui, sans-serif; background: #071019; color: #edf2f7; }
+    .wrap { max-width: 880px; margin: 32px auto; padding: 0 16px; }
+    .card { border: 1px solid rgba(255,255,255,.12); border-radius: 16px; padding: 18px; background: rgba(255,255,255,.03); }
+    h1 { margin: 0 0 8px; font-size: 28px; }
+    p { line-height: 1.55; }
+    .row { display: grid; gap: 10px; margin-top: 14px; }
+    textarea { width: 100%; min-height: 120px; background: #0f1825; color: #edf2f7; border: 1px solid rgba(255,255,255,.12); border-radius: 10px; padding: 10px; }
+    button, a.btn { border: 1px solid rgba(255,255,255,.14); background: #132135; color: #edf2f7; padding: 10px 14px; border-radius: 10px; cursor: pointer; text-decoration: none; display: inline-block; }
+    pre { background: #0f1825; border: 1px solid rgba(255,255,255,.1); border-radius: 10px; padding: 12px; overflow: auto; }
+    .muted { color: #9fb0c3; font-size: 14px; }
+  </style>
+  <link rel="canonical" href="https://ai.muonnoi.org/agents/demo-support/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Agent Demo 1 | Support Triage" />
+  <meta property="og:description" content="Public demo Agent hỗ trợ phân loại ticket và trả lời gợi ý." />
+  <meta property="og:url" content="https://ai.muonnoi.org/agents/demo-support/" />
+  <meta property="og:image" content="https://ai.muonnoi.org/assets/og-cover.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <h1>Agent Demo 1: Support Triage</h1>
+      <p>Demo công khai để khách test nhanh khả năng phân loại ticket, xác định độ ưu tiên và đề xuất phản hồi ban đầu.</p>
+      <p class="muted">Lưu ý: Đây là demo public, không xử lý dữ liệu nhạy cảm thật.</p>
+      <div class="row">
+        <label for="ticket">Nhập ticket từ khách:</label>
+        <textarea id="ticket">Khách báo không đăng nhập được dashboard từ sáng nay, đã thử reset mật khẩu nhưng chưa nhận email.</textarea>
+        <div>
+          <button id="run">Chạy Agent</button>
+          <a class="btn" href="https://flow.iai.one/" target="_blank" rel="noopener noreferrer">Mở flow.iai.one</a>
+        </div>
+        <pre id="output">Chưa chạy.</pre>
+      </div>
+    </section>
+  </main>
+  <script>
+    const output = document.getElementById("output");
+    document.getElementById("run").addEventListener("click", () => {
+      const text = document.getElementById("ticket").value.trim();
+      const priority = /không|lỗi|khẩn|sập|không đăng nhập/i.test(text) ? "P1" : "P3";
+      const topic = /đăng nhập|mật khẩu|email/i.test(text) ? "Auth / Session" : "General";
+      output.textContent = JSON.stringify({
+        agent: "support-triage-v1",
+        priority,
+        topic,
+        suggested_reply: "Cảm ơn bạn. Đội kỹ thuật đã nhận ticket và đang kiểm tra luồng đăng nhập + gửi email reset.",
+        next_actions: ["Kiểm tra status API auth", "Xác nhận mail provider", "Theo dõi logs 15 phút gần nhất"]
+      }, null, 2);
+    });
+  </script>
+</body>
+</html>

@@ -1,8 +1,8 @@
 {
-  "name": "nhachung-org",
+  "name": "ai-muonnoi-org",
   "version": "0.1.0",
   "private": true,
-  "description": "Nhachung.org public beta with static social feed, docs, and Cloudflare Worker API",
+  "description": "ai.muonnoi.org public beta with static social feed, docs, and Cloudflare Worker API",
   "type": "module",
   "scripts": {
     "serve": "python3 -m http.server 8080",

@@ -5,8 +5,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Hồ sơ | Nhà Chung</title>
   <meta name="description" content="Xem hồ sơ thành viên, bài viết gần đây và thông báo cá nhân trên Nhà Chung." />
-  <link rel="canonical" href="https://nhachung.org/profile/" />
+  <link rel="canonical" href="https://ai.muonnoi.org/profile/" />
   <link rel="stylesheet" href="/assets/styles.css" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Hồ sơ | Nhà Chung" />
+  <meta property="og:description" content="Xem hồ sơ thành viên, bài viết gần đây và thông báo cá nhân trên Nhà Chung." />
+  <meta property="og:url" content="https://ai.muonnoi.org/profile/" />
+  <meta property="og:image" content="https://ai.muonnoi.org/assets/og-cover.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
 </head>
 <body>
   <main class="shell">
@@ -199,7 +205,7 @@
       recentPosts.innerHTML = posts.map((post) => `
         <a class="article-link" href="/post/?id=${post.id}">
           <strong>${escHtml(post.title)}</strong>
-          <span>${escHtml(post.topic || "Không gắn chủ đề")} • ${post.vote_count || 0} vote • ${post.comment_count || 0} bình luận • ${formatDate(post.created_at)}</span>
+          <span>${escHtml(post.topic || "Không gắn chủ đề")}, ${post.vote_count || 0} vote, ${post.comment_count || 0} bình luận, ${formatDate(post.created_at)}</span>
         </a>
       `).join("");
     }
@@ -226,7 +232,7 @@
             <article class="list-item">
               <div>
                 <strong>${escHtml(item.message || item.type)}</strong>
-                <div class="list-meta">${escHtml(item.actor_name || "Hệ thống")} • ${formatDate(item.created_at)}</div>
+                <div class="list-meta">${escHtml(item.actor_name || "Hệ thống")}, ${formatDate(item.created_at)}</div>
               </div>
               <div class="row-actions">
                 <a class="btn btn-secondary" href="${refLink}">Mở</a>

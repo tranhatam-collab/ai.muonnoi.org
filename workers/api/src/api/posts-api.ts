@@ -140,24 +140,56 @@ export async function handlePosts(
   }
 
   if (method === "POST") {
-    const user = await getCurrentUser(request, env)
-    if (!user) return json({ ok: false, error: "Chưa đăng nhập" }, 401, origin, env)
+    // Automated publish pipeline: accept Bearer token in place of session cookie
+    let systemPublish = false
+    const authHeader = request.headers.get("Authorization") ?? ""
+    if (authHeader.startsWith("Bearer ") && env.PUBLISH_API_TOKEN) {
+      const token = authHeader.slice(7)
+      if (token === env.PUBLISH_API_TOKEN) {
+        systemPublish = true
+      }
+    }
 
-    const rateLimit = await checkRateLimit(request, env, {
-      namespace: "posts:create",
-      subject: user.id,
-      limit: 20,
-      windowMs: 60 * 60 * 1000
-    })
+    const user = systemPublish ? null : await getCurrentUser(request, env)
+    if (!user && !systemPublish) return json({ ok: false, error: "Chưa đăng nhập" }, 401, origin, env)
 
-    if (!rateLimit.allowed) {
-      return json({ ok: false, error: "Bạn đã đăng quá nhiều bài trong giờ này. Vui lòng thử lại sau." }, 429, origin, env)
+    let systemUserId: number
+    if (systemPublish) {
+      const configuredId = env.PUBLISH_SYSTEM_USER_ID
+      if (configuredId && /^\d+$/.test(configuredId)) {
+        systemUserId = Number(configuredId)
+      } else {
+        // Pick the first available user (admin/system account)
+        const row = await env.iai_flow_db
+          .prepare("SELECT id FROM users ORDER BY id ASC LIMIT 1")
+          .first<{ id: number }>()
+        if (!row) {
+          return json({ ok: false, error: "No users found — run migrations first" }, 503, origin, env)
+        }
+        systemUserId = row.id
+      }
+    } else {
+      systemUserId = 0
+    }
+
+    if (!systemPublish) {
+      const rateLimit = await checkRateLimit(request, env, {
+        namespace: "posts:create",
+        subject: user!.id,
+        limit: 20,
+        windowMs: 60 * 60 * 1000
+      })
+      if (!rateLimit.allowed) {
+        return json({ ok: false, error: "Bạn đã đăng quá nhiều bài trong giờ này. Vui lòng thử lại sau." }, 429, origin, env)
+      }
     }
 
     const body = await request.json().catch(() => ({} as Record<string, unknown>))
     const title = typeof body.title === "string" ? body.title.trim() : ""
-    const text = typeof body.body === "string" ? body.body.trim() : ""
-    const rawTopic = typeof body.topic === "string" ? body.topic.trim() : ""
+    // system publish accepts 'content' or 'body' field
+    const text = typeof body.body === "string" ? body.body.trim()
+      : typeof body.content === "string" ? body.content.trim() : ""
+    const rawTopic = typeof body.topic === "string" ? body.topic.trim() : "content"
     const postType = typeof body.post_type === "string" ? body.post_type : "discussion"
     const linkUrl = typeof body.link_url === "string" ? body.link_url : null
     const linkTitle = typeof body.link_title === "string" ? body.link_title : null
@@ -167,8 +199,10 @@ export async function handlePosts(
     if (title.length < 4 || title.length > 200) {
       return json({ ok: false, error: "Tiêu đề phải từ 4 đến 200 ký tự" }, 400, origin, env)
     }
-    if (text.length < 8 || text.length > 10000) {
-      return json({ ok: false, error: "Nội dung phải từ 8 đến 10.000 ký tự" }, 400, origin, env)
+    // system publish allows longer content (article-length)
+    const maxBodyLen = systemPublish ? 200000 : 10000
+    if (text.length < 8 || text.length > maxBodyLen) {
+      return json({ ok: false, error: `Nội dung phải từ 8 đến ${maxBodyLen} ký tự` }, 400, origin, env)
     }
     if (linkUrl && !isValidHttpUrl(linkUrl)) {
       return json({ ok: false, error: "Link đính kèm phải là http hoặc https" }, 400, origin, env)
@@ -184,23 +218,29 @@ export async function handlePosts(
     const topic = normalizeTopic(rawTopic)
     await ensureTopic(env, topic, rawTopic || topic, now)
 
+    const authorId = systemPublish ? systemUserId : user!.id
+    const isAiFlag = systemPublish ? 1 : 0
+    const isVerifiedFlag = systemPublish ? 1 : 0
+
     const result = await env.iai_flow_db
       .prepare(
         `INSERT INTO posts (user_id, title, body, topic, post_type, link_url, link_title, link_desc,
          visibility, is_hot, is_verified, is_ai, vote_count, comment_count, created_at, updated_at)
-         VALUES (?1,?2,?3,?4,?5,?6,?7,?8,'public',0,0,0,0,0,?9,?9)`
+         VALUES (?1,?2,?3,?4,?5,?6,?7,?8,'public',0,?9,?10,0,0,?11,?11)`
       )
-      .bind(user.id, title, text, topic, postType, linkUrl, linkTitle, linkDesc, now)
+      .bind(authorId, title, text, topic, postType, linkUrl, linkTitle, linkDesc, isVerifiedFlag, isAiFlag, now)
       .run()
 
     const postId = result.meta?.last_row_id as number
 
     await adjustTopicCount(env, topic, 1)
 
-    ctx.waitUntil(runAiModeration(env, postId, `${title} ${text}`))
+    if (!systemPublish) {
+      ctx.waitUntil(runAiModeration(env, postId, `${title} ${text}`))
+    }
     ctx.waitUntil(
       fireFlowTriggers(env, ctx, "post_created", {
-        post_id: postId, user_id: user.id, title, topic, is_ai: false
+        post_id: postId, user_id: authorId, title, topic, is_ai: isAiFlag === 1
       })
     )
 

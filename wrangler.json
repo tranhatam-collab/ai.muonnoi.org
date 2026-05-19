@@ -1,9 +1,9 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "nhachung-org",
+  "name": "ai-muonnoi-org",
   "compatibility_date": "2026-03-17",
   "pages_build_output_dir": ".",
   "vars": {
-    "APP_NAME": "nhachung.org"
+    "APP_NAME": "ai.muonnoi.org"
   }
 }

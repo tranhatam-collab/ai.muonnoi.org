@@ -1,4 +1,4 @@
-# nhachung.org
+# ai.muonnoi.org
 
 Social feed public beta cho thảo luận, phản biện và kiểm chứng với sự hỗ trợ của AI.
 

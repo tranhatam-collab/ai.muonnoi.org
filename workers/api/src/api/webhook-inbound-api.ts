@@ -66,7 +66,7 @@ export async function handleFlowAutoPost(request: Request, env: Env): Promise<Re
 
   if (!botUser) {
     const result = await env.iai_flow_db
-      .prepare("INSERT INTO users (email, name, password, role, is_verified, created_at) VALUES ('ai-bot@nhachung.org','AI Bot','',  'ai_bot',1,?1)")
+      .prepare("INSERT INTO users (email, name, password, role, is_verified, created_at) VALUES ('ai-bot@ai.muonnoi.org','AI Bot','',  'ai_bot',1,?1)")
       .bind(Date.now())
       .run()
     botUser = { id: result.meta?.last_row_id as number }

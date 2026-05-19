@@ -41,7 +41,7 @@ function deriveFlowId(row: { flow_id?: unknown; webhook_url?: unknown }): string
   if (typeof row.flow_id === "number" && Number.isFinite(row.flow_id)) return String(row.flow_id)
   if (typeof row.flow_id === "string" && row.flow_id.trim()) return row.flow_id.trim()
   if (typeof row.webhook_url === "string") {
-    const match = row.webhook_url.match(/\/api\/integrations\/nhachung\/flows\/([^/]+)\/run$/)
+    const match = row.webhook_url.match(/\/api\/integrations\/[^/]+\/flows\/([^/]+)\/run$/)
     if (match?.[1]) return decodeURIComponent(match[1])
   }
   return null
@@ -281,7 +281,7 @@ export async function handleFlowTriggerTest(
       test: true,
       trigger_id: Number(triggerId)
     },
-    source: "nhachung.org",
+    source: "ai.muonnoi.org",
     test: true,
     triggered_at: Date.now(),
     triggered_by: user.email

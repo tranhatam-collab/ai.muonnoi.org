@@ -4,7 +4,7 @@
   const API_BASE =
     location.hostname === "localhost" || location.hostname === "127.0.0.1"
       ? "http://localhost:8787/api"
-      : "https://api.nhachung.org/api";
+      : "https://api.muonnoi.org/api";
 
   const LOGIN_PATH = "/login/";
   const PROFILE_PATH = "/profile/";
@@ -147,7 +147,7 @@
     if (state.search) parts.push(`"${state.search}"`);
 
     dom.activeSummary.textContent = parts.length
-      ? `Đang xem: ${parts.join(" · ")}`
+      ? `Đang xem: ${parts.join(", ")}`
       : "Đang xem: tất cả";
   }
 
@@ -415,7 +415,7 @@ function setButtonActionsForGuest() {
             ${post.is_ai ? '<span class="ai-mark" title="AI tham gia">AI</span>' : ""}
             ${post.author_verified ? '<span class="verified-mark" title="Đã xác thực">✓</span>' : ""}
           </div>
-          <div class="post-time">${escHtml(formatTopic(post.topic))} · ${timeAgo(post.created_at)}</div>
+          <div class="post-time">${escHtml(formatTopic(post.topic))}, ${timeAgo(post.created_at)}</div>
         </div>
       </div>
       <div class="post-labels">${renderLabels(post.labels)}</div>
@@ -610,7 +610,7 @@ function setButtonActionsForGuest() {
         <div class="avatar" aria-hidden="true">${avatarInitial(post.author)}</div>
         <div class="post-meta">
           <div class="post-author">${escHtml(post.author || "Ẩn danh")} ${post.ai ? '<span class="ai-mark">AI</span>' : ""}</div>
-          <div class="post-time">${escHtml(post.topic || "Không gắn chủ đề")} · ${escHtml(post.time || "")}</div>
+          <div class="post-time">${escHtml(post.topic || "Không gắn chủ đề")}, ${escHtml(post.time || "")}</div>
         </div>
       </div>
       <div class="post-labels">${renderLabels(post.labels)}</div>
