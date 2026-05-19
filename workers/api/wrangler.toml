@@ -1,0 +1,43 @@
+name = "ai-muonnoi-api"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+
+[vars]
+ENVIRONMENT = "production"
+APP_DOMAIN = "api.muonnoi.org"
+APP_ORIGIN = "https://ai.muonnoi.org"
+API_ORIGIN = "https://api.muonnoi.org"
+DOCS_ORIGIN = "https://docs.muonnoi.org"
+CORS_ALLOW_ORIGINS = "https://app.muonnoi.org,https://www.app.muonnoi.org,https://www.muonnoi.org,https://muonnoi.org"
+COOKIE_SECURE = "true"
+FLOW_API_URL = "https://api.flow.muonnoi.org"
+# Payment (pay.iai.one canonical gateway)
+PAY_IAI_ONE_BASE_URL = "https://pay.iai.one"
+PAY_IAI_ONE_TENANT_CODE = "muonnoi"
+PAY_IAI_ONE_SITE_CODE = "muonnoi"
+PAY_IAI_ONE_PROVIDER = "payos"
+PAY_IAI_ONE_CALLBACK_BASE_URL = "https://api.muonnoi.org"
+GATEWAY_SUCCESS_URL = "https://www.muonnoi.org/"
+# Mail (mail.iai.one)
+MAIL_API_BASE_URL = "https://mail.iai.one/_mail/v1"
+EMAIL_FROM = "Muon Noi <hello@muonnoi.org>"
+EMAIL_FROM_NOREPLY = "Muon Noi <noreply@muonnoi.org>"
+SUPPORT_EMAIL = "support@muonnoi.org"
+
+# Required secrets (set via: wrangler secret put <NAME> --name ai-muonnoi-api)
+# - PAY_IAI_ONE_API_KEY
+# - PAYMENT_WEBHOOK_SECRET
+# - MAIL_API_KEY
+
+[[routes]]
+pattern = "api.muonnoi.org"
+custom_domain = true
+
+[[d1_databases]]
+binding = "iai_flow_db"
+database_name = "iai-flow-db"
+database_id = "3ceac8b1-1c0f-47c3-ad05-2b9da0983c32"
+migrations_dir = "migrations"
+
+[dev]
+port = 8787

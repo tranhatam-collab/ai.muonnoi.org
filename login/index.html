@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Đăng nhập | Nhà Chung</title>
+  <meta name="description" content="Đăng nhập hoặc tạo tài khoản Nhà Chung để tham gia thảo luận, lưu bài viết và nhận thông báo." />
+  <link rel="canonical" href="https://ai.muonnoi.org/login/" />
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Đăng nhập | Nhà Chung" />
+  <meta property="og:description" content="Đăng nhập hoặc tạo tài khoản Nhà Chung để tham gia thảo luận, lưu bài viết và nhận thông báo." />
+  <meta property="og:url" content="https://ai.muonnoi.org/login/" />
+  <meta property="og:image" content="https://ai.muonnoi.org/assets/og-cover.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+</head>
+<body>
+  <main class="shell">
+    <section class="page-hero">
+      <div class="brand-block">
+        <div class="brand-mark">NC</div>
+        <div>
+          <h1>Nhà Chung</h1>
+          <p>Đăng nhập để tham gia thảo luận, lưu bài viết và theo dõi thông báo.</p>
+        </div>
+      </div>
+      <div class="inline-actions">
+        <a class="btn btn-secondary" href="/">Về trang chủ</a>
+        <a class="btn btn-secondary" href="/docs/#onboarding">Cách bắt đầu</a>
+        <a class="btn btn-secondary" href="/app/login/">Đăng nhập app nội bộ</a>
+      </div>
+    </section>
+
+    <!-- Google OAuth + Magic Link -->
+    <section class="card" style="margin-bottom:1.5rem">
+      <div class="section-head">
+        <div>
+          <h2>Đăng nhập nhanh</h2>
+          <p class="muted">Không cần mật khẩu.</p>
+        </div>
+      </div>
+
+      <div class="form-stack">
+        <a class="btn btn-secondary" href="https://api.muonnoi.org/api/auth/google/start" style="display:flex;align-items:center;gap:0.5rem;justify-content:center">
+          <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 01-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z"/></svg>
+          Đăng nhập bằng Google
+        </a>
+      </div>
+
+      <hr style="margin:1.25rem 0;border:none;border-top:1px solid var(--border,#e2e8f0)" />
+
+      <form id="magicLinkForm" class="form-stack">
+        <label>
+          <span>Email</span>
+          <input id="magicLinkEmail" type="email" autocomplete="email" placeholder="you@example.com" required />
+        </label>
+        <button id="magicLinkBtn" type="submit" class="btn btn-secondary">Gửi liên kết đăng nhập</button>
+      </form>
+      <p id="magicLinkMessage" class="message muted"></p>
+    </section>
+
+    <section class="split-grid">
+      <section class="card">
+        <div class="section-head">
+          <div>
+            <h2>Đăng nhập</h2>
+            <p class="muted">Dùng tài khoản hiện có để tiếp tục.</p>
+          </div>
+        </div>
+
+        <form id="loginForm" class="form-stack">
+          <label>
+            <span>Email</span>
+            <input id="loginEmail" type="email" autocomplete="email" required />
+          </label>
+
+          <label>
+            <span>Mật khẩu</span>
+            <input id="loginPassword" type="password" autocomplete="current-password" required />
+          </label>
+
+          <button id="loginBtn" type="submit" class="btn btn-primary">Đăng nhập</button>
+        </form>
+
+        <p id="loginMessage" class="message muted">Sẵn sàng đăng nhập.</p>
+      </section>
+
+      <section class="card">
+        <div class="section-head">
+          <div>
+            <h2>Tạo tài khoản</h2>
+            <p class="muted">Tạo tài khoản thành viên để đăng bài và theo dõi thảo luận.</p>
+          </div>
+        </div>
+
+        <form id="registerForm" class="form-stack">
+          <label>
+            <span>Tên hiển thị</span>
+            <input id="registerName" type="text" maxlength="80" required />
+          </label>
+
+          <div class="field-grid">
+            <label>
+              <span>Email</span>
+              <input id="registerEmail" type="email" autocomplete="email" required />
+            </label>
+
+            <label>
+              <span>Username</span>
+              <input id="registerUsername" type="text" maxlength="24" placeholder="tam_vd" />
+            </label>
+          </div>
+
+          <label>
+            <span>Mật khẩu</span>
+            <input id="registerPassword" type="password" autocomplete="new-password" minlength="8" required />
+          </label>
+
+          <button id="registerBtn" type="submit" class="btn btn-primary">Tạo tài khoản</button>
+        </form>
+
+        <p class="helper-text">Username là tùy chọn. Nếu nhập, chỉ dùng chữ thường, số và dấu gạch dưới.</p>
+        <p id="registerMessage" class="message muted">Tạo tài khoản mới để bắt đầu.</p>
+      </section>
+    </section>
+  </main>
+
+  <script src="/assets/api.js"></script>
+  <script src="/assets/auth.js"></script>
+  <script>
+    const next = new URLSearchParams(window.location.search).get("next");
+    const loginForm = document.getElementById("loginForm");
+    const loginEmail = document.getElementById("loginEmail");
+    const loginPassword = document.getElementById("loginPassword");
+    const loginBtn = document.getElementById("loginBtn");
+    const loginMessage = document.getElementById("loginMessage");
+
+    const registerForm = document.getElementById("registerForm");
+    const registerName = document.getElementById("registerName");
+    const registerEmail = document.getElementById("registerEmail");
+    const registerUsername = document.getElementById("registerUsername");
+    const registerPassword = document.getElementById("registerPassword");
+    const registerBtn = document.getElementById("registerBtn");
+    const registerMessage = document.getElementById("registerMessage");
+
+    function resolveNext(user) {
+      if (next && next.startsWith("/")) {
+        if (next.startsWith("/app/") && !(user && window.Auth.canAccessApp(user))) {
+          return "/profile/";
+        }
+        return next;
+      }
+      return user && window.Auth.canAccessApp(user) ? "/app/dashboard/" : "/profile/";
+    }
+
+    async function bootstrap() {
+      try {
+        const me = await window.Auth.getCurrentUser();
+        if (me) {
+          window.location.href = resolveNext(me);
+        }
+      } catch (_error) {
+        // stay on page
+      }
+    }
+
+    loginForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      loginBtn.disabled = true;
+      loginMessage.textContent = "Đang đăng nhập...";
+
+      try {
+        const result = await window.Auth.login(loginEmail.value.trim(), loginPassword.value);
+        if (result?.ok && result?.data) {
+          window.location.href = resolveNext(result.data);
+          return;
+        }
+        loginMessage.textContent = result?.error || "Đăng nhập thất bại";
+      } catch (error) {
+        loginMessage.textContent = error.message || "Đăng nhập thất bại";
+      } finally {
+        loginBtn.disabled = false;
+      }
+    });
+
+    registerForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      registerBtn.disabled = true;
+      registerMessage.textContent = "Đang tạo tài khoản...";
+
+      try {
+        const result = await window.API.post("/register", {
+          name: registerName.value.trim(),
+          email: registerEmail.value.trim(),
+          username: registerUsername.value.trim(),
+          password: registerPassword.value
+        });
+
+        if (result?.ok && result?.data) {
+          window.location.href = resolveNext(result.data);
+          return;
+        }
+        registerMessage.textContent = result?.error || "Tạo tài khoản thất bại";
+      } catch (error) {
+        registerMessage.textContent = error.message || "Tạo tài khoản thất bại";
+      } finally {
+        registerBtn.disabled = false;
+      }
+    });
+
+    // Magic link form
+    const magicLinkForm = document.getElementById("magicLinkForm");
+    const magicLinkEmail = document.getElementById("magicLinkEmail");
+    const magicLinkBtn = document.getElementById("magicLinkBtn");
+    const magicLinkMessage = document.getElementById("magicLinkMessage");
+
+    magicLinkForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      magicLinkBtn.disabled = true;
+      magicLinkMessage.textContent = "Đang gửi liên kết...";
+      try {
+        const result = await window.API.post("/auth/magic-link/request", {
+          email: magicLinkEmail.value.trim()
+        });
+        if (result?.ok) {
+          magicLinkMessage.textContent = "Đã gửi! Kiểm tra email của bạn để lấy liên kết đăng nhập.";
+          magicLinkEmail.value = "";
+        } else {
+          magicLinkMessage.textContent = result?.error || "Gửi thất bại. Vui lòng thử lại.";
+        }
+      } catch (error) {
+        magicLinkMessage.textContent = error.message || "Lỗi. Vui lòng thử lại.";
+      } finally {
+        magicLinkBtn.disabled = false;
+      }
+    });
+
+    // Show OAuth error if redirected back with ?error=
+    const oauthError = new URLSearchParams(window.location.search).get("error");
+    if (oauthError) {
+      magicLinkMessage.textContent = "Đăng nhập Google thất bại (" + oauthError + "). Vui lòng thử lại.";
+    }
+
+    bootstrap();
+  </script>
+</body>
+</html>

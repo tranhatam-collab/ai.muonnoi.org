@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Agent Demo 2 | Sales Copilot</title>
+  <meta name="description" content="Public demo Agent hỗ trợ tạo pitch và follow-up cho khách hàng." />
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; font-family: Inter, system-ui, sans-serif; background: #081118; color: #ecf2f8; }
+    .wrap { max-width: 880px; margin: 32px auto; padding: 0 16px; }
+    .card { border: 1px solid rgba(255,255,255,.12); border-radius: 16px; padding: 18px; background: rgba(255,255,255,.03); }
+    h1 { margin: 0 0 8px; font-size: 28px; }
+    p { line-height: 1.55; }
+    .row { display: grid; gap: 10px; margin-top: 14px; }
+    input, select { width: 100%; background: #0f1825; color: #edf2f7; border: 1px solid rgba(255,255,255,.12); border-radius: 10px; padding: 10px; }
+    button, a.btn { border: 1px solid rgba(255,255,255,.14); background: #122238; color: #edf2f7; padding: 10px 14px; border-radius: 10px; cursor: pointer; text-decoration: none; display: inline-block; }
+    pre { background: #0f1825; border: 1px solid rgba(255,255,255,.1); border-radius: 10px; padding: 12px; overflow: auto; }
+    .muted { color: #9fb0c3; font-size: 14px; }
+  </style>
+  <link rel="canonical" href="https://ai.muonnoi.org/agents/demo-sales/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Agent Demo 2 | Sales Copilot" />
+  <meta property="og:description" content="Public demo Agent hỗ trợ tạo pitch và follow-up cho khách hàng." />
+  <meta property="og:url" content="https://ai.muonnoi.org/agents/demo-sales/" />
+  <meta property="og:image" content="https://ai.muonnoi.org/assets/og-cover.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <h1>Agent Demo 2: Sales Copilot</h1>
+      <p>Demo công khai để khách test nhanh khả năng tạo pitch ngắn và follow-up message theo nhu cầu.</p>
+      <p class="muted">Chạy trực tiếp trên web, phù hợp buổi demo với khách trong 3-5 phút.</p>
+      <div class="row">
+        <label for="customer">Tên khách hàng:</label>
+        <input id="customer" value="Công ty ABC Logistics" />
+        <label for="goal">Mục tiêu:</label>
+        <select id="goal">
+          <option value="automation">Tự động hóa quy trình nội bộ</option>
+          <option value="support">Nâng cấp hệ thống CSKH bằng AI</option>
+          <option value="analytics">Chuẩn hóa phân tích dữ liệu vận hành</option>
+        </select>
+        <div>
+          <button id="run">Tạo pitch</button>
+          <a class="btn" href="https://flow.iai.one/" target="_blank" rel="noopener noreferrer">Mở flow.iai.one</a>
+        </div>
+        <pre id="output">Chưa chạy.</pre>
+      </div>
+    </section>
+  </main>
+  <script>
+    const output = document.getElementById("output");
+    const goalLabels = {
+      automation: "tự động hóa quy trình",
+      support: "trợ lý CSKH AI",
+      analytics: "phân tích vận hành"
+    };
+    document.getElementById("run").addEventListener("click", () => {
+      const customer = document.getElementById("customer").value.trim() || "Khách hàng tiềm năng";
+      const goal = document.getElementById("goal").value;
+      output.textContent = JSON.stringify({
+        agent: "sales-copilot-v1",
+        customer,
+        pitch: `IAI Flow giúp ${customer} triển khai ${goalLabels[goal]} nhanh hơn với workflow + agent orchestration trên một nền tảng duy nhất.`,
+        follow_up: "Đề xuất buổi demo 30 phút để đi qua use-case thực tế và KPI mục tiêu.",
+        cta: "Đặt lịch demo kỹ thuật tuần này"
+      }, null, 2);
+    });
+  </script>
+</body>
+</html>
