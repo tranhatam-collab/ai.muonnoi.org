@@ -3,6 +3,7 @@ import { json } from "../lib/response"
 import { findUserByEmail } from "../security/identity"
 import { createSession } from "../security/session"
 import { buildSessionCookie } from "../security/auth-cookie"
+import { buildWelcomeGoogleEmail, fireEmail } from "../lib/email"
 
 const OAUTH_STATE_TTL_SECONDS = 10 * 60
 
@@ -99,13 +100,13 @@ function resolveConfig(env: Env): {
 async function upsertGoogleUser(
   env: Env,
   profile: Record<string, unknown>
-): Promise<{ id: string; email: string; name: string }> {
+): Promise<{ id: string; email: string; name: string; isNew: boolean }> {
   const email = String(profile.email ?? "").trim().toLowerCase()
   if (!email) throw new Error("Google profile does not include email")
 
   const existing = await findUserByEmail(env, email)
   if (existing) {
-    return { id: String(existing.id), email: existing.email, name: existing.name }
+    return { id: String(existing.id), email: existing.email, name: existing.name, isNew: false }
   }
 
   // Create new user — no password
@@ -123,7 +124,7 @@ async function upsertGoogleUser(
     .bind(newId, email, name, now)
     .run()
 
-  return { id: newId, email, name }
+  return { id: newId, email, name, isNew: true }
 }
 
 // ── GET /api/auth/google/start ───────────────────────────────────────────────
@@ -220,12 +221,17 @@ export async function handleGoogleAuthCallback(
   }
 
   // Upsert user and create session
-  let user: { id: string; email: string; name: string }
+  let user: { id: string; email: string; name: string; isNew: boolean }
   try {
     user = await upsertGoogleUser(env, profilePayload)
   } catch (err) {
     console.error("[google-oauth] upsert failed:", err instanceof Error ? err.message : String(err))
     return errorRedirect("account_error")
+  }
+
+  // Welcome email for first-time Google signups — fire-and-forget
+  if (user.isNew) {
+    fireEmail(env, buildWelcomeGoogleEmail(env, user.email, user.name))
   }
 
   const sessionId = await createSession(env, user.id)

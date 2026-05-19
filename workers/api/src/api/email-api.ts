@@ -6,7 +6,7 @@ function newId(prefix: string): string {
 }
 
 function mailBase(env: Env): string {
-  return (env.MAIL_API_BASE_URL ?? "https://mail.iai.one/v1").replace(/\/+$/, "")
+  return (env.MAIL_API_BASE_URL ?? "https://mail.iai.one/_mail/v1").replace(/\/+$/, "")
 }
 
 // POST /api/email/send  (internal / system use only — not public)

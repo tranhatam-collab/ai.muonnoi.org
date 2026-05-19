@@ -4,6 +4,7 @@ import { findUserByEmail } from "../security/identity"
 import { createSession } from "../security/session"
 import { buildSessionCookie } from "../security/auth-cookie"
 import { checkRateLimit } from "../lib/rate-limit"
+import { buildMagicLinkEmail, fireEmail } from "../lib/email"
 
 const MAGIC_LINK_TTL_SECONDS = 15 * 60
 
@@ -82,7 +83,7 @@ async function sendMagicLinkEmail(
   if (!env.MAIL_API_KEY) {
     return { ok: false, reason: "MAIL_API_KEY not configured" }
   }
-  const mailBase = (env.MAIL_API_BASE_URL ?? "https://mail.iai.one/v1").replace(/\/+$/, "")
+  const mailBase = (env.MAIL_API_BASE_URL ?? "https://mail.iai.one/_mail/v1").replace(/\/+$/, "")
   const workspaceId = env.MAIL_API_WORKSPACE_ID ?? "muonnoi.org"
   const escapedLink = magicLink.replace(/&/g, "&amp;")
 
@@ -162,7 +163,7 @@ export async function handleMagicLinkRequest(
       exp: nowSeconds() + MAGIC_LINK_TTL_SECONDS
     })
     const magicLink = `${apiBase}/api/auth/magic-link/verify?token=${encodeURIComponent(token)}`
-    await sendMagicLinkEmail(env, user.email, magicLink)
+    fireEmail(env, buildMagicLinkEmail(env, user.email, magicLink))
   }
 
   // Always return 202 to avoid leaking account existence

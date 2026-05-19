@@ -200,7 +200,7 @@ export async function handleRegister(
 
   // Send welcome email (non-blocking)
   if (env.MAIL_API_KEY) {
-    const mailBase = (env.MAIL_API_BASE_URL ?? "https://mail.iai.one/v1").replace(/\/+$/, "")
+    const mailBase = (env.MAIL_API_BASE_URL ?? "https://mail.iai.one/_mail/v1").replace(/\/+$/, "")
     const workspaceId = env.MAIL_API_WORKSPACE_ID ?? "muonnoi.org"
     const welcomeHtml = `<p>Chào <strong>${name.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</strong>,</p><p>Tài khoản <strong>${(username ?? email).replace(/</g, "&lt;").replace(/>/g, "&gt;")}</strong> đã được tạo thành công trên Muon Noi.</p>`
     ctx.waitUntil(

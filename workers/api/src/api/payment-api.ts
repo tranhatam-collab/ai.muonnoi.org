@@ -1,5 +1,6 @@
 import type { Env } from "../env"
 import { json } from "../lib/response"
+import { buildPaymentConfirmedEmail, buildPaymentFailedEmail, fireEmail } from "../lib/email"
 
 const PROVIDER_DEFAULT = "payos"
 const CURRENCY_DEFAULT = "VND"
@@ -184,6 +185,56 @@ export async function handlePaymentWebhook(request: Request, env: Env): Promise<
     await env.iai_flow_db.prepare(
       `UPDATE payment_webhook_log SET status = 'processed', processed_at = datetime('now') WHERE id = ?`
     ).bind(logId).run()
+
+    // Send payment confirmation email — fire-and-forget
+    const intent = await env.iai_flow_db.prepare(
+      `SELECT pi.amount, pi.currency, pi.purpose,
+              u.email, u.name
+       FROM payment_intents pi
+       LEFT JOIN users u ON u.id = pi.user_id
+       WHERE pi.id = ?`
+    ).bind(intentId).first<{ amount: number; currency: string; purpose: string; email: string | null; name: string | null }>()
+
+    const recipientEmail = intent?.email ?? (typeof payload.customer_email === "string" ? payload.customer_email : null)
+    if (recipientEmail && intent) {
+      fireEmail(env, buildPaymentConfirmedEmail(env, recipientEmail, {
+        name: intent.name ?? undefined,
+        amount: intent.amount,
+        currency: intent.currency ?? "VND",
+        intentId,
+        purpose: intent.purpose,
+        completedAt: new Date().toISOString(),
+      }))
+    }
+  }
+
+  if ((eventType === "payment.failed" || eventType === "payment.error") && intentId) {
+    await env.iai_flow_db.prepare(
+      `UPDATE payment_intents SET status = 'failed', updated_at = datetime('now') WHERE id = ?`
+    ).bind(intentId).run()
+    await env.iai_flow_db.prepare(
+      `UPDATE payment_webhook_log SET status = 'processed', processed_at = datetime('now') WHERE id = ?`
+    ).bind(logId).run()
+
+    // Send payment failure email — fire-and-forget
+    const intent = await env.iai_flow_db.prepare(
+      `SELECT pi.amount, pi.currency, pi.purpose,
+              u.email, u.name
+       FROM payment_intents pi
+       LEFT JOIN users u ON u.id = pi.user_id
+       WHERE pi.id = ?`
+    ).bind(intentId).first<{ amount: number; currency: string; purpose: string; email: string | null; name: string | null }>()
+
+    const recipientEmail = intent?.email ?? (typeof payload.customer_email === "string" ? payload.customer_email : null)
+    if (recipientEmail && intent) {
+      fireEmail(env, buildPaymentFailedEmail(env, recipientEmail, {
+        name: intent.name ?? undefined,
+        amount: intent.amount,
+        currency: intent.currency ?? "VND",
+        intentId,
+        reason: typeof payload.failure_reason === "string" ? payload.failure_reason : undefined,
+      }))
+    }
   }
 
   console.log("[webhook] payment event", JSON.stringify(sanitizeLog({ eventType, intentId, logId })))

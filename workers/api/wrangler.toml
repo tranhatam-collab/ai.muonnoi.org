@@ -19,7 +19,7 @@ PAY_IAI_ONE_PROVIDER = "payos"
 PAY_IAI_ONE_CALLBACK_BASE_URL = "https://api.muonnoi.org"
 GATEWAY_SUCCESS_URL = "https://www.muonnoi.org/"
 # Mail (mail.iai.one)
-MAIL_API_BASE_URL = "https://mail.iai.one/v1"
+MAIL_API_BASE_URL = "https://mail.iai.one/_mail/v1"
 EMAIL_FROM = "Muon Noi <hello@muonnoi.org>"
 EMAIL_FROM_NOREPLY = "Muon Noi <noreply@muonnoi.org>"
 SUPPORT_EMAIL = "support@muonnoi.org"
