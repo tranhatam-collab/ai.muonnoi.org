@@ -25,18 +25,21 @@ function getAllowedOrigins(env?: Env): string[] {
 
 export function corsHeaders(origin?: string | null, env?: Env): Record<string, string> {
   const allowedOrigins = getAllowedOrigins(env)
-  const allowOrigin =
+  const isAllowed =
     origin && (origin.startsWith("http://localhost:") || allowedOrigins.includes(origin))
-      ? origin
-      : allowedOrigins[0]
 
-  return {
-    "Access-Control-Allow-Origin": allowOrigin,
+  const headers: Record<string, string> = {
     "Access-Control-Allow-Credentials": "true",
     "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Connection-Key, X-Webhook-Key",
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
     "Vary": "Origin"
   }
+
+  if (isAllowed && origin) {
+    headers["Access-Control-Allow-Origin"] = origin
+  }
+
+  return headers
 }
 
 export function json(data: unknown, status = 200, origin?: string | null, env?: Env): Response {
