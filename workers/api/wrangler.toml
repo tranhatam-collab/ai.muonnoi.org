@@ -18,6 +18,9 @@ PAY_IAI_ONE_SITE_CODE = "muonnoi"
 PAY_IAI_ONE_PROVIDER = "payos"
 PAY_IAI_ONE_CALLBACK_BASE_URL = "https://api.muonnoi.org"
 GATEWAY_SUCCESS_URL = "https://www.muonnoi.org/"
+# Google OAuth
+GOOGLE_REDIRECT_URI = "https://api.muonnoi.org/api/auth/google/callback"
+GOOGLE_AUTH_REDIRECT_URL = "https://ai.muonnoi.org/"
 # Mail (mail.iai.one)
 MAIL_API_BASE_URL = "https://mail.iai.one/_mail/v1"
 EMAIL_FROM = "Muon Noi <hello@muonnoi.org>"
@@ -28,6 +31,9 @@ SUPPORT_EMAIL = "support@muonnoi.org"
 # - PAY_IAI_ONE_API_KEY
 # - PAYMENT_WEBHOOK_SECRET
 # - MAIL_API_KEY
+# - GOOGLE_CLIENT_ID
+# - GOOGLE_CLIENT_SECRET
+# - GOOGLE_OAUTH_STATE_SECRET
 
 [[routes]]
 pattern = "api.muonnoi.org"

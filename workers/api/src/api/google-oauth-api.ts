@@ -203,8 +203,16 @@ export async function handleGoogleAuthCallback(
 
   const tokenPayload = await tokenRes.json().catch(() => ({})) as Record<string, unknown>
   if (!tokenRes.ok || !tokenPayload.access_token) {
-    console.error("[google-oauth] token exchange failed:", JSON.stringify(tokenPayload).slice(0, 300))
-    return errorRedirect("oauth_exchange_failed")
+    const googleError = tokenPayload.error ?? "unknown"
+    const googleDesc = tokenPayload.error_description ?? ""
+    console.error("[google-oauth] token exchange failed:", {
+      status: tokenRes.status,
+      googleError,
+      googleDesc,
+      redirectUri: cfg.redirectUri,
+      clientIdPrefix: cfg.clientId.slice(0, 8) + "..."
+    })
+    return errorRedirect(`oauth_exchange_failed_${googleError}`)
   }
 
   // Fetch user profile
