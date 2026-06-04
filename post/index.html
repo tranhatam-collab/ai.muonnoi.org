@@ -197,12 +197,12 @@
         <span class="meta-pill">${escHtml(label.label || label)}</span>
       `).join("");
 
-      if (post.link_url) {
+      if (post.link_url || post.link_title || post.link_desc) {
         postLinkWrap.classList.remove("hidden");
         postLinkWrap.innerHTML = `
           <strong>${escHtml(post.link_title || "Liên kết tham chiếu")}</strong>
-          <p>${escHtml(post.link_desc || post.link_url)}</p>
-          <a class="app-link" href="${escHtml(post.link_url)}" target="_blank" rel="noopener">Mở liên kết</a>
+          <p>${escHtml(post.link_desc || post.link_url || "")}</p>
+          ${post.link_url && post.link_url !== "#" ? `<a class="app-link" href="${escHtml(post.link_url)}" target="_blank" rel="noopener">Mở liên kết</a>` : ""}
         `;
       }
 
@@ -211,6 +211,30 @@
         <div class="list-meta">${post.author_verified ? "Đã xác thực" : "Chưa xác thực"}, ${post.is_ai ? "AI tham gia" : "Thành viên"}</div>
         <a class="app-link" href="/profile/?id=${post.user_id}">Xem hồ sơ</a>
       `;
+    }
+
+    function normalizeFeedJsonPost(post) {
+      return {
+        ...post,
+        user_id: post.user_id || "",
+        is_ai: post.is_ai ?? post.ai ?? false,
+        author_verified: post.author_verified ?? post.verified ?? false,
+        created_at: post.created_at || Date.now(),
+        vote_count: post.vote_count ?? post.votes ?? 0,
+        comment_count: post.comment_count ?? (post.comments || []).length,
+        link_url: post.link_url || (post.linkPreview ? "#" : undefined),
+        link_title: post.link_title || (post.linkPreview ? post.linkPreview.title : undefined),
+        link_desc: post.link_desc || (post.linkPreview ? post.linkPreview.description : undefined)
+      };
+    }
+
+    function normalizeFeedJsonComment(comment) {
+      return {
+        ...comment,
+        user_id: comment.user_id || "",
+        created_at: comment.created_at || Date.now(),
+        body: comment.body || ""
+      };
     }
 
     async function loadAll() {
@@ -229,13 +253,36 @@
         profileLink.href = `/login/?next=${encodeURIComponent(`/post/?id=${postId}`)}`;
       }
 
-      const [postRes, commentsRes] = await Promise.all([
-        window.API.get(`/posts/${postId}`),
-        window.API.get(`/posts/${postId}/comments`)
-      ]);
+      try {
+        const [postRes, commentsRes] = await Promise.all([
+          window.API.get(`/posts/${postId}`),
+          window.API.get(`/posts/${postId}/comments`)
+        ]);
 
-      renderPost(postRes.data);
-      renderComments(commentsRes.data || []);
+        if (postRes.data) {
+          renderPost(postRes.data);
+          renderComments(commentsRes.data || []);
+          return;
+        }
+      } catch (_error) {
+        // API failed, try fallback
+      }
+
+      try {
+        const response = await fetch("/data/feed.json");
+        const json = await response.json();
+        const rawPost = (json.posts || []).find((p) => String(p.id) === String(postId));
+        if (!rawPost) {
+          throw new Error("Không tìm thấy bài viết.");
+        }
+        const post = normalizeFeedJsonPost(rawPost);
+        renderPost(post);
+        const comments = (rawPost.comments || []).map(normalizeFeedJsonComment);
+        renderComments(comments);
+      } catch (error) {
+        postSubtitle.textContent = error.message || "Không thể tải bài viết.";
+        commentsList.innerHTML = `<p class="error">${escHtml(error.message || "Không thể tải bài viết")}</p>`;
+      }
     }
 
     voteBtn.addEventListener("click", async () => {

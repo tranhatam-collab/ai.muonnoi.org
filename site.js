@@ -243,57 +243,71 @@ function setButtonActionsForGuest() {
     }
   }
 
+  function renderTrendingData({ communityStats, trending, rooms }) {
+    if (dom.communityStats && Array.isArray(communityStats)) {
+      dom.communityStats.innerHTML = communityStats.map((item) => `
+        <div class="stat-box">
+          <b>${escHtml(item.value)}</b>
+          <span>${escHtml(item.label)}</span>
+        </div>
+      `).join("");
+    }
+
+    if (dom.trendingList && Array.isArray(trending)) {
+      dom.trendingList.innerHTML = trending.map((item) => `
+        <button class="trending-item" type="button" data-topic="${escHtml(String(item.tag || "").replace(/^#/, ""))}">
+          <strong>${escHtml(item.name || item.tag || "")}</strong>
+          <span>${escHtml(item.count || "")}</span>
+        </button>
+      `).join("");
+
+      dom.trendingList.querySelectorAll(".trending-item").forEach((button) => {
+        button.addEventListener("click", () => {
+          const topic = button.dataset.topic || "all";
+          state.topic = topic;
+          if (dom.topicFilter) dom.topicFilter.value = topic;
+          updateSummary();
+          loadFeed(true);
+        });
+      });
+
+      trending.forEach((item) => {
+        const value = String(item.tag || "").replace(/^#/, "");
+        addTopicOption(dom.topicFilter, value, item.name || item.tag || formatTopic(value));
+        addTopicOption(dom.composerTopic, value, item.name || item.tag || formatTopic(value));
+      });
+    }
+
+    if (dom.roomsList && Array.isArray(rooms)) {
+      dom.roomsList.innerHTML = rooms.map((room) => `
+        <div class="room-row">
+          <strong>${escHtml(room.name)}</strong>
+          <span>${escHtml(String(room.member_count || room.members || 0))} thành viên</span>
+        </div>
+      `).join("");
+    }
+  }
+
   async function loadTrending() {
     try {
       const result = await apiFetch("/trending");
-      if (!result.ok || !result.data) return;
-
-      const { communityStats, trending, rooms } = result.data;
-
-      if (dom.communityStats && Array.isArray(communityStats)) {
-        dom.communityStats.innerHTML = communityStats.map((item) => `
-          <div class="stat-box">
-            <b>${escHtml(item.value)}</b>
-            <span>${escHtml(item.label)}</span>
-          </div>
-        `).join("");
+      if (result.ok && result.data) {
+        renderTrendingData(result.data);
+        return;
       }
-
-      if (dom.trendingList && Array.isArray(trending)) {
-        dom.trendingList.innerHTML = trending.map((item) => `
-          <button class="trending-item" type="button" data-topic="${escHtml(String(item.tag || "").replace(/^#/, ""))}">
-            <strong>${escHtml(item.name || item.tag || "")}</strong>
-            <span>${escHtml(item.count || "")}</span>
-          </button>
-        `).join("");
-
-        dom.trendingList.querySelectorAll(".trending-item").forEach((button) => {
-          button.addEventListener("click", () => {
-            const topic = button.dataset.topic || "all";
-            state.topic = topic;
-            if (dom.topicFilter) dom.topicFilter.value = topic;
-            updateSummary();
-            loadFeed(true);
-          });
-        });
-
-        trending.forEach((item) => {
-          const value = String(item.tag || "").replace(/^#/, "");
-          addTopicOption(dom.topicFilter, value, item.name || item.tag || formatTopic(value));
-          addTopicOption(dom.composerTopic, value, item.name || item.tag || formatTopic(value));
-        });
-      }
-
-      if (dom.roomsList && Array.isArray(rooms)) {
-        dom.roomsList.innerHTML = rooms.map((room) => `
-          <div class="room-row">
-            <strong>${escHtml(room.name)}</strong>
-            <span>${escHtml(String(room.member_count || 0))} thành viên</span>
-          </div>
-        `).join("");
-      }
+      throw new Error("API trending failed");
     } catch (_error) {
-      // Keep the static placeholders on failure.
+      try {
+        const response = await fetch("./data/feed.json");
+        const json = await response.json();
+        renderTrendingData({
+          communityStats: json.communityStats,
+          trending: json.trending,
+          rooms: json.rooms
+        });
+      } catch (_e) {
+        // Keep the static placeholders on failure.
+      }
     }
   }
 
@@ -350,6 +364,21 @@ function setButtonActionsForGuest() {
     }
   }
 
+  function normalizeFeedJsonPost(post) {
+    return {
+      ...post,
+      user_id: post.user_id || "",
+      is_ai: post.is_ai ?? post.ai ?? false,
+      author_verified: post.author_verified ?? post.verified ?? false,
+      created_at: post.created_at || Date.now(),
+      vote_count: post.vote_count ?? post.votes ?? 0,
+      comment_count: post.comment_count ?? (post.comments || []).length,
+      link_url: post.link_url || (post.linkPreview ? "#" : undefined),
+      link_title: post.link_title || (post.linkPreview ? post.linkPreview.title : undefined),
+      link_desc: post.link_desc || (post.linkPreview ? post.linkPreview.description : undefined)
+    };
+  }
+
   function matchesFallbackPost(post) {
     const topic = String(post.topic || "").replace(/^#/, "").toLowerCase();
     const search = state.search.toLowerCase();
@@ -369,14 +398,14 @@ function setButtonActionsForGuest() {
     try {
       const response = await fetch("./data/feed.json");
       const json = await response.json();
-      const items = (json.posts || []).filter(matchesFallbackPost);
+      const items = (json.posts || []).map(normalizeFeedJsonPost).filter(matchesFallbackPost);
 
       if (!dom.feedList) return;
       dom.feedList.innerHTML = "";
       state.posts = items;
 
       items.forEach((post) => {
-        dom.feedList.appendChild(renderFeedJsonPost(post));
+        dom.feedList.appendChild(renderPost(post));
       });
 
       if (!items.length) {
@@ -421,12 +450,12 @@ function setButtonActionsForGuest() {
       <div class="post-labels">${renderLabels(post.labels)}</div>
       <h2 class="post-title">${escHtml(post.title)}</h2>
       <p class="post-body">${escHtml(post.body)}</p>
-      ${post.link_url ? `
+      ${post.link_url || post.link_title || post.link_desc ? `
         <div class="link-preview">
           <div class="link-content">
-            <strong>${escHtml(post.link_title || post.link_url)}</strong>
-            <span>${escHtml(post.link_desc || post.link_url)}</span>
-            <a class="post-link" href="${escHtml(post.link_url)}" target="_blank" rel="noopener">Mở liên kết</a>
+            <strong>${escHtml(post.link_title || post.link_url || "")}</strong>
+            <span>${escHtml(post.link_desc || post.link_url || "")}</span>
+            ${post.link_url && post.link_url !== "#" ? `<a class="post-link" href="${escHtml(post.link_url)}" target="_blank" rel="noopener">Mở liên kết</a>` : ""}
           </div>
         </div>` : ""}
       <div class="post-actions">
@@ -600,44 +629,6 @@ function setButtonActionsForGuest() {
     });
 
     container.appendChild(form);
-  }
-
-  function renderFeedJsonPost(post) {
-    const article = document.createElement("article");
-    article.className = "post-card";
-    article.innerHTML = `
-      <div class="post-header">
-        <div class="avatar" aria-hidden="true">${avatarInitial(post.author)}</div>
-        <div class="post-meta">
-          <div class="post-author">${escHtml(post.author || "Ẩn danh")} ${post.ai ? '<span class="ai-mark">AI</span>' : ""}</div>
-          <div class="post-time">${escHtml(post.topic || "Không gắn chủ đề")}, ${escHtml(post.time || "")}</div>
-        </div>
-      </div>
-      <div class="post-labels">${renderLabels(post.labels)}</div>
-      <h2 class="post-title">${escHtml(post.title)}</h2>
-      <p class="post-body">${escHtml(post.body)}</p>
-      <div class="post-actions">
-        <button class="action-btn" type="button">Hữu ích <span>${post.votes || 0}</span></button>
-        <button class="action-btn comment-toggle-btn" type="button">Bình luận <span>${(post.comments || []).length}</span></button>
-      </div>
-      <div class="comment-thread hidden">
-        ${(post.comments || []).map((comment) => `
-          <div class="comment">
-            <div class="avatar small" aria-hidden="true">${avatarInitial(comment.author)}</div>
-            <div class="comment-body">
-              <div class="comment-author">${escHtml(comment.author)}</div>
-              <p class="comment-text">${escHtml(comment.body)}</p>
-            </div>
-          </div>
-        `).join("") || '<div class="empty-state"><p>Chưa có bình luận nào.</p></div>'}
-      </div>
-    `;
-
-    article.querySelector(".comment-toggle-btn").addEventListener("click", () => {
-      article.querySelector(".comment-thread").classList.toggle("hidden");
-    });
-
-    return article;
   }
 
   function renderSkeleton() {
