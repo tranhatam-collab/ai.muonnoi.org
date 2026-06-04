@@ -28,3 +28,7 @@ pnpm-debug.log*
 # temporary
 *.tmp
 *.temp
+
+# local tool worktrees
+.claude/
+.pages-deploy/
