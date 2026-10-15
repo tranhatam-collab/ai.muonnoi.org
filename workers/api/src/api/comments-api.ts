@@ -1,3 +1,4 @@
+import { requestObject } from '../lib/request-object'
 import type { Env } from "../env"
 import { json } from "../lib/response"
 import { checkRateLimit } from "../lib/rate-limit"
@@ -45,7 +46,7 @@ export async function handleComments(
       return json({ ok: false, error: "Bạn đã gửi quá nhiều bình luận trong giờ này. Vui lòng thử lại sau." }, 429, origin, env)
     }
 
-    const body = await request.json().catch(() => ({} as Record<string, unknown>))
+    const body = await requestObject(request)
     const text = typeof body.body === "string" ? body.body.trim() : ""
     const parentId = typeof body.parent_id === "number" ? body.parent_id : null
 

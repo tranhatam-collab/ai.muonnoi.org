@@ -1,3 +1,4 @@
+import { requestObject } from '../lib/request-object'
 import type { Env } from "../env"
 import { json } from "../lib/response"
 import { findUserByEmail } from "../security/identity"
@@ -144,7 +145,7 @@ export async function handleMagicLinkRequest(
     }, 429, origin, env)
   }
 
-  const body = await request.json().catch(() => ({} as Record<string, unknown>))
+  const body = await requestObject(request)
   const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : ""
 
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {

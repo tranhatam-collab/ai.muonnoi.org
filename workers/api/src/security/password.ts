@@ -11,7 +11,7 @@ function bytesToHex(bytes: Uint8Array): string {
     .join("")
 }
 
-function hexToBytes(hex: string): Uint8Array {
+function hexToBytes(hex: string): Uint8Array<ArrayBuffer> {
   const normalized = hex.trim()
   const bytes = new Uint8Array(normalized.length / 2)
 

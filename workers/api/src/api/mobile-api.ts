@@ -1,3 +1,4 @@
+import { requestObject } from '../lib/request-object'
 import type { Env } from "../env"
 import { json } from "../lib/response"
 import { getCurrentUser } from "../security/session"
@@ -17,7 +18,7 @@ export async function handleMobilePushRegister(request: Request, env: Env): Prom
   const user = await getCurrentUser(request, env)
   if (!user) return json({ ok: false, error: "Chưa đăng nhập" }, 401, origin, env)
 
-  const body = await request.json().catch(() => ({} as Record<string, unknown>))
+  const body = await requestObject(request)
   const token = normalizeToken(body.token)
   const platform = normalizePlatform(body.platform)
   const source = typeof body.source === "string" && body.source.trim() ? body.source.trim().slice(0, 40) : "capacitor"

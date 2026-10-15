@@ -1,0 +1,6 @@
+{
+ "extends":"../../tsconfig.base.json",
+ "compilerOptions":{"types":[]},
+ "files":["../revenueops/node_modules/@cloudflare/workers-types/index.d.ts"],
+ "include":["src/**/*.ts"]
+}

@@ -1,5 +1,6 @@
 import type { Env } from "./env"
 import { json } from "./lib/response"
+import { handlePublishing } from "./api/publishing-api"
 
 import { handleLogin, handleLogout, handleMe, handleRegister, handleUpdateProfile } from "./api/security-api"
 import { handleFlows, handleFlowById, handleRunFlow } from "./api/flows-api"
@@ -36,6 +37,7 @@ export async function router(request: Request, env: Env, ctx: ExecutionContext):
   const path = url.pathname
   const method = request.method.toUpperCase()
   const origin = request.headers.get("Origin")
+  if (path.startsWith('/api/publishing/')) return handlePublishing(request, env)
 
   // HEALTH
   if (path === "/api/health") {

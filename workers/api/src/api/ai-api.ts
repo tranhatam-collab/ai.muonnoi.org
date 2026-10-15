@@ -1,3 +1,4 @@
+import { requestObject } from '../lib/request-object'
 import type { Env } from "../env"
 import { json } from "../lib/response"
 import { checkRateLimit } from "../lib/rate-limit"
@@ -21,7 +22,7 @@ export async function handleAiSummarize(request: Request, env: Env): Promise<Res
     return json({ ok: false, error: "Bạn đã dùng AI quá nhiều lần. Vui lòng thử lại sau." }, 429, origin, env)
   }
 
-  const body = await request.json().catch(() => ({} as Record<string, unknown>))
+  const body = await requestObject(request)
   const postId = typeof body.post_id === "number" ? body.post_id : null
   if (!postId) return json({ ok: false, error: "post_id là bắt buộc" }, 400, origin, env)
 
@@ -79,7 +80,7 @@ export async function handleAiVerify(request: Request, env: Env): Promise<Respon
     return json({ ok: false, error: "Bạn đã gửi quá nhiều yêu cầu AI verify. Vui lòng thử lại sau." }, 429, origin, env)
   }
 
-  const body = await request.json().catch(() => ({} as Record<string, unknown>))
+  const body = await requestObject(request)
   const postId = typeof body.post_id === "number" ? body.post_id : null
   if (!postId) return json({ ok: false, error: "post_id là bắt buộc" }, 400, origin, env)
   if (!env.AI_API_URL || !env.AI_API_KEY) {
@@ -126,7 +127,7 @@ export async function handleModerationDecision(
   if (!user) return json({ ok: false, error: "Chưa đăng nhập" }, 401, origin, env)
   if (!isModerator(user)) return json({ ok: false, error: "Không có quyền truy cập" }, 403, origin, env)
 
-  const body = await request.json().catch(() => ({} as Record<string, unknown>))
+  const body = await requestObject(request)
   const decision = typeof body.decision === "string" ? body.decision : ""
 
   if (!["approved", "rejected", "escalated"].includes(decision)) {

@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="vi">
+<head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>Xưởng viết · Nhà Chung</title>
+ <meta name="description" content="Viết, lưu nháp và biên tập những điều hữu ích ở Nhà Chung. Mọi chủ đề đều có chỗ cho một góc nhìn có giá trị.">
+ <link rel="canonical" href="https://ai.muonnoi.org/studio/">
+ <link rel="stylesheet" href="/studio/studio.css">
+ <script src="/studio/studio.js" defer></script>
+</head>
+<body>
+ <a class="skip" href="#editor">Đến nội dung</a>
+ <header><a class="brand" href="/">Nhà Chung <span>/ Xưởng viết</span></a><nav aria-label="Điều hướng"><a href="/">Bảng tin</a><a href="/blog/">Blog</a><a href="/login/">Tài khoản</a></nav></header>
+ <main>
+  <section class="intro"><p>Không gian sáng tác</p><h1>Một điều hay,<br>đáng để chia sẻ.</h1><p>Trải nghiệm, kiến thức, câu chuyện hay một góc nhìn mới. Bắt đầu từ điều anh chị muốn đóng góp.</p></section>
+  <p id="connection" class="notice" role="status">Đang kết nối xưởng viết…</p>
+  <div class="workspace">
+   <aside aria-label="Thư viện bản nháp"><div class="library-head"><h2>Bản thảo</h2><button id="reloadDrafts" type="button" class="subtle">Đọc lại</button><button id="newDraft" type="button" class="subtle">Viết mới</button></div><div id="drafts"><p class="muted">Chưa có bản thảo được tải.</p></div><p class="muted small">Bản nháp chỉ hiện cho tác giả và người biên tập có quyền.</p></aside>
+   <section class="paper" id="editor" aria-label="Biên tập bài viết">
+    <div class="paper-top"><span id="draftState">Bản thảo mới</span><span id="version">Chưa lưu</span></div>
+    <form id="draftForm">
+     <label for="title">Tiêu đề</label><input id="title" name="title" required minlength="4" maxlength="200" placeholder="Điều anh chị muốn kể hôm nay">
+     <div class="fields"><div><label for="topic">Chủ đề tự chọn</label><input id="topic" name="topic" required maxlength="80" placeholder="Ví dụ: Sống xanh, kinh doanh, văn hóa"></div><div><label for="format">Dạng bài</label><select id="format" name="format"><option value="article">Bài viết</option><option value="discussion">Thảo luận</option><option value="guide">Hướng dẫn</option><option value="story">Câu chuyện</option><option value="resource">Tài nguyên</option><option value="report">Báo cáo</option></select></div></div>
+     <label for="body">Nội dung <span class="muted">· văn bản thuần</span></label><textarea id="body" name="body" required minlength="8" maxlength="50000" rows="15" placeholder="Viết điều hữu ích, bằng giọng của chính mình…"></textarea><p id="wordCount" class="small muted">0 ký tự</p>
+     <details><summary>Nguồn tham khảo và quyền sử dụng</summary><label for="sources">Đường dẫn nguồn · mỗi dòng một địa chỉ HTTPS, tối đa 10</label><textarea id="sources" name="sources" rows="3" placeholder="https://nguon-tham-khao.example/bai-viet"></textarea><label class="check"><input type="checkbox" id="rights">Tôi có quyền sử dụng nội dung, đã kiểm tra dữ kiện và không chia sẻ dữ liệu riêng tư trái phép.</label><label class="check"><input type="checkbox" id="ai">Có AI hỗ trợ sáng tác; tôi chịu trách nhiệm về nội dung cuối cùng.</label></details>
+     <div class="actions"><button id="save" type="submit">Lưu bản nháp</button><button id="submit" type="button" class="secondary" disabled>Gửi biên tập</button><button id="publish" type="button" class="secondary" disabled>Xuất bản</button><button id="export" type="button" class="subtle">Tải bản viết</button></div>
+    </form>
+    <section id="reviewPanel" hidden><h2>Biên tập phiên bản này</h2><p class="muted">Kiểm tra nội dung, nguồn, quyền sử dụng và giá trị với người đọc. Duyệt bài không cấp nhãn “đã xác minh”.</p><label for="reviewNote">Nhận xét biên tập</label><textarea id="reviewNote" rows="3" minlength="12" maxlength="2000"></textarea><div class="actions"><button id="approve" type="button">Duyệt phiên bản</button><button id="reject" type="button" class="secondary">Trả lại để sửa</button></div></section>
+    <p id="feedback" role="status" aria-live="polite"></p><div id="publishedLink"></div>
+   </section>
+  </div>
+  <footer><p>Tự do chia sẻ nhiều chủ đề. Tôn trọng con người, bản quyền và pháp luật.</p><p>Viết → lưu nháp → biên tập → xuất bản. Mạng xã hội được kết nối theo từng tài khoản được ủy quyền.</p></footer>
+ </main>
+</body></html>

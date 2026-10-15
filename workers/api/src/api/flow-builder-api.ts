@@ -1,3 +1,4 @@
+import { requestObject } from '../lib/request-object'
 import type { Env } from "../env"
 import { json } from "../lib/response"
 import { canAccessApp } from "../security/permission"
@@ -12,7 +13,7 @@ export async function handleBuilderUpdate(
   const user = await getCurrentUser(request, env)
   if (!user) return json({ ok: false, error: "Chưa đăng nhập" }, 401, origin, env)
   if (!canAccessApp(user)) return json({ ok: false, error: "Không có quyền truy cập app nội bộ" }, 403, origin, env)
-  const body = await request.json().catch(() => ({} as Record<string, unknown>))
+  const body = await requestObject(request)
   const definition =
     typeof body.definition_json === "string"
       ? body.definition_json
@@ -41,14 +42,14 @@ export async function handleBuilderValidate(
   const user = await getCurrentUser(request, _env)
   if (!user) return json({ ok: false, error: "Chưa đăng nhập" }, 401, origin, _env)
   if (!canAccessApp(user)) return json({ ok: false, error: "Không có quyền truy cập app nội bộ" }, 403, origin, _env)
-  const body = await request.json().catch(() => ({} as Record<string, unknown>))
+  const body = await requestObject(request)
   const definition = body.definition_json ?? { nodes: [], edges: [] }
 
   const valid =
     definition &&
     typeof definition === "object" &&
-    Array.isArray(definition.nodes) &&
-    Array.isArray(definition.edges)
+    'nodes' in definition && Array.isArray(definition.nodes) &&
+    'edges' in definition && Array.isArray(definition.edges)
 
   return json({
     ok: true,
@@ -69,7 +70,7 @@ export async function handleBuilderPreview(
   const user = await getCurrentUser(request, _env)
   if (!user) return json({ ok: false, error: "Chưa đăng nhập" }, 401, origin, _env)
   if (!canAccessApp(user)) return json({ ok: false, error: "Không có quyền truy cập app nội bộ" }, 403, origin, _env)
-  const body = await request.json().catch(() => ({} as Record<string, unknown>))
+  const body = await requestObject(request)
   const definition = body.definition_json ?? { nodes: [], edges: [] }
 
   return json({
@@ -77,8 +78,8 @@ export async function handleBuilderPreview(
     data: {
       flow_id: flowId,
       preview: {
-        nodes: Array.isArray(definition.nodes) ? definition.nodes.length : 0,
-        edges: Array.isArray(definition.edges) ? definition.edges.length : 0,
+        nodes: typeof definition === 'object' && 'nodes' in definition && Array.isArray(definition.nodes) ? definition.nodes.length : 0,
+        edges: typeof definition === 'object' && 'edges' in definition && Array.isArray(definition.edges) ? definition.edges.length : 0,
         message: "Preview sẵn sàng"
       }
     }
