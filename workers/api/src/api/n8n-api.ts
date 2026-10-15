@@ -1,3 +1,4 @@
+import { requestObject } from '../lib/request-object'
 import type { Env } from "../env"
 import { buildFlowRunUrl, getFlowApiBaseUrl, type TriggerEvent } from "../lib/webhooks"
 import { json } from "../lib/response"
@@ -80,7 +81,7 @@ export async function handleFlowConnections(request: Request, env: Env): Promise
   }
 
   if (method === "POST") {
-    const body = await request.json().catch(() => ({} as Record<string, unknown>))
+    const body = await requestObject(request)
     const apiBaseUrl = getFlowApiBaseUrl(
       typeof body.api_base_url === "string" ? body.api_base_url : typeof body.n8n_base_url === "string" ? body.n8n_base_url : undefined,
       env
@@ -175,7 +176,7 @@ export async function handleFlowTriggers(request: Request, env: Env): Promise<Re
   }
 
   if (method === "POST") {
-    const body = await request.json().catch(() => ({} as Record<string, unknown>))
+    const body = await requestObject(request)
     const triggerEvent = typeof body.trigger_event === "string" ? body.trigger_event.trim() : ""
     const name = typeof body.name === "string" && body.name.trim() ? body.name.trim() : "Flow trigger"
     const connId = parseId(body.connection_id)

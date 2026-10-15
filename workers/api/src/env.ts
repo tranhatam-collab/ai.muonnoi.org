@@ -41,6 +41,8 @@ export interface Env {
   PUBLISH_API_TOKEN?: string
   // Publisher system user ID (defaults to 1 — the seeded admin user)
   PUBLISH_SYSTEM_USER_ID?: string
+  // New Studio publication is opt-in only after staging and Founder sign-off.
+  STUDIO_PUBLISH_ENABLED?: string
 
   // Mail workspace
   MAIL_API_WORKSPACE_ID?: string

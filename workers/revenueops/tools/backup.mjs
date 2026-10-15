@@ -1,0 +1,10 @@
+import { backup, DatabaseSync } from 'node:sqlite';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { fileURLToPath } from 'node:url';
+const dir=new URL('../.local/backups/',import.meta.url);await mkdir(dir,{recursive:true,mode:0o700});
+const db=new DatabaseSync(fileURLToPath(new URL('../.local/revenueops.sqlite',import.meta.url)),{readOnly:true});
+const name='revenueops-'+new Date().toISOString().replaceAll(':','-')+'.sqlite';const target=new URL(name,dir);
+await backup(db,fileURLToPath(target));db.close();
+const bytes=await readFile(target);const manifest={file:name,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex'),createdAt:new Date().toISOString(),scope:'LOCAL_ONLY'};
+await writeFile(new URL(name+'.json',dir),JSON.stringify(manifest,null,2),{mode:0o600});console.log(JSON.stringify(manifest,null,2));

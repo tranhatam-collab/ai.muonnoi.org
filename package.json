@@ -9,7 +9,16 @@
     "check:json": "node -e \"JSON.parse(require('fs').readFileSync('./data/feed.json','utf8')); console.log('feed.json OK')\"",
     "check:wrangler": "node -e \"JSON.parse(require('fs').readFileSync('./wrangler.json','utf8')); console.log('wrangler.json OK')\"",
     "check": "npm run check:json && npm run check:wrangler",
-    "lint": "echo \"No root lint task is configured for the static public shell\""
+    "lint": "echo \"No root lint task is configured for the static public shell\"",
+    "build": "node tools/build.mjs",
+    "build:api": "node tools/bundle-api.mjs",
+    "dev:studio": "node tools/bundle-api.mjs && node tools/studio-preview.mjs",
+    "dev:revenueops": "npm --prefix workers/revenueops run dev",
+    "test:publishing": "node tools/bundle-api.mjs && node --test tests/publishing.test.mjs",
+    "test:static": "node --test tests/static.test.mjs",
+    "verify": "npm run check && npm run typecheck:api && npm run test:publishing && npm run test:publishing:worker && npm run build && npm run test:static && npm --prefix workers/revenueops run verify && npm --prefix workers/revenueops run typecheck && npm --prefix workers/revenueops run build && npm --prefix workers/revenueops run test:worker",
+    "typecheck:api": "workers/revenueops/node_modules/.bin/tsc -p workers/api/tsconfig.json",
+    "test:publishing:worker": "node --test tests/publishing-workerd.mjs"
   },
   "engines": {
     "node": ">=20.0.0"

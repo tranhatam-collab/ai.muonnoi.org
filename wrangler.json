@@ -2,7 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "ai-muonnoi-org",
   "compatibility_date": "2026-03-17",
-  "pages_build_output_dir": ".",
+  "pages_build_output_dir": "dist/site",
   "vars": {
     "APP_NAME": "ai.muonnoi.org"
   }

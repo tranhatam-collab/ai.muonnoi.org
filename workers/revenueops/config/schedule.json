@@ -1,0 +1,13 @@
+{
+  "timezone": "Asia/Ho_Chi_Minh",
+  "enabled": false,
+  "dispatcher": "one coordinator, ten agent configurations",
+  "jobs": [
+    { "localTime": "08:00", "task": "review previous-day close and prepare funded capacity", "enabled": false },
+    { "localTime": "12:30", "task": "review delivery, support and quality bottlenecks", "enabled": false },
+    { "localTime": "17:30", "task": "review consented-channel drafts and costs", "enabled": false },
+    { "localTime": "23:45", "task": "prepare daily close; missing evidence remains unknown", "enabled": false }
+  ],
+  "publishing": { "enabled": false, "accounts": [], "minimumPilotPostSeparationHours": 48, "requiresVersionedApproval": true },
+  "existingChatGPTSchedules": "NOT_CHECKED; do not create duplicates or alter them"
+}

@@ -1,3 +1,4 @@
+import { requestObject } from '../lib/request-object'
 import type { Env } from "../env"
 import { fireFlowTriggers } from "../lib/webhooks"
 import { json } from "../lib/response"
@@ -21,7 +22,7 @@ export async function handleFlows(request: Request, env: Env): Promise<Response>
   }
 
   if (method === "POST") {
-    const body = await request.json().catch(() => ({} as Record<string, unknown>))
+    const body = await requestObject(request)
     const name =
       typeof body.name === "string" && body.name.trim()
         ? body.name.trim()

@@ -32,3 +32,10 @@ pnpm-debug.log*
 # local tool worktrees
 .claude/
 .pages-deploy/
+.local/
+private/
+.env.*
+.dev.vars.*
+*.sqlite*
+*.db
+*.log

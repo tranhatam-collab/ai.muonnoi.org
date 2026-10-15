@@ -1,3 +1,4 @@
+import { requestObject } from '../lib/request-object'
 import type { Env } from "../env"
 import { json } from "../lib/response"
 import { canAccessApp } from "../security/permission"
@@ -27,7 +28,7 @@ export async function handleFlowDrafts(
   }
 
   if (method === "POST") {
-    const body = await request.json().catch(() => ({} as Record<string, unknown>))
+    const body = await requestObject(request)
     const draftJson =
       typeof body.draft_json === "string"
         ? body.draft_json

@@ -1,0 +1,432 @@
+[
+  {
+    "id": "GOV01",
+    "priority": "P0",
+    "task": "Chốt bên bán và người được ủy quyền",
+    "ownerRole": "Owner/pháp lý",
+    "assignedPerson": null,
+    "acceptance": "Approval có phiên bản và phạm vi",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "GOV02",
+    "priority": "P0",
+    "task": "Repo riêng và quyền ghi thật",
+    "ownerRole": "Lead",
+    "assignedPerson": null,
+    "acceptance": "Tạo nhánh thử hợp lệ; không sửa repo live",
+    "status": "VERIFIED_WORKTREE_ONLY",
+    "evidenceOrGap": "Nhánh codex/revenueops-publishing trong repo ai.muonnoi.org; receipt GitHub phải gắn commit thực tế."
+  },
+  {
+    "id": "GOV03",
+    "priority": "P0",
+    "task": "Dev/staging/prod, secrets và Access",
+    "ownerRole": "DevOps",
+    "assignedPerson": null,
+    "acceptance": "Identity test, deny unauthorized, rotation",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "GOV04",
+    "priority": "P0",
+    "task": "Phong bì ngân sách và kill switch",
+    "ownerRole": "Finance/backend",
+    "assignedPerson": null,
+    "acceptance": "Zero-budget test; không phí ngoài trần",
+    "status": "VERIFIED_WORKTREE_ONLY",
+    "evidenceOrGap": "src/coordinator.ts + tests/coordinator.test.mjs; chưa phải giới hạn billing provider"
+  },
+  {
+    "id": "PAY01",
+    "priority": "P0",
+    "task": "Xác minh tài khoản/merchant Vietcombank",
+    "ownerRole": "Chủ tài khoản",
+    "assignedPerson": null,
+    "acceptance": "Xác thực nhà cung cấp, đúng bên bán",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "PAY02",
+    "priority": "P0",
+    "task": "Contract test adapter payment",
+    "ownerRole": "Backend",
+    "assignedPerson": null,
+    "acceptance": "Test chữ ký hợp lệ/sai, tiền thiếu/thừa",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "PAY03",
+    "priority": "P0",
+    "task": "Catalog đa SKU server-side",
+    "ownerRole": "Backend",
+    "assignedPerson": null,
+    "acceptance": "A01 không bị đổi giá, version được duyệt",
+    "status": "VERIFIED_WORKTREE_ONLY",
+    "evidenceOrGap": "catalog draft server-side; chưa duyệt thương mại"
+  },
+  {
+    "id": "PAY04",
+    "priority": "P0",
+    "task": "Đơn/transaction idempotency toàn danh mục",
+    "ownerRole": "Backend",
+    "assignedPerson": null,
+    "acceptance": "Reference trùng khác Agent bị chặn",
+    "status": "VERIFIED_WORKTREE_ONLY",
+    "evidenceOrGap": "attributeReceipts chống trùng ở core; chưa nối payment"
+  },
+  {
+    "id": "PAY05",
+    "priority": "P0",
+    "task": "Bank/fees/refunds importer chỉ đọc",
+    "ownerRole": "Finance/backend",
+    "assignedPerson": null,
+    "acceptance": "File/API có hash, time, source, completeness",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "PAY06",
+    "priority": "P0",
+    "task": "Dự phòng, phân bổ và close theo Agent",
+    "ownerRole": "Finance/backend",
+    "assignedPerson": null,
+    "acceptance": "Không double count/không fill zero",
+    "status": "VERIFIED_WORKTREE_ONLY",
+    "evidenceOrGap": "scoreFinance core; chưa có bank importer"
+  },
+  {
+    "id": "PAY07",
+    "priority": "P0",
+    "task": "Token tải, R2 riêng, email recovery",
+    "ownerRole": "Full-stack",
+    "assignedPerson": null,
+    "acceptance": "Người A không xem đơn/tệp B",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "PAY08",
+    "priority": "P0",
+    "task": "Hủy/thu hồi/quy trình hoàn tiền",
+    "ownerRole": "Ops",
+    "assignedPerson": null,
+    "acceptance": "Không coi revoke=refunded; flow có nguồn",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "PAY09",
+    "priority": "P0",
+    "task": "Hóa đơn/chính sách hỗ trợ",
+    "ownerRole": "Kế toán/pháp lý",
+    "assignedPerson": null,
+    "acceptance": "Đúng mô hình bán đã chốt",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "PAY10",
+    "priority": "P0",
+    "task": "Kiểm thử E2E được phê duyệt",
+    "ownerRole": "QA/chủ tài khoản",
+    "assignedPerson": null,
+    "acceptance": "Giao dịch test loại khỏi KPI",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "AG01",
+    "priority": "P1",
+    "task": "Registry 10 Agent, target versions",
+    "ownerRole": "Backend",
+    "assignedPerson": null,
+    "acceptance": "Đủ 10 ID, tổng 55 triệu, không nhân bản",
+    "status": "VERIFIED_WORKTREE_ONLY",
+    "evidenceOrGap": "config/agents.json; tổng 55 triệu"
+  },
+  {
+    "id": "AG02",
+    "priority": "P1",
+    "task": "Model gateway, quota, egress",
+    "ownerRole": "AI/backend",
+    "assignedPerson": null,
+    "acceptance": "Test schema, cost reserve, privacy",
+    "status": "VERIFIED_WORKTREE_ONLY",
+    "evidenceOrGap": "adapter Workers AI, schema/quota/timeout; chỉ mock tests"
+  },
+  {
+    "id": "AG03",
+    "priority": "P1",
+    "task": "Workflows, Queue, DLQ, outbox",
+    "ownerRole": "Backend",
+    "assignedPerson": null,
+    "acceptance": "Retry/lỗi timeout không double execute",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "AG04",
+    "priority": "P1",
+    "task": "Daily close, individual hit vs portfolio",
+    "ownerRole": "Finance/backend",
+    "assignedPerson": null,
+    "acceptance": "Agent thiếu không bị dư Agent khác che",
+    "status": "VERIFIED_WORKTREE_ONLY",
+    "evidenceOrGap": "portfolioScore; chưa có daily close nguồn thật"
+  },
+  {
+    "id": "AG05",
+    "priority": "P1",
+    "task": "Consent + allowlist kênh",
+    "ownerRole": "Ops/full-stack",
+    "assignedPerson": null,
+    "acceptance": "Không đăng/send khi thiếu approval",
+    "status": "VERIFIED_WORKTREE_ONLY",
+    "evidenceOrGap": "khóa xuất bản mặc định; chưa có adapter kênh"
+  },
+  {
+    "id": "AG06",
+    "priority": "P1",
+    "task": "Dashboard true states và audit",
+    "ownerRole": "Full-stack",
+    "assignedPerson": null,
+    "acceptance": "Unknown/HIT/MISS tách, nguồn mở được",
+    "status": "VERIFIED_WORKTREE_ONLY",
+    "evidenceOrGap": "bàn điều hành local, dữ liệu thật null"
+  },
+  {
+    "id": "PROD01",
+    "priority": "P1",
+    "task": "A01 kiểm chất lượng và license",
+    "ownerRole": "Product/QA",
+    "assignedPerson": null,
+    "acceptance": "Mẫu/file hoàn chỉnh khớp mô tả",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "PROD02",
+    "priority": "P1",
+    "task": "A02 một ngành đầu",
+    "ownerRole": "Product/chuyên gia",
+    "assignedPerson": null,
+    "acceptance": "10 tình huống kiểm đúng, không bịa case",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "PROD03",
+    "priority": "P1",
+    "task": "A03 crawler và SSRF tests",
+    "ownerRole": "Backend/security",
+    "assignedPerson": null,
+    "acceptance": "IP nội bộ/redirect/rebinding bị chặn",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "HR01",
+    "priority": "P1",
+    "task": "Chốt quy chế/hợp đồng/dữ liệu người làm",
+    "ownerRole": "HR/pháp lý",
+    "assignedPerson": null,
+    "acceptance": "Quyền từ chối, công và tranh chấp rõ",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "HR02",
+    "priority": "P1",
+    "task": "Auth thật thay actor input local",
+    "ownerRole": "Backend",
+    "assignedPerson": null,
+    "acceptance": "JWT/role/CSRF/IDOR test đạt",
+    "status": "VERIFIED_WORKTREE_ONLY",
+    "evidenceOrGap": "Access JWT signature/roles tests; chưa cấu hình Access thật"
+  },
+  {
+    "id": "HR03",
+    "priority": "P1",
+    "task": "Transaction budget coordinator",
+    "ownerRole": "Backend",
+    "assignedPerson": null,
+    "acceptance": "Hai Agent cạnh tranh tiền không vượt",
+    "status": "VERIFIED_WORKTREE_ONLY",
+    "evidenceOrGap": "coordinator SQLite; test hai kết nối cạnh tranh"
+  },
+  {
+    "id": "HR04",
+    "priority": "P1",
+    "task": "Worker profile, acceptance, nộp bài",
+    "ownerRole": "Full-stack",
+    "assignedPerson": null,
+    "acceptance": "Consent và quyền xem đúng",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "HR05",
+    "priority": "P1",
+    "task": "QA độc lập và khoản phải trả",
+    "ownerRole": "Ops/finance",
+    "assignedPerson": null,
+    "acceptance": "Không tự duyệt; không API chuyển tiền",
+    "status": "VERIFIED_WORKTREE_ONLY",
+    "evidenceOrGap": "state machine đến PAYABLE_NOT_PAID; chưa có hợp đồng thật"
+  },
+  {
+    "id": "HR06",
+    "priority": "P2",
+    "task": "Dispute/cancel/expire/release funds",
+    "ownerRole": "Backend/HR",
+    "assignedPerson": null,
+    "acceptance": "Không hủy công đã làm để bảo vệ KPI",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "EXP01",
+    "priority": "P1",
+    "task": "Một kênh sở hữu và mẫu miễn phí",
+    "ownerRole": "Owner/marketing",
+    "assignedPerson": null,
+    "acceptance": "Đúng quyền, đo được nguồn truy cập",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "EXP02",
+    "priority": "P1",
+    "task": "Hai thông điệp, 14 ngày pilot",
+    "ownerRole": "Product",
+    "assignedPerson": null,
+    "acceptance": "Dữ liệu thật, không kết luận mẫu nhỏ",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "EXP03",
+    "priority": "P1",
+    "task": "Unit economics thực và năng lực",
+    "ownerRole": "Finance/ops",
+    "assignedPerson": null,
+    "acceptance": "Giờ người/chi phí/returns đầy đủ",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "PROD04",
+    "priority": "P2",
+    "task": "A04 CSV pipeline",
+    "ownerRole": "Product/dev",
+    "assignedPerson": null,
+    "acceptance": "Validator và reviewer đủ công suất",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "PROD05",
+    "priority": "P2",
+    "task": "A05 nguồn có quyền + fidelity QA",
+    "ownerRole": "Product",
+    "assignedPerson": null,
+    "acceptance": "Không trích giả/clone giọng",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "PROD07",
+    "priority": "P2",
+    "task": "A07 versioned brand/publishing",
+    "ownerRole": "Product/dev",
+    "assignedPerson": null,
+    "acceptance": "Client duyệt từng bản hoặc template rule",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "PROD08",
+    "priority": "P2",
+    "task": "A08 template sandbox",
+    "ownerRole": "Frontend/security",
+    "assignedPerson": null,
+    "acceptance": "Source sạch, build cô lập, visual tests",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "PROD06",
+    "priority": "P3",
+    "task": "A06 nội dung/lộ trình/entitlement",
+    "ownerRole": "Product/dev",
+    "assignedPerson": null,
+    "acceptance": "Đủ 12 bài/30 thực hành đã duyệt",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "PROD09",
+    "priority": "P3",
+    "task": "A09 ba module mô phỏng",
+    "ownerRole": "Technical lead",
+    "assignedPerson": null,
+    "acceptance": "Test và runbook, phạm vi không live",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "PROD10",
+    "priority": "P3",
+    "task": "A10 thư viện/10 seats/tenant",
+    "ownerRole": "Product/dev",
+    "assignedPerson": null,
+    "acceptance": "Đủ thư viện, IDOR và license tests",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "OPS01",
+    "priority": "P0",
+    "task": "Alert, backup và restore drill",
+    "ownerRole": "DevOps/QA",
+    "assignedPerson": null,
+    "acceptance": "Phục hồi mẫu có log và thời gian đo",
+    "status": "VERIFIED_WORKTREE_ONLY",
+    "evidenceOrGap": "backup và restore local; provider DR chưa kiểm tra"
+  },
+  {
+    "id": "OPS02",
+    "priority": "P0",
+    "task": "Secret/PII audit, dependency review",
+    "ownerRole": "Security",
+    "assignedPerson": null,
+    "acceptance": "Không dữ liệu tài khoản trong public source",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "OPS03",
+    "priority": "P1",
+    "task": "Xử lý sự cố và nhật ký thay đổi",
+    "ownerRole": "Ops",
+    "assignedPerson": null,
+    "acceptance": "Người nhận escalation và drill",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  },
+  {
+    "id": "OPS04",
+    "priority": "P2",
+    "task": "Kiểm chứng 30 ngày, quyết định scale",
+    "ownerRole": "Owner/finance",
+    "assignedPerson": null,
+    "acceptance": "Tỷ lệ ngày đạt từng Agent có evidence",
+    "status": "NOT_CHECKED",
+    "evidenceOrGap": "Chưa có implementation hoặc receipt tương ứng trong repo mới"
+  }
+]

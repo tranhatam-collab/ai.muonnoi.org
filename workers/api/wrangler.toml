@@ -4,6 +4,8 @@ compatibility_date = "2025-01-01"
 
 [vars]
 ENVIRONMENT = "production"
+# Kept locked until staging migration, end-to-end checks and Founder approval.
+STUDIO_PUBLISH_ENABLED = "false"
 APP_DOMAIN = "api.muonnoi.org"
 APP_ORIGIN = "https://ai.muonnoi.org"
 API_ORIGIN = "https://api.muonnoi.org"

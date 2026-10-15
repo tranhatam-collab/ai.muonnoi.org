@@ -1,0 +1,16 @@
+node_modules/
+.local/
+.wrangler/
+dist/
+private/
+.env
+.env.*
+!.env.example
+.dev.vars*
+!.dev.vars.example
+*.sqlite*
+*.db*
+*.zip
+*.xlsx
+*.log
+.DS_Store

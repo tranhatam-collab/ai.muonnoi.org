@@ -1,3 +1,4 @@
+import { requestObject } from '../lib/request-object'
 import type { Env } from "../env"
 import { json, corsHeaders } from "../lib/response"
 import { checkRateLimit } from "../lib/rate-limit"
@@ -69,7 +70,7 @@ function resolveCookieOptions(request: Request, env: Env) {
 export async function handleLogin(request: Request, env: Env): Promise<Response> {
   const origin = request.headers.get("Origin")
   const cookieOptions = resolveCookieOptions(request, env)
-  const body = await request.json().catch(() => ({} as Record<string, unknown>))
+  const body = await requestObject(request)
 
   const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : ""
   const password = typeof body.password === "string" ? body.password : ""
@@ -137,7 +138,7 @@ export async function handleRegister(
 ): Promise<Response> {
   const origin = request.headers.get("Origin")
   const cookieOptions = resolveCookieOptions(request, env)
-  const body = await request.json().catch(() => ({} as Record<string, unknown>))
+  const body = await requestObject(request)
 
   const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : ""
   const name = typeof body.name === "string" ? body.name.trim() : ""
@@ -286,7 +287,7 @@ export async function handleUpdateProfile(request: Request, env: Env): Promise<R
   const user = await getCurrentUser(request, env)
   if (!user) return json({ ok: false, error: "Chưa đăng nhập" }, 401, origin, env)
 
-  const body = await request.json().catch(() => ({} as Record<string, unknown>))
+  const body = await requestObject(request)
   const fields: Parameters<typeof updateUserProfile>[2] = {}
   if (typeof body.name === "string") {
     const nextName = body.name.trim()
