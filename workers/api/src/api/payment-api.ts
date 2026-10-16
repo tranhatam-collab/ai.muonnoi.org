@@ -29,6 +29,20 @@ function sanitizeLog(obj: unknown): unknown {
   return safe
 }
 
+function isSha256Hex(value: string): boolean {
+  return /^[a-f0-9]{64}$/i.test(value)
+}
+
+async function sha256Hex(value: string): Promise<string> {
+  const bytes = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value))
+  return Array.from(new Uint8Array(bytes), (byte) => byte.toString(16).padStart(2, "0")).join("")
+}
+
+function isUniqueConstraintError(error: unknown): boolean {
+  const message = error instanceof Error ? error.message : String(error)
+  return /unique|constraint/i.test(message)
+}
+
 // POST /api/payment/create-intent
 export async function handlePaymentCreateIntent(request: Request, env: Env): Promise<Response> {
   const origin = request.headers.get("Origin")
@@ -139,53 +153,85 @@ export async function handlePaymentWebhook(request: Request, env: Env): Promise<
   const origin = request.headers.get("Origin")
   const rawBody = await request.text()
 
-  // Signature check (HMAC-SHA256 when secret configured)
+  // This route is a provider callback. It must never process an unsigned event.
+  if (!env.PAYMENT_WEBHOOK_SECRET) {
+    return json({ ok: false, error: { code: "WEBHOOK_NOT_CONFIGURED" } }, 503, origin, env)
+  }
+
   const sig = request.headers.get("X-Signature") ?? request.headers.get("x-signature") ?? ""
-  if (env.PAYMENT_WEBHOOK_SECRET && sig) {
-    // Web Crypto HMAC verify
-    try {
-      const key = await crypto.subtle.importKey(
-        "raw", new TextEncoder().encode(env.PAYMENT_WEBHOOK_SECRET),
-        { name: "HMAC", hash: "SHA-256" }, false, ["verify"]
-      )
-      const sigBytes = Uint8Array.from(sig.match(/../g)!.map(h => parseInt(h, 16)))
-      const valid = await crypto.subtle.verify("HMAC", key, sigBytes, new TextEncoder().encode(rawBody))
-      if (!valid) {
-        console.warn("[webhook] invalid signature")
-        return json({ ok: false, error: { code: "INVALID_SIGNATURE" } }, 401, origin, env)
-      }
-    } catch (err) {
-      console.error("[webhook] sig verify error", err)
+  if (!sig) {
+    return json({ ok: false, error: { code: "MISSING_SIGNATURE" } }, 401, origin, env)
+  }
+  if (!isSha256Hex(sig)) {
+    return json({ ok: false, error: { code: "INVALID_SIGNATURE" } }, 401, origin, env)
+  }
+
+  try {
+    const key = await crypto.subtle.importKey(
+      "raw", new TextEncoder().encode(env.PAYMENT_WEBHOOK_SECRET),
+      { name: "HMAC", hash: "SHA-256" }, false, ["verify"]
+    )
+    const sigBytes = Uint8Array.from(sig.match(/../g)!.map((hex) => parseInt(hex, 16)))
+    const valid = await crypto.subtle.verify("HMAC", key, sigBytes, new TextEncoder().encode(rawBody))
+    if (!valid) {
+      return json({ ok: false, error: { code: "INVALID_SIGNATURE" } }, 401, origin, env)
     }
+  } catch {
+    return json({ ok: false, error: { code: "INVALID_SIGNATURE" } }, 401, origin, env)
   }
 
   let payload: Record<string, unknown>
   try { payload = JSON.parse(rawBody) as Record<string, unknown> } catch { return json({ ok: false, error: { code: "INVALID_JSON" } }, 400, origin, env) }
 
-  const eventId = typeof payload.event_id === "string" ? payload.event_id : newId("evt")
+  const eventId = typeof payload.event_id === "string" ? payload.event_id.trim() : ""
+  if (!eventId) {
+    return json({ ok: false, error: { code: "MISSING_EVENT_ID" } }, 400, origin, env)
+  }
   const eventType = typeof payload.event_type === "string" ? payload.event_type : "unknown"
   const intentId = typeof payload.intent_id === "string" ? payload.intent_id : null
+  const provider = typeof payload.provider === "string" ? payload.provider : PROVIDER_DEFAULT
+  const payloadHash = await sha256Hex(rawBody)
 
-  // Replay guard via event_id uniqueness
+  const isCompleted = (eventType === "payment.completed" || eventType === "payment.success") && Boolean(intentId)
+  const isFailed = (eventType === "payment.failed" || eventType === "payment.error") && Boolean(intentId)
   const logId = newId("whl")
-  try {
-    await env.iai_flow_db.prepare(
-      `INSERT INTO payment_webhook_log (id, provider, event_type, event_id, intent_id, status, created_at)
-       VALUES (?, ?, ?, ?, ?, 'received', datetime('now'))`
-    ).bind(logId, payload.provider ?? PROVIDER_DEFAULT, eventType, eventId, intentId).run()
-  } catch {
-    // Duplicate event_id → already processed
-    return json({ ok: true, data: { replayed: true } }, 200, origin, env)
+  const logStatus = isCompleted || isFailed ? "processed" : "received"
+
+  // D1 batch rolls every statement back if one fails. The receipt, audit row and
+  // payment state must commit together so provider retries cannot be poisoned by
+  // a receipt that survived a partial failure.
+  const statements = [
+    env.iai_flow_db.prepare(
+      `INSERT INTO payment_webhook_receipts (event_id, provider, intent_id, payload_hash, received_at)
+       VALUES (?, ?, ?, ?, datetime('now'))`
+    ).bind(eventId, provider, intentId, payloadHash),
+    env.iai_flow_db.prepare(
+      `INSERT INTO payment_webhook_log (id, provider, event_type, event_id, intent_id, payload_hash, status, processed_at, created_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ${logStatus === "processed" ? "datetime('now')" : "NULL"}, datetime('now'))`
+    ).bind(logId, provider, eventType, eventId, intentId, payloadHash, logStatus)
+  ]
+
+  if (isCompleted) {
+    statements.push(env.iai_flow_db.prepare(
+      `UPDATE payment_intents SET status = 'completed', completed_at = datetime('now'), updated_at = datetime('now') WHERE id = ?`
+    ).bind(intentId))
+  }
+  if (isFailed) {
+    statements.push(env.iai_flow_db.prepare(
+      `UPDATE payment_intents SET status = 'failed', updated_at = datetime('now') WHERE id = ?`
+    ).bind(intentId))
   }
 
-  if ((eventType === "payment.completed" || eventType === "payment.success") && intentId) {
-    await env.iai_flow_db.prepare(
-      `UPDATE payment_intents SET status = 'completed', completed_at = datetime('now'), updated_at = datetime('now') WHERE id = ?`
-    ).bind(intentId).run()
-    await env.iai_flow_db.prepare(
-      `UPDATE payment_webhook_log SET status = 'processed', processed_at = datetime('now') WHERE id = ?`
-    ).bind(logId).run()
+  try {
+    await env.iai_flow_db.batch(statements)
+  } catch (error) {
+    if (isUniqueConstraintError(error)) {
+      return json({ ok: true, data: { replayed: true } }, 200, origin, env)
+    }
+    throw error
+  }
 
+  if (isCompleted && intentId) {
     // Send payment confirmation email — fire-and-forget
     const intent = await env.iai_flow_db.prepare(
       `SELECT pi.amount, pi.currency, pi.purpose,
@@ -208,14 +254,7 @@ export async function handlePaymentWebhook(request: Request, env: Env): Promise<
     }
   }
 
-  if ((eventType === "payment.failed" || eventType === "payment.error") && intentId) {
-    await env.iai_flow_db.prepare(
-      `UPDATE payment_intents SET status = 'failed', updated_at = datetime('now') WHERE id = ?`
-    ).bind(intentId).run()
-    await env.iai_flow_db.prepare(
-      `UPDATE payment_webhook_log SET status = 'processed', processed_at = datetime('now') WHERE id = ?`
-    ).bind(logId).run()
-
+  if (isFailed && intentId) {
     // Send payment failure email — fire-and-forget
     const intent = await env.iai_flow_db.prepare(
       `SELECT pi.amount, pi.currency, pi.purpose,

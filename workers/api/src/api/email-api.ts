@@ -9,11 +9,29 @@ function mailBase(env: Env): string {
   return (env.MAIL_API_BASE_URL ?? "https://mail.iai.one/_mail/v1").replace(/\/+$/, "")
 }
 
+function hasInternalEmailAccess(request: Request, env: Env): boolean {
+  const token = env.INTERNAL_EMAIL_TOKEN
+  if (!token) return false
+  return request.headers.get("Authorization") === `Bearer ${token}`
+}
+
+function internalEmailAccessResponse(origin: string | null, env: Env): Response | null {
+  if (!env.INTERNAL_EMAIL_TOKEN) {
+    return json({ ok: false, error: { code: "INTERNAL_EMAIL_NOT_CONFIGURED" } }, 503, origin, env)
+  }
+  return null
+}
+
 // POST /api/email/send  (internal / system use only — not public)
 export async function handleEmailSend(request: Request, env: Env): Promise<Response> {
   const origin = request.headers.get("Origin")
 
   if (request.method !== "POST") return json({ ok: false, error: "Method Not Allowed" }, 405, origin, env)
+  const unavailable = internalEmailAccessResponse(origin, env)
+  if (unavailable) return unavailable
+  if (!hasInternalEmailAccess(request, env)) {
+    return json({ ok: false, error: { code: "UNAUTHORIZED" } }, 401, origin, env)
+  }
 
   const idempotencyKey = request.headers.get("Idempotency-Key") ?? newId("idem")
 
@@ -92,6 +110,11 @@ export async function handleEmailSend(request: Request, env: Env): Promise<Respo
 // GET /api/email/:id
 export async function handleEmailGetById(request: Request, env: Env, deliveryId: string): Promise<Response> {
   const origin = request.headers.get("Origin")
+  const unavailable = internalEmailAccessResponse(origin, env)
+  if (unavailable) return unavailable
+  if (!hasInternalEmailAccess(request, env)) {
+    return json({ ok: false, error: { code: "UNAUTHORIZED" } }, 401, origin, env)
+  }
   const row = await env.iai_flow_db.prepare(
     "SELECT id, template_id, locale, purpose, status, provider, attempts, sent_at, created_at FROM email_deliveries WHERE id = ?"
   ).bind(deliveryId).first<Record<string, unknown>>()

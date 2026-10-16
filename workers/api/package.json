@@ -11,7 +11,9 @@
     "d1:migrate:flow-ai": "wrangler d1 execute iai-flow-db --local --file=./migrations/0005_n8n_ai.sql --config wrangler.toml",
     "d1:migrate:v1": "wrangler d1 execute iai-flow-db --local --file=./migrations/0006_v1_security.sql --config wrangler.toml",
     "d1:migrate:mobile": "wrangler d1 execute iai-flow-db --local --file=./migrations/0007_mobile_push_tokens.sql --config wrangler.toml",
-    "d1:migrate:all:local": "npm run d1:migrate:local && npm run d1:migrate:auth && npm run d1:migrate:seed && npm run d1:migrate:social && npm run d1:migrate:flow-ai && npm run d1:migrate:v1 && npm run d1:migrate:mobile",
+    "d1:migrate:payment-email": "wrangler d1 execute iai-flow-db --local --file=./migrations/0008_payment_email.sql --config wrangler.toml",
+    "d1:migrate:webhook-receipts": "wrangler d1 execute iai-flow-db --local --file=./migrations/0009_payment_webhook_receipts.sql --config wrangler.toml",
+    "d1:migrate:all:local": "npm run d1:migrate:local && npm run d1:migrate:auth && npm run d1:migrate:seed && npm run d1:migrate:social && npm run d1:migrate:flow-ai && npm run d1:migrate:v1 && npm run d1:migrate:mobile && npm run d1:migrate:payment-email && npm run d1:migrate:webhook-receipts",
     "d1:tables:local": "wrangler d1 execute iai-flow-db --local --command=\"SELECT name FROM sqlite_master WHERE type='table';\" --config wrangler.toml"
   },
   "devDependencies": {

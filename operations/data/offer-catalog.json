@@ -1,0 +1,46 @@
+{
+  "currency": "VND",
+  "status_note": "All prices are draft proposals pending buyer validation, legal/tax setup and a verified payment path.",
+  "offers": [
+    {
+      "id": "studio-pilot-14d",
+      "status": "DRAFT",
+      "name": "Studio Pilot 14 ngày",
+      "price_vnd": 1500000,
+      "billing": "one_time",
+      "buyer": "creator hoặc doanh nghiệp nhỏ cần hệ nội dung có kiểm duyệt",
+      "delivery": ["brief thương hiệu", "12 bản nháp nội dung", "lịch 14 ngày", "checklist nguồn và quyền sử dụng", "báo cáo bàn giao"],
+      "exclusions": ["không cam kết doanh thu", "không tự đăng ra kênh chưa được cấu hình", "không dùng claim chưa kiểm chứng"]
+    },
+    {
+      "id": "creator-studio-monthly",
+      "status": "DRAFT",
+      "name": "Creator Studio",
+      "price_vnd": 1990000,
+      "billing": "monthly",
+      "buyer": "creator đã hoàn thành Pilot",
+      "delivery": ["20 nội dung/tháng", "thư viện kịch bản", "báo cáo hiệu quả", "một vòng chỉnh sửa mỗi asset"],
+      "exclusions": ["không bao gồm media buying", "không đảm bảo reach hay doanh thu"]
+    },
+    {
+      "id": "team-growth-studio-monthly",
+      "status": "DRAFT",
+      "name": "Team Growth Studio",
+      "price_vnd": 4990000,
+      "billing": "monthly",
+      "buyer": "nhóm kinh doanh có người duyệt nội dung",
+      "delivery": ["workflow brief-to-approval", "40 nội dung/tháng", "gói phân phối đa kênh", "báo cáo funnel"],
+      "exclusions": ["không tự gửi tin nhắn hay đăng bài nếu thiếu quyền tài khoản"]
+    },
+    {
+      "id": "b2b-workflow-setup",
+      "status": "DRAFT",
+      "name": "B2B Workflow Setup",
+      "price_vnd": 9900000,
+      "billing": "one_time",
+      "buyer": "doanh nghiệp cần workflow AI có audit trail",
+      "delivery": ["bản đồ quy trình", "thiết lập Studio có kiểm duyệt", "dashboard vận hành", "tài liệu bàn giao", "đào tạo nghiệm thu"],
+      "exclusions": ["tích hợp bên thứ ba cần scope và báo giá riêng"]
+    }
+  ]
+}

@@ -33,6 +33,8 @@ export interface Env {
   // Mail integration (mail.iai.one)
   MAIL_API_BASE_URL?: string
   MAIL_API_KEY?: string
+  // Service credential for the private /api/email/* control plane.
+  INTERNAL_EMAIL_TOKEN?: string
   EMAIL_FROM?: string
   EMAIL_FROM_NOREPLY?: string
   SUPPORT_EMAIL?: string
