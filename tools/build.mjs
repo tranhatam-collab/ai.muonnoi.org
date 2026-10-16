@@ -15,7 +15,7 @@ async function tree(dir){
  }
 }
 for(const file of ['index.html','site.js','style.css','_headers','robots.txt','sitemap.xml'])await copy(file);
-for(const dir of ['agents','app','assets','blog','data','login','post','profile','studio'])await tree(dir);
+for(const dir of ['agents','app','assets','blog','data','login','offers','post','profile','studio'])await tree(dir);
 // Engineering plans and evidence live in docs/ too. Only the pre-existing public guide is published.
 await copy('docs/index.html');
 await mkdir(resolve(root,'.local'),{recursive:true});
