@@ -55,6 +55,16 @@ The automation must stop the affected external action, record the reason, and co
 
 ## Records
 
+### Local Pilot delivery snapshot
+
+Run `npm run prepare:pilot:delivery` from this repo. The command uses only the fixed fictional Pilot sources and writes a new private local folder under `.local/pilot-deliveries/`; it does not send, publish or call a provider. Each snapshot contains 12 draft files, the 14-day CSV calendar, scope mapping, blank review/acceptance records, null actuals, source brief and a SHA-256 manifest (20 files total). Images/video production is outside this text-only sample scope.
+
+Keep the printed manifest digest in a separate local receipt. Verify later with `node tools/pilot-delivery.mjs --verify /absolute/path/to/.local/pilot-deliveries/pilot-XXXX TRUSTED_MANIFEST_SHA256`. Never derive the trusted digest from the folder being checked: that would not detect an altered manifest. Verification rejects missing/extra files, altered bytes, links and unsafe paths. A changed source creates a new snapshot and digest; it cannot reuse the old receipt. This is a local integrity check, not a signature, customer delivery, acceptance, production backup or payment proof. The tool is not a general importer or customer-data sanitizer.
+
+The isolated copy/restore and corruption cases run in `npm run test:pilot:delivery`, included in `npm run verify`. `.local/` is Git-ignored and excluded from the curated Pages build. Real customer delivery still requires a verified scope, rights, approver and destination; never commit customer data to these fictional source files.
+
+### Source and operational records
+
 - `data/offer-catalog.json`: draft commercial offers and delivery scope.
 - `data/content-calendar-30-days.json`: first 30-day draft queue; every item remains unpublished.
 - `content-scripts.md`: reusable Vietnamese scripts and approval notes.

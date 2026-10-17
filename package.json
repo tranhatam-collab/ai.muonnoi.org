@@ -22,13 +22,15 @@
     "test:intake:worker": "node tools/bundle-api.mjs && node --test tests/intake-workerd.mjs",
     "test:intake:ui": "node tools/bundle-api.mjs && node --test tests/intake-ui.test.mjs tests/intake-numeric-identity.test.mjs",
     "test:static": "node --test tests/static.test.mjs tests/login-redirect.test.mjs",
-    "verify": "npm run check && npm run typecheck:api && npm run test:publishing && npm run test:payment-email-security && npm run test:payment-email-workerd && npm run test:publishing:worker && npm run test:intake:worker && npm run test:intake:ui && npm run test:intake:actions && npm run test:intake:triage && npm run test:intake:staging && npm run build && npm run test:static && npm --prefix workers/revenueops run verify && npm --prefix workers/revenueops run typecheck && npm --prefix workers/revenueops run build && npm --prefix workers/revenueops run test:worker",
+    "verify": "npm run check && npm run typecheck:api && npm run test:publishing && npm run test:payment-email-security && npm run test:payment-email-workerd && npm run test:publishing:worker && npm run test:intake:worker && npm run test:intake:ui && npm run test:intake:actions && npm run test:intake:triage && npm run test:intake:staging && npm run test:pilot:delivery && npm run build && npm run test:static && npm --prefix workers/revenueops run verify && npm --prefix workers/revenueops run typecheck && npm --prefix workers/revenueops run build && npm --prefix workers/revenueops run test:worker",
     "typecheck:api": "workers/revenueops/node_modules/.bin/tsc -p workers/api/tsconfig.json",
     "test:publishing:worker": "node --test tests/publishing-workerd.mjs",
     "test:intake:actions": "node --test tests/intake-actions.test.mjs",
     "test:intake:triage": "node tools/bundle-api.mjs && node --test tests/intake-triage-workerd.mjs",
     "test:intake:staging": "node --test tests/intake-staging.test.mjs",
-    "prepare:intake:staging": "node tools/prepare-intake-staging.mjs"
+    "prepare:intake:staging": "node tools/prepare-intake-staging.mjs",
+    "prepare:pilot:delivery": "node tools/pilot-delivery.mjs",
+    "test:pilot:delivery": "node --test tests/pilot-delivery.test.mjs"
   },
   "engines": {
     "node": ">=20.0.0"
