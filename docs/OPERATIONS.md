@@ -18,6 +18,8 @@ Phạm vi: repo `tranhatam-collab/ai.muonnoi.org`, nhánh `codex/ai-muonnoi-auto
 | Staging runtime | `BLOCKED` | Chưa có D1 riêng, cấu hình origin/Access và danh tính thử được chỉ định, receipt kiểm soát chi phí. Bundle local cố ý có placeholder và flags tắt. |
 | Tiền đã đối soát | `BLOCKED` | Chưa kết nối nguồn đơn/giao dịch/settlement; actuals vẫn `null`. Workbook/giá/brief/receipt kỹ thuật không phải doanh thu. |
 
+Founder đã chọn **sẽ chỉ định tài khoản Cloudflare Free riêng** trong phiên 17/10. Chưa có account ID mới; generator dùng `__CLOUDFLARE_FREE_ACCOUNT_ID_REQUIRED__` thay vì account Paid đang audit. Khi nhận ID, xác minh plan/quota/quyền và D1 riêng trước khi điền target, không suy đoán tài khoản từ tên đăng nhập.
+
 ### Implementation hiện tại
 
 - Tác giả giữ brief riêng tư mặc định, kể cả brief cũ. `/offers/brief/` cho phép chia sẻ có chủ đích và thu hồi quyền xem; không mở đơn, thanh toán, email hay đăng bài. Thu hồi chặn lần đọc sau, không thể xóa thông tin người vận hành đã đọc.
@@ -45,6 +47,13 @@ Chromium local dưới CSP: tạo brief → riêng tư → cấp quyền → ope
 Failure path trong Chromium: chặn phản hồi sau khi backend local đã commit → giữ pending → đọc history đối chiếu đúng receipt; chặn trước khi gửi → tạm gác → chọn lại brief → nhập lại đúng nội dung → xác nhận thành công với **cùng request key**, phiên bản tăng đúng một. Queue cập nhật cùng trạng thái detail sau lưu/đối soát. Desktop 1440 có scrollWidth=1440; ảnh `output/playwright/triage-desktop.png`. Hai lỗi mạng trong console ở failure path là do route.abort chủ động của test, không diễn giải thành happy-path lỗi.
 
 Các receipt này chỉ chứng minh local source/test; chưa chứng minh auth thật, remote D1, staging deployment, production, kênh bán hàng hay thu tiền. Artifact web hiện **43 file public chọn lọc**; workbook/schema/source Worker không thuộc artifact. Giá và hai phép tính công sức trong workbook đã kiểm khớp catalog và tổng; chỉ kiểm schema subset tại local, chưa chạy validator JSON Schema đầy đủ.
+
+### Receipt GitHub và preview triage — 17/10, 08:40 (UTC+7)
+
+- Source push thành công: `785c7da623e4bbaaa4a3426345dea289eb760c71` vào đúng nhánh `codex/ai-muonnoi-autonomous-ops`. Không merge production.
+- Cloudflare Pages deployment **`a1dea1f2-e456-483f-b809-9d57009961b7`**, status **success**, duration 18 giây; log clone đúng full SHA, build `node tools/build.mjs`, output `dist/site`, 43 file chọn lọc/42 assets + rule headers, không có Functions.
+- Preview đã mở bằng trình duyệt: https://a1dea1f2.ai-muonnoi-org.pages.dev/studio/intake/ — ghi rõ offline, không tải brief khách, nút đọc/ghi disabled; không có error/warning trong log tab tại lần kiểm. Đó là receipt trang tĩnh, không phải backend live.
+- Sau receipt code này, Founder chọn tài khoản Free riêng: chỉ đổi placeholder account trong generator + assertion tương ứng và tài liệu, không đổi asset web; staging suite chạy lại **3/3**, exit 0. Chờ account ID mới và danh tính thử, không dùng account Paid vừa audit.
 
 ## Vòng triển khai Pilot — receipt lịch sử 17/10/2026
 

@@ -96,7 +96,7 @@ test('generator produces an inert, isolated staging bundle from the current inta
   ]);
 
   assert.match(config, /^name = "ai-muonnoi-studio-staging"$/m);
-  assert.match(config, /^account_id = "93112cc89181e75335cbd7ef7e392ba3"$/m);
+  assert.match(config, /^account_id = "__CLOUDFLARE_FREE_ACCOUNT_ID_REQUIRED__"$/m);
   assert.match(config, /^workers_dev = true$/m);
   assert.match(config, /^database_id = "__SEPARATE_STAGING_D1_ID_REQUIRED__"$/m);
   assert.match(config, /^STAGING_AUTH_ENABLED = "false"$/m);

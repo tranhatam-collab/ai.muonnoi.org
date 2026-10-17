@@ -40,7 +40,7 @@ const schema = fragments.map(([label, sql]) => `-- source: ${label}\n${sql}`).jo
 const config = `name = "ai-muonnoi-studio-staging"
 main = "../../workers/api/src/staging.ts"
 compatibility_date = "2026-10-17"
-account_id = "93112cc89181e75335cbd7ef7e392ba3"
+account_id = "__CLOUDFLARE_FREE_ACCOUNT_ID_REQUIRED__"
 workers_dev = true
 
 [vars]
