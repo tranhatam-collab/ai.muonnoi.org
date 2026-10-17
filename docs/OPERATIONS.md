@@ -2,6 +2,23 @@
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng diễn tập nghiệm thu và đối soát — 17/10/2026, 09:59 (UTC+7)
+
+Phạm vi: đúng remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git`, nhánh `codex/ai-muonnoi-autonomous-ops`, worktree `/private/tmp/ai-muonnoi-autonomous-ops`. Baseline đầu vòng `7c090f467cb6a479cfb0f92ae8e98378a95111af`, sạch. Code mới commit **`5705c1da3a2e93ae64b689c461eef0eb53a88440`**; receipt diễn tập sinh từ worktree sạch tại SHA này. Không đổi các checkout team. Phần này cập nhật việc tiếp theo, giữ nguyên receipt cũ và bộ Pilot đã đóng gói.
+
+**HOLD chưa đổi:** chưa nhận account ID Cloudflare Free riêng, danh tính thử, cấu hình staging/Access/D1 hoặc kênh bán hàng và nguồn đối soát thật. Chưa có bằng chứng thu tiền; actuals giữ `null`. Không dùng số tiền fixture làm forecast, pipeline hay tiền thực thu.
+
+- `VERIFIED_CURRENT` — `tools/commercial-records.mjs` kiểm năm loại hồ sơ: qualification, proposal, acceptance, revision, reconciliation. Dùng đúng tập keyword schema có trong workbook, từ chối keyword/ref chưa hỗ trợ; chưa phải JSON Schema engine tổng quát. Kiểm trường bắt buộc, ref trùng, ngày/thời gian, VND nguyên an toàn và trạng thái. Ref có chữ chỉ vượt kiểm cấu trúc, không chứng minh consent/quyền/receipt thật.
+- `VERIFIED_CURRENT` — diễn tập **16 chuyển trạng thái**, **8 tình huống bị từ chối**: gửi chưa rõ không reset; thiếu settlement; đổi manifest đã chấp nhận; thiếu delivery; revision còn mở; transaction ref trùng; net sai; phí chưa biết. Sau sửa asset, manifest mới quay lại review và bỏ receipt cũ. Record cuối giữ bất biến; việc đổi kỳ/điều chỉnh cần record mới, không tự ghi đè lịch sử.
+- `VERIFIED_CURRENT` — `npm run verify` exit 0: **136 tests, 136 pass, 0 fail/cancelled/skipped/TODO**; typecheck/build đạt, Worker build chỉ dry-run. Log `.local/verify-commercial-2026-10-17.log`. Sau bổ sung so sánh record không phụ thuộc thứ tự JSON keys, chạy lại `check:operations` và suite commercial **20/20**, exit 0; log `.local/recheck-commercial-2026-10-17.log`.
+- `VERIFIED_CURRENT` — `npm run rehearse:commercial` chỉ tạo receipt local mới; không nhận file khách và từ chối template nguồn đã điền. Đã đọc lại receipt, kiểm SHA-256 và kiểm lại cả 16 chuyển trạng thái. Artifact `.local/commercial-rehearsals/rehearsal-SlHPZh/receipt.json`; receipt tóm tắt `.local/commercial-rehearsal-receipt-2026-10-17.json`; SHA-256 **`cb22915ef56c7243689493c7046f80340958dd689ec2a1b90cb161e3aaf0e0fa`**. Header `COMMERCIAL_REHEARSAL_ONLY`, `fictional: true`, external actions 0; tiền mô phỏng chỉ nằm trong traces, mọi actuals `null`. Tệp ignored và ngoài artifact Pages.
+- `VERIFIED_CURRENT` — Dashboard preview baseline **`7a0508b3-1bfd-4bd5-ab2c-6ce827db966c`**, success lúc 08:50 ngày 17/10, duration 12 giây, clone đúng full SHA `7c090f467cb6a479cfb0f92ae8e98378a95111af`; output `dist/site`, 43 tệp/42 assets + header, không Functions. URL `https://7a0508b3.ai-muonnoi-org.pages.dev`. Đây là receipt baseline trước code diễn tập.
+- `BLOCKED` — Pages vẫn chỉ ra production branch `feat/flow-mvp-backend`, row `65d8737`, deployment URL `https://a6623203.ai-muonnoi-org.pages.dev`. Chưa nối được receipt đó với custom domain/Worker/D1 hiện hành. Không sửa mapping; không nâng staging/production gate từ build preview.
+
+Lệnh và giới hạn đã bổ sung ngay trong `operations/README.md`, `operations/pilot-commercial-workbook.md`; `check:operations` kiểm cả năm template. Các kiểm tra mới là công cụ local, chưa gắn vào API production, không phát hành quyền thao tác hoặc xác minh giao dịch bên ngoài.
+
+**Việc tự động tiếp theo:** nối kiểm tra nghiệm thu local với hash của bộ bàn giao thực sự được xuất và kiểm chéo ref/scope giữa các record, vẫn bằng fixture; giữ toàn bộ actuals riêng. Khi nhận tài khoản Free cụ thể, xác minh provider/quota/quyền và tiếp tục staging biệt lập theo gate. Lịch mỗi giờ hiện hữu đã kích hoạt vòng này; không tạo lịch trùng và không yêu cầu duyệt lại phần nội bộ đã được giao.
+
 ## Vòng đóng gói bàn giao Pilot — 17/10/2026, 08:49 (UTC+7)
 
 Phạm vi: repo `tranhatam-collab/ai.muonnoi.org`, remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git`, nhánh `codex/ai-muonnoi-autonomous-ops`, worktree `/private/tmp/ai-muonnoi-autonomous-ops`. Baseline đầu vòng `3a1dfd5d05708ccb90b3a56dd3bbed0771f53c26`, sạch. Code đóng gói được commit tại **`61181630b06bf0be134f63e7b1dbce2cd190a625`**; sinh artifact khi worktree sạch ở SHA này. Phần này cập nhật việc tiếp theo; không sửa receipt lịch sử hoặc checkout team.
