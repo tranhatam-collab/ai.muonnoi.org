@@ -2,6 +2,23 @@
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng cắt snapshot từ comment byte — 17/10/2026, 23:12 (UTC+7)
+
+Phạm vi: repo `tranhatam-collab/ai.muonnoi.org`, remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git`, nhánh `codex/ai-muonnoi-autonomous-ops`, worktree `/private/tmp/ai-muonnoi-autonomous-ops`. Baseline đầu vòng **`1916fb2f2d3780bb60faaef9ba7300fb6df1db05`**. Code mới **`fc5ea26e0423e3b038c91f6445e31b35e9c5f683`**. Không deploy, không push, không đụng snapshot cũ.
+
+**Blocker hiện hành:** lịch Codex mỗi giờ vẫn `ACTIVE` trong file nhưng các nhịp 12:03, 13:05 và 14:11 dừng vì `usage_limit_exceeded`; Codex báo thử lại 08:02 ngày 24/10/2026. Chưa có account ID Cloudflare Free, kênh bán hay nguồn đối soát. Actuals giữ `null`. Hạn mức chi thêm 0 VND.
+
+| Lớp | Trạng thái | Receipt |
+|---|---|---|
+| Snapshot mới từ comment | `VERIFIED_CURRENT` | `tools/pilot-revise.mjs` chỉ sao các file được comment `BYTE_CHANGED` sang thư mục mới. `acceptance.json` và `metrics.json` không lấy từ bản candidate. Không có thay đổi byte thì không tạo snapshot. |
+| Acceptance bản cũ | `VERIFIED_CURRENT` | Byte `acceptance.json` của snapshot cũ giữ nguyên trước và sau lệnh. Đối chiếu lại trả `REVIEW_COMMENTS_ONLY`, `acceptance_created: false`, actuals null. |
+| Kiểm thử | `VERIFIED_CURRENT` | `npm run verify` exit 0 lúc 23:12. Suite `test:pilot:revise` là **4 tests / 4 pass / 0 fail, cancelled, skipped, TODO**. Tổng **166 tests / 166 pass / 0 fail, cancelled, skipped, TODO**, bằng 162 ca vòng trước cộng 4 ca mới. Build static 43 file. Worker build là dry-run. |
+| Production | `BLOCKED` | Không tạo deployment. Pages production vẫn `feat/flow-mvp-backend`, row `65d8737`. |
+
+Lệnh: `npm run revise:pilot:snapshot -- BASELINE_DIR BASELINE_SHA256 CANDIDATE_DIR CANDIDATE_SHA256`. Snapshot mới nằm trong `.local/pilot-deliveries/`. Receipt nằm trong `.local/pilot-revisions/`, không vào Git. Đây là mẫu hư cấu, chưa nghiệm thu, chưa đăng và chưa có tiền.
+
+**Việc tự động tiếp theo:** đối chiếu snapshot mới với một bản sao nguyên byte để mọi comment trở lại `UNCHANGED`, và gắn digest mới vào hồ sơ handoff local mà không tạo acceptance. Không tạo lịch Codex trùng. Không push vòng này.
+
 ## Vòng so sánh phiên bản bàn giao — 17/10/2026, 21:49 (UTC+7)
 
 Phạm vi: repo `tranhatam-collab/ai.muonnoi.org`, remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git`, nhánh `codex/ai-muonnoi-autonomous-ops`, worktree `/private/tmp/ai-muonnoi-autonomous-ops`. Baseline đầu vòng **`6252af1cf2f4b6e13fbd73e29e2a5dee38360535`**, sạch. Code mới **`92515a1dff75e4fad1a30af265a006e45cdcd676`**. Phần này cập nhật việc tiếp theo; không sửa snapshot, handoff hay receipt lịch sử, không deploy và không push.
