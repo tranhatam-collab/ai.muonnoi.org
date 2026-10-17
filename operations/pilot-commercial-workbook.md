@@ -145,3 +145,11 @@ Chưa đưa ước tính thời gian Creator/Team/B2B thành cam kết năng l�
 `data/pilot-commercial-workbook.json` chứa bốn scope cards, ví dụ đề xuất Pilot, hai capacity scenarios và năm record trống có JSON Schema: `qualification`, `proposal`, `acceptance`, `revision`, `reconciliation`. Trường ID/ref chưa có là `null`; status ghi đúng loại record. Mọi ví dụ thương mại chưa gửi dùng `DRAFT_NOT_SENT`; actuals và receipt thật đều `null`.
 
 Chỉ chuyển sang bản ghi hoạt động khi có nguồn thật. Các schema phục vụ kiểm cấu trúc nội bộ; không thay quyền truy cập, kiểm tra consent, nguồn claim, hay đối soát giao dịch tại runtime. Khóa không được khai báo bị từ chối bằng `additionalProperties: false` để tránh vô tình đẩy dữ liệu liên hệ/bí mật vào mẫu này.
+
+### Diễn tập local — bổ sung 17/10/2026
+
+`npm run rehearse:commercial` tạo receipt mới trong `.local/commercial-rehearsals/`, chỉ dùng fixture hư cấu có tiền tố `DEMO-`. Luồng gồm 16 lần chuyển trạng thái và tám tình huống bị từ chối có chủ đích; `actuals` luôn `null`. Tệp nguồn, scope và các phiếu trống không bị điền thành khách thật. Lệnh không nhận file khách hàng, không gửi, không gọi provider hay mở cổng API.
+
+`tools/commercial-records.mjs` kiểm năm record bằng tập keyword schema đang dùng, từ chối keyword chưa hỗ trợ và ref ngoài/có vòng lặp; đây không phải bộ JSON Schema tổng quát. Kiểm thêm: consent/điểm đến/quyền và capacity phải có ref trước đủ điều kiện; scope có đầy đủ deliverable; trạng thái gửi chưa rõ phải đối soát; nghiệm thu phải có manifest, review, delivery, người duyệt, thời điểm và không còn revision mở. Thay manifest sau chỉnh sửa phải trở lại review, bỏ receipt cũ. Record đã chốt không được viết lại dưới cùng danh tính trong diễn tập.
+
+Đối soát yêu cầu order/provider/transaction/settlement refs, tiền nguyên an toàn, tổng net khớp gross − refunds − fees. Thu một phần, dữ liệu thiếu, ID trùng hoặc discrepancy mở không được ghi `RECONCILED`; net âm có thể hợp lệ khi dữ liệu đầy đủ và phép tính khớp. `other_actual_costs_vnd` vẫn có thể `null`; net settlement không phải lợi nhuận. Ref được điền chỉ vượt qua kiểm cấu trúc, không chứng minh ref có thật hoặc đã được xác minh. Các guard này chưa gắn vào API production và không cấp quyền gửi/thu tiền.

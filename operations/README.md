@@ -65,6 +65,12 @@ The isolated copy/restore and corruption cases run in `npm run test:pilot:delive
 
 ### Source and operational records
 
+`npm run rehearse:commercial` creates a new private `.local/commercial-rehearsals/` receipt from fixed fictional fixtures. It exercises 16 transitions through qualification, proposal, revision, acceptance and reconciliation, with eight expected rejections. DEMO records and their simulated amounts stay inside `traces`; the separate `actuals` fields remain `null`. No external adapter or provider is called. The command refuses populated source templates and does not accept customer-file arguments.
+
+`npm run test:commercial` checks the record preflight and transition guards. `check:operations` also checks all five blank workbook templates. The checker supports only the schema keywords currently used by those templates (including dates, required fields, unique refs and safe integer VND); it fails on unsupported keywords or external/cyclic refs. It is not a general JSON Schema implementation. Passing proves record structure, required references and arithmetic only, not the truth or authorization of a referenced event. No runtime/API status or real ledger is changed by these tools.
+
+Unknown send outcomes cannot reset to a new draft or mutate sent content. Revised manifests return through review with old delivery/review evidence cleared. Final records are immutable within this rehearsal. Partial payment, unknown fees, duplicate transaction refs, open discrepancies and wrong settlement totals cannot become `RECONCILED`. A new period or correction requires a separate record; the tool does not perform refunds or reopen closed ledgers.
+
 - `data/offer-catalog.json`: draft commercial offers and delivery scope.
 - `data/content-calendar-30-days.json`: first 30-day draft queue; every item remains unpublished.
 - `content-scripts.md`: reusable Vietnamese scripts and approval notes.

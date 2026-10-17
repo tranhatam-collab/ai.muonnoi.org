@@ -1,4 +1,5 @@
 import { readFile } from 'node:fs/promises';
+import { createRecordChecker } from './commercial-records.mjs';
 
 const offers = JSON.parse(await readFile(new URL('../operations/data/offer-catalog.json', import.meta.url), 'utf8'));
 const calendar = JSON.parse(await readFile(new URL('../operations/data/content-calendar-30-days.json', import.meta.url), 'utf8'));
@@ -14,3 +15,10 @@ if(new Set(sample.assets.map(asset=>asset.id)).size!==12||!sample.assets.every(a
 if(!sample.calendar.every((day,i)=>day.day===i+1&&day.review_requirement&&(!day.asset_id||sample.assets.some(asset=>asset.id===day.asset_id))))throw new Error('Pilot sample calendar invalid');
 if(!sample.sales_scripts.every(script=>script.consent_required===true&&script.sent_at===null)||sample.metrics.reconciled_cash_vnd!==null)throw new Error('Sample must not claim external outcomes');
 console.log('Fictional Pilot sample: 12 complete drafts, 14 days; no external receipts.');
+const workbook=JSON.parse(await readFile(new URL('../operations/data/pilot-commercial-workbook.json',import.meta.url),'utf8'));
+const checkRecord=createRecordChecker(workbook);
+if(Object.keys(workbook.record_templates).length!==5)throw new Error('Expected five commercial record templates');
+for(const [kind,record]of Object.entries(workbook.record_templates)){
+  const result=checkRecord(kind,record);if(!result.valid)throw new Error('Invalid commercial template: '+kind+' '+JSON.stringify(result.errors));
+}
+console.log('Five commercial templates checked against supported schema keywords and local preflight rules; external evidence not verified.');
