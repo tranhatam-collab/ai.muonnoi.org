@@ -69,6 +69,12 @@ Run `npm run verify:pilot:handoff -- /absolute/path/to/.local/pilot-deliveries/p
 
 The command reads the snapshot without changing it and writes a new `.local/pilot-handoffs/handoff-XXXX/README.md` plus `receipt.json`. The coverage table contains **12 content assets and four support documents**, each with file hash; this is not 16 sold content assets. The result is only `VERIFIED_LOCAL_LINKS_ONLY`, with `REVIEW_REQUIRED` and null actuals. It cannot turn this unreviewed fictional bundle into an accepted delivery, paid order or verified customer consent. The CLI generates fixed fictional records internally and does not import customer records. `npm run test:pilot:handoff` exercises the negative cases and is included in the full verify command.
 
+### Compare two local delivery versions
+
+Run `npm run compare:pilot:review -- /absolute/path/to/.local/pilot-deliveries/pilot-BASELINE TRUSTED_BASELINE_SHA256 /absolute/path/to/.local/pilot-deliveries/pilot-CANDIDATE TRUSTED_CANDIDATE_SHA256`. Use the independent digests saved when each snapshot was generated. The command verifies both directories, then writes per-asset comments for the same 12 content assets and four support documents. `UNCHANGED` and `BYTE_CHANGED` are the only comments. Asset codes must stay identical; a remapped code is refused. Acceptance and metrics files must stay byte-identical and blank. A review file that already carries an approval receipt is refused. Nothing is written back into either snapshot.
+
+The output is a new `.local/pilot-reviews/review-XXXX/README.md` plus `receipt.json` with status `REVIEW_COMMENTS_ONLY`, gate `REVIEW_REQUIRED`, `acceptance_created: false` and null actuals. Comments are fictional byte notes, not a quality review, customer acceptance, publication or payment. `npm run test:pilot:review` covers the refusal cases and is included in `npm run verify`.
+
 ### Source and operational records
 
 `npm run rehearse:commercial` creates a new private `.local/commercial-rehearsals/` receipt from fixed fictional fixtures. It exercises 16 transitions through qualification, proposal, revision, acceptance and reconciliation, with eight expected rejections. DEMO records and their simulated amounts stay inside `traces`; the separate `actuals` fields remain `null`. No external adapter or provider is called. The command refuses populated source templates and does not accept customer-file arguments.
