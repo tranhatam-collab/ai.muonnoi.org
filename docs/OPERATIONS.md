@@ -2,6 +2,23 @@
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng so sánh phiên bản bàn giao — 17/10/2026, 21:49 (UTC+7)
+
+Phạm vi: repo `tranhatam-collab/ai.muonnoi.org`, remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git`, nhánh `codex/ai-muonnoi-autonomous-ops`, worktree `/private/tmp/ai-muonnoi-autonomous-ops`. Baseline đầu vòng **`6252af1cf2f4b6e13fbd73e29e2a5dee38360535`**, sạch. Code mới **`92515a1dff75e4fad1a30af265a006e45cdcd676`**. Phần này cập nhật việc tiếp theo; không sửa snapshot, handoff hay receipt lịch sử, không deploy và không push.
+
+**Blocker hiện hành:** chưa có account ID Cloudflare Free riêng, staging/Access/D1/test identities, tài khoản/kênh bán hoặc nguồn giao dịch. Actuals tiếp tục `null`. Hạn mức chi thêm vẫn 0 VND. Không bật AI, social, checkout hay cron Worker.
+
+| Lớp | Trạng thái | Receipt |
+|---|---|---|
+| So sánh hai phiên bản local | `VERIFIED_CURRENT` | `tools/pilot-review.mjs` kiểm toàn vẹn cả hai snapshot bằng digest độc lập, rồi xuất comment cho đúng 12 nội dung và 4 tài liệu hỗ trợ. `UNCHANGED` hoặc `BYTE_CHANGED`. Đổi mã asset bị từ chối. |
+| Không tạo nghiệm thu | `VERIFIED_CURRENT` | `acceptance.json` và `metrics.json` phải giữ nguyên byte và còn trống. Approval gắn sẵn trong `review.json` bị từ chối. Kết quả là `REVIEW_COMMENTS_ONLY`, `acceptance_created: false`, actuals null, external actions 0. Không ghi ngược vào snapshot. |
+| Kiểm thử | `VERIFIED_CURRENT` | `npm run verify` exit 0 lúc 21:49. Suite mới `test:pilot:review` là **7 tests / 7 pass / 0 fail, cancelled, skipped, TODO**. Tổng cộng từ các suite của lệnh verify: **162 tests / 162 pass / 0 fail, cancelled, skipped, TODO**, tức 155 ca của vòng handoff cộng 7 ca mới. Typecheck, build static 43 file và Worker dry-run đạt. Không có log GitHub CI. |
+| Preview và production | `NOT_CHECKED` vòng này / `BLOCKED` production | Không tạo deployment mới. Receipt preview gần nhất vẫn là `470bd5d2-82d4-498d-9001-a3d54deba2c2` của baseline trước handoff. Pages production vẫn `feat/flow-mvp-backend`, row `65d8737`. |
+
+Lệnh: `npm run compare:pilot:review -- BASELINE_DIR BASELINE_SHA256 CANDIDATE_DIR CANDIDATE_SHA256`. Cả hai thư mục phải nằm trong `.local/pilot-deliveries`. Output nằm ở `.local/pilot-reviews/`, không vào Git và không vào artifact Pages. Comment chỉ mô tả khác biệt byte của mẫu hư cấu; không phải duyệt chất lượng, chấp thuận khách, đăng bài hay thu tiền.
+
+**Việc tự động tiếp theo:** tạo một snapshot phiên bản mới từ comment `BYTE_CHANGED` mà không sửa acceptance của snapshot cũ, rồi đối chiếu lại bằng cùng lệnh. Khi có account ID Cloudflare Free, kiểm plan/quota/quyền rồi mới chuẩn bị staging biệt lập. Không tạo lịch trùng với lịch Codex đang ACTIVE. Không push vòng này.
+
 ## Vòng nối hồ sơ với bộ bàn giao — 17/10/2026, 11:01 (UTC+7)
 
 Phạm vi: repo `tranhatam-collab/ai.muonnoi.org`, remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git`, nhánh `codex/ai-muonnoi-autonomous-ops`, worktree `/private/tmp/ai-muonnoi-autonomous-ops`. Baseline đầu vòng **`8ffa88a7cba211a3acf4ebcb712a1f6551f44f5f`**, sạch; code mới **`55761276c47a4ebcd803facf198c3e7231d5ce2a`**, sạch khi chạy CLI. Phần này cập nhật việc tiếp theo; giữ nguyên snapshot bàn giao và receipt lịch sử, không sửa checkout team.
