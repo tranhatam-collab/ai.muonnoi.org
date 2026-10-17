@@ -2,6 +2,27 @@
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng đóng gói bàn giao Pilot — 17/10/2026, 08:49 (UTC+7)
+
+Phạm vi: repo `tranhatam-collab/ai.muonnoi.org`, remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git`, nhánh `codex/ai-muonnoi-autonomous-ops`, worktree `/private/tmp/ai-muonnoi-autonomous-ops`. Baseline đầu vòng `3a1dfd5d05708ccb90b3a56dd3bbed0771f53c26`, sạch. Code đóng gói được commit tại **`61181630b06bf0be134f63e7b1dbce2cd190a625`**; sinh artifact khi worktree sạch ở SHA này. Phần này cập nhật việc tiếp theo; không sửa receipt lịch sử hoặc checkout team.
+
+**Blocker chưa đổi:** chờ account ID Cloudflare Free riêng mà Founder đã chọn, quyền CLI/Access/D1 staging và danh tính thử; chưa có tài khoản/kênh nhận khách và nguồn đối soát thanh toán. Không phát sinh chi tiêu được cấp. Tiền thu thực tế `null`; chưa có bằng chứng kiếm được tiền.
+
+| Lớp | Trạng thái | Receipt đúng phạm vi |
+|---|---|---|
+| Đóng gói Pilot local | `VERIFIED_CURRENT` | `tools/pilot-delivery.mjs` tạo snapshot mới, 12 bản chữ + lịch 14 ngày + scope/review/acceptance/metrics/source/manifest, tổng 20 file. Chỉ đọc ba nguồn mẫu hư cấu cố định; không nhập khách thật hoặc gửi ra ngoài. |
+| Toàn vẹn và hồi phục local | `VERIFIED_CURRENT` | SHA-256 manifest được giữ ngoài artifact; kiểm CLI `--verify` exit 0. Test từ chối sửa byte cùng kích thước, thiếu/thừa file, directory lạ, symlink/hardlink, đường dẫn vượt thư mục và manifest sai. Bản sao riêng kiểm được, sửa bản sao không đổi bản gốc. Đây không phải restore production hoặc chứng minh tác quyền. |
+| Kiểm thử | `VERIFIED_CURRENT` | `npm run verify` exit 0, **116 tests / 116 pass / 0 fail, cancelled, skipped, TODO**. Tăng 16 ca đóng gói so với 100 ca trước; typecheck và static/Worker build đạt, Worker chỉ dry-run. Log `.local/verify-delivery-2026-10-17.log`. Lần đầu sandbox chặn cổng loopback của workerd; chạy lại với quyền local cần thiết mới có kết quả này. |
+| Preview baseline | `VERIFIED_CURRENT` | Dashboard deployment `d3a32306-b4bb-4bff-b922-389dda74f304`: success, 08:41 ngày 17/10, 12 giây. Log clone đúng `3a1dfd5d05708ccb90b3a56dd3bbed0771f53c26`, chạy `node tools/build.mjs`, output `dist/site`, 43 file/42 assets + header, không Functions. Đây là preview trước commit đóng gói. |
+| Production mapping | `BLOCKED` | Trang Pages vẫn ghi nhánh production `feat/flow-mvp-backend`, row lịch sử `65d8737`. Row này chưa chứng minh artifact đang phục vụ custom domain. Mismatch Worker/D1 và custom-domain receipt ở phần trước vẫn chưa giải quyết. |
+| Khách/đăng/thu tiền | `BLOCKED` | Mọi phiếu trong gói giữ chưa duyệt, chưa giao; không gọi AI/provider, gửi email, đăng mạng xã hội hoặc tạo giao dịch. Forecast và giá đề xuất không cộng vào actuals. |
+
+Artifact local: `.local/pilot-deliveries/pilot-k2nuLL/README.md`; receipt riêng `.local/pilot-delivery-receipt-2026-10-17.json`; manifest SHA-256 **`df491a87d5dde76434022b8d10deef7346f49ee47e44667b02ad6acc2c3bc322`**. Ba input hash và source HEAD/CLEAN nằm trong manifest. `git check-ignore` xác nhận gói bị loại khỏi Git; build allowlist loại `.local/`, operations và mã công cụ khỏi Pages. Gói là `LOCAL_DEMO_NOT_DELIVERED`, verifier trả `VERIFIED_LOCAL_INTEGRITY_ONLY`, không phải chữ ký số hay biên nhận khách hàng.
+
+Lệnh tái tạo: `npm run prepare:pilot:delivery`; lệnh kiểm lại và giới hạn dùng ở `operations/README.md`. Mỗi lần tạo sinh thư mục mới; không ghi đè snapshot cũ. Hai nguồn text/JSON được giữ để truy xuất cùng phiên bản. Giá trị hiện hữu là bộ minh họa đầy đủ để đối chiếu phạm vi bán, chưa có khách hàng chấp nhận phạm vi đó.
+
+**Việc tự động tiếp theo:** tiếp tục rehearsal từ scope → review → acceptance → đối soát bằng record hư cấu và kiểm điều kiện chuyển trạng thái; bổ sung kiểm tra record theo schema khi còn khả thi. Khi nhận account Free cụ thể, xác minh provider/quota và triển khai staging biệt lập theo gate. Lịch hourly hiện hữu đã gọi vòng này; không tạo lịch trùng. Không cần Founder duyệt lại phần code local đã được giao.
+
 ## Vòng chia sẻ và tiếp nhận Studio — 17/10/2026
 
 Phạm vi: repo `tranhatam-collab/ai.muonnoi.org`, nhánh `codex/ai-muonnoi-autonomous-ops`, worktree `/private/tmp/ai-muonnoi-autonomous-ops`, baseline đầu vòng `1ea2690517796fe5802e2cdecaa23165e48047e5`. Phần này thay danh sách việc tiếp theo của vòng Pilot; receipt lịch sử giữ nguyên thời điểm. Không sửa hai checkout team khác.
