@@ -21,6 +21,17 @@ Chromium cục bộ dưới CSP đã thử: tải draft JSON (không receipt), b
 
 Kiểm thử này chưa chứng minh đăng nhập thật, production D1, email/thanh toán, tiếp nhận người mua, hoặc deploy Worker. Tiền đã đối soát: **chưa có nguồn kết nối/receipt**, giữ actuals `null`, không ghi thành doanh thu 0 hay doanh thu dự báo.
 
+### Receipt preview Pilot — 17/10, 08:15 giờ Việt Nam
+
+- Source đã push: `9dc2611104995a735d7c5b336a74bc1baec0d77c`, đúng repo/nhánh ở trên; worktree sạch sau commit.
+- Cloudflare Pages deployment: `e87fac08-cd2c-4fe9-8526-21df1fbec21a`; Dashboard báo `success`, duration 20 giây; log clone đúng full SHA, chạy `node tools/build.mjs`, đọc `pages_build_output_dir: dist/site`, build 39 file (38 assets upload và một rule headers).
+- Mẫu đã mở bằng trình duyệt: https://e87fac08.ai-muonnoi-org.pages.dev/offers/sample/ — DOM đủ 12 asset, 14 ngày; không có console error/warning được thu trên tab này.
+- Brief đã mở: https://e87fac08.ai-muonnoi-org.pages.dev/offers/brief/ — ghi rõ bản xem trước, các nút gửi/đối chiếu online disabled; không thao tác gửi dữ liệu trên preview.
+- Probe HTTP trực tiếp để so hash bị HTTP 403; vì vậy byte-for-byte hash live chưa được xác nhận. Receipt trình duyệt và provider không bị diễn giải thành bằng chứng cho việc so hash đó.
+- Không deploy Worker, áp migration, đổi DNS/secrets hoặc mở intake production trong bước này. Latest production row trên Pages vẫn là snapshot lịch sử `65d8737`; chưa kết luận custom domain đang phục vụ artifact nào từ row này.
+
+Lịch mỗi giờ đã cập nhật thành công qua Codex, giữ `ACTIVE`: mỗi vòng chọn việc nội bộ còn khả thi và làm tới receipt, ưu tiên provider/staging, operator triage có phân quyền/đồng ý chia sẻ và gói bàn giao; không tạo lịch trùng hoặc nâng ngân sách.
+
 ### Lịch nội bộ đã kiểm tra lại
 
 Các cấu hình Codex heartbeat cùng chat đều `ACTIVE` tại lần đọc 17/10; giờ theo Asia/Ho_Chi_Minh:
