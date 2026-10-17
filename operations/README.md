@@ -75,6 +75,12 @@ Run `npm run compare:pilot:review -- /absolute/path/to/.local/pilot-deliveries/p
 
 The output is a new `.local/pilot-reviews/review-XXXX/README.md` plus `receipt.json` with status `REVIEW_COMMENTS_ONLY`, gate `REVIEW_REQUIRED`, `acceptance_created: false` and null actuals. Comments are fictional byte notes, not a quality review, customer acceptance, publication or payment. `npm run test:pilot:review` covers the refusal cases and is included in `npm run verify`.
 
+### Cut a new local snapshot from BYTE_CHANGED comments
+
+Run `npm run revise:pilot:snapshot -- /absolute/path/to/.local/pilot-deliveries/pilot-BASELINE TRUSTED_BASELINE_SHA256 /absolute/path/to/.local/pilot-deliveries/pilot-CANDIDATE TRUSTED_CANDIDATE_SHA256`. The command compares the two snapshots, then writes a new delivery directory containing the baseline plus only the files named by `BYTE_CHANGED` comments. `acceptance.json` and `metrics.json` are never taken from the candidate. The previous snapshot is not modified. A comparison with no byte changes writes nothing.
+
+The new manifest records `revision_of` and remains `LOCAL_DEMO_NOT_DELIVERED`. The command immediately compares the old snapshot with the new one. Status is `REVISION_REQUIRES_REVIEW`, `acceptance_created` stays false, and actuals stay null. A receipt is written to `.local/pilot-revisions/revision-XXXX/`. This does not accept, publish, or record payment. `npm run test:pilot:revise` is included in `npm run verify`.
+
 ### Source and operational records
 
 `npm run rehearse:commercial` creates a new private `.local/commercial-rehearsals/` receipt from fixed fictional fixtures. It exercises 16 transitions through qualification, proposal, revision, acceptance and reconciliation, with eight expected rejections. DEMO records and their simulated amounts stay inside `traces`; the separate `actuals` fields remain `null`. No external adapter or provider is called. The command refuses populated source templates and does not accept customer-file arguments.
