@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Chuẩn bị brief | AI Muôn Nơi</title>
+  <meta name="description" content="Soạn yêu cầu nội dung cho Studio Pilot, tải bản brief hoặc gửi khi hệ thống mở tiếp nhận.">
+  <link rel="stylesheet" href="/assets/styles.css"><link rel="stylesheet" href="/offers/brief/brief.css">
+  <script type="module" src="/offers/brief/brief.js"></script>
+</head>
+<body>
+<main class="shell brief-shell">
+  <nav aria-label="Điều hướng"><a href="/offers/">← Các gói Studio</a><a href="/offers/sample/">Xem bộ bàn giao mẫu</a></nav>
+  <header><p class="eyebrow">AI MUÔN NƠI · STUDIO PILOT</p><h1>Một brief rõ ràng.<br>Một bước bắt đầu cụ thể.</h1><p class="muted">Mô tả điều anh/chị cần. Có thể tải bản brief ngay, không cần tài khoản.</p></header>
+  <section class="card status-panel" aria-label="Tình trạng tiếp nhận">
+    <p id="availability" role="status">Đang kiểm tra khả năng tiếp nhận…</p>
+    <p class="helper-text">Gửi brief là yêu cầu xác định phạm vi, chưa tạo đơn hàng, thanh toán hay lịch đăng. Nội dung chỉ được gửi khi anh/chị bấm “Gửi brief”.</p>
+    <a id="loginLink" class="text-link" href="/login/?next=/offers/brief/" hidden>Đăng nhập để gửi và xem brief của mình</a>
+  </section>
+  <noscript><p>Cần bật JavaScript để soạn và tải brief. Không có dữ liệu nào được gửi từ trang này khi JavaScript bị tắt.</p></noscript>
+  <form id="briefForm" autocomplete="off">
+    <fieldset id="briefFields" class="card form-stack">
+      <legend>Yêu cầu của anh/chị</legend>
+      <label>Tên brief <input name="name" required minlength="4" maxlength="120" placeholder="Ví dụ: 14 ngày giới thiệu sổ tay thủ công"></label>
+      <label>Gói quan tâm <select name="offer_id"><option value="studio-pilot-14d">Studio Pilot · 14 ngày</option><option value="creator-studio-monthly">Creator Studio · theo tháng</option><option value="team-growth-studio-monthly">Team Growth Studio · theo tháng</option><option value="b2b-workflow-setup">B2B Workflow Setup</option></select></label>
+      <label>Sản phẩm hoặc hoạt động cần giới thiệu <textarea name="business" required minlength="10" maxlength="2000" rows="3" placeholder="Anh/chị làm gì, giá trị cụ thể nào đã có thể kiểm chứng?"></textarea></label>
+      <label>Đối tượng muốn tiếp cận <textarea name="audience" required minlength="5" maxlength="1000" rows="2" placeholder="Ai cần sản phẩm này, họ đang gặp vấn đề gì?"></textarea></label>
+      <label>Mục tiêu và cách đo <textarea name="objective" required minlength="10" maxlength="2000" rows="3" placeholder="Ví dụ: giới thiệu cách dùng, đo số yêu cầu tư vấn đã đồng ý liên hệ; không cam kết doanh số."></textarea></label>
+      <label>Nội dung cần bàn giao <textarea name="deliverables" required minlength="10" maxlength="3000" rows="3">12 bản nháp nội dung, lịch 14 ngày, checklist nguồn và quyền sử dụng, báo cáo bàn giao.</textarea></label>
+      <label>Nguồn, giọng viết và điều cần tránh <textarea name="source_notes" maxlength="4000" rows="4" placeholder="Link nguồn công khai, dữ kiện được phép dùng, giọng thương hiệu. Không dán mật khẩu, token, dữ liệu khách hàng hoặc tài liệu mật."></textarea></label>
+      <label>Tên người hoặc vai trò duyệt nội dung <input name="reviewer_name" required minlength="2" maxlength="120" placeholder="Ví dụ: Chủ cửa hàng"></label>
+      <label>Kênh liên hệ mong muốn (không bắt buộc) <input name="contact" maxlength="200" placeholder="Chỉ điền thông tin anh/chị cho phép sử dụng để phản hồi brief"></label>
+      <label class="check-label"><input name="rights_confirmed" type="checkbox" required><span>Tôi có quyền cung cấp các tư liệu này, sẽ kiểm lại dữ kiện và duyệt nội dung trước khi sử dụng.</span></label>
+    </fieldset>
+    <section class="card actions-panel">
+      <h2>Lưu bản của mình, rồi gửi khi sẵn sàng</h2>
+      <p class="helper-text">Bản tải về có thể chứa thông tin riêng: lưu ở nơi phù hợp. Trang chỉ giữ mã tài khoản nội bộ, mã yêu cầu và dấu vân tay để chống gửi trùng; không tự lưu nội dung brief vào trình duyệt.</p>
+      <div class="row-actions"><button id="downloadBtn" type="button" class="btn btn-secondary">Tải bản brief (.json)</button><button id="sendBtn" type="submit" class="btn btn-primary" disabled>Gửi brief</button></div>
+      <p id="message" role="status" aria-live="polite"></p>
+      <p id="receipt" class="receipt" hidden></p>
+      <div class="row-actions"><button id="refreshBtn" type="button" class="btn btn-secondary" disabled>Kiểm tra brief đã nhận</button><button id="newBtn" type="button" class="btn btn-secondary" hidden>Soạn brief mới</button></div>
+      <details><summary>Tiếp tục từ bản brief đã tải</summary><label>Chọn tệp JSON từ trang này <input id="importFile" type="file" accept="application/json,.json"></label><p class="helper-text">Tệp chỉ được đọc trên máy. Sau khi kiểm lại, anh/chị chủ động bấm gửi.</p></details>
+    </section>
+  </form>
+  <section class="card history"><h2>Brief của tài khoản hiện tại</h2><p class="helper-text">Chỉ hiển thị sau khi đăng nhập và hệ thống đã mở tiếp nhận.</p><ul id="briefHistory"></ul></section>
+</main>
+</body></html>

@@ -1,5 +1,7 @@
 # Audit intake và thay đổi được phép — 2026-10-15
 
+> Cập nhật 17/10/2026: nội dung bên dưới là snapshot 15/10 của lane cũ. Receipt hiện hành cho lane `codex/ai-muonnoi-autonomous-ops`, 75 kiểm thử local, brief intake, mẫu Pilot và lịch nội bộ nằm trong `docs/OPERATIONS.md` (mục Vòng triển khai Pilot). Đường dẫn `evidence/verification.json` trong snapshot là tương đối với thư mục docs (`docs/evidence/verification.json`); giữ là receipt lịch sử, không dùng làm kết quả kiểm thử mới. Production vẫn HOLD; triển khai static preview không đóng các gate Worker/DB/đối soát.
+
 **Verdict: HOLD cho production/thương mại.** Phạm vi là baseline nguồn và kiểm thử local của nhánh mở rộng. Đây là verification của người xây, chưa thay independent audit/Founder acceptance. Không có phát hiện mới P0 đang khai thác được chứng minh; các blocker P1 bên dưới ngăn release.
 
 ## Identity và candidate

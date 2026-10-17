@@ -58,4 +58,7 @@ The automation must stop the affected external action, record the reason, and co
 - `data/offer-catalog.json`: draft commercial offers and delivery scope.
 - `data/content-calendar-30-days.json`: first 30-day draft queue; every item remains unpublished.
 - `content-scripts.md`: reusable Vietnamese scripts and approval notes.
+- `pilot-sample.md` and `data/pilot-sample.json`: complete fictional Pilot, 12 drafts, 14-day calendar, claim/rights review, acceptance and handoff. The public sample page copies only this explicitly selected fictional JSON.
+- `/offers/brief/`: offline preparation/export and gated private intake. A received brief is neither an order nor collected revenue. Production intake remains disabled until provider/schema/auth and operator access gates are met.
+- `../docs/OPERATIONS.md`: current execution receipt, verified local test counts, existing Codex schedules, blockers and next work.
 - Runtime ledgers must distinguish target, pipeline, invoiced, paid, refunded and collected cash. Do not place credentials or customer personal data in this repository.

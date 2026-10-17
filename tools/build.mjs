@@ -18,6 +18,10 @@ for(const file of ['index.html','site.js','style.css','_headers','robots.txt','s
 for(const dir of ['agents','app','assets','blog','data','login','offers','post','profile','studio'])await tree(dir);
 // Engineering plans and evidence live in docs/ too. Only the pre-existing public guide is published.
 await copy('docs/index.html');
+// Exactly one reviewed, fictional public sample. No customer inputs or operations ledgers are published.
+const sample=JSON.parse(await readFile(resolve(root,'operations/data/pilot-sample.json'),'utf8'));
+if(sample.fictional!==true||sample.status!=='DRAFT_ONLY'||sample.assets.length!==12||sample.assets.some(asset=>asset.status!=='DRAFT_ONLY'||asset.publication_receipt!==null))throw new Error('Public sample must remain fictional and unpublished');
+await writeFile(resolve(out,'offers/sample/data.json'),JSON.stringify(sample,null,2)+'\n');copied.push('offers/sample/data.json');
 await mkdir(resolve(root,'.local'),{recursive:true});
 await writeFile(resolve(root,'.local/site-manifest.json'),JSON.stringify({files:copied.sort()},null,2)+'\n');
 console.log(`Built ${copied.length} curated public files in dist/site. No workers, plans, secrets or database files.`);

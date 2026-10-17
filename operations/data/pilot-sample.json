@@ -1,0 +1,379 @@
+{
+  "schema_version": 1,
+  "id": "studio-pilot-handmade-notebooks-demo",
+  "created_at": "2026-10-17",
+  "language": "vi",
+  "status": "DRAFT_ONLY",
+  "offer_id": "studio-pilot-14d",
+  "fictional": true,
+  "brand": "Mộc Giấy",
+  "copy_source": "../pilot-sample.md",
+  "notice": "Fictional demonstration only. No customer, publication, approval or revenue receipt. Brand/product claims and rights must be verified before adapting for a real business.",
+  "claim_registry": {
+    "C01": "FICTIONAL_DEMO",
+    "C02": "FICTIONAL_DEMO",
+    "C03": "UNVERIFIED_SOURCE_REQUIRED",
+    "C04": "EDITORIAL_SUGGESTION",
+    "C05": "NOT_CLAIMED",
+    "C06": "NOT_CLAIMED"
+  },
+  "assets": [
+    {
+      "id": "MG01",
+      "title": "Một trang bắt đầu vừa đủ",
+      "format": "caption",
+      "primary_channel": "facebook",
+      "adaptations": [
+        "instagram"
+      ],
+      "claims": [
+        "C01",
+        "C04"
+      ],
+      "status": "DRAFT_ONLY",
+      "approved_at": null,
+      "publication_receipt": null,
+      "content": "Caption dùng sau review\n\nTrang đầu không cần phải đẹp.\n\nBạn có thể bắt đầu bằng ba dòng rất nhỏ:\n\n– Hôm nay tôi muốn dành thời gian cho điều gì?\n– Việc nào có thể làm trước?\n– Có điều gì tôi muốn ghi lại để khỏi quên?\n\nViết xong rồi gấp sổ lại cũng được. Không cần trang trí kín trang, không cần theo kịp cách ghi chép của ai khác.\n\nMộc Giấy gợi ý một cách mở sổ như vậy: để trang giấy phục vụ điều bạn cần viết hôm nay.\n\nNếu muốn thử, hãy chọn một trong ba câu hỏi và viết câu trả lời của riêng bạn.\n\nBản thích nghi Instagram: “Trang đầu không cần phải đẹp. Chọn một câu thôi: Hôm nay mình muốn dành thời gian cho điều gì? Viết câu trả lời của bạn, rồi để trang còn lại tiếp tục vào một ngày khác.”\n\nẢnh cần làm: ảnh chụp từ trên xuống, một trang chỉ có ba câu hỏi viết bằng tay của người thực hiện; không chụp ghi chú riêng. Alt text mẫu: “Cuốn sổ mở trên bàn, trang giấy có ba câu hỏi để bắt đầu ghi chép.” Chỉnh alt text theo ảnh thật."
+    },
+    {
+      "id": "MG02",
+      "title": "Viết gì khi chưa có ý tưởng?",
+      "format": "short_video",
+      "duration_seconds": 25,
+      "primary_channel": "instagram_reels",
+      "adaptations": [
+        "youtube_shorts",
+        "tiktok"
+      ],
+      "claims": [
+        "C04"
+      ],
+      "status": "DRAFT_ONLY",
+      "approved_at": null,
+      "publication_receipt": null,
+      "content": "Thời gian · Hình quay · Lời đọc và chữ trên màn hình\n0–3 giây · Mở một trang trống. · “Mở sổ ra rồi chưa biết viết gì?” / Chữ: “Thử ba dòng này.”\n3–9 giây · Tay viết “Một việc hôm nay”. · “Dòng một: một việc bạn muốn hoàn thành hôm nay.”\n9–15 giây · Tay viết “Một điều cần nhớ”. · “Dòng hai: một điều cần nhớ, dù rất nhỏ.”\n15–21 giây · Tay viết “Một điều muốn thử”. · “Dòng ba: một điều bạn muốn thử khi có thời gian.”\n21–25 giây · Toàn cảnh trang có ba dòng, giữ đủ để đọc. · “Không cần viết dài. Bạn muốn bắt đầu ở dòng nào?”\n\nCaption: “Một trang trống có thể bắt đầu từ ba dòng. Đây là gợi ý, không phải quy tắc ghi chép. Chọn câu phù hợp với bạn hôm nay.”\n\nYouTube Shorts: tiêu đề “Ba dòng để bắt đầu một trang sổ”; mô tả dùng caption trên. TikTok: mở thẳng bằng cảnh trang trống; giữ lời đọc, dùng phụ đề tự viết, không dùng nhạc chưa rõ quyền. Âm thanh: tiếng lật giấy tự thu hoặc giọng đọc đã có quyền dùng; không bắt buộc nhạc."
+    },
+    {
+      "id": "MG03",
+      "title": "Chọn sổ bằng bốn câu hỏi",
+      "format": "carousel",
+      "slides": 6,
+      "primary_channel": "instagram",
+      "adaptations": [
+        "facebook"
+      ],
+      "claims": [
+        "C03",
+        "C04",
+        "C05"
+      ],
+      "status": "DRAFT_ONLY",
+      "approved_at": null,
+      "publication_receipt": null,
+      "content": "1. Bìa: “Trước khi chọn sổ, thử trả lời bốn câu hỏi.”\n2. Bạn sẽ mang sổ đi đâu? “Ở bàn làm việc, trong túi xách hay bên cạnh giường? Hãy hình dung nơi bạn dùng sổ nhiều nhất trước khi hỏi kích thước.”\n3. Bạn thường viết bằng gì? “Bút bi, bút chì hay loại bút khác? Hỏi người bán về mẫu giấy và khả năng dùng với chính loại bút của bạn; đừng đoán từ ảnh.”\n4. Bạn thích trang như thế nào? “Trang trơn, có dòng hoặc có ô phục vụ những cách viết khác nhau. Chọn theo việc bạn sẽ làm trên giấy.”\n5. Bạn cần ghi trong bao lâu? “Một chuyến đi, một dự án hay ghi chép thường ngày? Hỏi số trang và cân nhắc lượng nội dung bạn định viết.”\n6. Kết: “Không cần một cuốn sổ hợp với tất cả mọi người. Nếu muốn được tư vấn mẫu thực tế, nhắn SỔ và nói bạn dùng để ghi chép hay làm quà.”\n\nCaption: “Đừng chọn chỉ vì ảnh đẹp. Lưu bốn câu hỏi này để kiểm tra mẫu sổ theo đúng cách bạn sẽ sử dụng. Thông số và tình trạng mẫu cần được cửa hàng xác nhận tại thời điểm tư vấn.”\n\nFacebook: dùng sáu ảnh theo đúng thứ tự; đặt bốn câu hỏi ở đầu caption. Không gắn nhãn “còn hàng” khi chưa có dữ liệu. Thiết kế: chữ lớn, tương phản rõ, mỗi trang một câu hỏi; dùng hình tự tạo hoặc ảnh có quyền."
+    },
+    {
+      "id": "MG04",
+      "title": "Một trang cho chuyến đi ngắn",
+      "format": "caption",
+      "primary_channel": "facebook",
+      "adaptations": [
+        "instagram"
+      ],
+      "claims": [
+        "C04"
+      ],
+      "status": "DRAFT_ONLY",
+      "approved_at": null,
+      "publication_receipt": null,
+      "content": "Caption\n\nKhông phải chuyến đi nào cũng cần một cuốn nhật ký dày.\n\nMột trang giấy có thể dành cho bốn điều:\n\nNơi mình đã đến.\nMột món đã thử.\nMột câu đã nghe.\nMột chi tiết muốn nhớ.\n\nBạn có thể viết ngay lúc nghỉ chân hoặc ghi lại sau khi về nhà. Nếu không muốn viết nhiều, chỉ cần một câu và một nét vẽ cũng được.\n\nThử đặt tiêu đề cho trang bằng ngày đi, thay vì cố nghĩ một cái tên thật hay. Phần còn lại là câu chuyện của bạn.\n\nBạn sẽ giữ lại chi tiết nào từ chuyến đi gần nhất?\n\nInstagram: “Một nơi. Một món. Một câu. Một chi tiết. Bốn gợi ý cho trang ghi chép sau chuyến đi của bạn.” Ảnh: trang mẫu tự viết về một chuyến đi tưởng tượng; trên ảnh ghi “Trang minh họa”. Không dùng vé hoặc hóa đơn có dữ liệu thật."
+    },
+    {
+      "id": "MG05",
+      "title": "Nhìn một bước làm sổ",
+      "format": "short_video",
+      "duration_seconds": 30,
+      "primary_channel": "instagram_reels",
+      "adaptations": [
+        "youtube_shorts",
+        "tiktok"
+      ],
+      "claims": [
+        "C01",
+        "C02"
+      ],
+      "status": "DRAFT_ONLY",
+      "approved_at": null,
+      "publication_receipt": null,
+      "content": "Thời gian · Hình quay dự kiến · Lời đọc và chữ\n0–4 giây · Cận tay xếp giấy. · “Trước khi trở thành một cuốn sổ, đây là những tờ giấy rời.”\n4–12 giây · Một bước xếp giấy quay liên tục, không tăng tốc gây hiểu sai. · “Ở bước này, chúng mình xếp lại phần ruột để chuẩn bị cho công đoạn tiếp theo.”\n12–22 giây · Cận một bước làm bìa có thật trong quy trình. · “Phần bìa được thực hiện riêng. Mỗi cảnh ở đây chỉ ghi lại một phần công việc.”\n22–30 giây · Mở và lật các trang của mẫu đã hoàn thiện. · “Và đây là lúc lật thử những trang đầu. Bạn muốn xem kỹ công đoạn nào trong lần sau?”\n\nCaption: “Một lát cắt trong quá trình làm sổ tại Mộc Giấy. Video không đại diện cho toàn bộ quy trình. Chúng mình sẽ ghi rõ công đoạn được quay để bạn dễ theo dõi.”\n\nShorts: tiêu đề “Từ giấy rời đến một trang sổ: một góc quy trình”; TikTok: dùng âm thanh thao tác thật, không thêm từ “hoàn toàn bằng tay” hoặc “thân thiện môi trường”. Nếu thực tế không có bước làm bìa/xếp giấy như mô tả, sửa storyboard trước khi quay và review lại C02."
+    },
+    {
+      "id": "MG06",
+      "title": "Lời nhắn cho cuốn sổ làm quà",
+      "format": "carousel",
+      "slides": 5,
+      "primary_channel": "instagram",
+      "adaptations": [
+        "facebook"
+      ],
+      "claims": [
+        "C04"
+      ],
+      "status": "DRAFT_ONLY",
+      "approved_at": null,
+      "publication_receipt": null,
+      "content": "1. Bìa: “Tặng một cuốn sổ, viết lời nhắn gì?”\n2. Cho người bắt đầu một dự án: “Chúc bạn có thật nhiều điều muốn thử. Cuốn sổ này dành cho những ý tưởng của bạn, kể cả khi chúng còn chưa hoàn chỉnh.”\n3. Cho người thích đi đây đó: “Mong bạn gặp nhiều điều đáng nhớ. Nếu muốn, hãy dành vài trang để giữ lại một góc của mỗi chuyến đi.”\n4. Cho chính mình: “Không cần mọi trang đều chỉn chu. Mình được phép viết lại, gạch đi và bắt đầu ở một trang khác.”\n5. Kết: “Chọn một lời nhắn, rồi đổi cách xưng hô và thêm một chi tiết chỉ hai người biết. Giữ riêng thông tin cá nhân; không cần đưa lời nhắn thật lên mạng.”\n\nCaption: “Một lời nhắn ngắn cũng đủ để món quà mang ý nghĩa của người tặng. Ba đoạn trên là gợi ý tự biên soạn; bạn có thể sửa để đúng với mối quan hệ của mình.”\n\nFacebook: chuyển thành một bài có ba đoạn trích; hỏi “Bạn thường viết lời nhắn ở trang đầu hay kẹp một tấm thiệp?”. Tài sản: chữ tự thiết kế trên nền đơn giản; không ngụ ý cửa hàng có dịch vụ in/khắc tên."
+    },
+    {
+      "id": "MG07",
+      "title": "Để cuốn sổ có một việc rõ ràng",
+      "format": "article",
+      "primary_channel": "facebook",
+      "adaptations": [
+        "website_after_configuration",
+        "instagram_excerpt"
+      ],
+      "claims": [
+        "C03",
+        "C04",
+        "C05"
+      ],
+      "status": "DRAFT_ONLY",
+      "approved_at": null,
+      "publication_receipt": null,
+      "content": "Tiêu đề: “Trước khi mua một cuốn sổ mới, hãy chọn việc bạn muốn làm với nó”\n\nMột cuốn sổ trong ảnh có thể rất đẹp, nhưng điều đáng hỏi trước tiên là: mình sẽ dùng nó vào việc gì? Không cần tìm một công dụng lớn. Một việc cụ thể, vừa với sinh hoạt của bạn, đã đủ để bắt đầu lựa chọn.\n\nNếu bạn muốn ghi việc mỗi ngày, hãy thử viết ra lượng thông tin thường cần ghi: vài gạch đầu dòng, lịch theo giờ hay ghi chú dài sau mỗi cuộc họp. Từ đó, bạn có thể cân nhắc kiểu trang và khoảng trống cần thiết. Đây là lựa chọn theo thói quen của bạn, không có một bố cục bắt buộc cho tất cả mọi người.\n\nNếu bạn muốn mang sổ theo khi ra ngoài, hãy hỏi kích thước thực tế thay vì chỉ nhìn ảnh. Bạn có thể đo ngăn túi mình thường dùng rồi so sánh với số đo cửa hàng cung cấp. Nếu sổ chủ yếu nằm trên bàn, hãy hình dung chỗ đặt sổ khi đang viết, cùng với các đồ vật khác bạn thường sử dụng.\n\nNếu định dùng sổ làm quà, hãy nghĩ về người nhận ở mức đơn giản: họ có thích viết tay không, thường ghi chép điều gì, có muốn mang sổ theo người không? Bạn không cần đoán sở thích quá chi tiết. Một lời nhắn do chính bạn viết có thể thể hiện ý định của món quà mà không cần thêm dịch vụ cá nhân hóa.\n\nLoại bút cũng là một câu hỏi nên hỏi trước. Khi chưa có mẫu thử, đừng tự kết luận giấy sẽ phù hợp với mọi loại mực. Hãy cho cửa hàng biết loại bút bạn dự định dùng và đề nghị thông tin hoặc hình thử tương ứng nếu cửa hàng có. Những mô tả như “không lem” chỉ nên sử dụng khi đã có điều kiện thử và kết quả rõ ràng.\n\nCuối cùng, kiểm tra lại thông số, giá, tình trạng mẫu và điều kiện giao nhận tại thời điểm bạn quyết định. Bài viết giới thiệu hoặc hình ảnh cũ không thay cho xác nhận hiện tại của người bán.\n\nMột cách bắt đầu ngắn gọn là hoàn thành câu này: “Tôi muốn dùng cuốn sổ để…”. Bạn có thể dùng câu trả lời đó khi hỏi tư vấn tại Mộc Giấy. Chúng mình sẽ trao đổi dựa trên thông tin mẫu thực tế đã được xác nhận, không chọn thay bạn chỉ vì một tấm ảnh.\n\nĐoạn giới thiệu Instagram: “Bạn muốn cuốn sổ mới có một việc gì? Ghi ba việc mỗi ngày, lưu ý tưởng cho một dự án hay viết vài dòng sau chuyến đi? Hãy chọn việc trước, rồi hỏi thông số mẫu phù hợp.” Không gắn “link bio” trước khi URL bài thật tồn tại."
+    },
+    {
+      "id": "MG08",
+      "title": "Một trang dành cho ý tưởng",
+      "format": "short_video",
+      "duration_seconds": 20,
+      "primary_channel": "youtube_shorts",
+      "adaptations": [
+        "instagram_reels",
+        "tiktok"
+      ],
+      "claims": [
+        "C04"
+      ],
+      "status": "DRAFT_ONLY",
+      "approved_at": null,
+      "publication_receipt": null,
+      "content": "Thời gian · Hình · Lời đọc / chữ\n0–3 giây · Viết tiêu đề “Ý tưởng chưa cần hoàn chỉnh”. · “Ý tưởng này chưa rõ lắm? Cứ ghi lại trước.”\n3–8 giây · Kẻ hai cột “Điều muốn thử” và “Bước nhỏ đầu tiên”. · “Một bên là điều bạn muốn thử.”\n8–14 giây · Điền ví dụ “Vẽ một bưu thiếp” / “Phác ba hình nhỏ”. · “Bên còn lại là một bước nhỏ có thể làm.”\n14–20 giây · Giữ toàn cảnh hai cột. · “Không phải kế hoạch cố định. Chỉ là một chỗ để bắt đầu nghĩ tiếp.”\n\nTiêu đề Shorts: “Một trang cho ý tưởng chưa hoàn chỉnh”. Caption Reels/TikTok: “Thử hai cột: điều muốn thử và bước nhỏ đầu tiên. Ví dụ trong video là trang minh họa do chúng mình tự viết. Bạn có thể đổi bố cục theo cách mình thích.”\n\nQuay: một cảnh tay viết, không cần người mẫu; dựng phụ đề đọc được khi tắt tiếng. Không hứa bố cục sẽ tăng năng suất."
+    },
+    {
+      "id": "MG09",
+      "title": "Những thông tin nên hỏi trước khi chọn mẫu",
+      "format": "caption",
+      "primary_channel": "facebook",
+      "adaptations": [
+        "instagram"
+      ],
+      "claims": [
+        "C03",
+        "C04",
+        "C05"
+      ],
+      "status": "DRAFT_ONLY",
+      "approved_at": null,
+      "publication_receipt": null,
+      "content": "Caption\n\nMột tấm ảnh chưa thể trả lời hết câu hỏi về cuốn sổ.\n\nTrước khi chọn mẫu, bạn có thể hỏi:\n\n1. Kích thước và số trang thực tế là bao nhiêu?\n2. Trang bên trong trơn, có dòng hay có ô?\n3. Có ảnh chụp phần ruột và mép sổ không?\n4. Mẫu này hiện có sẵn hay cần chờ?\n5. Giá và điều kiện giao nhận được xác nhận vào thời điểm nào?\n\nMộc Giấy sẽ dùng thông tin mẫu đã được xác nhận để tư vấn. Nếu một thông tin chưa rõ, chúng mình cần kiểm tra lại trước khi trả lời.\n\nBạn có thể nhắn SỔ kèm mục đích sử dụng. Chưa cần quyết định mua ở bước hỏi thông tin.\n\nInstagram: “Ảnh đẹp là điểm bắt đầu. Trước khi chọn sổ, hãy hỏi thêm kích thước, số trang, kiểu ruột, tình trạng mẫu và điều kiện giao nhận. Lưu danh sách này cho lần cần dùng.” Ảnh: năm câu hỏi dưới dạng chữ; không dựng screenshot hội thoại với khách giả."
+    },
+    {
+      "id": "MG10",
+      "title": "Cùng một trang, ba cách dùng",
+      "format": "carousel",
+      "slides": 5,
+      "primary_channel": "instagram",
+      "adaptations": [
+        "facebook"
+      ],
+      "claims": [
+        "C04"
+      ],
+      "status": "DRAFT_ONLY",
+      "approved_at": null,
+      "publication_receipt": null,
+      "content": "1. Bìa: “Cùng một trang giấy, thử ba cách dùng.”\n2. Cách một — một danh sách ngắn: “Hôm nay: mang sách trả bạn; ghi lại ý tưởng cho cuối tuần; chuẩn bị câu hỏi cho cuộc hẹn. Ví dụ minh họa, hãy thay bằng việc của bạn.”\n3. Cách hai — một điều muốn nhớ: “Hôm nay mình nhìn thấy một chiếc bóng cây rất đẹp trên tường. Ghi một câu, thêm một nét vẽ nếu muốn.”\n4. Cách ba — một câu hỏi mở: “Nếu có một buổi chiều rảnh, mình muốn thử làm gì? Để chỗ trống cho câu trả lời đến sau cũng được.”\n5. Kết: “Bạn không cần dùng tất cả. Chọn một cách phù hợp với trang giấy hôm nay.”\n\nCaption: “Không có mẫu ghi chép duy nhất. Ba trang trong bài là ví dụ tự viết để bạn chọn, sửa hoặc bỏ qua. Bạn thích danh sách, một câu chuyện nhỏ hay một câu hỏi?”\n\nFacebook: đăng từng ảnh theo thứ tự kèm caption. Thiết kế: gắn “Trang minh họa” trên những ảnh có ví dụ viết tay; không dùng tên, lịch hẹn hoặc địa điểm cá nhân thật."
+    },
+    {
+      "id": "MG11",
+      "title": "Trước khi tặng sổ",
+      "format": "short_video",
+      "duration_seconds": 25,
+      "primary_channel": "instagram_reels",
+      "adaptations": [
+        "youtube_shorts",
+        "tiktok"
+      ],
+      "claims": [
+        "C04"
+      ],
+      "status": "DRAFT_ONLY",
+      "approved_at": null,
+      "publication_receipt": null,
+      "content": "Thời gian · Hình · Lời đọc / chữ\n0–4 giây · Đặt cuốn sổ cạnh một tờ giấy nhỏ. · “Trước khi tặng một cuốn sổ, bạn có thể thêm điều này.”\n4–11 giây · Viết lời nhắn mẫu. · “Một câu do chính bạn viết: Mong bạn có nhiều điều muốn ghi lại.”\n11–18 giây · Gấp tờ lời nhắn, đặt cạnh sổ. · “Không cần lời thật dài. Thêm cách xưng hô của hai người là được.”\n18–25 giây · Bố cục món quà và lời nhắn, không quay thông tin người nhận. · “Giữ lời nhắn thật ở riêng. Video này chỉ dùng chữ minh họa.”\n\nCaption: “Gợi ý dành cho người tặng: tự viết một lời nhắn ngắn và đặt cùng cuốn sổ. Đây là hướng dẫn trình bày tại nhà, không phải thông báo dịch vụ gói quà của cửa hàng.”\n\nShorts: tiêu đề “Một lời nhắn ngắn khi tặng sổ”. TikTok: giữ toàn bộ lời đọc, thêm phụ đề; không dùng hình ảnh người nhận nếu chưa có quyền."
+    },
+    {
+      "id": "MG12",
+      "title": "Chọn một việc cho cuốn sổ tiếp theo",
+      "format": "caption",
+      "primary_channel": "facebook",
+      "adaptations": [
+        "instagram"
+      ],
+      "claims": [
+        "C01",
+        "C03",
+        "C04"
+      ],
+      "status": "DRAFT_ONLY",
+      "approved_at": null,
+      "publication_receipt": null,
+      "content": "Caption\n\nNếu cuốn sổ tiếp theo chỉ cần có một việc, bạn muốn đó là việc gì?\n\nGhi vài dòng mỗi ngày.\nGiữ ý tưởng cho một dự án.\nNhớ một chuyến đi.\nHay gửi tặng một người bạn.\n\nHãy bắt đầu từ cách bạn muốn sử dụng, rồi kiểm tra mẫu sổ thực tế. Kích thước, kiểu trang, giá và tình trạng mẫu cần được xác nhận trước khi chọn.\n\nNếu muốn trao đổi cùng Mộc Giấy, nhắn SỔ và nói bạn đang tìm sổ để ghi chép hay làm quà. Chúng mình sẽ hỏi thêm nhu cầu và trả lời theo thông tin đã kiểm tra. Bạn có thể dừng cuộc trao đổi bất cứ lúc nào.\n\nInstagram: “Cuốn sổ tiếp theo của bạn sẽ dành cho điều gì? Ghi chép hay làm quà? Khi cần tư vấn mẫu thực tế, nhắn SỔ kèm nhu cầu của bạn.” Ảnh: một mẫu sổ thật có quyền sử dụng sau khi xác nhận; không thêm badge giảm giá, số lượng khan hiếm hay đánh giá giả."
+    }
+  ],
+  "calendar": [
+    {
+      "day": 1,
+      "illustrative_date": "2026-10-17",
+      "asset_id": "MG01",
+      "activity": "draft_and_review",
+      "suggested_local_time": "19:30",
+      "review_requirement": "Xác nhận brief, tên thật và ảnh; ghi version người duyệt."
+    },
+    {
+      "day": 2,
+      "illustrative_date": "2026-10-18",
+      "asset_id": "MG02",
+      "activity": "draft_and_review",
+      "suggested_local_time": "19:30",
+      "review_requirement": "Quay trang mẫu; soát phụ đề, quyền giọng/âm thanh."
+    },
+    {
+      "day": 3,
+      "illustrative_date": "2026-10-19",
+      "asset_id": "MG03",
+      "activity": "draft_and_review",
+      "suggested_local_time": "19:30",
+      "review_requirement": "Xác minh kênh nhận tin; không biến câu hỏi thành thông số thật."
+    },
+    {
+      "day": 4,
+      "illustrative_date": "2026-10-20",
+      "asset_id": "MG04",
+      "activity": "draft_and_review",
+      "suggested_local_time": "19:30",
+      "review_requirement": "Ảnh ghi rõ minh họa; không có thông tin chuyến đi thật."
+    },
+    {
+      "day": 5,
+      "illustrative_date": "2026-10-21",
+      "asset_id": "MG05",
+      "activity": "draft_and_review",
+      "suggested_local_time": "19:30",
+      "review_requirement": "Đối chiếu C02 với quy trình và clip thật; sửa bước không đúng."
+    },
+    {
+      "day": 6,
+      "illustrative_date": "2026-10-22",
+      "asset_id": "MG06",
+      "activity": "draft_and_review",
+      "suggested_local_time": "19:30",
+      "review_requirement": "Soát câu chữ; không ngụ ý dịch vụ khắc tên/gói quà."
+    },
+    {
+      "day": 7,
+      "illustrative_date": "2026-10-23",
+      "asset_id": null,
+      "activity": "review_week_1",
+      "suggested_local_time": null,
+      "review_requirement": "Nếu đã đăng hợp lệ: lưu post ID và số liệu do nền tảng cung cấp; nếu chưa đăng: NOT_PUBLISHED, metrics null."
+    },
+    {
+      "day": 8,
+      "illustrative_date": "2026-10-24",
+      "asset_id": "MG07",
+      "activity": "draft_and_review",
+      "suggested_local_time": "19:30",
+      "review_requirement": "Duyệt mọi thông tin sản phẩm; chỉ gắn URL bài nếu đã có."
+    },
+    {
+      "day": 9,
+      "illustrative_date": "2026-10-25",
+      "asset_id": "MG08",
+      "activity": "draft_and_review",
+      "suggested_local_time": "19:30",
+      "review_requirement": "Kiểm phụ đề, ví dụ tự biên soạn, không claim năng suất."
+    },
+    {
+      "day": 10,
+      "illustrative_date": "2026-10-26",
+      "asset_id": "MG09",
+      "activity": "draft_and_review",
+      "suggested_local_time": "19:30",
+      "review_requirement": "Kiểm tra người nhận tin và bảng sản phẩm hiện hành."
+    },
+    {
+      "day": 11,
+      "illustrative_date": "2026-10-27",
+      "asset_id": "MG10",
+      "activity": "draft_and_review",
+      "suggested_local_time": "19:30",
+      "review_requirement": "Gắn nhãn trang minh họa; kiểm tra riêng tư ảnh."
+    },
+    {
+      "day": 12,
+      "illustrative_date": "2026-10-28",
+      "asset_id": "MG11",
+      "activity": "draft_and_review",
+      "suggested_local_time": "19:30",
+      "review_requirement": "Không hứa dịch vụ gói quà; kiểm quyền tài sản."
+    },
+    {
+      "day": 13,
+      "illustrative_date": "2026-10-29",
+      "asset_id": "MG12",
+      "activity": "draft_and_review",
+      "suggested_local_time": "19:30",
+      "review_requirement": "CTA chỉ dùng nếu kênh thật sẵn sàng nhận nhu cầu."
+    },
+    {
+      "day": 14,
+      "illustrative_date": "2026-10-30",
+      "asset_id": null,
+      "activity": "handoff_and_reconciliation",
+      "suggested_local_time": null,
+      "review_requirement": "Đối soát đủ 12 asset, phiên bản, quyết định; tổng hợp số liệu có nguồn hoặc ghi chưa có."
+    }
+  ],
+  "timezone": "Asia/Ho_Chi_Minh",
+  "calendar_status": "ILLUSTRATIVE_NOT_SCHEDULED",
+  "sales_scripts": [
+    {
+      "id": "S01",
+      "purpose": "reply_to_requested_sample",
+      "consent_required": true,
+      "status": "DRAFT_ONLY",
+      "sent_at": null,
+      "content": "“Cảm ơn bạn đã yêu cầu xem Studio Pilot. Đây là bộ minh họa cho một cửa hàng sổ tay giả định: 12 bản nháp, lịch 14 ngày và checklist kiểm chứng. Với thương hiệu của bạn, chúng tôi bắt đầu từ thông tin sản phẩm và tài sản bạn có quyền dùng, rồi bàn giao nội dung để bạn duyệt. Nếu muốn trao đổi tiếp, bạn cho biết sản phẩm chính và kênh đang quản lý. Chưa có khoản phí hoặc đăng bài nào ở bước xem mẫu.”"
+    },
+    {
+      "id": "S02",
+      "purpose": "single_consented_followup",
+      "consent_required": true,
+      "status": "DRAFT_ONLY",
+      "sent_at": null,
+      "content": "“Chào bạn, tôi gửi tiếp theo lịch bạn đã đồng ý. Sau khi xem bộ mẫu, bạn muốn ưu tiên video ngắn, bài viết hay carousel trong Pilot? Tôi có thể tổng hợp phạm vi phù hợp để bạn xem trước khi quyết định. Nếu chưa cần, chỉ cần nói dừng; chúng tôi sẽ không gửi thêm về đề xuất này.”"
+    }
+  ],
+  "metrics": {
+    "approved_asset_count": null,
+    "published_asset_count": null,
+    "opted_in_inquiries": null,
+    "qualified_leads": null,
+    "accepted_orders": null,
+    "reconciled_cash_vnd": null,
+    "source_status": "NOT_CONNECTED"
+  }
+}

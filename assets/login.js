@@ -20,8 +20,13 @@ const magicLinkMessage = document.getElementById("magicLinkMessage");
 
 function resolveNext(user) {
   if (next && next.startsWith("/")) {
-    if (next.startsWith("/app/") && !(user && window.Auth.canAccessApp(user))) return "/profile/";
-    return next;
+    try {
+      const destination = new URL(next, window.location.origin);
+      if (destination.origin === window.location.origin) {
+        if (destination.pathname.startsWith("/app/") && !(user && window.Auth.canAccessApp(user))) return "/profile/";
+        return destination.pathname + destination.search + destination.hash;
+      }
+    } catch (_error) { /* Invalid return destinations use the account default. */ }
   }
   return user && window.Auth.canAccessApp(user) ? "/app/dashboard/" : "/profile/";
 }

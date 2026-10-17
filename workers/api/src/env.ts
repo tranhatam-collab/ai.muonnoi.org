@@ -45,6 +45,8 @@ export interface Env {
   PUBLISH_SYSTEM_USER_ID?: string
   // New Studio publication is opt-in only after staging and Founder sign-off.
   STUDIO_PUBLISH_ENABLED?: string
+  // Private brief storage is opt-in after migration, account and deployment verification.
+  STUDIO_INTAKE_ENABLED?: string
 
   // Mail workspace
   MAIL_API_WORKSPACE_ID?: string

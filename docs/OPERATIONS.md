@@ -1,6 +1,46 @@
-# Runbook phát triển và tiếp nhận vận hành — 2026-10-15
+# Runbook phát triển và tiếp nhận vận hành — cập nhật 2026-10-17
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
+
+## Vòng triển khai Pilot — 17/10/2026
+
+Phạm vi cập nhật: lane `codex/ai-muonnoi-autonomous-ops`, remote `tranhatam-collab/ai.muonnoi.org`, worktree `/private/tmp/ai-muonnoi-autonomous-ops`, parent `f1be6f22ab0fbdef5c8460350d0b352d7ca44104`. Thay thông tin lane và lịch nội bộ ngày 15/10; các receipt preview lịch sử bên dưới giữ nguyên thời điểm. Không sửa hai checkout team khác.
+
+- `/offers/brief/`: soạn/tải JSON trên máy; gửi có chủ đích khi intake được bật và có session active. Trang Pages preview chỉ hoạt động offline, không gửi tới API production.
+- `/offers/sample/`: 12 bản nháp đầy đủ (4 caption, 4 kịch bản video, 3 carousel, 1 bài dài), lịch minh họa 14 ngày. Tình huống Mộc Giấy hoàn toàn hư cấu; không phải campaign hay khách hàng thật. Bản đầy đủ và quy trình bàn giao: `operations/pilot-sample.md`.
+- `/api/intake/*`: default-off bằng `STUDIO_INTAKE_ENABLED`; `expected_actor_id` phải khớp session, Origin đúng, dữ liệu giới hạn và quyền tư liệu bắt buộc. Chỉ tác giả xem được brief, kể cả admin khác cũng không được đọc. Tối đa 20 brief/tài khoản; đây là quota tổng, chưa có cơ chế reset được mở.
+- Mã gửi gắn với tài khoản + nội dung bất biến; timeout giữ trạng thái chờ đối soát, retry không tạo bản thứ hai. Trình duyệt chỉ lưu account ID nội bộ, request key, fingerprint và receipt ID; không tự lưu nội dung riêng tư. Không log brief.
+- `0010_studio_intake.sql` là migration additive. Chưa chạy từ xa, chưa bật flag. Hai migration `0009` hiện hữu phải được đối chiếu lịch sử `d1_migrations` trước kế hoạch remote; không chạy toàn bộ seed cũ.
+- Đăng nhập chỉ chấp nhận return URL cùng origin; đã chặn protocol-relative/backslash chuyển sang site ngoài.
+
+### Receipt kiểm thử local
+
+Ngày 17/10/2026, `npm run verify` exit 0: **75 tests, 75 pass, 0 fail/cancelled/skipped/TODO**. Theo suite: publishing 13; payment/email security 5; payment D1/workerd 1; publishing D1/workerd 1; intake D1/workerd 9; intake client 8; static/login redirect 3; RevenueOps 34; Durable Object/workerd 1. Typecheck API/module và build static/module exit 0; Worker build là dry-run. Artifact static 39 file chọn lọc, chỉ xuất thêm JSON mẫu hư cấu được chỉ định; không xuất thư mục operations hoặc Worker.
+
+Chromium cục bộ dưới CSP đã thử: tải draft JSON (không receipt), bấm gửi fixture → receipt, reload → đối chiếu đúng một bản đã lưu. Form và sample có scrollWidth bằng 390 tại viewport 390; sample cũng không tràn tại 1440. Sample render đủ 12 nội dung và 14 ngày, mở đọc được nội dung. Có một 404 favicon trên lần mở form đầu; không thấy lỗi JavaScript/CSP. Log và ảnh ở `.local/verify-2026-10-17.log`, `output/playwright/` (ignored, chỉ dữ liệu giả lập). `npm run dev:intake` tái tạo máy chủ 127.0.0.1:8790 với SQLite tạm trong bộ nhớ; không gọi API ngoài.
+
+Kiểm thử này chưa chứng minh đăng nhập thật, production D1, email/thanh toán, tiếp nhận người mua, hoặc deploy Worker. Tiền đã đối soát: **chưa có nguồn kết nối/receipt**, giữ actuals `null`, không ghi thành doanh thu 0 hay doanh thu dự báo.
+
+### Lịch nội bộ đã kiểm tra lại
+
+Các cấu hình Codex heartbeat cùng chat đều `ACTIVE` tại lần đọc 17/10; giờ theo Asia/Ho_Chi_Minh:
+
+| Nhịp | Giờ / mục tiêu |
+|---|---|
+| Mỗi giờ | Kiểm tra source/gates và hoàn thành việc nội bộ tiếp theo; thông báo khi thay đổi có ý nghĩa |
+| Hằng ngày | 08:00 — vận hành, nội dung, kiểm thử, receipt |
+| Hằng tuần | Thứ Hai 09:00 — funnel, delivery, chi phí và tiền đã đối soát |
+| Hằng tháng | Ngày 1, 10:00 — báo cáo vận hành và kế hoạch tháng |
+| Hằng năm | Ngày 2/1, 11:00 — chiến lược, khả năng khôi phục, quyền truy cập |
+
+Đây là lịch gọi chat Codex; cần host/scheduler hoạt động. Chưa có receipt bảo đảm chạy liên tục 24/7 ở hạ tầng ngoài. Worker cron, social scheduler, AI calls và kế toán thanh toán vẫn chưa được kích hoạt.
+
+### Việc tự động tiếp theo
+
+1. Chốt source và đối chiếu preview artifact cho thay đổi Pilot; giữ preview offline intake.
+2. Đọc metadata Worker/Pages/D1 bằng tài khoản đã được cung cấp, lập bản đồ staging biệt lập và kế hoạch migration có rollback; chưa suy đoán production route.
+3. Hoàn thiện operator triage có phân quyền/đồng ý chia sẻ trước khi bật intake khách thật. Bản hiện tại chỉ cho tác giả đọc, chưa là hàng đợi tiếp nhận của bộ phận xử lý.
+4. Sau khi có tên/ID tài khoản do Founder quản lý, cấu hình từng kênh và lưu receipt. Chưa có danh sách cụ thể thì tiếp tục nội dung và kiểm thử, không gửi thử tới người ngoài.
 
 ## Môi trường và dữ liệu
 
@@ -41,7 +81,7 @@ RevenueOps: owner gọi POST `/api/stop` từ đúng origin sau Access; lệnh d
 
 ## Nhịp làm việc và kênh
 
-Lịch đề xuất 08:00/12:30/17:30/23:45 Asia/Ho_Chi_Minh ở registry đều disabled. `run-daily` hiện tạo 10 phiếu chuẩn bị không dùng AI, không gửi nội dung. Không có automation nền hoặc social scheduler được kích hoạt trong thay đổi này.
+Lịch Worker đề xuất 08:00/12:30/17:30/23:45 Asia/Ho_Chi_Minh ở registry đều disabled. `run-daily` hiện tạo 10 phiếu chuẩn bị không dùng AI, không gửi nội dung. Lịch chat Codex ở bảng cập nhật phía trên là lớp điều phối riêng; không kích hoạt social scheduler hoặc AI runtime.
 
 Trước mỗi kết nối kênh: account/page ID và owner, OAuth scope tối thiểu, hạn mức, expiry/revocation, người duyệt, quyền nội dung và mục tiêu bài. Dùng API chính thức được nền tảng cho phép. Adapter phải chống trùng theo account+content hash+slot; timeout đánh dấu UNKNOWN, kiểm tra provider trước retry. Dừng kênh khi mất quyền, sai nội dung, phản ánh spam hoặc hết hạn mức. Chưa có adapter social executable.
 
