@@ -1,0 +1,195 @@
+{
+  "schema_version": 1,
+  "id": "studio-commercial-workbook",
+  "created_at": "2026-10-17",
+  "status": "DRAFT_NOT_SENT",
+  "currency": "VND",
+  "catalog_source": "offer-catalog.json",
+  "catalog_baseline": "1ea2690517796fe5802e2cdecaa23165e48047e5",
+  "budget_policy": {
+    "authorized_additional_spend_vnd": 0,
+    "actual_spend_vnd": null,
+    "note": "A zero spending authorization is not evidence that actual costs are zero."
+  },
+  "start_condition": {
+    "name": "T0",
+    "requires": ["accepted_scope_version", "confirmed_inputs_and_rights", "assigned_reviewer", "confirmed_capacity"],
+    "time_unit": "calendar_days",
+    "actual_start_date": null,
+    "note": "Offsets are proposed planning targets, not a current customer commitment. Record blocked input and agree any change to confirmed dates."
+  },
+  "offer_scopes": [
+    {
+      "offer_id": "studio-pilot-14d",
+      "status": "DRAFT_NOT_SENT",
+      "proposed_price_vnd": 1500000,
+      "billing": "one_time",
+      "content_asset_count": 12,
+      "format_mix": {"caption":4,"short_video_script":4,"carousel_text":3,"article":1},
+      "asset_ids": ["P-C01","P-C02","P-C03","P-C04","P-V01","P-V02","P-V03","P-V04","P-K01","P-K02","P-K03","P-A01"],
+      "support_deliverables": ["P-BRIEF","P-CAL14","P-RIGHTS","P-HANDOFF"],
+      "milestones": [{"offset_days":2,"output":"P-BRIEF and manifest"},{"offset_days":6,"output":"first six content assets"},{"offset_days":10,"output":"remaining six content assets"},{"offset_days":12,"output":"consolidated feedback requested"},{"offset_days":14,"output":"handoff of reviewed versions"}],
+      "revision_basis": "One consolidated round proposed for this scope; catalog does not specify Pilot rounds.",
+      "exclusions": ["finished photo/video production", "automatic publication", "unverified claims", "guaranteed reach or revenue"]
+    },
+    {
+      "offer_id": "creator-studio-monthly",
+      "status": "DRAFT_NOT_SENT",
+      "proposed_price_vnd": 1990000,
+      "billing": "monthly",
+      "content_asset_count": 20,
+      "format_mix": {"caption":8,"short_video_script":6,"carousel_text":4,"article":2},
+      "asset_ids": ["C-C01","C-C02","C-C03","C-C04","C-C05","C-C06","C-C07","C-C08","C-V01","C-V02","C-V03","C-V04","C-V05","C-V06","C-K01","C-K02","C-K03","C-K04","C-A01","C-A02"],
+      "support_deliverables": ["C-LIB","C-REPORT"],
+      "milestones": [{"offset_days":3,"output":"cycle brief"},{"offset_days":7,"output":"five assets"},{"offset_days":14,"output":"five assets"},{"offset_days":21,"output":"five assets"},{"offset_days":28,"output":"five assets"},{"offset_days":30,"output":"source-backed report; adjust actual dates for short months"}],
+      "revision_basis": "One revision round per asset from catalog.",
+      "exclusions": ["media buying", "finished media unless separately scoped", "guaranteed reach or revenue"]
+    },
+    {
+      "offer_id": "team-growth-studio-monthly",
+      "status": "DRAFT_NOT_SENT",
+      "proposed_price_vnd": 4990000,
+      "billing": "monthly",
+      "content_asset_count": 40,
+      "format_mix": {"caption":16,"short_video_script":12,"carousel_text":8,"article":4},
+      "asset_ids": ["T-C01","T-C02","T-C03","T-C04","T-C05","T-C06","T-C07","T-C08","T-C09","T-C10","T-C11","T-C12","T-C13","T-C14","T-C15","T-C16","T-V01","T-V02","T-V03","T-V04","T-V05","T-V06","T-V07","T-V08","T-V09","T-V10","T-V11","T-V12","T-K01","T-K02","T-K03","T-K04","T-K05","T-K06","T-K07","T-K08","T-A01","T-A02","T-A03","T-A04"],
+      "support_deliverables": ["T-WORKFLOW","T-DISTRIBUTION","T-FUNNEL"],
+      "milestones": [{"offset_days":3,"output":"workflow and cycle brief"},{"offset_days":7,"output":"ten assets"},{"offset_days":14,"output":"ten assets"},{"offset_days":21,"output":"ten assets"},{"offset_days":28,"output":"ten assets"},{"offset_days":30,"output":"source-backed funnel report; adjust actual dates for short months"}],
+      "revision_basis": "One consolidated round per batch proposed; not specified in catalog.",
+      "exclusions": ["unconfigured-account messaging or publishing", "finished media unless separately scoped", "guaranteed revenue"]
+    },
+    {
+      "offer_id": "b2b-workflow-setup",
+      "status": "DRAFT_NOT_SENT",
+      "proposed_price_vnd": 9900000,
+      "billing": "one_time",
+      "content_asset_count": null,
+      "format_mix": {},
+      "asset_ids": [],
+      "support_deliverables": ["B-MAP","B-STUDIO","B-DASH","B-DOC","B-TRAIN"],
+      "milestones": [{"offset_days":3,"output":"B-MAP"},{"offset_days":8,"output":"B-STUDIO within authorized scope environment"},{"offset_days":12,"output":"B-DASH with verified data source"},{"offset_days":16,"output":"verification and B-DOC"},{"offset_days":20,"output":"B-TRAIN walkthrough and acceptance review"}],
+      "revision_basis": "One review round per deliverable proposed; exact scope required.",
+      "exclusions": ["third-party integrations without separate scope and price", "unapproved production changes", "mockups represented as working integration"]
+    }
+  ],
+  "example_pilot_proposal": {
+    "id": "DEMO-PILOT-PROP-001",
+    "fictional": true,
+    "status": "DRAFT_NOT_SENT",
+    "offer_id": "studio-pilot-14d",
+    "version": "1.0",
+    "situation": "Mộc Giấy, the fictional handmade-notebook demonstration from pilot-sample.md; no real customer.",
+    "objective": "Prepare useful notebook-use and product-question content; no sales or reach guarantee.",
+    "proposed_amount_vnd": 1500000,
+    "content_asset_count": 12,
+    "format_mix": {"caption":4,"short_video_script":4,"carousel_text":3,"article":1},
+    "revision_rounds_proposed": 1,
+    "delivery_target_offset_days": 14,
+    "seller_identity_ref": null,
+    "buyer_ref": null,
+    "consent_ref": null,
+    "confirmed_inputs_ref": null,
+    "capacity_check_ref": null,
+    "scope_acceptance_ref": null,
+    "actual_start_date": null,
+    "actual_due_date": null,
+    "sent_receipt_ref": null,
+    "order_ref": null,
+    "reconciled_cash_vnd": null,
+    "actual_costs_vnd": null,
+    "response_copy": "Với nhu cầu giới thiệu cách dùng sổ, đề xuất Pilot gồm 12 bản nháp, lịch 14 ngày và bộ review nguồn/quyền. Video được bàn giao dưới dạng kịch bản, lời đọc và shot list; carousel là chữ từng trang. Giá tham khảo của Pilot là 1.500.000 VND. Lịch cụ thể chỉ bắt đầu sau khi thông tin sản phẩm, tư liệu, người duyệt và phạm vi được xác nhận. Anh/chị có thể đánh dấu phần cần thay đổi trước khi quyết định; bản này chưa tạo đơn, thanh toán hoặc lịch đăng."
+  },
+  "capacity_scenarios": [
+    {
+      "id": "PILOT-A",
+      "status": "ASSUMPTION_ONLY",
+      "description": "Complete inputs and limited revision; not measured performance.",
+      "hours_by_stage": {"qualification":0.5,"scope":0.5,"source_review":1,"writing":3,"review":1.5,"revision":1,"handoff":0.5},
+      "total_hours": 8,
+      "imputed_hourly_rate_vnd": 100000,
+      "imputed_effort_cost_vnd": 800000,
+      "proposed_price_vnd": 1500000,
+      "price_less_imputed_effort_vnd": 700000,
+      "headroom_before_unknown_costs_pct": 46.67,
+      "weekly_available_hours_assumed": 20,
+      "reserve_fraction_assumed": 0.2,
+      "weekly_schedulable_hours_assumed": 16,
+      "theoretical_pilots_per_week": 2,
+      "actual_hours": null,
+      "actual_costs_vnd": null,
+      "actual_revenue_vnd": null
+    },
+    {
+      "id": "PILOT-B",
+      "status": "ASSUMPTION_ONLY",
+      "description": "More source checking and editing; not measured performance.",
+      "hours_by_stage": {"qualification":1,"scope":1,"source_review":2,"writing":4,"review":2,"revision":1.5,"handoff":0.5},
+      "total_hours": 12,
+      "imputed_hourly_rate_vnd": 100000,
+      "imputed_effort_cost_vnd": 1200000,
+      "proposed_price_vnd": 1500000,
+      "price_less_imputed_effort_vnd": 300000,
+      "headroom_before_unknown_costs_pct": 20,
+      "weekly_available_hours_assumed": 20,
+      "reserve_fraction_assumed": 0.2,
+      "weekly_schedulable_hours_assumed": 16,
+      "theoretical_pilots_per_week": 1,
+      "actual_hours": null,
+      "actual_costs_vnd": null,
+      "actual_revenue_vnd": null
+    }
+  ],
+  "record_templates": {
+    "qualification": {"status":"DRAFT_NOT_SENT","brief_ref":null,"intake_receipt_ref":null,"consent_ref":null,"managed_destination_ref":null,"offer_id":null,"needs_summary":null,"source_rights_ref":null,"reviewer_role":null,"capacity_check_ref":null,"fit":"NOT_ASSESSED","missing_inputs":[]},
+    "proposal": {"status":"DRAFT_NOT_SENT","proposal_id":null,"offer_id":null,"version":null,"brief_ref":null,"proposed_amount_vnd":null,"currency":"VND","deliverable_ids":[],"formats_agreed":null,"revision_basis":null,"confirmed_inputs_ref":null,"capacity_check_ref":null,"target_offset_days":null,"actual_start_date":null,"actual_due_date":null,"scope_acceptance_ref":null,"sent_receipt_ref":null},
+    "acceptance": {"status":"NOT_REVIEWED","offer_id":null,"scope_version":null,"scope_acceptance_ref":null,"manifest_ref":null,"delivery_receipt_ref":null,"reviewer_role":null,"verification_refs":[],"environment_ref":null,"open_revision_ids":[],"acceptance_ref":null,"accepted_at":null},
+    "revision": {"status":"DRAFT_NOT_SENT","revision_id":null,"asset_id":null,"from_version":null,"to_version":null,"feedback_ref":null,"classification":"NOT_ASSESSED","change_summary":null,"claim_review_ref":null,"reviewer_role":null,"resolution_ref":null},
+    "reconciliation": {"status":"PENDING_RECONCILIATION","offer_id":null,"proposal_ref":null,"order_ref":null,"currency":"VND","period_start":null,"period_end":null,"proposed_amount_vnd":null,"accepted_order_amount_vnd":null,"transaction_refs":[],"provider_event_refs":[],"settlement_ref":null,"gross_paid_vnd":null,"refunds_vnd":null,"payment_fees_vnd":null,"net_settled_vnd":null,"other_actual_costs_vnd":null,"discrepancies":[],"reconciled_at":null,"reconciliation_receipt_ref":null}
+  },
+  "record_schemas": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$defs": {
+      "nullable_text": {"type":["string","null"],"minLength":1},
+      "nullable_money": {"type":["integer","null"],"minimum":0},
+      "nullable_signed_money": {"type":["integer","null"]},
+      "nullable_offer": {"enum":[null,"studio-pilot-14d","creator-studio-monthly","team-growth-studio-monthly","b2b-workflow-setup"]},
+      "refs": {"type":"array","items":{"type":"string","minLength":1},"uniqueItems":true},
+      "qualification": {
+        "type":"object","additionalProperties":false,
+        "required":["status","brief_ref","intake_receipt_ref","consent_ref","managed_destination_ref","offer_id","needs_summary","source_rights_ref","reviewer_role","capacity_check_ref","fit","missing_inputs"],
+        "properties": {
+          "status":{"enum":["DRAFT_NOT_SENT","NEEDS_INPUT","QUALIFIED_FOR_SCOPING"]},
+          "brief_ref":{"$ref":"#/$defs/nullable_text"},"intake_receipt_ref":{"$ref":"#/$defs/nullable_text"},"consent_ref":{"$ref":"#/$defs/nullable_text"},"managed_destination_ref":{"$ref":"#/$defs/nullable_text"},"offer_id":{"$ref":"#/$defs/nullable_offer"},"needs_summary":{"$ref":"#/$defs/nullable_text"},"source_rights_ref":{"$ref":"#/$defs/nullable_text"},"reviewer_role":{"$ref":"#/$defs/nullable_text"},"capacity_check_ref":{"$ref":"#/$defs/nullable_text"},"fit":{"enum":["NOT_ASSESSED","WITHIN_SCOPE","NEEDS_SCOPING","OUT_OF_SCOPE"]},"missing_inputs":{"$ref":"#/$defs/refs"}
+        }
+      },
+      "proposal": {
+        "type":"object","additionalProperties":false,
+        "required":["status","proposal_id","offer_id","version","brief_ref","proposed_amount_vnd","currency","deliverable_ids","formats_agreed","revision_basis","confirmed_inputs_ref","capacity_check_ref","target_offset_days","actual_start_date","actual_due_date","scope_acceptance_ref","sent_receipt_ref"],
+        "properties": {
+          "status":{"enum":["DRAFT_NOT_SENT","REVIEWED_FOR_SEND","SENT_UNCONFIRMED","SENT_CONFIRMED","SCOPE_ACCEPTED"]},"proposal_id":{"$ref":"#/$defs/nullable_text"},"offer_id":{"$ref":"#/$defs/nullable_offer"},"version":{"$ref":"#/$defs/nullable_text"},"brief_ref":{"$ref":"#/$defs/nullable_text"},"proposed_amount_vnd":{"$ref":"#/$defs/nullable_money"},"currency":{"const":"VND"},"deliverable_ids":{"$ref":"#/$defs/refs"},"formats_agreed":{"$ref":"#/$defs/nullable_text"},"revision_basis":{"$ref":"#/$defs/nullable_text"},"confirmed_inputs_ref":{"$ref":"#/$defs/nullable_text"},"capacity_check_ref":{"$ref":"#/$defs/nullable_text"},"target_offset_days":{"type":["integer","null"],"minimum":1},"actual_start_date":{"type":["string","null"],"format":"date"},"actual_due_date":{"type":["string","null"],"format":"date"},"scope_acceptance_ref":{"$ref":"#/$defs/nullable_text"},"sent_receipt_ref":{"$ref":"#/$defs/nullable_text"}
+        }
+      },
+      "acceptance": {
+        "type":"object","additionalProperties":false,
+        "required":["status","offer_id","scope_version","scope_acceptance_ref","manifest_ref","delivery_receipt_ref","reviewer_role","verification_refs","environment_ref","open_revision_ids","acceptance_ref","accepted_at"],
+        "properties": {
+          "status":{"enum":["NOT_REVIEWED","REVIEWING","REVISION_REQUESTED","ACCEPTED"]},"offer_id":{"$ref":"#/$defs/nullable_offer"},"scope_version":{"$ref":"#/$defs/nullable_text"},"scope_acceptance_ref":{"$ref":"#/$defs/nullable_text"},"manifest_ref":{"$ref":"#/$defs/nullable_text"},"delivery_receipt_ref":{"$ref":"#/$defs/nullable_text"},"reviewer_role":{"$ref":"#/$defs/nullable_text"},"verification_refs":{"$ref":"#/$defs/refs"},"environment_ref":{"$ref":"#/$defs/nullable_text"},"open_revision_ids":{"$ref":"#/$defs/refs"},"acceptance_ref":{"$ref":"#/$defs/nullable_text"},"accepted_at":{"type":["string","null"],"format":"date-time"}
+        }
+      },
+      "revision": {
+        "type":"object","additionalProperties":false,
+        "required":["status","revision_id","asset_id","from_version","to_version","feedback_ref","classification","change_summary","claim_review_ref","reviewer_role","resolution_ref"],
+        "properties": {
+          "status":{"enum":["DRAFT_NOT_SENT","RECEIVED","IN_REVIEW","RESOLVED"]},"revision_id":{"$ref":"#/$defs/nullable_text"},"asset_id":{"$ref":"#/$defs/nullable_text"},"from_version":{"$ref":"#/$defs/nullable_text"},"to_version":{"$ref":"#/$defs/nullable_text"},"feedback_ref":{"$ref":"#/$defs/nullable_text"},"classification":{"enum":["NOT_ASSESSED","WITHIN_SCOPE","NEEDS_SCOPE_CHANGE"]},"change_summary":{"$ref":"#/$defs/nullable_text"},"claim_review_ref":{"$ref":"#/$defs/nullable_text"},"reviewer_role":{"$ref":"#/$defs/nullable_text"},"resolution_ref":{"$ref":"#/$defs/nullable_text"}
+        }
+      },
+      "reconciliation": {
+        "type":"object","additionalProperties":false,
+        "required":["status","offer_id","proposal_ref","order_ref","currency","period_start","period_end","proposed_amount_vnd","accepted_order_amount_vnd","transaction_refs","provider_event_refs","settlement_ref","gross_paid_vnd","refunds_vnd","payment_fees_vnd","net_settled_vnd","other_actual_costs_vnd","discrepancies","reconciled_at","reconciliation_receipt_ref"],
+        "properties": {
+          "status":{"enum":["PENDING_RECONCILIATION","DISCREPANCY","RECONCILED"]},"offer_id":{"$ref":"#/$defs/nullable_offer"},"proposal_ref":{"$ref":"#/$defs/nullable_text"},"order_ref":{"$ref":"#/$defs/nullable_text"},"currency":{"const":"VND"},"period_start":{"type":["string","null"],"format":"date"},"period_end":{"type":["string","null"],"format":"date"},"proposed_amount_vnd":{"$ref":"#/$defs/nullable_money"},"accepted_order_amount_vnd":{"$ref":"#/$defs/nullable_money"},"transaction_refs":{"$ref":"#/$defs/refs"},"provider_event_refs":{"$ref":"#/$defs/refs"},"settlement_ref":{"$ref":"#/$defs/nullable_text"},"gross_paid_vnd":{"$ref":"#/$defs/nullable_money"},"refunds_vnd":{"$ref":"#/$defs/nullable_money"},"payment_fees_vnd":{"$ref":"#/$defs/nullable_money"},"net_settled_vnd":{"$ref":"#/$defs/nullable_signed_money"},"other_actual_costs_vnd":{"$ref":"#/$defs/nullable_money"},"discrepancies":{"$ref":"#/$defs/refs"},"reconciled_at":{"type":["string","null"],"format":"date-time"},"reconciliation_receipt_ref":{"$ref":"#/$defs/nullable_text"}
+        }
+      }
+    }
+  }
+}

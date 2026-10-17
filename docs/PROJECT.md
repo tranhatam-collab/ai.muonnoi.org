@@ -9,11 +9,11 @@ Cập nhật 17/10/2026: bảng identity này thay bảng ngày 15/10 cho lane t
 | Tên | AI Muôn Nơi — AI Assistance & Reviewed Publishing Studio |
 | Canonical repo | https://github.com/tranhatam-collab/ai.muonnoi.org |
 | Nhánh build | codex/ai-muonnoi-autonomous-ops |
-| Baseline bước Pilot | f1be6f22ab0fbdef5c8460350d0b352d7ca44104; commit trước thay đổi intake/mẫu ngày 17/10 |
+| Baseline bước triage | 1ea2690517796fe5802e2cdecaa23165e48047e5; commit trước thay đổi chia sẻ/triage/staging ngày 17/10; receipt bước Pilot giữ trong docs/OPERATIONS.md |
 | Chủ dự án, final approver | Founder Trần Hà Tâm; chưa chỉ định người thay thế |
 | Người dùng | Người viết/người đọc, biên tập viên; bộ phận vận hành 10 Agent |
 | Vấn đề | Biến kiến thức thành nội dung hữu ích và sản phẩm được kiểm tra, ghi nhận giá trị kinh doanh bằng chứng từ |
-| Bề mặt sản phẩm | /studio/, /offers/, /offers/brief/, /offers/sample/, API D1 và module RevenueOps nội bộ; feed là phần legacy cần phối hợp với Social Core |
+| Bề mặt sản phẩm | /studio/, /studio/intake/, /offers/, /offers/brief/, /offers/sample/, API D1 và module RevenueOps nội bộ; feed là phần legacy cần phối hợp với Social Core |
 | Domain hiện hành trong source | ai.muonnoi.org, api.muonnoi.org; preview Pages riêng đã có receipt, ánh xạ production vẫn chưa đủ |
 | Domain đề xuất nội bộ | ops.ai.muonnoi.org sau Access; chưa tạo DNS |
 | Dữ liệu | Public code; bản nháp/session/finance/customer/workforce là private. Tài liệu gốc và bản bán không push |

@@ -51,7 +51,7 @@ test('workerd + local D1: private intake authentication, immutable receipts and 
     await t.test('defaults disabled without touching a missing database schema', async () => {
       const capability = await call('capabilities');
       assert.deepEqual(await capability.json(), {
-        ok: true, intakeEnabled: false,
+        ok: true, intakeEnabled: false, triageEnabled: false,
         offers: ['studio-pilot-14d', 'creator-studio-monthly', 'team-growth-studio-monthly', 'b2b-workflow-setup'], maxBriefsPerUser: 20
       });
       await expectError(await call('briefs', brief()), 503, 'INTAKE_DISABLED');

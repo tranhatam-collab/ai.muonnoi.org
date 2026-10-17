@@ -2,7 +2,51 @@
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
-## Vòng triển khai Pilot — 17/10/2026
+## Vòng chia sẻ và tiếp nhận Studio — 17/10/2026
+
+Phạm vi: repo `tranhatam-collab/ai.muonnoi.org`, nhánh `codex/ai-muonnoi-autonomous-ops`, worktree `/private/tmp/ai-muonnoi-autonomous-ops`, baseline đầu vòng `1ea2690517796fe5802e2cdecaa23165e48047e5`. Phần này thay danh sách việc tiếp theo của vòng Pilot; receipt lịch sử giữ nguyên thời điểm. Không sửa hai checkout team khác.
+
+### Blocker hiện hành và provider đọc lúc 08:30–08:35 (UTC+7)
+
+| Claim/lớp | Trạng thái | Receipt và ý nghĩa |
+|---|---|---|
+| Chi thêm được cấp | `VERIFIED_CURRENT` | Chỉ đạo Founder: 0 VND. Không dùng số billable hiện tại để tự nâng ngân sách. |
+| Workers plan | `VERIFIED_CURRENT` | Dashboard account `93112cc89181e75335cbd7ef7e392ba3`, Workers plans: **Paid — Current plan, $5/month + usage**. D1 hiển thị soft limit cho reads/writes/storage. Chưa có bằng chứng hard cap cho dự án, không hứa staging/AI miễn phí từ free-tier tài liệu. Không đổi subscription. |
+| Worker cùng tên source | `VERIFIED_CURRENT` | `ai-muonnoi-api` Overview: version hiển thị `55a3c17d`, Wrangler/manual deployment lịch sử, **Bindings 0, Domains 0, workers.dev Disabled, custom domains/routes trống**. Đây không phải receipt backend vừa xây. Không dùng tên Worker để kết luận api.muonnoi.org chạy source này. |
+| D1 identity | `CONTRADICTED` | Repo `workers/api/wrangler.toml` ghi `iai-flow-db` ID `3ceac8b1-1c0f-47c3-ad05-2b9da0983c32`; Dashboard toàn bộ 10 DB có tên `iai-flow-db` nhưng ID **`73993529-9b2e-42c2-8d40-5b05525ecf4b`**. Không có ID source trong danh sách. Chỉ bác bỏ phép coi cùng tên là cùng DB; chưa kết luận DB source bị xóa hay thuộc account khác. Không đọc row/data hoặc thay ID. |
+| CLI deployment auth | `BLOCKED` | `wrangler whoami` báo chưa xác thực. Dashboard đang đăng nhập không đồng nghĩa CLI có quyền deploy. Không tạo token/OAuth. |
+| Staging runtime | `BLOCKED` | Chưa có D1 riêng, cấu hình origin/Access và danh tính thử được chỉ định, receipt kiểm soát chi phí. Bundle local cố ý có placeholder và flags tắt. |
+| Tiền đã đối soát | `BLOCKED` | Chưa kết nối nguồn đơn/giao dịch/settlement; actuals vẫn `null`. Workbook/giá/brief/receipt kỹ thuật không phải doanh thu. |
+
+### Implementation hiện tại
+
+- Tác giả giữ brief riêng tư mặc định, kể cả brief cũ. `/offers/brief/` cho phép chia sẻ có chủ đích và thu hồi quyền xem; không mở đơn, thanh toán, email hay đăng bài. Thu hồi chặn lần đọc sau, không thể xóa thông tin người vận hành đã đọc.
+- `/studio/intake/` chỉ đọc brief đang được chia sẻ; backend bắt buộc session active và ID trong `STUDIO_OPERATOR_IDS`, không kế thừa quyền admin. `STUDIO_INTAKE_ENABLED` và `STUDIO_TRIAGE_ENABLED` đều default-off.
+- Trạng thái: `RECEIVED → IN_REVIEW → NEEDS_INFORMATION / PROPOSAL_READY / DECLINED`; bổ sung thông tin quay lại `IN_REVIEW`. Phản hồi hiển thị cho tác giả; không có ghi chú nội bộ trong field này. Hai trạng thái cuối kết thúc vòng xử lý, không chứng minh đã bán hay đã giao.
+- Migration `0011_studio_triage.sql` tách consent/state khỏi brief bất biến và giữ event bất biến. Version, actor, request key và payload hash chống gửi lặp/ghi đè; event và state cùng transaction D1. Thu hồi chặn cả operator retry receipt cũ.
+- Client chỉ lưu metadata chống trùng. Timeout giữ chưa xác nhận; cùng key chỉ retry đúng payload. Operator có thể tạm gác thao tác chưa đối soát theo brief để tiếp tục hàng chờ; khôi phục giữ key/version/hash cũ, không tạo key mới cho brief đang chờ. Nội dung phản hồi không tự lưu; bản tải về do người vận hành chủ động giữ.
+- Đã xử lý response cũ quay về sau storage/account invalidation bằng epoch ở hai giao diện. Đã chuẩn hóa ID tài khoản thành chuỗi để fixture/legacy ID số hoạt động như ID text; không rewrite dữ liệu production.
+- Workbook `operations/pilot-commercial-workbook.md` + JSON: bốn phạm vi khớp catalog, năm record mẫu, một đề xuất Pilot hư cấu chưa gửi, hai kịch bản công sức 8/12 giờ là giả định. Không đưa dữ liệu khách thật vào Git; operations không vào artifact web.
+
+### Bundle staging biệt lập và lệnh local
+
+`npm run prepare:intake:staging` chỉ sinh `.local/intake-staging/wrangler.toml` và `schema.sql`, không chạy Wrangler remote. Schema gồm base sạch + 0010 + 0011; không seed admin, người dùng hay mật khẩu; không chạy chuỗi migration legacy. Config khóa tên `ai-muonnoi-studio-staging`, placeholder D1 riêng, không custom route/cron/AI/mail/payment binding. Không dùng D1 trong source hay D1 cùng tên trên Dashboard làm staging.
+
+Entrypoint `workers/api/src/staging.ts` chỉ có health, auth tối thiểu và intake. `STAGING_AUTH_ENABLED=false` khóa login/logout/me trước D1; chỉ mở sau receipt Access, danh tính thử và budget. Các route payment/email/AI/register/OAuth/feed/workflow cũ bị từ chối. Auth yêu cầu origin staging chính xác cho mutation, cookie host-only Secure/Lax, body tối đa 24 KB. Login rate-limit legacy vẫn có thể ghi D1 theo email khi auth được bật; không dùng kiểm soát này thay hard cap/Access. Trước rollout: xác minh tài khoản/budget, D1 riêng, origin/Access và test identities; áp schema chỉ vào DB staging đã chốt, kiểm hai phía, giữ kill switch; không chạm DNS hay secret production. Rollback bằng tắt flags/đổi artifact đã xác minh, giữ DB/event cho đối soát, không DROP dữ liệu.
+
+Lệnh kiểm chứng: `npm run verify`; `npm run dev:intake` mở fixture 127.0.0.1:8790, SQLite trong RAM và danh tính giả lập. Endpoint `/__preview/identity` chỉ tồn tại trong server local và bị ràng buộc Host/Origin/loopback; không thuộc artifact public. Lịch mỗi giờ và hằng ngày đã đọc lại ngày 17/10: `ACTIVE`. Các lịch khác giữ receipt bảng bên dưới; không tạo bản trùng.
+
+### Receipt local của vòng triage
+
+`npm run verify` ngày 17/10/2026 exit 0: **100 tests, 100 pass, 0 fail/cancelled/skipped/TODO**. Các suite: publishing 13; payment/email security 5; payment D1/workerd 1; publishing D1/workerd 1; intake D1/workerd 9; intake client + numeric identity 9; action journal 12; triage D1/workerd 9; staging 3; static/login redirect 3; RevenueOps 34; Durable Object/workerd 1. Typecheck và build exit 0; Worker build là dry-run. Log `.local/verify-triage-2026-10-17-final.log` (ignored). Sau bổ sung kiểm tra manifest cho asset mới, suite static/login chạy lại 3/3.
+
+Chromium local dưới CSP: tạo brief → riêng tư → cấp quyền → operator thấy đúng một brief → lưu phản hồi → tác giả thấy phản hồi → thu hồi → queue operator trống. Giao diện tác giả và operator đều có `scrollWidth=390` tại viewport 390. Ảnh fixture ở `output/playwright/triage-mobile.png`, `brief-revoked-mobile.png`; không phải dữ liệu khách thật. Lần smoke đầu phát hiện ID số được SQLite chuyển thành text khác dạng; đã sửa canonical actor và thêm regression, rồi tái tạo fixture và chạy lại thành công. Favicon local chưa có (404); không thấy lỗi CSP/JavaScript trong happy path sau sửa.
+
+Failure path trong Chromium: chặn phản hồi sau khi backend local đã commit → giữ pending → đọc history đối chiếu đúng receipt; chặn trước khi gửi → tạm gác → chọn lại brief → nhập lại đúng nội dung → xác nhận thành công với **cùng request key**, phiên bản tăng đúng một. Queue cập nhật cùng trạng thái detail sau lưu/đối soát. Desktop 1440 có scrollWidth=1440; ảnh `output/playwright/triage-desktop.png`. Hai lỗi mạng trong console ở failure path là do route.abort chủ động của test, không diễn giải thành happy-path lỗi.
+
+Các receipt này chỉ chứng minh local source/test; chưa chứng minh auth thật, remote D1, staging deployment, production, kênh bán hàng hay thu tiền. Artifact web hiện **43 file public chọn lọc**; workbook/schema/source Worker không thuộc artifact. Giá và hai phép tính công sức trong workbook đã kiểm khớp catalog và tổng; chỉ kiểm schema subset tại local, chưa chạy validator JSON Schema đầy đủ.
+
+## Vòng triển khai Pilot — receipt lịch sử 17/10/2026
 
 Phạm vi cập nhật: lane `codex/ai-muonnoi-autonomous-ops`, remote `tranhatam-collab/ai.muonnoi.org`, worktree `/private/tmp/ai-muonnoi-autonomous-ops`, parent `f1be6f22ab0fbdef5c8460350d0b352d7ca44104`. Thay thông tin lane và lịch nội bộ ngày 15/10; các receipt preview lịch sử bên dưới giữ nguyên thời điểm. Không sửa hai checkout team khác.
 
@@ -46,12 +90,12 @@ Các cấu hình Codex heartbeat cùng chat đều `ACTIVE` tại lần đọc 1
 
 Đây là lịch gọi chat Codex; cần host/scheduler hoạt động. Chưa có receipt bảo đảm chạy liên tục 24/7 ở hạ tầng ngoài. Worker cron, social scheduler, AI calls và kế toán thanh toán vẫn chưa được kích hoạt.
 
-### Việc tự động tiếp theo
+### Việc tự động tiếp theo (cập nhật sau vòng triage)
 
-1. Chốt source và đối chiếu preview artifact cho thay đổi Pilot; giữ preview offline intake.
-2. Đọc metadata Worker/Pages/D1 bằng tài khoản đã được cung cấp, lập bản đồ staging biệt lập và kế hoạch migration có rollback; chưa suy đoán production route.
-3. Hoàn thiện operator triage có phân quyền/đồng ý chia sẻ trước khi bật intake khách thật. Bản hiện tại chỉ cho tác giả đọc, chưa là hàng đợi tiếp nhận của bộ phận xử lý.
-4. Sau khi có tên/ID tài khoản do Founder quản lý, cấu hình từng kênh và lưu receipt. Chưa có danh sách cụ thể thì tiếp tục nội dung và kiểm thử, không gửi thử tới người ngoài.
+1. Đối chiếu source/preview của thay đổi triage với receipt mới nhất; Pages preview giữ offline, không gọi production intake.
+2. Giải quyết ánh xạ Worker/D1 và hạn mức 0 VND trước staging remote; không thay ID cùng tên, không dùng Paid như tài khoản Free. Chuẩn bị Access/test identities/CLI auth theo tài khoản được chỉ định.
+3. Tiếp tục gói bàn giao và rehearsal từ brief → scope → review → acceptance → đối soát bằng dữ liệu hư cấu; dùng workbook có sẵn, không tự ghi lead hay tiền thật.
+4. Sau khi có URL/ID tài khoản mạng xã hội do Founder quản lý và integration được cấu hình, thực hiện hành động được phép ở đúng điểm đến và lưu receipt; hiện chưa có danh sách đó.
 
 ## Môi trường và dữ liệu
 

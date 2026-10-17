@@ -47,6 +47,9 @@ export interface Env {
   STUDIO_PUBLISH_ENABLED?: string
   // Private brief storage is opt-in after migration, account and deployment verification.
   STUDIO_INTAKE_ENABLED?: string
+  // Triage remains disabled until the owner configures exact trusted operator user IDs.
+  STUDIO_TRIAGE_ENABLED?: string
+  STUDIO_OPERATOR_IDS?: string
 
   // Mail workspace
   MAIL_API_WORKSPACE_ID?: string
