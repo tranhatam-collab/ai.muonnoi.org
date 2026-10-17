@@ -63,6 +63,12 @@ Keep the printed manifest digest in a separate local receipt. Verify later with 
 
 The isolated copy/restore and corruption cases run in `npm run test:pilot:delivery`, included in `npm run verify`. `.local/` is Git-ignored and excluded from the curated Pages build. Real customer delivery still requires a verified scope, rights, approver and destination; never commit customer data to these fictional source files.
 
+### Bind a review case to the exported snapshot
+
+Run `npm run verify:pilot:handoff -- /absolute/path/to/.local/pilot-deliveries/pilot-XXXX TRUSTED_MANIFEST_SHA256`. Use the independent digest saved when that snapshot was generated. This command verifies every file, requires the exact workbook source hash, then links fictional qualification/proposal/order/acceptance/reconciliation records to that manifest. It checks the offer, brief, capacity, proposal/version, scope acceptance, currency, amounts, revision allowance and deliverable coverage across records. It refuses changed/missing files, a different manifest, mismatched records or inherited review/payment receipts.
+
+The command reads the snapshot without changing it and writes a new `.local/pilot-handoffs/handoff-XXXX/README.md` plus `receipt.json`. The coverage table contains **12 content assets and four support documents**, each with file hash; this is not 16 sold content assets. The result is only `VERIFIED_LOCAL_LINKS_ONLY`, with `REVIEW_REQUIRED` and null actuals. It cannot turn this unreviewed fictional bundle into an accepted delivery, paid order or verified customer consent. The CLI generates fixed fictional records internally and does not import customer records. `npm run test:pilot:handoff` exercises the negative cases and is included in the full verify command.
+
 ### Source and operational records
 
 `npm run rehearse:commercial` creates a new private `.local/commercial-rehearsals/` receipt from fixed fictional fixtures. It exercises 16 transitions through qualification, proposal, revision, acceptance and reconciliation, with eight expected rejections. DEMO records and their simulated amounts stay inside `traces`; the separate `actuals` fields remain `null`. No external adapter or provider is called. The command refuses populated source templates and does not accept customer-file arguments.
