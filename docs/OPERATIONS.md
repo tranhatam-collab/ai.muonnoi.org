@@ -2,6 +2,25 @@
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng nối hồ sơ với bộ bàn giao — 17/10/2026, 11:01 (UTC+7)
+
+Phạm vi: repo `tranhatam-collab/ai.muonnoi.org`, remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git`, nhánh `codex/ai-muonnoi-autonomous-ops`, worktree `/private/tmp/ai-muonnoi-autonomous-ops`. Baseline đầu vòng **`8ffa88a7cba211a3acf4ebcb712a1f6551f44f5f`**, sạch; code mới **`55761276c47a4ebcd803facf198c3e7231d5ce2a`**, sạch khi chạy CLI. Phần này cập nhật việc tiếp theo; giữ nguyên snapshot bàn giao và receipt lịch sử, không sửa checkout team.
+
+**Blocker hiện hành:** chưa có account ID Cloudflare Free riêng, staging/Access/D1/test identities hoặc tài khoản/kênh bán và nguồn giao dịch được cấu hình. Chưa có tiền đã đối soát; các actuals tiếp tục `null`. Hạn mức chi thêm vẫn 0 VND, không bật AI/social hay ghi production.
+
+| Lớp | Trạng thái | Receipt |
+|---|---|---|
+| Artifact và hồ sơ | `VERIFIED_CURRENT` | `tools/pilot-handoff.mjs` kiểm toàn vẹn snapshot bằng digest độc lập, hash workbook, rồi đối chiếu offer/brief/capacity/proposal/order/phiên bản/scope/tiền tệ/số tiền/vòng sửa/thời lượng/manifest. Bảng coverage gắn từng deliverable với hash tệp. |
+| Phạm vi và review | `VERIFIED_CURRENT` | Đủ **12 nội dung chính + 4 tài liệu hỗ trợ**, không tính thành 16 nội dung bán. Snapshot giữ `NOT_REVIEWED`, phiếu fixture ở `REVIEWING` và đối soát `PENDING_RECONCILIATION`; checker không cho gán accepted, receipt cũ hoặc actuals vào bộ này. Giá và refs trong case đều là fixture, không phải đơn đã nhận. |
+| Kiểm thử | `VERIFIED_CURRENT` | `npm run verify` exit 0: **155 tests / 155 pass / 0 fail, cancelled, skipped, TODO**; tăng 19 ca handoff. Typecheck/static build/Worker dry-run đạt. Log `.local/verify-handoff-2026-10-17.log`; artifact public vẫn 43 file, không chứa công cụ/operations/receipt local. |
+| CLI và receipt | `VERIFIED_CURRENT` | Đã chạy CLI trên snapshot có sẵn, đọc lại receipt, kiểm SHA-256, rồi kiểm lại hồ sơ và coverage từ receipt đã lưu. Không thay byte hoặc trạng thái snapshot nguồn. Output `VERIFIED_LOCAL_LINKS_ONLY`, gate `REVIEW_REQUIRED`, external actions 0, actuals null. Đây chỉ là toàn vẹn và tính nhất quán local, chưa xác minh quyền/khách/receipt ngoài hệ thống. |
+| Preview baseline | `VERIFIED_CURRENT` | Dashboard **`470bd5d2-82d4-498d-9001-a3d54deba2c2`**, success lúc 10:00 ngày 17/10, 16 giây; log clone đúng full SHA `8ffa88a7cba211a3acf4ebcb712a1f6551f44f5f`, output `dist/site`, 43 file/42 assets + header, không Functions. URL `https://470bd5d2.ai-muonnoi-org.pages.dev`. Receipt này thuộc baseline trước code handoff. |
+| Production/provider | `BLOCKED` | Trang Pages hiện vẫn ghi production branch `feat/flow-mvp-backend`, row `65d8737`, URL `https://a6623203.ai-muonnoi-org.pages.dev`. Chưa đối chiếu được custom domain với Worker/D1 hiện hành; không đổi mapping, không deploy backend. |
+
+Bảng đọc: `.local/pilot-handoffs/handoff-0Emvpz/README.md`; receipt: `.local/pilot-handoffs/handoff-0Emvpz/receipt.json`; digest **`29d34d3ddda81870139f8a663b76058311d0909f8ea569111df3164b3fdb260e`**. Receipt tóm tắt độc lập `.local/pilot-handoff-receipt-2026-10-17.json`. Snapshot nguồn vẫn `.local/pilot-deliveries/pilot-k2nuLL`, HEAD khi tạo `61181630b06bf0be134f63e7b1dbce2cd190a625`, manifest **`df491a87d5dde76434022b8d10deef7346f49ee47e44667b02ad6acc2c3bc322`**. Hash workbook đúng bản đi kèm snapshot; source của verifier và source của artifact được ghi riêng. `git check-ignore` xác nhận receipt không vào Git.
+
+**Việc tự động tiếp theo:** bổ sung cách review/so sánh phiên bản bàn giao local và xuất phản hồi theo mã asset, dùng dữ liệu hư cấu, không tự tạo acceptance. Khi có tài khoản Free cụ thể, kiểm provider/quota/quyền rồi thực hiện staging biệt lập theo gate. Lịch mỗi giờ hiện hữu đã gọi vòng này; không tạo lịch trùng.
+
 ## Vòng diễn tập nghiệm thu và đối soát — 17/10/2026, 09:59 (UTC+7)
 
 Phạm vi: đúng remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git`, nhánh `codex/ai-muonnoi-autonomous-ops`, worktree `/private/tmp/ai-muonnoi-autonomous-ops`. Baseline đầu vòng `7c090f467cb6a479cfb0f92ae8e98378a95111af`, sạch. Code mới commit **`5705c1da3a2e93ae64b689c461eef0eb53a88440`**; receipt diễn tập sinh từ worktree sạch tại SHA này. Không đổi các checkout team. Phần này cập nhật việc tiếp theo, giữ nguyên receipt cũ và bộ Pilot đã đóng gói.
