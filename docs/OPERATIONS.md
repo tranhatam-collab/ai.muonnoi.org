@@ -2,6 +2,10 @@
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Thuyết minh danh mục 1–3 năm chờ duyệt — 19/10/2026, 14:32 (UTC+7)
+
+Đã tạo `docs/PRODUCT_PORTFOLIO_1_TO_3_YEARS_FOUNDER_APPROVAL.md`: 4 offer Studio + 10 Agent A01–A10, mỗi dòng độc lập/tự chủ, kế hoạch chuẩn bị hoàn hảo trước mở bán, lộ trình 1–3 năm. Trạng thái `DRAFT_AWAITING_FOUNDER_APPROVAL`. Giá và target là đề xuất; actuals null; HOLD live. AI tiếp tục chuẩn bị nội bộ dưới 0 VND theo CONTINUOUS_AUTONOMOUS_OPS; không chờ duyệt từng giờ.
+
 ## Kế hoạch liên tục + đối chiếu DNS/HTTP — 19/10/2026, 13:54 (UTC+7)
 
 Phạm vi: remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git`, nhánh `codex/ai-muonnoi-autonomous-ops`, worktree `/private/tmp/ai-muonnoi-autonomous-ops`, HEAD `a7aba972742d5931214e10ee053279b7efc0c1f8` (ahead 4). Bảo toàn thay đổi dirty trước đó. Ngân sách 0 VND. Không deploy, không Reactivate DNS, không push.
