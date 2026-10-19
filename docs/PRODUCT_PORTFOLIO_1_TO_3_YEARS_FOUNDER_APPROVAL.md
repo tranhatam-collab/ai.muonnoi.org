@@ -246,13 +246,16 @@ Mỗi Agent: **một dòng sản phẩm · một target · một giá đề xu�
 
 ### Sóng 0 — Nền tảng chung (song song mọi sản phẩm)
 
-- [ ] Repo/nhánh/identity đúng (đang làm).  
-- [ ] Zero-budget policy + emergency stop (đã có local).  
-- [ ] Studio review path khóa auto-post (đã có local).  
-- [ ] Staging biệt lập khi có Cloudflare Free ID (**chờ Founder**).  
+- [x] Repo/nhánh/identity đúng (lane `codex/ai-muonnoi-autonomous-ops`).  
+- [x] Zero-budget policy + emergency stop (đã có local).  
+- [x] Studio review path khóa auto-post (đã có local).  
+- [x] **Staging kit local + checklist đọc-only** — `docs/STAGING_KIT_CHECKLIST.md`; generator `npm run prepare:intake:staging`; placeholder `__CLOUDFLARE_FREE_ACCOUNT_ID_REQUIRED__` / `__SEPARATE_STAGING_D1_ID_REQUIRED__`; receipt `.local/continuous/staging-checklist-20261019T145626/`. Bước A local xong; **áp remote vẫn chờ Free account ID**.  
+- [ ] Staging biệt lập trên Cloudflare Free khi có account ID (**chờ Founder** — xem checklist mục B).  
 - [ ] Merchant + bank importer chỉ đọc (**chờ Founder**).  
 - [ ] Một kênh sở hữu + consent (**chờ Founder**).  
 - [ ] Người: seller / QA / finance / on-call (**chờ Founder chỉ định**).
+
+Truy vết: mọi sản phẩm S01–S04 và A01–A10 **phụ thuộc cùng Sóng 0**; không nhận đơn thật trước khi staging kit remote + merchant/kênh đạt cho SKU đó.
 
 ### Sóng 1 — Mở học hỏi (không scale)
 

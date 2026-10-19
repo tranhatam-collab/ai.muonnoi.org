@@ -2,6 +2,14 @@
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — gắn staging vào Sóng 0 — 19/10/2026, 15:56 (UTC+7)
+
+Source: remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git`, nhánh `codex/ai-muonnoi-autonomous-ops`, HEAD `296d746` (ahead 8 trước commit vòng này). Ba tệp dirty implementation/test bảo toàn. Tick `AGENT_LOOP_TICK_muonnoi_hourly` lúc `2026-10-19T08:55:43Z`. 0 VND. Không deploy/DNS/remote.
+
+`VERIFIED_WORKTREE_ONLY`: cập nhật `docs/PRODUCT_PORTFOLIO_1_TO_3_YEARS_FOUNDER_APPROVAL.md` mục Sóng 0 — đánh dấu staging kit local + checklist `docs/STAGING_KIT_CHECKLIST.md` đã có; giữ mục remote Free account / merchant / kênh / người là chờ Founder; thêm câu truy vết mọi SKU phụ thuộc Sóng 0. Actuals null. HOLD không đổi.
+
+**Việc tự động tiếp theo:** củng cố 3 tệp Pilot dirty thành gói review có hash mới (không commit code trừ khi Founder duyệt), hoặc thêm mục Sóng 0 vào `CONTINUOUS_AUTONOMOUS_OPS.md` hàng đợi. Không chờ Founder nếu còn việc docs/test an toàn.
+
 ## Vòng giờ Cursor — staging checklist — 19/10/2026, 14:56 (UTC+7)
 
 Source: remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git`, nhánh `codex/ai-muonnoi-autonomous-ops`, worktree `/private/tmp/ai-muonnoi-autonomous-ops`, HEAD `555e32acbbc82222ab9a7a0d516a7c4d59cba24e` (ahead 7). Ba tệp dirty implementation/test được bảo toàn. Tick `AGENT_LOOP_TICK_muonnoi_hourly` lúc `2026-10-19T07:55:43Z`. Ngân sách 0 VND. Không deploy/DNS/remote.
