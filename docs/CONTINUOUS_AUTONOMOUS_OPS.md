@@ -14,8 +14,9 @@
 | Ngân sách | 0 VND |
 | AI provider đã chọn | Cloudflare Workers AI — chưa bật binding |
 | Lịch Codex | `ai-muonnoi-continuous-revenue-execution` `ACTIVE` `FREQ=HOURLY` — đang `usage_limit_exceeded` tới khoảng 24/10/2026 08:02 |
-| Lịch Cursor (phiên này) | Loop cục bộ mỗi 3600 giây; Automation Glass được mở sẵn form để Founder bật nếu muốn lịch ngoài phiên chat |
-| Lịch Worker | `workers/revenueops/config/schedule.json` — tất cả `enabled=false` |
+| Lịch Cursor (phiên này) | Loop monitored mỗi 3600 giây · sentinel `AGENT_LOOP_TICK_muonnoi_hourly` · PID xem OPERATIONS mới nhất; Automation Glass form đã mở để Founder bật lịch bền ngoài phiên chat (một lần) |
+| Lịch Worker | `workers/revenueops/config/schedule.json` — tất cả `enabled=false` (0 VND; không tự bật phí) |
+| Chế độ Founder | **100% tự động nội bộ** — AI không hỏi từng giờ; chỉ báo khi cần `AP-*`, Free account ID, merchant, kênh, hoặc P0/P1 có evidence |
 
 ## 2. Phân công
 
@@ -48,11 +49,11 @@ Trạng thái đối chiếu Sóng 0 (`docs/PRODUCT_PORTFOLIO_1_TO_3_YEARS_FOUND
 | 0a | Identity + zero-budget + Studio review khóa auto-post | Xong (local) |
 | 0b | Staging kit local + checklist đọc-only | Xong — `docs/STAGING_KIT_CHECKLIST.md`; `npm run prepare:intake:staging`; placeholder Free account / D1 |
 | 0c | Portfolio 14 SKU thuyết minh Founder | Xong draft — chờ `AP-*` |
-| 1 | Củng cố test/tooling Pilot (revision, handoff, recovery, artifact boundary) | Đang — 3 tệp dirty `tools/pilot-revise.mjs` + tests (chưa commit code) |
-| 2 | Probe đọc-only domain/DNS/HTTP/CSP; ghi receipt, không sửa | Có thể chạy lại mỗi giờ nếu cần revalidate |
-| 3 | Đóng gói diff local thành baseline review có hash độc lập | Tiếp theo khi không đụng remote |
+| 1 | Củng cố test/tooling Pilot (revision, handoff, recovery, artifact boundary) | Dirty còn đó; test `node --test` 8/8 pass trên worktree |
+| 2 | Probe đọc-only domain/DNS/HTTP/CSP; ghi receipt, không sửa | Tiếp theo revalidate |
+| 3 | Đóng gói diff local thành baseline review có hash độc lập | **Xong local** — `.local/continuous/pilot-dirty-baseline-20261019T111829Z/` (chưa commit code) |
 | 4 | Staging remote biệt lập trên Cloudflare Free | **BLOCKED** — chờ Free account ID |
-| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Đang (Cursor loop PID phiên này) |
+| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop monitored đã tái kích hoạt sau khi loop cũ aborted |
 
 Thứ tự chọn mỗi giờ: làm mục còn mở nhỏ nhất số; bỏ qua mục `BLOCKED` Founder; không commit 3 tệp Pilot dirty trừ khi Founder duyệt.
 
