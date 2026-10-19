@@ -2,7 +2,7 @@
 
 **Loại tài liệu:** bản AI sáng tạo để Founder duyệt · không phải bằng chứng doanh thu · không tự mở bán  
 **Ngày:** 2026-10-19 · `Asia/Ho_Chi_Minh`  
-**Source:** nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD tại thời điểm soạn `b4d728a` (có thể lệch sau commit)  
+**Source:** nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `f0a337b` (cập nhật 2026-10-19 15:56 +0700)  
 **Trạng thái:** `DRAFT_AWAITING_FOUNDER_APPROVAL`  
 **Ngân sách hiện hành:** 0 VND · HOLD live/thương mại cho đến khi từng sản phẩm qua cổng riêng  
 
