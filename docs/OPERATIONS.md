@@ -2,6 +2,14 @@
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — hàng đợi Sóng 0 trong CONTINUOUS_OPS — 19/10/2026, 16:55 (UTC+7)
+
+Source: remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git`, nhánh `codex/ai-muonnoi-autonomous-ops`, HEAD `2d4e7d9` (ahead 10 trước commit vòng này). Ba tệp dirty Pilot bảo toàn. Tick `AGENT_LOOP_TICK_muonnoi_hourly` lúc `2026-10-19T09:55:43Z`. Loop PID 16445 còn chạy. 0 VND. Không deploy/DNS/remote.
+
+`VERIFIED_WORKTREE_ONLY`: cập nhật `docs/CONTINUOUS_AUTONOMOUS_OPS.md` §3 — bảng trạng thái Sóng 0 (0a–0c xong local/draft; mục 1 dirty Pilot; mục 4 BLOCKED Free account; quy tắc chọn việc mỗi giờ). Actuals null. HOLD không đổi. Portfolio vẫn `DRAFT_AWAITING_FOUNDER_APPROVAL`.
+
+**Việc tự động tiếp theo:** đóng gói 3 tệp Pilot dirty thành baseline review có hash (không commit code), hoặc revalidate probe domain đọc-only. Không chờ Founder nếu còn việc an toàn.
+
 ## Vòng giờ Cursor — gắn staging vào Sóng 0 — 19/10/2026, 15:56 (UTC+7)
 
 Source: remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git`, nhánh `codex/ai-muonnoi-autonomous-ops`, HEAD `296d746` (ahead 8 trước commit vòng này). Ba tệp dirty implementation/test bảo toàn. Tick `AGENT_LOOP_TICK_muonnoi_hourly` lúc `2026-10-19T08:55:43Z`. 0 VND. Không deploy/DNS/remote.
