@@ -1,6 +1,97 @@
-# Runbook phát triển và tiếp nhận vận hành — cập nhật 2026-10-17
+# Runbook phát triển và tiếp nhận vận hành — cập nhật 2026-10-19
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
+
+## Kế hoạch liên tục + đối chiếu DNS/HTTP — 19/10/2026, 13:54 (UTC+7)
+
+Phạm vi: remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git`, nhánh `codex/ai-muonnoi-autonomous-ops`, worktree `/private/tmp/ai-muonnoi-autonomous-ops`, HEAD `a7aba972742d5931214e10ee053279b7efc0c1f8` (ahead 4). Bảo toàn thay đổi dirty trước đó. Ngân sách 0 VND. Không deploy, không Reactivate DNS, không push.
+
+**Verdict vận hành:** lịch Codex mỗi giờ vẫn `ACTIVE` nhưng lần gọi gần nhất `2026-10-19T05:58:24Z` (12:58 VN) vẫn `usage_limit_exceeded`. Đã lập kế hoạch tự động liên tục tại `docs/CONTINUOUS_AUTONOMOUS_OPS.md`. Đã mở form Automation Glass trong Cursor để Founder bật lịch bền ngoài phiên chat. Đã bật loop cục bộ mỗi 3600 giây trong phiên này (`AGENT_LOOP_TICK_muonnoi_hourly`).
+
+| Claim | Trạng thái | Evidence |
+|---|---|---|
+| DNS A `ai.muonnoi.org` | `VERIFIED_CURRENT` | dig @1.1.1.1: `104.21.93.187`, `172.67.214.1`, TTL 300; NS zone `davina/justin.ns.cloudflare.com` |
+| CNAME `ai.muonnoi.org` | `VERIFIED_CURRENT` | dig +short CNAME trống; không có answer CNAME trong probe |
+| HTTP live domain | `VERIFIED_CURRENT` | `https://ai.muonnoi.org/` HTTP/2 200, title `AI Muôn Nơi — Công cụ AI cho cộng đồng người Việt`, body SHA-256 `984e4db663f1e0f57786c81a2959a447a56ecefccc127ea9a1fa2cd37b525187`, 15971 bytes, `server: cloudflare`, `cf-cache-status: DYNAMIC` |
+| Preview ops `7e579cd6` / alias nhánh | `VERIFIED_CURRENT` | Cùng title `Nhà Chung | Viết và chia sẻ điều có giá trị`, cùng body SHA-256 `0edb5b54c59a892e1c22ee3c55c334f614fb21e7adf4de8dec5d76a0a4135c85` |
+| Pages production row `a6623203` | `VERIFIED_CURRENT` | Title khác: `Nhà Chung | Nơi cộng đồng và AI cùng nhìn rõ vấn đề hơn`, body SHA-256 `f1d25e3709ac79d4763acaf17e65e78bc2c879f07d5a200470c6b88067857216` |
+| Domain = Pages deployment đã audit | `CONTRADICTED` | Body/title domain **không khớp** preview ops lẫn production row Pages. Pages từng ghi custom domain Inactive vẫn tương thích với việc traffic domain đi đường khác trong Cloudflare; chưa khóa Worker/route/project nào đang phục vụ |
+| Staging/Free/merchant | `BLOCKED` | Chưa có account Free ID, Access identity, merchant, kênh |
+
+Receipt: `.local/continuous/dns-route-20261019T135354/compare-receipt.json` và `probes.txt`. HTTP 200 không chứng minh Studio/API/auth. Actuals null. External actions 0.
+
+**Việc tự động tiếp theo (không chờ Founder):** gom thay đổi dirty hiện có thành baseline review có hash (không push); chuẩn bị checklist staging kit đọc-only từ placeholder Free account; mỗi giờ loop chọn một việc nội bộ tiếp theo trong `CONTINUOUS_AUTONOMOUS_OPS.md`.
+
+**Chỉ cần Founder khi:** bật Automation Glass (form đã mở), cấp account ID Cloudflare Free / Access / merchant / kênh, hoặc phê duyệt commit/push/deploy. Không cần trả lời để AI tiếp tục việc nội bộ.
+
+## Replay gói review từ HEAD — 18/10/2026, 15:31 (UTC+7)
+
+Đã xác minh lại remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git`, nhánh `codex/ai-muonnoi-autonomous-ops`, HEAD `a7aba972742d5931214e10ee053279b7efc0c1f8`; bốn tệp dirty giữ nguyên. Trích đúng ba file gốc từ HEAD vào thư mục biệt lập `/private/tmp/ai-muonnoi-patch-replay-DiDtzX`, xác minh hash patch đã lưu rồi apply check và apply tại bản sao: cả hai exit 0. Ba file sau replay khớp hash worktree trong receipt; cả ba đạt `node --check`.
+
+Receipt `.local/review-packages/review-FgQEvy/replay-receipt.json`. Phạm vi `VERIFIED_CURRENT` là tái tạo ba file từ baseline + patch và kiểm cú pháp; không phải full test trên checkout độc lập hoặc receipt deploy. Không sửa lane team, staging config hay dữ liệu cũ. Provider/preview/mapping không được kiểm lại vòng này; giữ nguyên thời điểm receipt trước. Actuals null, external actions 0, HOLD không đổi.
+
+Bước tiếp theo: đối chiếu DNS/route phía provider để khóa origin thực tế, trước khi chuẩn bị phát hành; gói patch hiện đã có evidence tái tạo độc lập để review.
+
+## Gói diff review và DNS — 18/10/2026, 14:23 (UTC+7)
+
+Repo/remote/nhánh/HEAD không đổi; bảo toàn bốn tệp dirty. DNS đọc ngoài sandbox trả A `104.21.93.187`, `172.67.214.1`, TTL 300; truy vấn CNAME không có answer. Kết quả này không xác định origin/deployment sau proxy và không tự bác bỏ trạng thái Pages Inactive đã quan sát. Preview/provider chưa đọc lại vòng này.
+
+Đã đóng gói ba tệp implementation/test thay đổi thành `.local/review-packages/review-FgQEvy/implementation.patch`, SHA-256 `fb6c80c6c2c06fb2538fb133510008584692a32b93ff194f5f73ce807d288e8f`. Receipt cùng thư mục lưu base HEAD `a7aba972742d5931214e10ee053279b7efc0c1f8` và hash từng tệp. `git apply --reverse --check` exit 0, chỉ kiểm không sửa worktree. Gói không bao gồm runbook hoặc bốn commit local trước baseline.
+
+Năm suite liên quan chạy cùng nhau: exit 0, 35 tests / 35 pass / 0 fail / 0 cancelled / 0 skipped / 0 TODO. Đây là gói review local, không phải commit, approval hay deploy; actuals null. Giữ HOLD. Bước tiếp theo: đối chiếu origin bằng cấu hình DNS/route provider đọc-only và kiểm baseline candidate trước bất kỳ phát hành nào.
+
+## Xác minh build preview và biên artifact — 18/10/2026, 13:21 (UTC+7)
+
+Cùng HEAD `a7aba972742d5931214e10ee053279b7efc0c1f8`, remote và nhánh ops như dưới; bảo toàn ba tệp dirty trước vòng. `VERIFIED_CURRENT` provider cho **preview lịch sử** `7e579cd6-bd4a-4db8-9060-98668a1d5105`: Dashboard Details báo success, source `6252af1cf2f4b6e13fbd73e29e2a5dee38360535`, build 17/10 04:02 UTC, 14 giây. Log đọc được: output `dist/site`, 43 tệp curated, upload 42 assets, một header rule, không có Functions. Không phải deployment của HEAD/worktree hiện tại; không nâng gate production hoặc custom domain.
+
+`VERIFIED_WORKTREE_ONLY`: tăng kiểm tra static để duyệt cây tệp artifact thực tế, từ chối symlink và đối chiếu toàn bộ file với manifest; trước đây chỉ kiểm danh sách manifest và một phần thư mục. Build local tạo 43 tệp; static/login tests 3/3 pass, fail/cancelled/skipped/TODO 0. Negative probe chèn một tệp hư cấu ngoài danh sách làm test thất bại đúng assertion (exit 1); đã dọn đúng probe và chạy lại 3/3 pass. Không deploy, không gửi dữ liệu, actuals null.
+
+Giữ HOLD: account Free, nguồn giao dịch, mapping domain và các gate live chưa đủ. Bước tiếp theo là kiểm mapping domain bằng nguồn DNS/provider hiện tại, sau đó gom thay đổi local đã kiểm chứng thành baseline review được; không coi build xanh là nghiệm thu.
+
+## HTTP live và chuỗi revision — 18/10/2026, 12:16 (UTC+7)
+
+**HOLD; chưa chứng minh domain ngừng phục vụ.** HEAD/remote/nhánh không đổi (`a7aba972742d5931214e10ee053279b7efc0c1f8`, `tranhatam-collab/ai.muonnoi.org`, `codex/ai-muonnoi-autonomous-ops`); ba tệp dirty được bảo toàn. `curl -I --max-time 20 https://ai.muonnoi.org` ngoài sandbox trả exit 0, HTTP/2 200, HTML, thời điểm response 05:16:06 GMT, CF-Ray `a4c511a979c009dc-HKG`. Lần chạy trong sandbox exit 6 không được dùng làm bằng chứng DNS production hỏng. HTTP 200 không chứng minh luồng ứng dụng hay mapping đúng deployment; trạng thái Pages Inactive ở vòng trước chưa đủ kết luận outage. CSP response vẫn `script-src 'self'`.
+
+`VERIFIED_WORKTREE_ONLY`: thêm ca hai revision liên tiếp, kiểm digest candidate mới thay giá trị cũ, revision_of trỏ đúng parent trực tiếp, nội dung sửa ở vòng đầu và acceptance trống được giữ. Ba suite revise/review/handoff exit 0: **32 tests / 32 pass / 0 fail / 0 cancelled / 0 skipped / 0 TODO**. Chưa commit/push/deploy; actuals null.
+
+Việc tiếp theo: đọc chi tiết build preview và kiểm chứng mapping domain tại provider, không sửa DNS/Reactivate khi nguyên nhân chưa rõ. Không tạo thêm lịch hoặc dùng HTTP 200 để đóng gate live.
+
+## Provider và provenance revision — 18/10/2026, 10:33 (UTC+7)
+
+**HOLD: Cloudflare Pages hiển thị custom domain `ai.muonnoi.org` là `Inactive`.** Đây là trạng thái provider đọc trực tiếp tại tab Custom domains của project `ai-muonnoi-org`, account `93112cc89181e75335cbd7ef7e392ba3`; chưa kiểm DNS hoặc HTTP live nên chưa kết luận nguyên nhân hay phạm vi gián đoạn. Không bấm Reactivate, không sửa DNS.
+
+`VERIFIED_CURRENT` provider: production vẫn nhánh `feat/flow-mvp-backend`, commit `65d873734495297aa23461d81f90231abcb82bc5`, deployment `a6623203-b04e-46c2-852c-6a41eee99fe0`. Preview đầu danh sách của nhánh ops là commit `6252af1cf2f4b6e13fbd73e29e2a5dee38360535`, deployment `7e579cd6-bd4a-4db8-9060-98668a1d5105`, URL `https://7e579cd6.ai-muonnoi-org.pages.dev`. Không suy ra build thành công từ việc có URL; chưa mở trang chi tiết build. Dashboard đọc được, tab cũ biến mất không phải bằng chứng mất đăng nhập.
+
+`VERIFIED_WORKTREE_ONLY`: bổ sung `candidate_manifest_sha256` vào manifest và receipt của revision để truy ngược đúng candidate đã cung cấp byte sửa đổi, bên cạnh baseline digest. Giữ nguyên snapshot lịch sử và các thay đổi dirty trước đó. Baseline repo/nhánh như trên: HEAD `a7aba972742d5931214e10ee053279b7efc0c1f8`. Chưa commit/push/deploy.
+
+Kiểm thử ba suite revise/review/handoff: exit 0, 31 tests / 31 pass / 0 fail / 0 cancelled / 0 skipped / 0 TODO. Bổ sung assertion provenance vào ca sửa draft; nghiệm thu và actuals vẫn không được tạo. Việc tiếp theo: đọc chi tiết build preview và kiểm DNS/HTTP domain để phân biệt mapping provider với live; tiếp tục chờ account Free và nguồn đối soát.
+
+## Diễn tập khôi phục local — 18/10/2026, 09:25 (UTC+7)
+
+Repo/remote/nhánh giữ nguyên như mục dưới; HEAD `a7aba972742d5931214e10ee053279b7efc0c1f8`, hai tệp dirty được bảo toàn. Đã đóng gói snapshot `pilot-QuFMm1` thành tar, lưu digest riêng, giải nén sang thư mục mới và kiểm toàn vẹn bằng manifest digest của receipt trước. Kết quả `VERIFIED_CURRENT` chỉ trong local: 20 tệp/12 nội dung khớp; handoff vẫn `REVIEW_REQUIRED`; bản sao thử bị sửa nội dung bị từ chối; nguồn gốc kiểm lại không đổi. Lệnh Node với tar tạo/giải nén và hai verifier hiện có exit 0. Không có tác động bên ngoài, actuals null.
+
+Receipt: `.local/pilot-recovery/restore-4tX11z/receipt.json`. Archive SHA-256 `5c25409fdad57d826d3a04753aa158da19b4beab9260dafffbf444f6796d1621`. Đây là khôi phục trên cùng máy trong thư mục tạm, **chưa chứng minh backup ngoài máy hoặc DR production**.
+
+Inventory trình duyệt hiện tại không có tab nào trong in-app browser; preview và mapping production chưa được xác minh lại (`NOT_CHECKED`). Giữ HOLD và blocker account Free/kênh bán/đối soát. Bước tiếp theo: xác minh provider bằng Dashboard đọc-only và chuẩn bị nơi lưu backup ngoài thư mục tạm khi điểm đến được xác định; không coi archive local là đã đóng gate backup production.
+
+## Receipt rehearsal lưu trên đĩa — 18/10/2026, 08:32 (UTC+7)
+
+Cùng repo/nhánh và HEAD `a7aba972742d5931214e10ee053279b7efc0c1f8`; worktree DIRTY với hai tệp của vòng trước, được bảo toàn. Đã tạo mới bộ mẫu hư cấu bằng CLI hiện có, không thay snapshot lịch sử. Artifact `.local/pilot-deliveries/pilot-QuFMm1`: 20 tệp, 12 nội dung; manifest SHA-256 `1fa88a9c9dcc83e7eba46e6af893350ad6791646421e8b2df82f32c433cd4381`. Kiểm lại toàn vẹn sau khi tạo handoff đạt `VERIFIED_LOCAL_INTEGRITY_ONLY` (exit 0).
+
+Receipt `.local/pilot-handoffs/handoff-bTEBKR/receipt.json`, SHA-256 `444b3c198f0f8a82b7fda6b2cff00e07b299a3bdb51dbaa90c22c0833816e73f`; `run-receipt.json` lưu thời điểm, đường dẫn, digest độc lập và kết quả kiểm lại. Handoff xác minh 12 nội dung + 4 tài liệu hỗ trợ, vẫn `REVIEW_REQUIRED`, external actions 0 và toàn bộ actuals null. Các tệp local nằm trong thư mục tạm của máy, chưa phải backup bền vững hoặc bàn giao khách hàng.
+
+Không kiểm lại provider/live ở vòng này; không nâng receipt production lịch sử thành hiện hành. Giữ HOLD và các blocker tài khoản Free/kênh bán/đối soát đã ghi. Việc tiếp theo: kiểm chứng sao lưu–khôi phục bộ rehearsal bằng digest đã lưu, trước khi tuyên bố khả năng hồi phục.
+
+## Kiểm chứng nối snapshot sửa đổi với handoff — 18/10/2026
+
+Baseline `a7aba972742d5931214e10ee053279b7efc0c1f8`, remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git`, nhánh `codex/ai-muonnoi-autonomous-ops`, worktree `/private/tmp/ai-muonnoi-autonomous-ops`. Thay đổi vòng này chỉ ở test và runbook, chưa commit/push/deploy.
+
+- `VERIFIED_WORKTREE_ONLY`: thêm kiểm thử tích hợp sửa draft → snapshot mới → bản sao nguyên byte → so sánh → handoff. Cả 16 comment và ba file hồ sơ đều `UNCHANGED`; handoff vẫn `REVIEW_REQUIRED`. Digest hoặc manifest reference của bản cũ đều bị từ chối; acceptance cũ giữ nguyên byte, actuals null, external actions 0.
+- `VERIFIED_CURRENT` ở local: `node --test tests/pilot-revise.test.mjs tests/pilot-review.test.mjs tests/pilot-handoff.test.mjs`, exit 0, **31 tests / 31 pass / 0 fail / 0 cancelled / 0 skipped / 0 TODO**. Fixture hư cấu được tạo rồi dọn bởi test; đây không phải receipt bàn giao khách hàng. Không chạy lại full verify vì chỉ thêm test tích hợp.
+- `NOT_CHECKED` hiện tại: preview, mapping production và trạng thái quota lịch. Tab Dashboard cũ không còn tìm thấy; các thông tin provider và lỗi quota trong mục 17/10 là receipt lịch sử, không phải xác nhận hiện hành.
+- `BLOCKED`: chưa có tài khoản Cloudflare Free được chỉ định, tài khoản bán và nguồn đối soát. Giữ HOLD cho live, actuals null và ngân sách 0 đồng.
+
+Việc tiếp theo: tạo gói rehearsal bền vững kèm digest độc lập và receipt có thể kiểm lại; xác minh provider bằng phiên đọc hợp lệ khi có. Không dùng kết quả kiểm thử để suy ra nghiệm thu hoặc doanh thu.
 
 ## Vòng cắt snapshot từ comment byte — 17/10/2026, 23:12 (UTC+7)
 
