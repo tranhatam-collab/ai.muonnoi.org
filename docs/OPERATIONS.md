@@ -2,6 +2,20 @@
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng tự động — Founder chỉ duyệt · probe + A01 outline — 19/10/2026, 19:25 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `6f29c4d` (ahead 12 trước commit). Founder: **chỉ phê duyệt, không bị giao việc**. Loop PID **57320** còn chạy. 0 VND. Không deploy/DNS/push.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| Policy Founder-only | `VERIFIED_WORKTREE_ONLY` | `docs/FOUNDER_APPROVAL_ONLY.md` + cập nhật `CONTINUOUS_AUTONOMOUS_OPS` |
+| Domain probe | `VERIFIED_CURRENT` | HTTP/2 200; body SHA `984e4db6…525187` **UNCHANGED**; A `104.21.93.187`; CSP `script-src 'self'`; receipt `.local/continuous/domain-probe-20261019T122537Z/` |
+| Domain = Pages ops | `CONTRADICTED` | Không đổi so với audit trước; không Reactivate DNS |
+| A01 prep | `VERIFIED_WORKTREE_ONLY` | Outline 12 quy trình local; prompts 0/30; `DRAFT_NOT_FOR_SALE` |
+| Pilot dirty | Bảo toàn | Chờ `AP-PILOT-DIRTY` — AI không nhờ Founder sửa code |
+
+**Việc tự động tiếp theo:** điền 30 prompt skeleton A01 + mẫu miễn phí HTML dưới `.local` (không publish); hoặc thêm test fixture A01 inventory. Không chờ Founder.
+
 ## Vòng tự động — 100% nội bộ + baseline Pilot dirty — 19/10/2026, 18:18 (UTC+7)
 
 Source: remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git`, nhánh `codex/ai-muonnoi-autonomous-ops`, HEAD `b1152f7` (ahead 11 trước commit vòng này). Founder yêu cầu **tất cả 100% tự động**. 0 VND. Không deploy/DNS/push.

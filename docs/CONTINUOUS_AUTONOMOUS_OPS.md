@@ -1,6 +1,6 @@
 # Kế hoạch vận hành tự động liên tục — 19/10/2026
 
-**Mục tiêu Founder:** AI làm việc tự động 100%. Founder chỉ phê duyệt và cung cấp thông tin AI không tự lấy được. Không dừng chờ Founder khi còn việc nội bộ an toàn dưới hạn mức 0 VND.
+**Mục tiêu Founder:** AI làm việc tự động 100%. Founder **chỉ phê duyệt** (và gửi INFO khi sẵn sàng). Founder **không** bị giao việc vận hành. AI **không idle chờ** Founder — mục thiếu INFO đánh `BLOCKED` rồi chuyển việc khác ngay. Hộp duyệt duy nhất: `docs/FOUNDER_APPROVAL_ONLY.md`.
 
 **HOLD cho live/thương mại** vẫn giữ cho đến khi có receipt gate tương ứng. Kế hoạch này không cấp quyền deploy, DNS, secret, thanh toán, đăng mạng xã hội hoặc chi tiền.
 
@@ -29,12 +29,12 @@
 5. Bảo toàn lane team và file dirty chưa được giao.
 6. Actuals thiếu nguồn giữ `null`. Không bịa doanh thu, không nâng preview thành production.
 
-### Chỉ báo Founder khi
+### Chỉ báo Founder khi (duyệt / INFO — không giao việc)
 
-- Cần phê duyệt (commit/push/deploy/merge production).
-- Cần thông tin AI không tự lấy: account ID Cloudflare Free, Access/test identity, merchant/bank, URL kênh sở hữu, consent đăng bài, danh tính reviewer/finance.
+- Cập nhật `docs/FOUNDER_APPROVAL_ONLY.md` rồi thông báo ngắn: có mục `AP-*` sẵn sàng tick.
+- INFO-* AI không tự lấy được (Free account, merchant, kênh, people) — liệt kê, **không** yêu cầu Founder tự cấu hình/deploy/test.
 - P0/P1 mới có bằng chứng.
-- Hết việc nội bộ an toàn dưới hạn mức 0 VND.
+- Hết việc nội bộ an toàn dưới hạn mức 0 VND (hiếm; thường luôn còn docs/fixture/probe).
 
 ### Cấm khi thiếu quyền rõ
 
@@ -50,12 +50,14 @@ Trạng thái đối chiếu Sóng 0 (`docs/PRODUCT_PORTFOLIO_1_TO_3_YEARS_FOUND
 | 0b | Staging kit local + checklist đọc-only | Xong — `docs/STAGING_KIT_CHECKLIST.md`; `npm run prepare:intake:staging`; placeholder Free account / D1 |
 | 0c | Portfolio 14 SKU thuyết minh Founder | Xong draft — chờ `AP-*` |
 | 1 | Củng cố test/tooling Pilot (revision, handoff, recovery, artifact boundary) | Dirty còn đó; test `node --test` 8/8 pass trên worktree |
-| 2 | Probe đọc-only domain/DNS/HTTP/CSP; ghi receipt, không sửa | Tiếp theo revalidate |
-| 3 | Đóng gói diff local thành baseline review có hash độc lập | **Xong local** — `.local/continuous/pilot-dirty-baseline-20261019T111829Z/` (chưa commit code) |
-| 4 | Staging remote biệt lập trên Cloudflare Free | **BLOCKED** — chờ Free account ID |
-| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop monitored đã tái kích hoạt sau khi loop cũ aborted |
+| 2 | Probe đọc-only domain/DNS/HTTP/CSP; ghi receipt, không sửa | **Revalidated** `2026-10-19T12:25:37Z` — body SHA unchanged; domain≠Pages ops vẫn `CONTRADICTED` |
+| 3 | Đóng gói diff local thành baseline review có hash độc lập | **Xong local** — `.local/continuous/pilot-dirty-baseline-20261019T111829Z/` |
+| 3b | Hộp duyệt Founder-only | **Xong** — `docs/FOUNDER_APPROVAL_ONLY.md` |
+| 3c | A01 outline nội bộ (không bán) | **Bắt đầu** — `.local/continuous/a01-prep-20261019T1226/outline.json` (12 quy trình; prompt 0/30) |
+| 4 | Staging remote biệt lập trên Cloudflare Free | `BLOCKED` INFO-CF-FREE — **không dừng hàng đợi** |
+| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID xem OPERATIONS |
 
-Thứ tự chọn mỗi giờ: làm mục còn mở nhỏ nhất số; bỏ qua mục `BLOCKED` Founder; không commit 3 tệp Pilot dirty trừ khi Founder duyệt.
+Thứ tự mỗi giờ: việc mở nhỏ nhất số → bỏ qua `BLOCKED` → không commit Pilot dirty trừ khi `AP-PILOT-DIRTY`.
 
 ## 4. Khi có đầu vào Founder
 
