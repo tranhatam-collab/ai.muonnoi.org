@@ -20,7 +20,9 @@ Phạm vi: remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git`, nhánh `
 
 Receipt: `.local/continuous/dns-route-20261019T135354/compare-receipt.json` và `probes.txt`. HTTP 200 không chứng minh Studio/API/auth. Actuals null. External actions 0.
 
-**Việc tự động tiếp theo (không chờ Founder):** gom thay đổi dirty hiện có thành baseline review có hash (không push); chuẩn bị checklist staging kit đọc-only từ placeholder Free account; mỗi giờ loop chọn một việc nội bộ tiếp theo trong `CONTINUOUS_AUTONOMOUS_OPS.md`.
+**Đã làm tiếp ngay trong cùng giờ:** đóng gói 3 tệp dirty còn lại (`tests/pilot-revise.test.mjs`, `tests/static.test.mjs`, `tools/pilot-revise.mjs`) tại `.local/continuous/dirty-baseline-20261019T135535/`, diff SHA-256 `fb6c80c6c2c06fb2538fb133510008584692a32b93ff194f5f73ce807d288e8f` (khớp gói review-FgQEvy trước đó), suite liên quan 16/16 pass. Loop hàng giờ Cursor đã được phê duyệt và đang chạy (PID 16445), tick đầu sau ~60 phút.
+
+**Việc tự động tiếp theo (không chờ Founder):** viết checklist staging kit đọc-only từ placeholder `__CLOUDFLARE_FREE_ACCOUNT_ID_REQUIRED__`; giữ dirty chưa commit cho đến khi Founder phê duyệt commit riêng; mỗi giờ loop chọn việc nội bộ tiếp theo.
 
 **Chỉ cần Founder khi:** bật Automation Glass (form đã mở), cấp account ID Cloudflare Free / Access / merchant / kênh, hoặc phê duyệt commit/push/deploy. Không cần trả lời để AI tiếp tục việc nội bộ.
 
