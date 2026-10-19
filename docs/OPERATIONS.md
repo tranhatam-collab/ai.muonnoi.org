@@ -2,6 +2,21 @@
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — staging checklist — 19/10/2026, 14:56 (UTC+7)
+
+Source: remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git`, nhánh `codex/ai-muonnoi-autonomous-ops`, worktree `/private/tmp/ai-muonnoi-autonomous-ops`, HEAD `555e32acbbc82222ab9a7a0d516a7c4d59cba24e` (ahead 7). Ba tệp dirty implementation/test được bảo toàn. Tick `AGENT_LOOP_TICK_muonnoi_hourly` lúc `2026-10-19T07:55:43Z`. Ngân sách 0 VND. Không deploy/DNS/remote.
+
+| Lớp | Trạng thái | Receipt |
+|---|---|---|
+| Checklist staging | `VERIFIED_WORKTREE_ONLY` | `docs/STAGING_KIT_CHECKLIST.md` — bước A local xong; bước B chờ Free account ID |
+| Bundle local | `VERIFIED_CURRENT` | `npm run prepare:intake:staging` exit 0; `account_id=__CLOUDFLARE_FREE_ACCOUNT_ID_REQUIRED__`; `database_id=__SEPARATE_STAGING_D1_ID_REQUIRED__`; không chứa production D1 |
+| Test | `VERIFIED_CURRENT` | `npm run test:intake:staging` **3/3 pass**, 0 fail/cancelled/skipped/TODO |
+| Remote | `BLOCKED` | Chưa có Free account ID; `remote_applied=false` |
+
+Receipt: `.local/continuous/staging-checklist-20261019T145626/receipt.json`. Actuals null. External actions 0. HOLD live không đổi.
+
+**Việc tự động tiếp theo:** gắn checklist staging vào `PRODUCT_PORTFOLIO` Sóng 0 (một đoạn truy vết); hoặc củng cố test Pilot còn dirty thành baseline review khi Founder chưa duyệt commit riêng. Không chờ Founder nếu còn việc nội bộ.
+
 ## Thuyết minh danh mục 1–3 năm chờ duyệt — 19/10/2026, 14:32 (UTC+7)
 
 Đã tạo `docs/PRODUCT_PORTFOLIO_1_TO_3_YEARS_FOUNDER_APPROVAL.md`: 4 offer Studio + 10 Agent A01–A10, mỗi dòng độc lập/tự chủ, kế hoạch chuẩn bị hoàn hảo trước mở bán, lộ trình 1–3 năm. Trạng thái `DRAFT_AWAITING_FOUNDER_APPROVAL`. Giá và target là đề xuất; actuals null; HOLD live. AI tiếp tục chuẩn bị nội bộ dưới 0 VND theo CONTINUOUS_AUTONOMOUS_OPS; không chờ duyệt từng giờ.
