@@ -76,9 +76,11 @@ Trạng thái đối chiếu Sóng 0 (`docs/PRODUCT_PORTFOLIO_1_TO_3_YEARS_FOUND
 | 3w | Một owner-input packet cho bảy gate chung + hai test identity S01/A01, không chứa credential | **Xong local** — `.local/continuous/owner-input-packet-20261020T205255Z/` · 7 gate + 2 identity · **9 checks** · reject secret patterns · Founder chưa điền |
 | 3x | Khóa Studio create-intent trong source theo catalog/approval/idempotency; không deploy | **Xong worktree** — `.local/continuous/create-intent-source-fix-20261021T0400/`; unit 13/13 + Miniflare 1/1 + static 3/3; catalog thật `DRAFT` trả 423 trước D1/provider |
 | 3y | Định nghĩa checkout boundary riêng A01, không trộn với Studio Worker và không mở giao dịch thật | **Xong local** — `.local/continuous/a01-checkout-boundary-20261020T215300Z/` · **29 checks** · provider/D1 0 · DRAFT chặn trừ rehearsal structure |
-| 3z | Webhook amount/currency contract stub (fail-closed) khi chưa có pay.iai.one callback spec | Tiếp theo |
+| 3z | Webhook amount/currency/provider-ref contract stub khi chưa có pay.iai.one callback spec | **Xong local** — `.local/continuous/payment-webhook-contract-stub-20261021T0505/`; 78 checks; template `UNVERIFIED_PROVIDER_SPEC`, apply/source patch false, actuals null |
+| 3aa | Provider-spec intake/evidence checklist cho callback field map + signed samples + verifier | **Xong local** — `.local/continuous/provider-spec-intake-20261020T225254Z/` · 5 evidence slots · **7 checks** · `AWAITING_EVIDENCE` · cấm field bịa |
+| 3ab | Revalidate payment dirty suite (create-intent + webhook stub) không commit code trừ khi Founder AP | Tiếp theo |
 | 4 | Staging remote biệt lập trên Cloudflare Free | `BLOCKED` INFO-CF-FREE — **không dừng hàng đợi** |
-| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **53356** · tick `2026-10-20T21:52:11Z` |
+| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **53356** · tick `2026-10-20T22:52:11Z` |
 
 Thứ tự mỗi giờ: việc mở nhỏ nhất số → bỏ qua `BLOCKED` → không commit Pilot dirty trừ khi `AP-PILOT-DIRTY`.
 

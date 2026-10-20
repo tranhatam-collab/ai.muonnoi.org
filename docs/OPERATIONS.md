@@ -2,6 +2,30 @@
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — provider-spec intake checklist — 21/10/2026, 05:53 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `73e9d34`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-20T22:52:11Z`. Loop PID **53356**. Bảo toàn dirty Pilot + payment worktree. 0 VND. Không bịa field pay.iai.one.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| Webhook stub (Codex) | `VERIFIED_WORKTREE_ONLY` | Revalidate **78/78** · `UNVERIFIED_PROVIDER_SPEC` · apply false |
+| Provider-spec intake | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/provider-spec-intake-20261020T225254Z/` · **7/7** · 5 evidence · từ chối field `INVENTED*` / secret · `AWAITING_EVIDENCE` |
+| Actuals | null | HOLD |
+
+**Việc tự động tiếp theo:** revalidate payment dirty suite (create-intent tests) không commit code trừ Founder duyệt. Không idle chờ provider docs.
+
+## Vòng Codex — payment webhook contract stub fail-closed — 21/10/2026, 05:07 (UTC+7)
+
+Source khóa tại `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `73e9d345772c61dd6e97800c4f411888a4d3e2f3`. Bảo toàn ba tệp Pilot và payment source worktree của vòng trước. Không commit/push/deploy/migration/provider call/payment; 0 VND.
+
+`VERIFIED_WORKTREE_ONLY`: `.local/continuous/payment-webhook-contract-stub-20261021T0505/` vật hóa contract template, validator và simulator đối chiếu signature state, event ID/type, intent ID, provider reference, amount, currency, provider, intent state, replay và payload conflict. Chỉ fixture hư cấu có provider spec receipt, exact field map và signed sample hashes mới cho `ALLOW_LOCAL_TRANSITION`; mismatch giữ `BLOCKED` hoặc `PENDING_RECONCILIATION`, không đổi trạng thái và actuals `null`.
+
+Test exit 0 với **78 checks**. Template thật giữ `UNVERIFIED_PROVIDER_SPEC`, `production_apply_allowed=false`, `source_patch_allowed=false`, verdict `BLOCKED_PROVIDER_SPEC`; không giả định callback field của `pay.iai.one` và không sửa source webhook. Hash source/artifact có trong `receipt.json`.
+
+Giới hạn: source hiện vẫn chuyển trạng thái theo `event_type + intent_id` sau chữ ký; amount/currency/provider-session matching chưa được áp dụng vì chưa có provider callback contract đã xác minh. Live/thương mại vẫn `HOLD`; mọi actuals `null`.
+
+**Việc tự động tiếp theo:** dựng provider-spec intake/evidence checklist một lần cho callback field map, signed samples và verifier; tiếp tục backlog nội bộ nếu evidence chưa có.
+
 ## Vòng giờ Cursor — A01 checkout boundary — 21/10/2026, 04:53 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `6d3f69c`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-20T21:52:11Z`. Loop PID **53356**. Bảo toàn dirty Pilot + payment-api/catalog worktree Codex. 0 VND. Không deploy/provider.
