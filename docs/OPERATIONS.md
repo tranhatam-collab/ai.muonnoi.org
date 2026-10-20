@@ -2,6 +2,30 @@
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — A06 curriculum + entitlement 90d — 20/10/2026, 23:53 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `969c73b`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-20T16:52:11Z`. Loop PID **53356**. Pilot dirty bảo toàn. 0 VND.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| A06 curriculum skeleton | `VERIFIED_WORKTREE_ONLY` | 12 bài + 30 thực hành · `lessons_approved=0` · không chứng chỉ nghề |
+| A06 entitlement/revoke/support | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a06-entitlement-20261020T165316Z/` · **25/25** · window đúng 90 ngày · use-after-revoke deny · support cap |
+| Actuals | null | `DRAFT_NOT_FOR_SALE` |
+
+**Việc tự động tiếp theo:** A07 brand-brief calendar contract (30 ngày, không ads/inbox). Không chờ Founder.
+
+## Vòng Codex — A05 source-rights + fidelity mở rộng — 20/10/2026, 22:53 (UTC+7)
+
+Artifact được khóa tại source `tranhatam-collab/ai.muonnoi.org` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `cba2d1e917dd90e3825905fa293a35c745507c86`, trước commit đồng thời `969c73b`. Lane Pilot và mọi tệp dirty được bảo toàn; không deploy/publish/voice-clone/DNS/secret/migration. Ngân sách 0 VND.
+
+`VERIFIED_WORKTREE_ONLY`: `.local/continuous/a05-source-rights-fidelity-20261020T2255/` bổ sung contract A05 với 10 source slot, rights/fidelity rubric và 22 output slot đúng cơ cấu 12 bài ngắn + 4 bài dài + 6 kịch bản. Contract chỉ nhận một mode tối đa 60 phút transcript hoặc 10.000 từ; mỗi nguồn phải có source/owner/rights/retention/locator receipt, SHA-256, commercial-transform + derivative rights, third-party clearance, quote policy rõ và không có injection. Voice clone luôn bị chặn.
+
+Test exit 0 với **44 checks**. Failure path phủ receipt/hash/locator/retention thiếu, trộn mode, vượt hạn mức, transform/third-party/quote rights thiếu, injection, voice clone, output sai cơ cấu, nguồn/claim ref không hợp lệ, unsupported claim, đổi ý gốc, giả giọng, thiếu fidelity reviewer và lịch auto-publish. Template thực tế có source receipts 0, rights receipts 0, ready sources 0, reviewed outputs 0, verdict `BLOCKED_SOURCE_RIGHTS`. External actions 0, `commercial_effect=false`; mọi actuals `null`. Receipt: `receipt.json` trong cùng thư mục.
+
+Giới hạn: chưa có nguồn, chủ sở hữu, quyền, locator hoặc reviewer thật; không tạo text, post hay script. A05 vẫn `DRAFT_NOT_FOR_SALE` và HOLD thương mại.
+
+**Việc tự động tiếp theo:** dựng A06 schema 12 bài + 30 thực hành, entitlement 90 ngày và support-capacity gate.
+
 ## Vòng giờ Cursor — A05 rights/fidelity contract — 20/10/2026, 22:53 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `cba2d1e`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-20T15:52:11Z`. Loop PID **53356**. Pilot dirty bảo toàn. 0 VND. Không publish/voice-clone.

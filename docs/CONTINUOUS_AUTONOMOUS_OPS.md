@@ -66,10 +66,11 @@ Trạng thái đối chiếu Sóng 0 (`docs/PRODUCT_PORTFOLIO_1_TO_3_YEARS_FOUND
 | 3m | A03 crawler sandbox contract + SSRF refusal fixtures | **Xong local** — `.local/continuous/a03-crawler-sandbox-20261020T2035/`; 63 checks, DNS/HTTP requests 0, actuals null |
 | 3n | A03 packet hư cấu: 10 trang, evidence schema, 20 finding ưu tiên | **Xong local** — `.local/continuous/a03-report-packet-20261020T135600Z/` · **77 checks** · auth trống · live_fetch=false |
 | 3o | A04 CSV schema + rubric dữ kiện (local draft, không đăng sàn) | **Xong local** — `.local/continuous/a04-csv-rubric-20261020T2135/`; 20 row, 53 checks, source/rights/ready rows đều 0 |
-| 3p | A05 source-rights + fidelity contract cho input được cấp quyền | **Xong local** — `.local/continuous/a05-rights-fidelity-20261020T155311Z/` · **29 checks** · sources_ready 0 · content_generated=false |
-| 3q | A06 entitlement 90 ngày + revoke fixture (local) | Tiếp theo |
+| 3p | A05 source-rights + fidelity contract cho input được cấp quyền | **Xong local** — `.local/continuous/a05-rights-fidelity-20261020T155311Z/` 29 checks + `a05-source-rights-fidelity-20261020T2255/` 44 checks; sources/rights 0, content generated false |
+| 3q | A06 entitlement 90 ngày + revoke fixture (local) | **Xong local** — `.local/continuous/a06-entitlement-20261020T165316Z/` · 12 bài + 30 thực hành skeleton · **25 checks** · revoke + support cap |
+| 3r | A07 brand-brief calendar contract (30 ngày, không ads/inbox) | Tiếp theo |
 | 4 | Staging remote biệt lập trên Cloudflare Free | `BLOCKED` INFO-CF-FREE — **không dừng hàng đợi** |
-| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **53356** · tick `2026-10-20T15:52:11Z` |
+| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **53356** · tick `2026-10-20T16:52:11Z` |
 
 Thứ tự mỗi giờ: việc mở nhỏ nhất số → bỏ qua `BLOCKED` → không commit Pilot dirty trừ khi `AP-PILOT-DIRTY`.
 
