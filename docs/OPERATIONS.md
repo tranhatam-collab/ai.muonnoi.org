@@ -2,6 +2,30 @@
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — A10 seat license IDOR — 21/10/2026, 02:53 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `dc7e4f6`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-20T19:52:11Z`. Loop PID **53356**. Pilot dirty bảo toàn. 0 VND.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| A10 tenant 10×90d | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a10-seat-license-20261020T195300Z/` · **28/28** · inventory 60+100 skeleton (approved 0) · seat cap · IDOR assign/export/revoke deny · use-after-revoke deny |
+| Actuals | null | `DRAFT_NOT_FOR_SALE` · không resale / không chuyển bản quyền toàn bộ |
+
+**Việc tự động tiếp theo:** ma trận sẵn sàng S01–S04/A01–A10 (local vs BLOCKED Founder). Không chờ Founder.
+
+
+## Vòng Codex — A09 blueprint/data-contract/recovery mở rộng — 21/10/2026, 01:53 (UTC+7)
+
+Source khóa tại `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `dc7e4f6669b722a9ac2b815f37eee14c9cc60800`. Ba tệp Pilot dirty được bảo toàn; không commit/push/deploy/connector/credential/production mutation. Ngân sách 0 VND.
+
+`VERIFIED_WORKTREE_ONLY`: `.local/continuous/a09-workflow-blueprints-20261021T0155/` bổ sung ba blueprint độc lập (brief intake, draft approval, handoff reconciliation), sáu input/output data contract, simulator và recovery runbook. Mỗi flow có manual checkpoint, idempotency, timeout 5 giây, tối đa hai attempt, dead letter và connector production rỗng.
+
+Test exit 0 với **41 checks**. Failure path phủ connector/side effect/credential/additional field, thiếu reference, manifest hash sai, idempotency conflict bằng hash nested canonical, retry mù, transient/permanent failure, dead-letter và recovery thiếu operator/receipt. Re-run và recovery exact là idempotent; mọi kết quả chỉ `SIMULATED`. Production connectors 0, external actions 0, `commercial_effect=false`; mọi actuals `null`. Receipt: `receipt.json` trong cùng thư mục.
+
+Giới hạn: chưa có scope khách, môi trường, connector, credential hoặc acceptance thật; packet chỉ chứng minh thiết kế local, không phải automation production. A09 vẫn `DRAFT_NOT_FOR_SALE` và HOLD thương mại.
+
+**Việc tự động tiếp theo:** dựng A10 tenant license 10 seat × 90 ngày, inventory gate 60 SOP + 100 mẫu và IDOR/export/revoke tests.
+
 ## Vòng giờ Cursor — A09 blueprint simulation — 21/10/2026, 01:53 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `3c12460`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-20T18:52:11Z`. Loop PID **53356**. Pilot dirty bảo toàn. 0 VND. Không nối production.
