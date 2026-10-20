@@ -74,9 +74,11 @@ Trạng thái đối chiếu Sóng 0 (`docs/PRODUCT_PORTFOLIO_1_TO_3_YEARS_FOUND
 | 3u | A10 seat license 10×90d + IDOR/export/revoke tests (local) | **Xong local** — `.local/continuous/a10-seat-license-20261020T195300Z/` · 60 SOP + 100 mẫu skeleton · **28 checks** · IDOR/export/revoke |
 | 3v | Ma trận sẵn sàng S01–S04/A01–A10 (local vs BLOCKED Founder) | **Xong local** — `.local/continuous/portfolio-readiness-matrix-20261021T0300/`; 14 SKU, 53 checks, 5 fixture + 5 structure + 2 design + 2 blocked, sale-ready 0, actuals null |
 | 3w | Một owner-input packet cho bảy gate chung + hai test identity S01/A01, không chứa credential | **Xong local** — `.local/continuous/owner-input-packet-20261020T205255Z/` · 7 gate + 2 identity · **9 checks** · reject secret patterns · Founder chưa điền |
-| 3x | Khi có owner-input: điền staging kit / merchant contract tests (vẫn 0 VND) | Chờ packet; tạm thời harden create-intent candidate docs hoặc FOUNDER_APPROVAL_ONLY sync |
+| 3x | Khóa Studio create-intent trong source theo catalog/approval/idempotency; không deploy | **Xong worktree** — `.local/continuous/create-intent-source-fix-20261021T0400/`; unit 13/13 + Miniflare 1/1 + static 3/3; catalog thật `DRAFT` trả 423 trước D1/provider |
+| 3y | Định nghĩa checkout boundary riêng A01, không trộn với Studio Worker và không mở giao dịch thật | **Xong local** — `.local/continuous/a01-checkout-boundary-20261020T215300Z/` · **29 checks** · provider/D1 0 · DRAFT chặn trừ rehearsal structure |
+| 3z | Webhook amount/currency contract stub (fail-closed) khi chưa có pay.iai.one callback spec | Tiếp theo |
 | 4 | Staging remote biệt lập trên Cloudflare Free | `BLOCKED` INFO-CF-FREE — **không dừng hàng đợi** |
-| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **53356** · tick `2026-10-20T20:52:11Z` |
+| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **53356** · tick `2026-10-20T21:52:11Z` |
 
 Thứ tự mỗi giờ: việc mở nhỏ nhất số → bỏ qua `BLOCKED` → không commit Pilot dirty trừ khi `AP-PILOT-DIRTY`.
 

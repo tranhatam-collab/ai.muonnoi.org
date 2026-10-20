@@ -2,6 +2,30 @@
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — A01 checkout boundary — 21/10/2026, 04:53 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `6d3f69c`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-20T21:52:11Z`. Loop PID **53356**. Bảo toàn dirty Pilot + payment-api/catalog worktree Codex. 0 VND. Không deploy/provider.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| A01 checkout boundary | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a01-checkout-boundary-20261020T215300Z/` · **29/29** · tách Studio Worker · cấm offer_id A0x · gates bắt buộc · `provider_called=false` |
+| Studio create-intent (Codex) | `FIXED_WORKTREE_ONLY` | Catalog-bound trong source; chưa commit lane này |
+| Actuals | null | HOLD · không giao dịch thật |
+
+**Việc tự động tiếp theo:** webhook amount/currency contract stub fail-closed (chưa có callback spec pay.iai.one). Không chờ Founder.
+
+## Vòng Codex — khóa create-intent theo catalog trong source — 21/10/2026, 04:14 (UTC+7)
+
+Source khóa tại `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `6d3f69cdccdab5bc116a5b9ddd2a11a410188b06`. Ba tệp Pilot dirty được bảo toàn. Không commit/push/deploy/migration/DNS/secret/payment/provider mutation; 0 VND.
+
+`FIXED_WORKTREE_ONLY`: `workers/api/src/api/payment-api.ts` không còn lấy `amount`, `currency`, `purpose` hoặc success URL do caller quyết định. Resolver Worker-safe ở `workers/api/src/lib/payment-catalog.ts` chỉ nhận một `offer_id`, dùng giá/tiền tệ từ `operations/data/offer-catalog.json`, yêu cầu đúng `APPROVED_FOR_SALE`, so khớp mọi field legacy nếu được gửi và khóa idempotency theo terms canonical. Race cùng key re-read winner và không gọi provider lần hai. CORS cho phép `Idempotency-Key`. Catalog thật hiện có bốn offer `DRAFT`, nên route trả `423 OFFER_NOT_APPROVED_FOR_SALE` trước D1/provider; không SKU nào được mở bán.
+
+Review độc lập tìm một regression P2: JSON hợp lệ nhưng không phải object có thể thành 500. Đã sửa để `null`, array, string, number và boolean trả `400 INVALID_JSON`; review không tìm thấy catalog-term bypass còn lại. Validation: payment/email unit **13/13**, Miniflare+D1 **1/1**, static **3/3**, API typecheck/build, operations check và `git diff --check` đều exit 0. Receipt và hash: `.local/continuous/create-intent-source-fix-20261021T0400/`.
+
+Giới hạn: patch chỉ khóa Studio checkout; A01–A10 chưa được tự động nối vào Worker này. Webhook chưa đối chiếu amount/currency/provider-session vì chưa có callback contract `pay.iai.one` đã xác minh. Live/thương mại vẫn `HOLD`; mọi actuals `null`.
+
+**Việc tự động tiếp theo:** định nghĩa và kiểm thử ranh giới checkout riêng cho A01, vẫn khóa seller/legal/price/merchant/Free staging/channel và không mở giao dịch thật.
+
 ## Vòng giờ Cursor — owner-input packet (no secrets) — 21/10/2026, 03:53 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `e45ea0e`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-20T20:52:11Z`. Loop PID **53356**. Pilot dirty bảo toàn. 0 VND.
