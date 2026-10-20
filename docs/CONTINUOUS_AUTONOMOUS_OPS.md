@@ -72,9 +72,11 @@ Trạng thái đối chiếu Sóng 0 (`docs/PRODUCT_PORTFOLIO_1_TO_3_YEARS_FOUND
 | 3s | A08 landing sandbox contract (≤7 khối, không hosting/domain/payment) | **Xong local** — `.local/continuous/a08-landing-sandbox-20261021T0058/`; 7 khối, 1 form disabled, 30 checks, build manifest local |
 | 3t | A09 ba workflow blueprint + data contract + simulation/recovery runbook | **Xong local** — `.local/continuous/a09-blueprint-sim-20261020T185306Z/` 23 checks + `a09-workflow-blueprints-20261021T0155/` 41 checks; 3 flow, 6 contract, production connectors 0 |
 | 3u | A10 seat license 10×90d + IDOR/export/revoke tests (local) | **Xong local** — `.local/continuous/a10-seat-license-20261020T195300Z/` · 60 SOP + 100 mẫu skeleton · **28 checks** · IDOR/export/revoke |
-| 3v | Ma trận sẵn sàng S01–S04/A01–A10 (local vs BLOCKED Founder) | Tiếp theo |
+| 3v | Ma trận sẵn sàng S01–S04/A01–A10 (local vs BLOCKED Founder) | **Xong local** — `.local/continuous/portfolio-readiness-matrix-20261021T0300/`; 14 SKU, 53 checks, 5 fixture + 5 structure + 2 design + 2 blocked, sale-ready 0, actuals null |
+| 3w | Một owner-input packet cho bảy gate chung + hai test identity S01/A01, không chứa credential | **Xong local** — `.local/continuous/owner-input-packet-20261020T205255Z/` · 7 gate + 2 identity · **9 checks** · reject secret patterns · Founder chưa điền |
+| 3x | Khi có owner-input: điền staging kit / merchant contract tests (vẫn 0 VND) | Chờ packet; tạm thời harden create-intent candidate docs hoặc FOUNDER_APPROVAL_ONLY sync |
 | 4 | Staging remote biệt lập trên Cloudflare Free | `BLOCKED` INFO-CF-FREE — **không dừng hàng đợi** |
-| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **53356** · tick `2026-10-20T19:52:11Z` |
+| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **53356** · tick `2026-10-20T20:52:11Z` |
 
 Thứ tự mỗi giờ: việc mở nhỏ nhất số → bỏ qua `BLOCKED` → không commit Pilot dirty trừ khi `AP-PILOT-DIRTY`.
 

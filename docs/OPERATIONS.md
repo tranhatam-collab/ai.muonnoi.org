@@ -2,6 +2,28 @@
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — owner-input packet (no secrets) — 21/10/2026, 03:53 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `e45ea0e`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-20T20:52:11Z`. Loop PID **53356**. Pilot dirty bảo toàn. 0 VND.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| Portfolio readiness matrix | `VERIFIED_WORKTREE_ONLY` | Revalidate **53/53** · 14 SKU · sale-ready **0** · HOLD |
+| Owner-input packet | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/owner-input-packet-20261020T205255Z/` · 7 gate chung + 2 test identity · **9/9** · từ chối password/OTP/token · `founder_filled=false` |
+| Actuals | null | Không lưu secret |
+
+**Việc tự động tiếp theo:** sync `FOUNDER_APPROVAL_ONLY` trỏ tới owner-input packet; hoặc tiếp tục hardening nội bộ. Không idle chờ Founder điền.
+
+## Vòng Codex — ma trận sẵn sàng toàn danh mục — 21/10/2026, 03:00 (UTC+7)
+
+Source khóa tại `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `e45ea0e07893125e858bf94eaa95419f5542e412`. Ba tệp Pilot dirty được bảo toàn; không commit/push/deploy/DNS/secret/migration, không dùng tài khoản ngoài. Ngân sách 0 VND.
+
+`VERIFIED_WORKTREE_ONLY`: `.local/continuous/portfolio-readiness-matrix-20261021T0300/` đối soát đúng **14 sản phẩm** từ hai source catalog: S01–S04 và A01–A10. Kết quả theo gate local là **5 fixture verified, 5 structure verified, 2 design verified, 2 local blocked**; dùng **20 tham chiếu tới 18 receipt duy nhất**. Validator khóa đúng product/SKU/source, chặn receipt ngoài `.local/continuous`, chặn path traversal, status `READY`/`LIVE`/`APPROVED_FOR_SALE`, sale-ready claim và actual tài chính không có provider receipt.
+
+Test exit 0 với **53 checks**. Bảy gate ngoài được khai báo fail-closed cho từng SKU: Founder portfolio/wave approval; seller/legal; giá duyệt; merchant/reconciliation; Cloudflare Free staging; production mapping; owned channel/consent. Mỗi sản phẩm còn liệt kê riêng source/rights/reviewer/content/capacity/environment/acceptance còn thiếu. Không dùng phần trăm hoàn thành. Sản phẩm sale-ready: **0**; toàn danh mục giữ `DRAFT_NOT_FOR_SALE`, verdict `HOLD`; target/forecast/pipeline/invoiced/paid/refunds/fees/collected cash đều `null`.
+
+**Việc tự động tiếp theo:** dựng một owner-input packet duy nhất cho bảy gate chung và hai test identity của S01/A01, không lưu password/OTP/token/secret; sau đó tiếp tục hoàn thiện deliverable nội bộ không phụ thuộc đầu vào.
+
 ## Vòng giờ Cursor — A10 seat license IDOR — 21/10/2026, 02:53 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `dc7e4f6`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-20T19:52:11Z`. Loop PID **53356**. Pilot dirty bảo toàn. 0 VND.

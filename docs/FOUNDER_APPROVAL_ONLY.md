@@ -31,3 +31,7 @@ Thiếu các INFO-* **không** dừng vòng giờ. AI tiếp tục probe, fixtur
 ## Việc AI không bao giờ nhờ Founder làm
 
 Chạy test, viết receipt, sửa docs, chuẩn bị staging local, probe domain, đóng gói baseline, tạo outline A01, cập nhật hàng đợi, restart loop, mở form Automation (Founder chỉ bật lịch nếu muốn bền ngoài chat — không bắt buộc cho vòng trong phiên).
+
+## Owner-input packet (không secret)
+
+Điền công khai tại `.local/continuous/owner-input-packet-20261020T205255Z/packet.json` (7 gate + 2 test identity). Không dán password/OTP/API token.
