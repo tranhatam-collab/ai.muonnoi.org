@@ -2,6 +2,30 @@
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — A05 rights/fidelity contract — 20/10/2026, 22:53 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `cba2d1e`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-20T15:52:11Z`. Loop PID **53356**. Pilot dirty bảo toàn. 0 VND. Không publish/voice-clone.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| A04 CSV (Codex) | `VERIFIED_WORKTREE_ONLY` | Revalidate **53/53 PASS** · `BLOCKED_SOURCE_DATA` · ready rows 0 |
+| A05 rights/fidelity | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a05-rights-fidelity-20261020T155311Z/` · **29/29** · refuse without rights · sources_ready **0** · `content_generated=false` |
+| Actuals | null | `DRAFT_NOT_FOR_SALE` |
+
+**Việc tự động tiếp theo:** A06 entitlement 90 ngày + revoke fixture (local). Không chờ Founder.
+
+## Vòng Codex — A04 CSV 20 sản phẩm + rubric dữ kiện — 20/10/2026, 21:35 (UTC+7)
+
+Source khóa tại `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `cba2d1e917dd90e3825905fa293a35c745507c86`. Ba tệp Pilot dirty được bảo toàn; không commit/push/deploy/DNS/secret/migration. Ngân sách 0 VND.
+
+`VERIFIED_WORKTREE_ONLY`: `.local/continuous/a04-csv-rubric-20261020T2135/` đã materialize schema, rubric 10 tiêu chí, CSV intake đúng 20 dòng và validator fail-closed cho A04. Mỗi dòng muốn sang `DRAFT_READY` phải có source/rights receipt, tối thiểu 5 fact, tiêu đề/mô tả, đúng 3 FAQ và claim map chỉ tham chiếu fact key hiện có. `REVIEWED` buộc reviewer receipt; scope chỉ cho `REVISION_0` hoặc `REVISION_1`; không có đường publish.
+
+Test exit 0 với **53 checks**. Validator chặn thiếu/sai source-rights receipt, JSON/fact/FAQ thiếu, claim tuyệt đối, claim khách cấm, claim map ngoài nguồn, vòng sửa thứ hai, reviewer thiếu, row trùng/thiếu và nội dung được viết trước nguồn. Template thực tế giữ 20 row trống, source receipts 0, rights receipts 0, ready/reviewed rows 0, verdict `BLOCKED_SOURCE_DATA`. External actions 0, `commercial_effect=false`; target/forecast/pipeline/invoiced/paid/refunds/fees/collected cash đều `null`. Receipt: `receipt.json` trong cùng thư mục.
+
+Giới hạn: chưa có dữ liệu sản phẩm khách, quyền sử dụng, reviewer hoặc demand signal; các dòng CSV không phải nội dung sản phẩm hoàn tất. A04 vẫn `DRAFT_NOT_FOR_SALE` và HOLD thương mại.
+
+**Việc tự động tiếp theo:** dựng A05 source-rights + fidelity contract cho input văn bản/bản ghi được cấp quyền; không tạo nội dung khi receipt còn thiếu.
+
 ## Vòng giờ Cursor — A03 report packet hư cấu — 20/10/2026, 20:55 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `fdf1489`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-20T13:55:02Z`. Loop PID **53356**. Pilot dirty bảo toàn. 0 VND. Không crawl/DNS/deploy.
