@@ -53,10 +53,19 @@ Trạng thái đối chiếu Sóng 0 (`docs/PRODUCT_PORTFOLIO_1_TO_3_YEARS_FOUND
 | 2 | Probe đọc-only domain/DNS/HTTP/CSP; ghi receipt, không sửa | **Revalidated** `2026-10-19T12:25:37Z` — body SHA unchanged; domain≠Pages ops vẫn `CONTRADICTED` |
 | 3 | Đóng gói diff local thành baseline review có hash độc lập | **Xong local** — `.local/continuous/pilot-dirty-baseline-20261019T111829Z/` |
 | 3b | Hộp duyệt Founder-only | **Xong** — `docs/FOUNDER_APPROVAL_ONLY.md` |
-| 3c | A01 outline + 30 prompt skeleton + mẫu HTML (không bán) | **Xong local** — `.local/continuous/a01-prep-20261019T1226/` (12/30/1; practice_days 0/30) |
-| 3d | A01 30 ngày thực hành skeleton + license draft local | Tiếp theo |
+| 3c | A01 outline + 30 prompt skeleton + mẫu HTML (không bán) | **Xong local** — `.local/continuous/a01-prep-20261019T1226/` (12/30/30 practice + license; sync outline) |
+| 3d | A01 30 ngày thực hành skeleton + license draft local | **Xong local** — `.local/continuous/a01-practice-20261020T1432/` (30 ngày, 6 bảng, license nháp; chưa bán) |
+| 3e | A01 validator tái lập với receipt digest + tamper probe | **Xong local** — `.local/continuous/a01-validator-20261020T1440/`; positive exit 0, byte-change probe bị từ chối exit 1 |
+| 3f | A01 entitlement/revoke fixture deny-by-default local | **Xong local** — `.local/continuous/a01-entitlement-20261020T1450/`; 24 checks, use-after-revoke và ID reuse bị chặn |
+| 3g | A01 delivery/recovery rehearsal có manifest + failure path | **Xong local** — `.local/continuous/a01-delivery-recovery-20261020T1538/`; 8 file/36.076 bytes, 7 failure path bị chặn |
+| 3h | A01 measurement/reconciliation rehearsal, actuals null khi thiếu nguồn | **Xong local** — `.local/continuous/a01-measurement-20261020T1641/`; 30 checks, test reconciliation không nâng actuals |
+| 3i | A02 candidate matrix theo ngành, chỉ local draft có source/rights gate | **Xong local** — `.local/continuous/a02-candidate-matrix-20261020T1744/`; 3 candidate, 0 selected, 0 verified cases |
+| 3j | A02 retail structure + evidence packet fail closed | **Xong local** — `.local/continuous/a02-retail-draft-20261020T1800/`; 20 quy trình, 40 prompt, 10 case hư cấu, evidence counts 0 |
+| 3k | S01/A01 checkout + merchant launch gate local, khóa catalog/giá/receipt | **Xong local** — `.local/continuous/s01-a01-checkout-gate-20261020T1845/`; 54 checks, `RECONCILED_TEST_ONLY`, actuals null; production create-intent chưa catalog-bound |
+| 3l | Candidate hardening create-intent catalog-bound + test, không deploy | **Xong local** — `.local/continuous/create-intent-harden-20261020T125229Z/` · **15/15** checks · `applied_to_production=false` · P1 production còn mở |
+| 3m | A03 crawler sandbox contract + SSRF refusal fixtures | Tiếp theo |
 | 4 | Staging remote biệt lập trên Cloudflare Free | `BLOCKED` INFO-CF-FREE — **không dừng hàng đợi** |
-| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **31600** (tick `2026-10-20T06:47:00Z`) |
+| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop monitored tái kích hoạt mỗi giờ |
 
 Thứ tự mỗi giờ: việc mở nhỏ nhất số → bỏ qua `BLOCKED` → không commit Pilot dirty trừ khi `AP-PILOT-DIRTY`.
 

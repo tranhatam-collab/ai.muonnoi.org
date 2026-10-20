@@ -2,6 +2,120 @@
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng trực tiếp Founder “chạy luôn” — create-intent candidate — 20/10/2026, 19:52 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `ed1df9a`. Pilot dirty + docs dirty bảo toàn trước commit vòng này. 0 VND. Không deploy/DNS/push/production patch.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| A01 content pack | `VERIFIED_WORKTREE_ONLY` | 12 quy trình · 30 prompt · 30 ngày · license · bảng — practice receipt `a01-practice-20261020T1432` |
+| create-intent catalog-bound candidate | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/create-intent-harden-20261020T125229Z/` · test **15/15 pass** · `applied_to_production=false` |
+| Production create-intent | `P1` mở | Vẫn nhận amount caller; candidate **chưa** wire vào `payment-api.ts` |
+| Live probes (đọc-only) | `VERIFIED_CURRENT` | `ai.muonnoi.org` 200 · body SHA `984e4db6…525187` UNCHANGED · `ailamviec/health` ok · n8n 200 |
+| Commercial | HOLD | Actuals null · không bán |
+
+**Việc tự động tiếp theo:** A03 crawler sandbox + SSRF refusal fixtures (local); hoặc wire create-intent candidate **chỉ sau** Founder duyệt AP + review. Không chờ Founder để làm A03.
+
+## Vòng Codex — S01/A01 checkout + merchant launch gate — 20/10/2026, 18:46 (UTC+7)
+
+Source khóa tại `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `ed1df9a81f370520de40751b6bced933c34a06e5`. Năm tệp tracked dirty được bảo toàn; không commit/push/deploy/DNS/secret/migration. Ngân sách 0 VND.
+
+`VERIFIED_WORKTREE_ONLY`: `.local/continuous/s01-a01-checkout-gate-20261020T1845/` đã materialize checkout/merchant gate fail-closed cho S01 `studio-pilot-14d` (giá đề xuất 1.500.000 VND) và A01 (giá đề xuất 149.000 VND). Fixture chỉ nhận environment hư cấu local và buộc đủ seller, price approval, license, merchant, webhook signing, refund, reconciliation source và owned-channel ref; khóa SKU/giá/VND; chặn idempotency conflict, webhook thiếu/sai chữ ký, mismatch intent/amount/currency, outcome chưa rõ và reconciliation thiếu settlement/fee/refund hoặc còn discrepancy.
+
+Test exit 0 với **54 checks**. Chuỗi test hợp lệ chỉ kết thúc ở `RECONCILED_TEST_ONLY`; `commercial_effect=false`, external actions 0 và mọi actuals vẫn `null`. Receipt: `receipt.json` trong cùng thư mục, gắn hash catalog S01, cấu hình A01, payment source, fixture và test result.
+
+`VERIFIED_HEAD_ONLY`: webhook production ở `workers/api/src/api/payment-api.ts` đang fail-closed khi thiếu secret/chữ ký. `P1`: create-intent hiện parse `amount` do caller gửi, chỉ kiểm tra số dương rồi lưu; chưa khóa vào catalog, SKU, trạng thái giá được duyệt hoặc merchant launch gate. Vì vậy fixture local không nâng checkout production thành sẵn sàng mở bán.
+
+**Việc tự động tiếp theo:** dựng candidate contract hardening cho create-intent trong lane tách biệt, kèm test catalog-bound và migration-compatible; không chạm production hay ba tệp Pilot dirty. HOLD live/thương mại giữ nguyên cho tới khi source fix được review cùng seller/legal/price/merchant receipt thật.
+
+## Vòng trực tiếp — ưu tiên doanh thu + A02 retail structure — 20/10/2026, 17:58 (UTC+7)
+
+Đã cập nhật **lịch heartbeat hiện có** `ai-muonnoi-continuous-revenue-execution`, vẫn chạy mỗi giờ và không tạo lịch trùng. Lịch mới dồn đường găng vào S01/A01, yêu cầu mỗi vòng tạo deliverable sản phẩm cụ thể, giảm lặp probe không đổi và chuyển ngay sang A02–A10 khi gate ngoài bị chặn.
+
+Source: `tranhatam-collab/ai.muonnoi.org` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `ed1df9a81f370520de40751b6bced933c34a06e5`. Năm tệp tracked dirty được giữ nguyên; không commit/push/deploy/DNS/secret/migration. Ngân sách 0 VND.
+
+`VERIFIED_CURRENT` local: `.local/continuous/a02-retail-draft-20261020T1800/` đã materialize **20 quy trình, 40 prompt và 10 case bán lẻ hư cấu**. Validator/test exit 0 với 15 checks; chặn tự nâng thành đã chọn/đã duyệt/đã có evidence. Source packet còn trống đúng thực tế: authoritative sources 0, rights receipts 0, expert review receipts 0. Receipt: `receipt.json` trong cùng thư mục.
+
+Giới hạn: đây là structure-only draft `DRAFT_NOT_FOR_SALE`; candidate bán lẻ chưa được chọn, chưa expert review và chưa sale-ready. Actuals null; external actions 0; HOLD live/thương mại không đổi.
+
+**Việc tự động tiếp theo:** dựng A03 crawler sandbox contract + SSRF refusal fixtures; A02 chỉ được nâng tiếp khi có source/rights/expert receipt thật.
+
+## Vòng Codex — A02 candidate matrix theo ngành — 20/10/2026, 17:45 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `ed1df9a81f370520de40751b6bced933c34a06e5`. Năm tệp tracked dirty được giữ nguyên; không commit/push/deploy/DNS/secret/migration. Ngân sách 0 VND.
+
+`VERIFIED_CURRENT` public HTTP: live/Pages production/ops preview vẫn giữ ba digest `984e4db6…525187`, `f1d25e37…857216`, `0edb5b54…135c85`; live không khớp hai Pages deployment. Receipt: `.local/continuous/mapping-recheck-20261020T1744/receipt.json`.
+
+`VERIFIED_CURRENT` local: `.local/continuous/a02-candidate-matrix-20261020T1744/` khóa ma trận ba candidate bán lẻ/lưu trú/dịch vụ theo hai nguồn kế hoạch nội bộ đã hash. Validator + test exit 0 với **16 checks**; selected candidates 0, verified cases 0, external sources 0, rights receipts 0, expert review receipts 0. Bán lẻ chỉ là `A02-RETAIL_UNAPPROVED`, không phải lựa chọn đã duyệt. Các test chặn tự chọn ngành, nâng readiness, gắn quyền/case không có evidence, điền actuals hoặc coi giá đề xuất là đã duyệt.
+
+Receipt: `receipt.json` trong cùng thư mục. Đây không phải market validation, quyền nội dung, expert review, phê duyệt giá hoặc sale readiness. External actions 0; actuals null; HOLD live/thương mại không đổi.
+
+**Việc tự động tiếp theo:** tạo packet template cho nguồn/quyền/10 case/expert review của candidate bán lẻ; dữ liệu chưa có giữ trống và fail closed.
+
+## Vòng Codex — A01 measurement/reconciliation rehearsal — 20/10/2026, 16:42 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `ed1df9a81f370520de40751b6bced933c34a06e5`. Năm tệp tracked dirty được giữ nguyên; không commit/push/deploy/DNS/secret/migration. Ngân sách 0 VND.
+
+`VERIFIED_CURRENT` public HTTP: live/Pages production/ops preview giữ ba digest `984e4db6…525187`, `f1d25e37…857216`, `0edb5b54…135c85`; live vẫn không khớp hai Pages deployment. Receipt: `.local/continuous/mapping-recheck-20261020T1641/receipt.json`.
+
+`VERIFIED_CURRENT` local: `.local/continuous/a01-measurement-20261020T1641/` tách plan (`target`, `pipeline`, `invoiced`), giao dịch thử (`paid`, `refund`, `fee`) và actuals. Test exit 0 với **30 checks**; phủ thiếu nguồn, thiếu invoice, outcome chưa rõ, thanh toán một phần, discrepancy, trùng transaction, sai currency/provider/SKU/order, sai phép đối soát. Một reconciliation `TEST_ONLY` tính đúng 100.000 − 10.000 − 2.000 = 88.000 VND nhưng không nâng sang actuals; mọi actuals vẫn null.
+
+Receipt: `receipt.json` trong cùng thư mục. Các số nêu trên là fixture local, không phải forecast đã duyệt, pipeline thật, hóa đơn, tiền thu, hoàn tiền hoặc doanh thu. External actions 0; HOLD live/thương mại không đổi.
+
+**Việc tự động tiếp theo:** lập candidate matrix A02 theo ngành dưới dạng nháp local để chọn một ngành có nguồn/quyền/phạm vi rõ; chưa tạo claim sản phẩm hoặc mở bán.
+
+## Vòng Codex — A01 delivery/recovery rehearsal + mapping recheck — 20/10/2026, 15:41 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `ed1df9a81f370520de40751b6bced933c34a06e5`. Năm tệp tracked dirty được giữ nguyên; không commit/push/deploy/DNS/secret/migration. Ngân sách 0 VND.
+
+`VERIFIED_CURRENT` public HTTP: live domain SHA `984e4db6…525187`, Pages production SHA `f1d25e37…857216`, ops preview SHA `0edb5b54…135c85`; ba digest không đổi và live vẫn không khớp hai Pages deployment. Dashboard provider không recheck được vì máy đang khóa; không suy trạng thái provider mới. Receipt: `.local/continuous/mapping-recheck-20261020T1538/receipt.json`.
+
+`VERIFIED_CURRENT` local: `.local/continuous/a01-delivery-recovery-20261020T1538/` đóng gói 8 file A01, 36.076 bytes, theo manifest SHA-256 `c1d7fefc…84362`, rồi xác minh bản recovery cách ly có cùng file count/bytes/digest. Test exit 0 với 10 checks; từ chối 7 failure path: trusted manifest sai, file bị sửa, file thiếu, file thừa, symlink, hardlink và path manifest không an toàn. Receipt: `receipt.json` trong cùng thư mục.
+
+Giới hạn: đây là copy/restore hư cấu local, không phải backup/restore production, giao hàng, acceptance, approval pháp lý hoặc revenue. External actions 0; actuals null; HOLD live/thương mại không đổi.
+
+**Việc tự động tiếp theo:** tạo A01 measurement/reconciliation rehearsal tách target, pipeline, invoiced, paid, refunds, fees và collected cash; mọi nguồn thiếu giữ null.
+
+## Vòng Codex — A01 entitlement/revoke rehearsal — 20/10/2026, 14:48 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `ed1df9a81f370520de40751b6bced933c34a06e5`. Năm tệp tracked dirty được giữ nguyên; không commit/push/deploy/DNS/secret/migration. Ngân sách 0 VND.
+
+`VERIFIED_CURRENT` local: `.local/continuous/a01-entitlement-20261020T1450/` chứa state machine entitlement/revoke hư cấu, gắn đúng receipt bundle A01. Test exit 0 với **24 checks**: mặc định từ chối khi chưa có entitlement; chặn receipt bundle sai, actor/SKU/environment sai, trước hạn và hết hạn; chỉ trả `TEST_ALLOW` trong cửa sổ hợp lệ; thu hồi xong chặn dùng lại; không tái sử dụng entitlement ID; lặp đúng revocation receipt là idempotent và receipt khác bị xung đột. Mọi nhánh đều `commercial_effect=false`, external actions 0, actuals null.
+
+Receipt: `.local/continuous/a01-entitlement-20261020T1450/receipt.json`. Đây chỉ là rehearsal trong bộ nhớ local, không tạo đơn hàng, quyền khách thật, giao hàng, chấp thuận, approval pháp lý hoặc doanh thu. HOLD live/thương mại không đổi.
+
+**Việc tự động tiếp theo:** tạo rehearsal A01 delivery/recovery có manifest khóa digest và phủ failure path; staging remote vẫn bỏ qua cho tới khi có đúng account Cloudflare Free.
+
+## Vòng Codex — validator A01 tái lập — 20/10/2026, 14:44 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `ed1df9a81f370520de40751b6bced933c34a06e5`. Năm tệp tracked dirty được giữ nguyên; không commit/push/deploy/DNS/secret/migration. Ngân sách 0 VND.
+
+`VERIFIED_CURRENT` local: `.local/continuous/a01-validator-20261020T1440/validate.mjs` kiểm receipt theo digest tin cậy, ba artifact A01, ba artifact nguồn, cấu trúc 30 prompt/30 ngày/12 quy trình/30 đầu ra/6 bảng, license gate và mọi actuals null. Positive probe exit 0. Negative probe đổi một giá trị trong `practice-30.json` bị từ chối với exit 1, mã `ARTIFACT_DIGEST_MISMATCH`. Receipt: `.local/continuous/a01-validator-20261020T1440/receipt.json`; validator SHA-256 `69f40f53…3dd8`.
+
+Giới hạn: validator và receipt đều nằm trong `.local`, chỉ chứng minh toàn vẹn/cấu trúc bundle local tại HEAD nêu trên. Đây không phải sale, delivery, deployment, approval hoặc revenue. Actuals null; HOLD live/thương mại không đổi.
+
+**Việc tự động tiếp theo:** tạo fixture entitlement/revoke local có deny-by-default và receipt thu hồi; bỏ qua staging remote cho tới khi có đúng account Cloudflare Free.
+
+## Vòng Codex — A01 30 ngày + provider recheck — 20/10/2026, 14:36 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `ed1df9a81f370520de40751b6bced933c34a06e5` (ahead 14). Ba tệp Pilot dirty được giữ nguyên; không commit/push/deploy/DNS/secret/migration. Ngân sách 0 VND.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| A01 thực hành | `VERIFIED_CURRENT` local | `.local/continuous/a01-practice-20261020T1432/practice-30.json`: 30 ngày duy nhất, 30 đầu ra, phủ P01–P12; mọi actuals null |
+| A01 bảng mẫu | `VERIFIED_CURRENT` local | 6 schema bảng: nguồn, lịch, claim, quyền, manifest và ledger; external actions 0 |
+| A01 license | `DRAFT_NOT_FOR_SALE` | Điều khoản còn để mở bên bán, user/term, giá, hoàn tiền, support và pháp lý; chưa cấp quyền thương mại |
+| Receipt A01 | `VERIFIED_CURRENT` local | `receipt.json` SHA-256 `c880706d…d77b60`; verifier đọc lại hash cả ba artifact: OK |
+| Cloudflare account hiện tại | `VERIFIED_CURRENT` provider | Account `93112…2ba3` vẫn **Paid current plan**; không dùng làm staging 0 đồng; account Free riêng vẫn chưa được cung cấp |
+| Pages production | `VERIFIED_CURRENT` provider | `feat/flow-mvp-backend` · `65d8737` · deployment `a6623203-b04e-46c2-852c-6a41eee99fe0` |
+| Preview nhánh ops | `VERIFIED_CURRENT` provider | Vẫn dừng tại `6252af1` · deployment `7e579cd6-bd4a-4db8-9060-98668a1d5105`; HEAD hiện tại chưa deploy |
+| Custom domain | `CONTRADICTED` với Pages mapping | Dashboard Pages vẫn ghi `ai.muonnoi.org` `Inactive`; HTTP body domain SHA `984e4db6…525187` không khớp production Pages hoặc preview ops |
+| Lane khác | Bảo toàn | Dashboard có `claude/money-engine-draft` `6601571`, `No deployment available`; không đọc sâu, không chỉnh |
+
+Provider receipt: `.local/continuous/provider-recheck-20261020T1436/receipt.json`. Ba public body SHA/byte không đổi so với probe 19/10. Workers AI vẫn là provider đã chọn nhưng binding chưa bật. Actuals null; chưa có sale, delivery hoặc revenue đã đối soát.
+
+**Việc tự động tiếp theo:** tạo validator tái lập cho bundle A01 hoặc fixture entitlement/revoke local; bỏ qua staging remote cho tới khi có đúng account Free. HOLD live/thương mại không đổi.
+
 ## Vòng giờ Cursor — A01 30 prompt skeleton — 20/10/2026, 13:47 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `0e2e380` (ahead 13 trước commit). Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-20T06:47:00Z`. Loop PID **31600**. 0 VND. Không deploy/DNS/push. Ba tệp Pilot dirty bảo toàn.
