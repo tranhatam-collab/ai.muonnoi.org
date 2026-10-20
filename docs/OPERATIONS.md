@@ -2,6 +2,30 @@
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — A09 blueprint simulation — 21/10/2026, 01:53 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `3c12460`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-20T18:52:11Z`. Loop PID **53356**. Pilot dirty bảo toàn. 0 VND. Không nối production.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| A08 landing (Codex) | `VERIFIED_WORKTREE_ONLY` | Revalidate **30/30 PASS** · `BLOCKED_CLIENT_CONTENT` |
+| A09 3 blueprints + sim + runbook | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a09-blueprint-sim-20261020T185306Z/` · **23/23** · WF01–WF03 · recovery runbook · `production_integrations=false` |
+| Actuals | null | `DRAFT_NOT_FOR_SALE` |
+
+**Việc tự động tiếp theo:** A10 seat license 10×90d + IDOR/export/revoke tests (local). Không chờ Founder.
+
+## Vòng Codex — A08 landing sandbox + handoff build — 21/10/2026, 00:57 (UTC+7)
+
+Source khóa tại `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `3c124607ced6d7461348d28816707dea8afe6116`. Ba tệp Pilot dirty được bảo toàn; không commit/push/deploy/hosting/domain/DNS/secret/migration. Ngân sách 0 VND.
+
+`VERIFIED_WORKTREE_ONLY`: `.local/continuous/a08-landing-sandbox-20261021T0058/` đã materialize một landing template responsive đúng 7 khối, một form bị vô hiệu hóa, source, handoff checklist, validator và build `dist/` cô lập. CSP khóa `default-src` và `form-action`; không script/iframe/tài nguyên ngoài/tracking/payment/secret; có viewport, media query, language, landmarks và label cho form controls.
+
+Test exit 0 với **30 checks**; build exit 0 và manifest khóa source/output SHA-256 giống nhau. Failure path phủ khối/form vượt scope, form có destination hoặc control bật, active content/inline event/external resource, secret/payment pattern, thiếu responsive/a11y/CSP/placeholder, thiếu handoff hoặc deployment approval gate. Template thực tế có client content/rights/reviewer receipts đều 0, verdict `BLOCKED_CLIENT_CONTENT`; external actions/resources 0, `commercial_effect=false`, mọi actuals `null`. Receipt: `receipt.json` trong cùng thư mục.
+
+Giới hạn: trang chỉ chứa placeholder, form không có backend, không hosting/domain/deploy và chưa có acceptance. A08 vẫn `DRAFT_NOT_FOR_SALE` và HOLD thương mại.
+
+**Việc tự động tiếp theo:** dựng A09 packet ba workflow blueprint, data contract, simulation test và recovery runbook; production integrations bị tắt.
+
 ## Vòng giờ Cursor — A07 brand-brief calendar — 21/10/2026, 00:53 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `ab273ca`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-20T17:52:11Z`. Loop PID **53356**. Pilot dirty bảo toàn. 0 VND.

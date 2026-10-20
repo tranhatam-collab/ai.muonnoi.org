@@ -69,9 +69,11 @@ Trạng thái đối chiếu Sóng 0 (`docs/PRODUCT_PORTFOLIO_1_TO_3_YEARS_FOUND
 | 3p | A05 source-rights + fidelity contract cho input được cấp quyền | **Xong local** — `.local/continuous/a05-rights-fidelity-20261020T155311Z/` 29 checks + `a05-source-rights-fidelity-20261020T2255/` 44 checks; sources/rights 0, content generated false |
 | 3q | A06 entitlement 90 ngày + revoke fixture (local) | **Xong local** — `.local/continuous/a06-entitlement-20261020T165316Z/` 25 checks + `a06-curriculum-entitlement-20261020T2355/` 41 checks; 12 bài, 30 thực hành, support cap 0 |
 | 3r | A07 brand-brief calendar contract (30 ngày, không ads/inbox) | **Xong local** — `.local/continuous/a07-calendar-contract-20261020T175314Z/` · 30+8+4 skeleton · **33 checks** · ads/inbox/auto-publish forbidden |
-| 3s | A08 landing sandbox contract (≤7 khối, không hosting/domain/payment) | Tiếp theo |
+| 3s | A08 landing sandbox contract (≤7 khối, không hosting/domain/payment) | **Xong local** — `.local/continuous/a08-landing-sandbox-20261021T0058/`; 7 khối, 1 form disabled, 30 checks, build manifest local |
+| 3t | A09 ba workflow blueprint + data contract + simulation/recovery runbook | **Xong local** — `.local/continuous/a09-blueprint-sim-20261020T185306Z/` · 3 module · **23 checks** · production integrations off |
+| 3u | A10 seat license 10×90d + IDOR/export/revoke tests (local) | Tiếp theo |
 | 4 | Staging remote biệt lập trên Cloudflare Free | `BLOCKED` INFO-CF-FREE — **không dừng hàng đợi** |
-| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **53356** · tick `2026-10-20T17:52:11Z` |
+| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **53356** · tick `2026-10-20T18:52:11Z` |
 
 Thứ tự mỗi giờ: việc mở nhỏ nhất số → bỏ qua `BLOCKED` → không commit Pilot dirty trừ khi `AP-PILOT-DIRTY`.
 
