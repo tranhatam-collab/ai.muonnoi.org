@@ -2,6 +2,30 @@
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — A03 report packet hư cấu — 20/10/2026, 20:55 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `fdf1489`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-20T13:55:02Z`. Loop PID **53356**. Pilot dirty bảo toàn. 0 VND. Không crawl/DNS/deploy.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| A03 sandbox (Codex) | `VERIFIED_WORKTREE_ONLY` | Revalidate `node …/a03-crawler-sandbox-20261020T2035/test.mjs` **63/63 PASS** |
+| A03 packet 10 trang / 20 finding | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a03-report-packet-20261020T135600Z/` · test **77/77** · `live_fetch=false` · authorization `EMPTY_REQUIRED` |
+| Actuals | null | Không bán · không pentest/SEO guarantee |
+
+**Việc tự động tiếp theo:** A04 CSV schema + rubric dữ kiện (local draft, không đăng sàn). Không chờ Founder.
+
+## Vòng Codex — A03 crawler sandbox + SSRF refusal — 20/10/2026, 20:34 (UTC+7)
+
+Source khóa tại `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `fdf1489801f08241857369f5607377530357e9e2`. Ba tệp Pilot dirty được bảo toàn; không commit/push/deploy/DNS/secret/migration. Ngân sách 0 VND.
+
+`VERIFIED_WORKTREE_ONLY`: `.local/continuous/a03-crawler-sandbox-20261020T2035/` đã materialize contract crawler local cho A03: bắt buộc authorization/scope receipt hư cấu, khóa đúng một HTTPS origin, tối đa 10 trang, GET/HEAD, bỏ credentials, redirect thủ công tối đa ba hop, pin toàn bộ DNS set trước fetch, HTML tối đa 2 MB và timeout 10 giây. Fixture không thực hiện DNS/HTTP thật.
+
+Test exit 0 với **63 checks**. Failure path đã phủ IP loopback/private/link-local/metadata/reserved/multicast/documentation, IPv6 local và IPv4-mapped, IP literal, hostname local, URL chứa token, port/scheme/method sai, redirect khác origin, DNS rebinding, vượt page cap, status/content-type/size sai. Network requests 0, external actions 0, `commercial_effect=false`; target/forecast/pipeline/invoiced/paid/refunds/fees/collected cash đều `null`. Receipt: `receipt.json` trong cùng thư mục.
+
+Giới hạn: chưa có website khách được cấp quyền, target URL, DNS/runtime receipt hoặc crawler production; A03 vẫn `DRAFT_NOT_FOR_SALE` và HOLD thương mại.
+
+**Việc tự động tiếp theo:** dựng packet báo cáo A03 hư cấu đủ 10 trang, evidence schema và 20 finding ưu tiên; source/authorization/customer acceptance còn thiếu phải giữ trống, không gắn claim thật.
+
 ## Vòng trực tiếp Founder “chạy luôn” — create-intent candidate — 20/10/2026, 19:52 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `ed1df9a`. Pilot dirty + docs dirty bảo toàn trước commit vòng này. 0 VND. Không deploy/DNS/push/production patch.
