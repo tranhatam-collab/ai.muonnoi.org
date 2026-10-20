@@ -2,6 +2,35 @@
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — revalidate payment dirty suite — 21/10/2026, 06:53 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `c5d3cf6`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-20T23:52:11Z`. Loop PID **53356**. **Không commit** payment/Pilot dirty. 0 VND.
+
+| Suite | Kết quả |
+|---|---|
+| `payment-create-intent-security` | **8/8** pass |
+| `test:payment-email-security` | **13/13** pass |
+| `test:payment-email-workerd` | **1/1** pass |
+| `test:static` | **3/3** pass |
+| webhook contract stub | **78** checks |
+| A01 checkout boundary | **29** checks |
+| Code commit | `false` — chờ `AP-PILOT-DIRTY` / duyệt payment patch |
+
+Receipt: `.local/continuous/payment-dirty-revalidate-*/receipt.json`. Actuals null. HOLD.
+
+**Việc tự động tiếp theo:** baseline hash gói payment dirty (review-only) hoặc S02/S03 entitlement draft local. Không chờ Founder.
+
+
+## Vòng Codex — payment source handoff/recovery tách lane — 21/10/2026, 06:03 (UTC+7)
+
+Source khóa tại `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `c5d3cf6354ffcae4cc9af6b1d0d8a6af9425925f`. Bảo toàn ba tệp Pilot dirty; không commit/push/deploy/migration/provider call/payment; 0 VND.
+
+`VERIFIED_WORKTREE_ONLY`: `.local/continuous/payment-source-handoff-20261021T0600/` chứa patch review/recovery đúng **7 tệp payment**, loại rõ `tests/pilot-revise.test.mjs`, `tests/static.test.mjs` và `tools/pilot-revise.mjs`. Patch SHA-256 `ad985bd6129e05582b925d996bb7a682442d6ec3096b1007cdd834b239b114ca` đã `git apply --check` và apply exit 0 trên bản materialize từ HEAD sạch; SHA-256 của cả 7 tệp sau apply khớp worktree. Validator bundle **56/56**.
+
+Revalidation cùng vòng: payment/email unit **13/13**, Miniflare+D1 **1/1**, webhook contract stub **78/78**, provider-spec intake **7/7** với trạng thái `AWAITING_EVIDENCE`; API typecheck/build, operations check và `git diff --check` đều exit 0. `AP-PAYMENT-SOURCE` trong hộp duyệt trỏ đúng digest; chưa tạo commit hay thay source authority. Live/thương mại vẫn `HOLD`; target/forecast/pipeline/invoiced/paid/refunds/fees/collected cash đều `null`.
+
+**Việc tự động tiếp theo:** dựng launch packet S01/A01 gồm buyer-facing copy có gate claim, fulfillment SOP, cancellation/refund draft và measurement map; không mở bán, publish hay gọi merchant.
+
 ## Vòng giờ Cursor — provider-spec intake checklist — 21/10/2026, 05:53 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `73e9d34`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-20T22:52:11Z`. Loop PID **53356**. Bảo toàn dirty Pilot + payment worktree. 0 VND. Không bịa field pay.iai.one.
