@@ -1,6 +1,30 @@
-# Runbook phát triển và tiếp nhận vận hành — cập nhật 2026-10-20
+# Runbook phát triển và tiếp nhận vận hành — cập nhật 2026-10-21
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
+
+## Vòng giờ Cursor — A07 brand-brief calendar — 21/10/2026, 00:53 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `ab273ca`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-20T17:52:11Z`. Loop PID **53356**. Pilot dirty bảo toàn. 0 VND.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| A07 calendar contract | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a07-calendar-contract-20261020T175314Z/` · **33/33** · 30 post + 8 script + 4 email skeleton · bắt buộc brief/reviewer/opt-in · cấm ads/inbox/auto-publish · `content_body_generated=false` |
+| Actuals | null | `DRAFT_NOT_FOR_SALE` |
+
+**Việc tự động tiếp theo:** A08 landing sandbox contract (≤7 khối, không hosting/domain/payment). Không chờ Founder.
+
+
+## Vòng Codex — A06 curriculum, entitlement + support gate mở rộng — 20/10/2026, 23:54 (UTC+7)
+
+Source khóa tại `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `ab273ca1c354decc0e04bad2ddc29083e5e70699`. Ba tệp Pilot dirty được bảo toàn; không commit/push/deploy/DNS/secret/migration. Ngân sách 0 VND.
+
+`VERIFIED_WORKTREE_ONLY`: `.local/continuous/a06-curriculum-entitlement-20261020T2355/` bổ sung schema A06 đủ 12 bài + 30 thực hành, source/rights/reviewer/hash gate, self-assessment, support-capacity gate và entitlement một người đúng 90 ngày. Contract chặn tuyên bố chứng chỉ nghề, bảo đảm việc làm, dạy trực tiếp, truy cập trước hạn/sau hạn, learner mismatch, entitlement ID dùng lại, vượt năng lực support và use-after-revoke.
+
+Test exit 0 với **41 checks**. Template thực tế giữ lessons ready 0, practices ready 0, support capacity 0, verdict `BLOCKED_CONTENT_APPROVAL`; chỉ đường test hư cấu mới đạt curriculum/support ready và entitlement 90 ngày. Revocation idempotent với cùng receipt, receipt xung đột bị từ chối. External actions 0, `commercial_effect=false`; mọi actuals `null`. Receipt: `receipt.json` trong cùng thư mục.
+
+Giới hạn: chưa có source/rights/reviewer cho bài học hoặc thực hành, chưa có support channel/capacity thật, không cấp quyền truy cập hay chứng chỉ. A06 vẫn `DRAFT_NOT_FOR_SALE` và HOLD thương mại.
+
+**Việc tự động tiếp theo:** dựng A07 brand-brief, opt-in email, reviewer và lịch 30 ngày với ads/inbox/auto-publish bị tắt.
 
 ## Vòng giờ Cursor — A06 curriculum + entitlement 90d — 20/10/2026, 23:53 (UTC+7)
 
