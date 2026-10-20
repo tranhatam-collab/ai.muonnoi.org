@@ -1,6 +1,19 @@
-# Runbook phát triển và tiếp nhận vận hành — cập nhật 2026-10-19
+# Runbook phát triển và tiếp nhận vận hành — cập nhật 2026-10-20
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
+
+## Vòng giờ Cursor — A01 30 prompt skeleton — 20/10/2026, 13:47 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `0e2e380` (ahead 13 trước commit). Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-20T06:47:00Z`. Loop PID **31600**. 0 VND. Không deploy/DNS/push. Ba tệp Pilot dirty bảo toàn.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| A01 prompts | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a01-prep-20261019T1226/prompts-30.json` — **30/30** skeleton; SHA `32edef12…18ab9c` |
+| A01 free sample HTML | `VERIFIED_WORKTREE_ONLY` | `free-sample.html` — local fixture; `DRAFT_NOT_FOR_SALE`; không publish |
+| Outline counts | Cập nhật | processes 12 · prompts 30 · free_sample 1 · practice_days **0/30** |
+| Commercial | HOLD | Không bán; không hứa thu nhập |
+
+**Việc tự động tiếp theo:** skeleton 30 ngày thực hành A01 + license draft dưới `.local`; hoặc revalidate domain probe. Không chờ Founder.
 
 ## Vòng tự động — Founder chỉ duyệt · probe + A01 outline — 19/10/2026, 19:25 (UTC+7)
 

@@ -53,9 +53,10 @@ Trạng thái đối chiếu Sóng 0 (`docs/PRODUCT_PORTFOLIO_1_TO_3_YEARS_FOUND
 | 2 | Probe đọc-only domain/DNS/HTTP/CSP; ghi receipt, không sửa | **Revalidated** `2026-10-19T12:25:37Z` — body SHA unchanged; domain≠Pages ops vẫn `CONTRADICTED` |
 | 3 | Đóng gói diff local thành baseline review có hash độc lập | **Xong local** — `.local/continuous/pilot-dirty-baseline-20261019T111829Z/` |
 | 3b | Hộp duyệt Founder-only | **Xong** — `docs/FOUNDER_APPROVAL_ONLY.md` |
-| 3c | A01 outline nội bộ (không bán) | **Bắt đầu** — `.local/continuous/a01-prep-20261019T1226/outline.json` (12 quy trình; prompt 0/30) |
+| 3c | A01 outline + 30 prompt skeleton + mẫu HTML (không bán) | **Xong local** — `.local/continuous/a01-prep-20261019T1226/` (12/30/1; practice_days 0/30) |
+| 3d | A01 30 ngày thực hành skeleton + license draft local | Tiếp theo |
 | 4 | Staging remote biệt lập trên Cloudflare Free | `BLOCKED` INFO-CF-FREE — **không dừng hàng đợi** |
-| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID xem OPERATIONS |
+| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **31600** (tick `2026-10-20T06:47:00Z`) |
 
 Thứ tự mỗi giờ: việc mở nhỏ nhất số → bỏ qua `BLOCKED` → không commit Pilot dirty trừ khi `AP-PILOT-DIRTY`.
 
