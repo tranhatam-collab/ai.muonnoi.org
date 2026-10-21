@@ -2,6 +2,18 @@
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng Codex — launch packet S01/A01 có gate — 21/10/2026, 07:01 (UTC+7)
+
+Source khóa tại `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `a25746a54ff4f814826c70ab9e07de9715312ba4`. Bảo toàn worktree Pilot, payment và hộp duyệt Founder đang dirty; không commit/push/deploy/merchant/publish/message/payment. Ngân sách 0 VND.
+
+`VERIFIED_WORKTREE_ONLY`: `.local/continuous/s01-a01-launch-packet-20261021T0700/` vật hóa nội dung hướng khách hàng cho **S01 và A01**, hai fulfillment/recovery SOP, khung hủy/hoàn tiền `DRAFT_NOT_A_POLICY` và hai measurement contract. S01 khóa đúng đề xuất 1.500.000 VND và 12 bản nháp + lịch 14 ngày; A01 khóa đúng đề xuất 149.000 VND và cấu trúc 12 quy trình + 30 prompt + 30 ngày. Mỗi sản phẩm có deliverable, exclusion, acceptance criteria và danh sách receipt bắt buộc.
+
+Validator đạt **77/77 checks**; failure path chặn trạng thái READY/APPROVED, CTA hoặc checkout/publish bật, đổi SKU/giá, claim bảo đảm kết quả, thiếu gate/acceptance/recovery, SOP production, measurement thiếu pending reconciliation và mọi actual tự điền. Revalidation receipt liên quan đạt checkout gate **54/54**, A01 delivery/recovery **10/10** và measurement **30/30**. CTA destination đều `null`; production execution, external actions và commercial effect đều tắt. Receipt khóa source/hash tại `receipt.json`.
+
+Giới hạn: seller/pháp lý, giá, merchant/settlement, policy hoàn tiền, Cloudflare Free staging, production mapping, source-rights/user trial, delivery storage, email recovery, kênh và reviewer vẫn thiếu receipt. Sale-ready **0**; target/forecast/pipeline/invoiced/paid/refunds/fees/collected cash đều `null`; live/thương mại giữ `HOLD`.
+
+**Việc tự động tiếp theo:** render preview local S01/A01 trực tiếp từ packet với CTA disabled, CSP không tài nguyên ngoài và snapshot/a11y checks; không publish.
+
 ## Vòng giờ Cursor — revalidate payment dirty suite — 21/10/2026, 06:53 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `c5d3cf6`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-20T23:52:11Z`. Loop PID **53356**. **Không commit** payment/Pilot dirty. 0 VND.

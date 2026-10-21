@@ -80,7 +80,9 @@ Trạng thái đối chiếu Sóng 0 (`docs/PRODUCT_PORTFOLIO_1_TO_3_YEARS_FOUND
 | 3aa | Provider-spec intake/evidence checklist cho callback field map + signed samples + verifier | **Xong local** — `.local/continuous/provider-spec-intake-20261020T225254Z/` · 5 evidence slots · **7 checks** · `AWAITING_EVIDENCE` · cấm field bịa |
 | 3ab | Revalidate và đóng gói payment source thành patch review/recovery tách lane Pilot | **Xong local** — `.local/continuous/payment-source-handoff-20261021T0600/`; patch đúng 7 file, loại 3 file Pilot, apply sạch lên HEAD, hash khớp, 56 checks; payment 13/13 + Miniflare 1/1 + webhook 78 + intake 7 |
 | 3ac | Gắn patch payment đúng digest vào hộp duyệt Founder, không commit/push/deploy | **Xong** — `AP-PAYMENT-SOURCE`; patch SHA-256 `ad985bd6129e05582b925d996bb7a682442d6ec3096b1007cdd834b239b114ca` |
-| 3ad | S01/A01 launch packet: copy có gate claim, fulfillment SOP, cancellation/refund draft và measurement map | Tiếp theo |
+| 3ad | S01/A01 launch packet: copy có gate claim, fulfillment SOP, cancellation/refund draft và measurement map | **Xong local** — `.local/continuous/s01-a01-launch-packet-20261021T0700/`; 2 sản phẩm, 2 SOP, refund `DRAFT_NOT_A_POLICY`, 2 measurement contract, **77 checks**, CTA/checkout/publish tắt, actuals null |
+| 3ae | Render local preview S01/A01 từ packet, CTA disabled, không tài nguyên ngoài; snapshot/a11y/CSP checks | **Xong local** — `.local/continuous/s01-a01-local-preview-20261021T005321Z/` · **18 checks** · CSP `default-src 'none'` · CTA disabled · 0 script/img ngoài |
+| 3af | S02/S03 recurring entitlement draft local (pause/cancel; không billing thật) | Tiếp theo |
 | 4 | Staging remote biệt lập trên Cloudflare Free | `BLOCKED` INFO-CF-FREE — **không dừng hàng đợi** |
 | 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **53356** · tick `2026-10-20T22:52:11Z` |
 
