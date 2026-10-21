@@ -2,6 +2,30 @@
 
 **NO_GO cho live:** public source/migration exposure còn được xác minh ngày 21/10/2026. Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — A02/A03 output acceptance manifests — 21/10/2026, 21:52 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `437f1cf`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T14:52:11Z`. Loop PID **53356**. Dirty lanes bảo toàn. 0 VND. Không generate/crawl/deploy.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| 3bh A02/A03 intake (Codex) | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a02-a03-industry-intake-20261021T1435Z/` · **21/21** |
+| 3bi output acceptance manifests | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a02-a03-output-acceptance-manifests-20261021T145219Z/` · **14/14** · A02 20/40/10 + source/rights/expert · A03 10 trang/20 finding/20 evidence/backlog · template `BLOCKED_OUTPUT_EMPTY` · generate/crawl/fetch off · actuals null |
+| Live P0 | `NO_GO` | Không hạ |
+
+**Việc tự động tiếp theo:** provider-spec slot refresh hoặc A04 CSV draft; không gọi mạng.
+
+## Vòng Codex — A02/A03 industry intake rehearsal — 21/10/2026, 21:35 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY`; contract intake đã vật hóa nhưng input thật vẫn `BLOCKED_REQUIRED_INTAKE`, chưa tạo work order hay gọi mạng.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `437f1cf36600918f42dd5dd07235725fbd71fba0`. Các lane Pilot, payment và public-output dirty được bảo toàn; không commit/push/deploy/crawl/generate/publish/delivery/payment; 0 VND.
+
+`.local/continuous/a02-a03-industry-intake-20261021T1435Z/` khóa A02 vào đúng một ngành, buyer-role reference và **10** case packet, mỗi case phải có source, rights và expert-review reference. A03 yêu cầu authorization + scope reference, một HTTPS origin được cấp quyền và 1–10 path; contract tái dùng sandbox chống SSRF hiện có. Customer chỉ được định danh bằng SHA-256, không nhận PII thô.
+
+Validation đạt **21/21**. Fixture đầy đủ chỉ tạo `TEST_INPUT_COMPLETE_NOT_EXECUTED`: A02 work order 20 quy trình/40 prompt/10 case; A03 work order tối đa 10 trang và mục tiêu 20 finding, vẫn `fetched=false`, evidence null, pentest claim false, SEO guarantee false. Failure path chặn secret, nhiều ngành ngoài allowlist, thiếu 10 case, thiếu quyền/reviewer, case trùng, HTTP/IP target, quá 10 trang, path trùng và token URL. Source không chứa lời gọi `fetch`.
+
+Input thật còn thiếu customer subject hash; A02 thiếu ngành, buyer role và 10 case packet; A03 thiếu authorization, scope, origin và page paths. Hai mức giá 399.000/799.000 VND vẫn là đề xuất chưa duyệt. Network/live fetch/content generation/external actions đều 0; sale-ready 0; mọi actual tài chính `null`; live tiếp tục `NO_GO`.
+
+**Việc tự động tiếp theo:** dựng acceptance manifest local cho đầu ra A02 20/40/10 và A03 10 trang/20 finding/evidence/backlog; không generate, crawl hoặc giao bên ngoài.
+
 ## Vòng giờ Cursor — S01/A01 first-order lifecycle — 21/10/2026, 20:52 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `36c9f50`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T13:52:11Z`. Loop PID **53356**. Dirty lanes bảo toàn. 0 VND. Không deploy/provider/email.
