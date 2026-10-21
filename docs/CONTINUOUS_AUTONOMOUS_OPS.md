@@ -104,9 +104,11 @@ Trạng thái đối chiếu Sóng 0 (`docs/PRODUCT_PORTFOLIO_1_TO_3_YEARS_FOUND
 | 3ay | Gate-diff reader cho launch-input S01/A01, fail closed theo field/receipt | **Xong local** — `.local/continuous/s01-a01-launch-input-gate-diff-20261021T095219Z/` · **9/9** · template missing fields liệt kê theo gate · secret/credential chặn · complete vẫn sale-ready 0 · live `NO_GO` |
 | 3az | Revalidate public-output patch trên HEAD hiện tại, không deploy | **Xong local** — `.local/continuous/public-output-patch-revalidate-20261021T1022Z/` · **16/16** · exact 3-file patch · reviewed hashes match · apply-check current index · build 43 file · security 3/3 · forbidden path 0 · live chưa sửa |
 | 3ba | Combined predeploy scope manifest cho public-output + payment, loại Pilot lane | **Xong local** — `.local/continuous/combined-predeploy-scope-20261021T105219Z/` · **13/13** · 3+7 file · overlap 0 · Pilot excluded · cả hai patch apply-check clean HEAD 0 · live `NO_GO` |
-| 3bb | Payment dirty suite revalidate trên worktree hiện tại (không commit Pilot) | Tiếp theo; bỏ qua deploy nếu thiếu SHA/provider |
+| 3bb | Payment dirty suite revalidate trên HEAD/worktree hiện tại, giữ Pilot ngoài scope | **Xong local** — `.local/continuous/payment-dirty-revalidate-20261021T1126Z/` · verifier **32/32** · suite assertions **112**, fail 0 · payment unit 13/13 · Workerd 1/1 · webhook 78 · provider intake 7 · combined scope 13 · apply-check current index · provider spec vẫn thiếu |
+| 3bc | Predeploy acceptance matrix gắn 2 patch digest + authority + post-deploy probes | **Xong local** — `.local/continuous/predeploy-acceptance-matrix-20261021T122019Z/` · **12/12** · digest public+payment khóa · AP-* MISSING · probe `BLOCKED_MISSING_DEPLOYMENT` · verdict `HOLD_NOT_DEPLOYABLE` · live `NO_GO` |
+| 3bd | Owner-input / FOUNDER_APPROVAL_ONLY sync với matrix digests (không deploy) | Tiếp theo; production apply vẫn tắt |
 | 4 | Staging remote biệt lập trên Cloudflare Free | `BLOCKED` INFO-CF-FREE — **không dừng hàng đợi** |
-| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **53356** · tick `2026-10-21T10:52:11Z` |
+| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **53356** · tick `2026-10-21T11:52:11Z` |
 
 Thứ tự mỗi giờ: việc mở nhỏ nhất số → bỏ qua `BLOCKED` → không commit Pilot dirty trừ khi `AP-PILOT-DIRTY`.
 

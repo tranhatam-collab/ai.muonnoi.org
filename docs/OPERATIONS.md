@@ -2,6 +2,30 @@
 
 **NO_GO cho live:** public source/migration exposure còn được xác minh ngày 21/10/2026. Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — predeploy acceptance matrix — 21/10/2026, 18:52 / xử lý 19:20 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `eeb3b5e`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T11:52:11Z`. Loop PID **53356**. Dirty lanes bảo toàn. 0 VND. Không deploy.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| 3bb payment dirty revalidate (Codex) | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/payment-dirty-revalidate-20261021T1126Z/` · verifier **32/32** · assertions **112** fail 0 |
+| 3bc predeploy acceptance matrix | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/predeploy-acceptance-matrix-20261021T122019Z/` · **12/12** · public digest `4b581d4c…` · payment digest `ad985bd6…` · AP-PUBLIC-OUTPUT / AP-PAYMENT / AP-DEPLOY còn `MISSING` · post-deploy probe `BLOCKED_MISSING_DEPLOYMENT` · verdict `HOLD_NOT_DEPLOYABLE` · sale-ready 0 |
+| Live P0 | `NO_GO` | Không hạ |
+
+**Việc tự động tiếp theo:** sync FOUNDER_APPROVAL_ONLY với đúng digest; không deploy trước authority + provider receipt.
+
+## Vòng Codex — payment dirty suite revalidate — 21/10/2026, 18:29 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY`; payment candidate đạt local suite, provider spec vẫn `AWAITING_EVIDENCE`, production/live giữ `HOLD/NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eeb3b5e2af0551180cd7891d8573ca653f28136f`. Đúng bảy file payment được kiểm tra; ba file Pilot tiếp tục nằm ngoài patch. Không commit/push/deploy/migration/provider call/payment; 0 VND.
+
+Đầu vòng, `workers/revenueops/node_modules` còn thư mục nhưng thiếu file `esbuild`; đã phục hồi chỉ file thiếu từ checkout local có `package-lock.json` cùng SHA-256 `2388c0d05eb03cadf884b29748fdd86531dc910ff20d11bf09c99dfc31896999`, không tải mạng. Payment unit đạt **13/13**. Workerd attempt trong sandbox thất bại `EPERM 127.0.0.1` và được ghi riêng; chạy lại đúng suite local ngoài sandbox đạt **1/1**, không gọi provider. Webhook contract đạt **78** checks, provider-spec intake **7**, combined predeploy scope **13**, API typecheck và bundle đều exit 0.
+
+`.local/continuous/payment-dirty-revalidate-20261021T1126Z/` có verifier **32/32**; tổng assertion của các suite có số đếm là **112**, effective failure 0. Patch SHA-256 `ad985bd6129e05582b925d996bb7a682442d6ec3096b1007cdd834b239b114ca` vẫn khớp bảy file reviewed và `git apply --check --cached` đạt trên index HEAD hiện tại. Failure path D1 thiếu `payload_hash` trong Workerd là tình huống test có chủ ý; callback vẫn retryable và xử lý đúng một event sau khi schema test được bổ sung.
+
+Blocker: callback field map/signed samples/verifier của provider chưa có; merchant + settlement reconciliation chưa có; patch chưa commit/deploy; live public-output P0 chưa được hạ. Mọi actual tài chính giữ `null`.
+
+**Việc tự động tiếp theo:** tạo predeploy acceptance matrix gắn đúng hai patch digest, authority cần có và post-deploy negative probes; production apply tiếp tục tắt.
+
 ## Vòng giờ Cursor — combined predeploy scope manifest — 21/10/2026, 17:52 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `265d6db`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T10:52:11Z`. Loop PID **53356**. Dirty lanes bảo toàn. 0 VND. Không commit/deploy.
