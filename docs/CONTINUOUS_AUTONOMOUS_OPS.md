@@ -100,9 +100,11 @@ Trạng thái đối chiếu Sóng 0 (`docs/PRODUCT_PORTFOLIO_1_TO_3_YEARS_FOUND
 | 3au | A10 onboarding + seat-transfer + expiry acceptance packet local | **Xong local** — `.local/continuous/a10-onboarding-seat-transfer-expiry-20261021T075219Z/` · **18/18** · inventory gate · 10 seat × 90 ngày · IDOR + owner transfer · expiry/revoke · giá 9.990.000 · sale-ready 0 · live `NO_GO` |
 | 3av | S01/A01 user-trial + reviewer-capacity + private-delivery readiness | **Xong local** — `.local/continuous/s01-a01-trial-capacity-delivery-readiness-20261021T0819Z/` · **23/23** · 2 trial fixture · source/rights/capacity/consent/acceptance gate · A01 private-storage/recovery gate · KPI eligible 0 · sale-ready 0 · actuals null |
 | 3aw | S01/A01 reviewer-capacity reservation + trial issue-remediation handoff local | **Xong local** — `.local/continuous/s01-a01-capacity-reservation-remediation-20261021T085219Z/` · **17/17** · pool gate · S01 120m + A01 90m · overbook chặn · reviewer-only remediate · open issue chặn handoff · KPI 0 · live `NO_GO` |
-| 3ax | Payment dirty revalidate (không commit Pilot) hoặc owner-input/AP-* packet refresh | Tiếp theo; bỏ qua deploy nếu thiếu SHA/provider |
+| 3ax | S01/A01 launch-input contract v2, chống secret và khóa đúng gate | **Xong local** — `.local/continuous/s01-a01-launch-input-contract-20261021T0921Z/` · **17/17** · 2 SKU/giá đề xuất · owner-filled false · credential fields cấm · fictional fill không cấp sale-ready · actuals null |
+| 3ay | Gate-diff reader cho launch-input S01/A01, fail closed theo field/receipt | **Xong local** — `.local/continuous/s01-a01-launch-input-gate-diff-20261021T095219Z/` · **9/9** · template missing fields liệt kê theo gate · secret/credential chặn · complete vẫn sale-ready 0 · live `NO_GO` |
+| 3az | Payment dirty revalidate (không commit Pilot) hoặc public-output patch apply-check | Tiếp theo; bỏ qua deploy nếu thiếu SHA/provider |
 | 4 | Staging remote biệt lập trên Cloudflare Free | `BLOCKED` INFO-CF-FREE — **không dừng hàng đợi** |
-| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **53356** · tick `2026-10-21T08:52:11Z` |
+| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **53356** · tick `2026-10-21T09:52:11Z` |
 
 Thứ tự mỗi giờ: việc mở nhỏ nhất số → bỏ qua `BLOCKED` → không commit Pilot dirty trừ khi `AP-PILOT-DIRTY`.
 
