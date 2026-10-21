@@ -2,6 +2,30 @@
 
 **NO_GO cho live:** public source/migration exposure còn được xác minh ngày 21/10/2026. Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — predeploy approval receipt parser — 21/10/2026, 19:52 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `53dc1db`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T12:52:11Z`. Loop PID **53356**. Dirty lanes bảo toàn. 0 VND. Không deploy.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| 3bd Founder box sync (Codex) | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/founder-approval-predeploy-sync-20261021T1231Z/` · **14/14** · AP rows gắn digest |
+| 3be approval receipt parser | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/predeploy-approval-receipt-parser-20261021T125219Z/` · **12/12** · chỉ nhận `AP-… digest=` / deploy identity fields · free prose chặn · secret chặn · parsed approval **không** grant commit/push/deploy · sale-ready 0 |
+| Live P0 | `NO_GO` | Không hạ |
+
+**Việc tự động tiếp theo:** dry-run checklist probe gắn AP-DEPLOY identity; không gọi mạng nếu thiếu hostname/SHA/receipt.
+
+## Vòng Codex — đồng bộ hộp duyệt Founder với predeploy matrix — 21/10/2026, 19:31 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY`; ba quyết định predeploy đã có phạm vi bất biến để Founder duyệt, nhưng cả ba vẫn chưa được duyệt và production/live giữ `HOLD/NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `53dc1db27ca02891c3aa075a372b8c5012f941bb`. Các lane Pilot, payment và public-output dirty được bảo toàn; không commit/push/deploy/provider call/payment; 0 VND.
+
+`docs/FOUNDER_APPROVAL_ONLY.md` nay có `AP-PUBLIC-OUTPUT-PATCH` gắn đúng patch **3 tệp** SHA-256 `4b581d4cb940be3924fc9525a8a40f1ecc188601f722011133e82c020b937beb`, `AP-PAYMENT-SOURCE` gắn đúng patch **7 tệp** SHA-256 `ad985bd6129e05582b925d996bb7a682442d6ec3096b1007cdd834b239b114ca`, và `AP-DEPLOY-CANDIDATE` khóa trên exact full SHA + provider deployment ID + provider build receipt. Pilot bị loại khỏi cả hai patch. Các ô vẫn `☐`; việc ghi hàng duyệt không tự cấp authority.
+
+Receipt `.local/continuous/founder-approval-predeploy-sync-20261021T1231Z/` đạt **14/14**: đối chiếu source identity, matrix `HOLD_NOT_DEPLOYABLE`, scope 3+7, exact digest, ba authority còn thiếu, ô chưa tick, deploy candidate bị chặn, Pilot excluded, disclosure live `NO_GO`, actuals null và không có vật liệu credential. `npm run check:operations` và `git diff --check` cùng exit 0; không có tracked deletion.
+
+Blocker không đổi: chưa có Founder approval cho hai patch; chưa có exact deployed SHA/provider deployment/build receipt; provider callback spec, merchant reconciliation và Cloudflare Free staging chưa có. Post-deploy probe vẫn `BLOCKED_MISSING_DEPLOYMENT`; sale-ready 0; target/forecast/pipeline/invoiced/paid/refunds/fees/collected cash đều `null`.
+
+**Việc tự động tiếp theo:** dựng parser receipt phê duyệt fail-closed, chỉ nhận exact AP ID cùng digest/provider identity; không suy approval từ văn bản tự do và không mở production apply.
+
 ## Vòng giờ Cursor — predeploy acceptance matrix — 21/10/2026, 18:52 / xử lý 19:20 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `eeb3b5e`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T11:52:11Z`. Loop PID **53356**. Dirty lanes bảo toàn. 0 VND. Không deploy.

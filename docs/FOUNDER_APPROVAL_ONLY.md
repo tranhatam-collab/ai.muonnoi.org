@@ -13,9 +13,14 @@
 | AP-AUTONOMY | Mỗi SKU đủ cổng trước đơn thật | cùng file | ☐ |
 | AP-NO-GUARANTEE | Target ≠ cam kết doanh thu | cùng file | ☐ |
 | AP-PILOT-DIRTY | Commit 3 tệp `pilot-revise` + tests (8/8 pass) | `.local/continuous/pilot-dirty-baseline-20261019T111829Z/` | ☐ |
+| AP-PUBLIC-OUTPUT-PATCH | Chấp nhận candidate 3 tệp cô lập output public; loại source, config và migration khỏi Pages | `.local/continuous/predeploy-acceptance-matrix-20261021T122019Z/` · patch SHA-256 `4b581d4cb940be3924fc9525a8a40f1ecc188601f722011133e82c020b937beb` · đúng 3 tệp · Pilot bị loại khỏi scope | ☐ |
+| AP-PAYMENT-SOURCE | Chấp nhận candidate 7 tệp payment đã khóa catalog/idempotency; loại toàn bộ tệp Pilot | `.local/continuous/predeploy-acceptance-matrix-20261021T122019Z/` · patch SHA-256 `ad985bd6129e05582b925d996bb7a682442d6ec3096b1007cdd834b239b114ca` · đúng 7 tệp · Pilot bị loại khỏi scope | ☐ |
+| AP-DEPLOY-CANDIDATE | Chấp nhận một candidate deploy bất biến sau khi có đủ identity provider | Chưa đủ điều kiện: cần exact full SHA, provider deployment ID và provider build receipt; probe đang `BLOCKED_MISSING_DEPLOYMENT` | ☐ |
 | AP-PUSH | Push nhánh ops lên origin (ahead local) | commits docs đã có local | ☐ |
 
 Trả lời một dòng khi duyệt, ví dụ: `Duyệt AP-PORTFOLIO AP-WAVE AP-PRICE AP-AUTONOMY AP-NO-GUARANTEE` — không cần làm thêm bước nào.
+
+Ba mục predeploy trên chỉ gắn quyết định với đúng digest/candidate được nêu. Chúng **không tự cấp quyền commit, push hoặc deploy**. `AP-DEPLOY-CANDIDATE` chỉ có hiệu lực khi AI đã điền đủ exact full SHA, provider deployment ID và provider build receipt vào receipt bất biến; hiện vẫn `HOLD_NOT_DEPLOYABLE`, `production_apply=false`, live `NO_GO`, sale-ready **0** và toàn bộ target/forecast/pipeline/invoiced/paid/refunds/fees/collected cash là `null`.
 
 ## Hàng chờ thông tin (Founder gửi khi sẵn sàng — không phải việc phải làm ngay)
 
