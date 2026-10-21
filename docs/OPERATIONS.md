@@ -2,6 +2,28 @@
 
 **NO_GO cho live:** public source/migration exposure còn được xác minh ngày 21/10/2026. Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — S04 handoff/recovery rehearsal — 21/10/2026, 10:52 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `2c53b07`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T03:52:11Z`. Loop PID **53356**. Dirty lanes bảo toàn. 0 VND. Không deploy.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| 3al probe packet (Codex, docs pending) | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/immutable-preview-probe-packet-20261021T0304Z/` · **8/8** · execution `BLOCKED_MISSING_DEPLOYMENT` |
+| 3am S04 handoff + recovery | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/s04-handoff-recovery-rehearsal-20261021T035219Z/` · **11/11** · process map, Studio worksheet (auto-post off), dashboard CSP placeholder, handoff runbook, training checklist, recovery playbook · giá 9.900.000 · capacity `UNCONFIRMED` |
+| Live P0 | `NO_GO` | Không hạ; thiếu exact deployed SHA |
+
+**Việc tự động tiếp theo:** A05/A06 entitlement draft hoặc portfolio readiness revalidate; chạy packet 3al chỉ khi có deployed SHA + provider receipt.
+
+## Vòng Codex — immutable-preview probe packet fail-closed — 21/10/2026, 10:06 (UTC+7)
+
+**Verdict: production vẫn `NO_GO`; packet `VERIFIED_WORKTREE_ONLY` và chưa gọi mạng.** Source khóa tại `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `2c53b07bf6be7c7bcf816028803554bf0cd71147`. Các lane Founder, Pilot, payment và public-output đang dirty được bảo toàn; không commit/push/deploy/DNS/secret/migration/provider mutation; 0 VND.
+
+`.local/continuous/immutable-preview-probe-packet-20261021T0304Z/` tạo contract kiểm đúng immutable `pages.dev` preview trước khi hạ P0. Template mặc định `BLOCKED_MISSING_DEPLOYMENT` và không thể phát request khi thiếu hostname immutable, deployment ID, full deployed SHA hoặc provider receipt. Contract chỉ dùng `HEAD`, redirect manual, không đọc body, không retry; khóa đúng 5 public path và 6 negative path gồm `wrangler`, package, build source, Worker source và migration SQL. Negative path chỉ sạch khi 404/410; 200, redirect, 5xx, content type sai hoặc kết quả mạng chưa rõ không được nâng thành thành công.
+
+Test fixture đạt **8/8**, phủ template blocked/call 0, clean preview, từ chối production/mutable/credentialed URL, thiếu SHA/receipt, path set sai/trùng, forbidden path trả 200, redirect/wrong type/5xx và network outcome `PENDING_RECONCILIATION` không retry. External requests 0; target/forecast/pipeline/invoiced/paid/refunds/fees/collected cash đều `null`.
+
+**Việc tự động tiếp theo:** khi có exact deployed SHA/provider receipt thì chạy packet một lần và đối soát; nếu chưa có, tiếp tục S04 handoff/recovery rehearsal local. Live P0 chỉ được hạ sau preview sạch và negative live probe riêng trên domain mapped.
+
 ## Vòng giờ Cursor — S04 SOW draft local — 21/10/2026, 09:53 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `1938334`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T02:52:11Z`. Loop PID **53356**. Dirty lanes (Pilot/payment/build policy) bảo toàn. 0 VND. Không deploy.
