@@ -2,6 +2,28 @@
 
 **NO_GO cho live:** public source/migration exposure còn được xác minh ngày 21/10/2026. Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — A06 onboarding/support/expiry handoff — 21/10/2026, 11:52 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `f6cc611`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T04:52:11Z`. Loop PID **53356**. Dirty lanes bảo toàn. 0 VND. Không deploy.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| 3an A05 delivery/retention (Codex) | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a05-delivery-retention-entitlement-20261021T0406Z/` · **9/9** |
+| 3ao A06 onboarding/support/expiry | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a06-onboarding-support-expiry-handoff-20261021T045219Z/` · **16/16** · template `BLOCKED_SUPPORT_CAPACITY` · 12 bài + 30 thực hành · 90 ngày · handoff/expire/revoke · giá 2.490.000 portfolio · `FOUNDER_APPROVAL_MISSING` · CTA off · actuals null |
+| Live P0 | `NO_GO` | Không hạ |
+
+**Việc tự động tiếp theo:** portfolio readiness revalidate hoặc A07 calendar draft; packet 3al chỉ khi có deployed SHA.
+
+## Vòng Codex — A05 delivery/retention entitlement fail-closed — 21/10/2026, 11:08 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY`; A05 vẫn `DRAFT_NOT_FOR_SALE`, production vẫn `NO_GO`.** Source khóa tại `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `f6cc6111b965d74018e548b1a0b4deebb12dcfba`. Các lane Founder, Pilot, payment và public-output dirty được bảo toàn; không commit/push/deploy/content processing/delivery/payment; 0 VND.
+
+`.local/continuous/a05-delivery-retention-entitlement-20261021T0406Z/` bổ sung contract bàn giao cho đúng 22 output A05. Activation test chỉ hợp lệ khi có source receipt, rights receipt, retention-policy receipt, manifest SHA-256, scope version và một client subject đã hash. Delivery, acceptance, recovery, revoke và xóa nguồn khi hết retention đều cần receipt riêng; sai subject, ngoài access window, manifest mismatch, use-after-revoke và xóa sớm bị từ chối. Contract cấm lưu source body, third-party access, auto-publish và production apply.
+
+Test fixture đạt **9/9**. Template thật giữ `BLOCKED_SOURCE_RIGHTS`; nguồn thật xử lý 0, source body lưu 0, entitlement thật 0, external actions 0. Target/forecast/pipeline/invoiced/paid/refunds/fees/collected cash đều `null`.
+
+Blocker còn lại: nguồn/quyền thật, retention/deletion policy được Founder duyệt, 22 output được reviewer duyệt, seller/giá/merchant/reconciliation, staging/delivery destination và production mapping. **Việc tự động tiếp theo:** dựng A06 learner onboarding, support-capacity và expiry handoff rehearsal local; không chờ nhánh deploy đang thiếu receipt.
+
 ## Vòng giờ Cursor — S04 handoff/recovery rehearsal — 21/10/2026, 10:52 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `2c53b07`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T03:52:11Z`. Loop PID **53356**. Dirty lanes bảo toàn. 0 VND. Không deploy.

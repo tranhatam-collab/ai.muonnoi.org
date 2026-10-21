@@ -90,9 +90,11 @@ Trạng thái đối chiếu Sóng 0 (`docs/PRODUCT_PORTFOLIO_1_TO_3_YEARS_FOUND
 | 3ak | S04 SOW + acceptance/capacity draft local hoặc chuẩn bị immutable-preview probe packet | **Xong local (SOW)** — `.local/continuous/s04-sow-draft-20261021T025319Z/` · **11 checks** · 9.900.000 catalog-bound · capacity unconfirmed · CTA off · live P0 vẫn `NO_GO` |
 | 3al | Immutable-preview / negative live probe packet (wrangler+migration must not 200) | **Xong packet local** — `.local/continuous/immutable-preview-probe-packet-20261021T0304Z/` · **8/8** · HEAD-only · body 0 · retry 0 · execution `BLOCKED_MISSING_DEPLOYMENT`; không hạ P0 |
 | 3am | S04 handoff/recovery rehearsal hoặc chạy packet 3al khi có exact deployed SHA/provider receipt | **Xong local (handoff)** — `.local/continuous/s04-handoff-recovery-rehearsal-20261021T035219Z/` · **11/11** · D1–D5 + recovery · CTA/auto-post off · capacity unconfirmed · probe vẫn `BLOCKED_MISSING_DEPLOYMENT` · live `NO_GO` |
-| 3an | A05/A06 entitlement draft hoặc portfolio readiness matrix revalidate (sale-ready vẫn 0) | Tiếp theo; bỏ qua nhánh deploy nếu thiếu SHA/provider |
+| 3an | A05 client delivery/retention entitlement draft local | **Xong local** — `.local/continuous/a05-delivery-retention-entitlement-20261021T0406Z/` · **9/9** · subject-bound · 22-output manifest · revoke/delete/recovery · source body 0 · actuals null |
+| 3ao | A06 learner onboarding/support-capacity/expiry handoff rehearsal | **Xong local** — `.local/continuous/a06-onboarding-support-expiry-handoff-20261021T045219Z/` · **16/16** · support gate · 12+30 · 90 ngày · handoff/expire/revoke · giá 2.490.000 portfolio · sale-ready 0 · live `NO_GO` |
+| 3ap | Portfolio readiness matrix revalidate (sale-ready vẫn 0) hoặc A07 calendar draft local | Tiếp theo; bỏ qua nhánh deploy nếu thiếu SHA/provider |
 | 4 | Staging remote biệt lập trên Cloudflare Free | `BLOCKED` INFO-CF-FREE — **không dừng hàng đợi** |
-| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **53356** · tick `2026-10-21T03:52:11Z` |
+| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **53356** · tick `2026-10-21T04:52:11Z` |
 
 Thứ tự mỗi giờ: việc mở nhỏ nhất số → bỏ qua `BLOCKED` → không commit Pilot dirty trừ khi `AP-PILOT-DIRTY`.
 
