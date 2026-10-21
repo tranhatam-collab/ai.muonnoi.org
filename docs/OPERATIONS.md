@@ -2,6 +2,18 @@
 
 **NO_GO cho live:** public source/migration exposure còn được xác minh ngày 21/10/2026. Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — A08 intake/sandbox/acceptance — 21/10/2026, 12:52 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `f3d235f`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T05:52:11Z`. Loop PID **53356**. Dirty lanes bảo toàn. 0 VND. Không deploy.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| 3ap A07 review/revision (Codex) | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a07-review-revision-delivery-20261021T0510Z/` · **10/10** |
+| 3aq A08 intake/sandbox/acceptance | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a08-intake-sandbox-acceptance-20261021T055219Z/` · **15/15** · template `BLOCKED_CLIENT_BRIEF` · ≤7 khối + 1 form · secrets scan · visual/a11y/function · customer signoff + deploy approval · vendor production deploy cấm · không hosting/domain/payment · giá 4.990.000 · actuals null |
+| Live P0 | `NO_GO` | Không hạ |
+
+**Việc tự động tiếp theo:** portfolio readiness revalidate hoặc A09 blueprint/sim; packet 3al chỉ khi có deployed SHA.
+
 ## Vòng Codex — A07 review/revision/delivery calendar — 21/10/2026, 12:12 (UTC+7)
 
 **Verdict: `VERIFIED_WORKTREE_ONLY`; A07 vẫn `DRAFT_NOT_FOR_SALE`, production vẫn `NO_GO`.** Source khóa tại `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `f3d235f26a7592e154365827e0a1667cf60b788c`. Các lane Founder, Pilot, payment và public-output dirty được bảo toàn; không commit/push/deploy/email/publish/payment; 0 VND.
