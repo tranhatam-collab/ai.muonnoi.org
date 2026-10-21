@@ -2,6 +2,30 @@
 
 **NO_GO cho live:** public source/migration exposure còn được xác minh ngày 21/10/2026. Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — S01/A01 capacity reservation + remediation — 21/10/2026, 15:52 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `6450f20`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T08:52:11Z`. Loop PID **53356**. Dirty lanes bảo toàn. 0 VND. Không deploy.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| 3av S01/A01 trial readiness (Codex) | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/s01-a01-trial-capacity-delivery-readiness-20261021T0819Z/` · **23/23** |
+| 3aw capacity reservation + remediation | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/s01-a01-capacity-reservation-remediation-20261021T085219Z/` · **17/17** · template `BLOCKED_CAPACITY_POOL` · S01 120m + A01 90m · overbook chặn · issue open chặn handoff · reviewer-only remediate · publish/email/delivery off · KPI excluded · actuals null |
+| Live P0 | `NO_GO` | Không hạ |
+
+**Việc tự động tiếp theo:** payment dirty revalidate hoặc owner-input/AP-* refresh; packet 3al chỉ khi có deployed SHA.
+
+## Vòng Codex — S01/A01 trial, capacity và private-delivery readiness — 21/10/2026, 15:21 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY`; S01/A01 vẫn `DRAFT_NOT_FOR_SALE`, sale-ready 0 và live vẫn `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `6450f2086ff309092a0432ee06c7a5dc371d2408`. Các lane Founder, Pilot, payment và public-output dirty được bảo toàn; không commit/push/deploy/checkout/delivery/email/publish; 0 VND.
+
+`.local/continuous/s01-a01-trial-capacity-delivery-readiness-20261021T0819Z/` chuyển blocker user trial thành protocol local fail-closed cho đúng S01 giá đề xuất 1.500.000 VND và A01 giá đề xuất 149.000 VND. Fixture S01 dùng 2 asset mẫu; fixture A01 dùng 1 workflow + 3 prompt + 1 ngày thực hành. Đây là giả định thử nội bộ, không phải phạm vi bán được duyệt. Trial chỉ được mô phỏng khi có receipt test cho source/quyền, reviewer capacity, participant consent và acceptance; A01 còn bắt buộc private-storage và email-recovery receipt test.
+
+Test đạt **23/23**. Failure path chặn thiếu quyền nguồn, thiếu phút reviewer, manifest sai, participant hash không hợp lệ, publish/external delivery, private storage hoặc recovery thiếu. Hai trial record đều `kpi_eligible=false`, external actions 0, commercial effect false và có digest; không gửi dữ liệu ra ngoài.
+
+Chín gate chung vẫn thiếu receipt: Founder portfolio/wave, seller, giá, merchant reconciliation, refund policy, Cloudflare Free staging, production mapping và owned-channel consent. Không có participant, reviewer capacity, source-rights, private delivery hoặc recovery receipt thật. `target_vnd`, `forecast_vnd`, `pipeline_vnd`, `invoiced_vnd`, `paid_vnd`, `refunds_vnd`, `fees_vnd` và `collected_cash_vnd` đều `null`.
+
+**Việc tự động tiếp theo:** dựng reservation capacity và trial issue-remediation handoff S01/A01; tiếp tục khóa publish, email và delivery ngoài.
+
 ## Vòng giờ Cursor — A10 onboarding/seat-transfer/expiry — 21/10/2026, 14:52 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `e3569db`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T07:52:11Z`. Loop PID **53356**. Dirty lanes bảo toàn. 0 VND. Không deploy.

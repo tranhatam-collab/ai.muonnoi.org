@@ -98,9 +98,11 @@ Trạng thái đối chiếu Sóng 0 (`docs/PRODUCT_PORTFOLIO_1_TO_3_YEARS_FOUND
 | 3as | A09 customer-scope + simulation acceptance + rollback handoff local | **Xong local** — `.local/continuous/a09-scope-sim-rollback-handoff-20261021T065219Z/` · **15/15** · 3 blueprint / 6 contract · sim + rollback 0 connector · live claim cấm · giá 7.990.000 · sale-ready 0 · live `NO_GO` |
 | 3at | A10 renewal + usage export + rollback/revoke handoff local | **Xong local** — `.local/continuous/a10-renewal-usage-export-handoff-20261021T0720Z/` · **35/35** · 10 seat × 90 ngày · 60 SOP/100 mẫu · gia hạn không tự động · aggregate export owner-only · future renewal rollback + revoke · sale-ready 0 · actuals null |
 | 3au | A10 onboarding + seat-transfer + expiry acceptance packet local | **Xong local** — `.local/continuous/a10-onboarding-seat-transfer-expiry-20261021T075219Z/` · **18/18** · inventory gate · 10 seat × 90 ngày · IDOR + owner transfer · expiry/revoke · giá 9.990.000 · sale-ready 0 · live `NO_GO` |
-| 3av | Owner-input / AP-* packet refresh hoặc payment dirty revalidate (không commit Pilot) | Tiếp theo; bỏ qua deploy nếu thiếu SHA/provider |
+| 3av | S01/A01 user-trial + reviewer-capacity + private-delivery readiness | **Xong local** — `.local/continuous/s01-a01-trial-capacity-delivery-readiness-20261021T0819Z/` · **23/23** · 2 trial fixture · source/rights/capacity/consent/acceptance gate · A01 private-storage/recovery gate · KPI eligible 0 · sale-ready 0 · actuals null |
+| 3aw | S01/A01 reviewer-capacity reservation + trial issue-remediation handoff local | **Xong local** — `.local/continuous/s01-a01-capacity-reservation-remediation-20261021T085219Z/` · **17/17** · pool gate · S01 120m + A01 90m · overbook chặn · reviewer-only remediate · open issue chặn handoff · KPI 0 · live `NO_GO` |
+| 3ax | Payment dirty revalidate (không commit Pilot) hoặc owner-input/AP-* packet refresh | Tiếp theo; bỏ qua deploy nếu thiếu SHA/provider |
 | 4 | Staging remote biệt lập trên Cloudflare Free | `BLOCKED` INFO-CF-FREE — **không dừng hàng đợi** |
-| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **53356** · tick `2026-10-21T07:52:11Z` |
+| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **53356** · tick `2026-10-21T08:52:11Z` |
 
 Thứ tự mỗi giờ: việc mở nhỏ nhất số → bỏ qua `BLOCKED` → không commit Pilot dirty trừ khi `AP-PILOT-DIRTY`.
 
