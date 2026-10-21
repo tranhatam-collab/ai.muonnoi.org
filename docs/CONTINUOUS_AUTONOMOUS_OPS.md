@@ -85,7 +85,10 @@ Trạng thái đối chiếu Sóng 0 (`docs/PRODUCT_PORTFOLIO_1_TO_3_YEARS_FOUND
 | 3af | S02/S03 recurring entitlement draft local (pause/cancel; không billing thật) | **Xong local** — `.local/continuous/s02-s03-recurring-entitlement-20261021T0800/`; **72 checks** · catalog-bound · quota 20/40 · pause/cancel cuối kỳ · renewal cần reconciliation · revoke · billing provider null · actuals null |
 | 3ag | S02/S03 monthly delivery acceptance contract: 20/40 asset, reviewer, revision quota, carryover/refusal rules | **Xong local** — `.local/continuous/s02-s03-monthly-delivery-20261021T0815/`; **114 checks** · 60 asset test · reviewer/source/rights/digest · 1 revision · carryover/publish tắt · actuals null |
 | 3ah | P0 source exposure remediation local: output root cô lập + allowlist + regression test, không deploy | **Xong local** — `.local/continuous/public-output-allowlist-20261021T015336Z/` · **10 checks** · reject wrangler/sql/workers · `production_apply=false` · live re-probe session này ERR → giữ prior `NO_GO` Codex 08:14 |
-| 3ai | Áp allowlist vào publish pipeline worktree (không deploy) hoặc S04 SOW draft local | Tiếp theo; live vẫn `NO_GO` đến khi public root hết lộ source |
+| 3ai | Áp allowlist vào publish pipeline worktree, khóa config/source/migration và giữ đủ site public | **Xong worktree** — path/source-realpath gate + atomic staging + manifest snapshot; build **43 file**, focused tests **5/5**, operations check và diff check exit 0; chưa deploy, live vẫn `NO_GO` |
+| 3aj | Đóng gói patch 3 file + receipt review để bàn giao provider | **Xong local** — `.local/continuous/public-output-policy-source-fix-20261021T022513Z/`; patch apply-check exit 0; review cuối `SCOPED_ACCEPT`; production vẫn `NO_GO` |
+| 3ak | S04 SOW + acceptance/capacity draft local hoặc chuẩn bị immutable-preview probe packet | **Xong local (SOW)** — `.local/continuous/s04-sow-draft-20261021T025319Z/` · **11 checks** · 9.900.000 catalog-bound · capacity unconfirmed · CTA off · live P0 vẫn `NO_GO` |
+| 3al | Immutable-preview / negative live probe packet (wrangler+migration must not 200) sau khi có deployed SHA | Tiếp theo; không hạ P0 trước evidence |
 | 4 | Staging remote biệt lập trên Cloudflare Free | `BLOCKED` INFO-CF-FREE — **không dừng hàng đợi** |
 | 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **53356** · tick `2026-10-20T22:52:11Z` |
 

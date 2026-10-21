@@ -2,6 +2,30 @@
 
 **NO_GO cho live:** public source/migration exposure còn được xác minh ngày 21/10/2026. Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — S04 SOW draft local — 21/10/2026, 09:53 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `1938334`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T02:52:11Z`. Loop PID **53356**. Dirty lanes (Pilot/payment/build policy) bảo toàn. 0 VND. Không deploy.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| S04 SOW + acceptance/capacity | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/s04-sow-draft-20261021T025319Z/` · **11/11** · giá 9.900.000 khớp catalog · 5 deliverables · CTA off · secrets-in-repo forbidden · capacity `UNCONFIRMED` |
+| Public-output patch (Codex) | `FIXED_WORKTREE_ONLY` | handoff `.local/continuous/public-output-policy-source-fix-20261021T022513Z/` · chưa deploy |
+| Live P0 | `NO_GO` | prior probe wrangler.json + migration SQL = 200 |
+
+**Việc tự động tiếp theo:** negative live probe packet sau deployed SHA; hoặc Founder duyệt `AP-PAYMENT-SOURCE` / public-output patch. Không hạ P0 trước evidence.
+
+## Vòng Codex — khóa public output trong source candidate — 21/10/2026, 09:10 (UTC+7)
+
+**Verdict: `FIXED_WORKTREE_ONLY` cho tuyến build; production/live vẫn `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `193833450b62f3780c1d176479765b05d65ae8fa`. Các lane Pilot, payment và Founder đang dirty được bảo toàn. Không commit/push/deploy/DNS/secret/migration; 0 VND.
+
+`tools/public-output-policy.mjs` bổ sung policy fail-closed cho build: chỉ các root file và thư mục web được duyệt mới vào `dist/site`; JSON chỉ cho `data/feed.json` và mẫu hư cấu `offers/sample/data.json`; config, source, migration, database, source map, private path, traversal, absolute path, symlink output và manifest trùng đều bị từ chối. Mọi nguồn copy/generate còn phải là regular file nằm đúng canonical realpath dưới repo, nên symlink ở file cuối hoặc thư mục trung gian không thể lách allowlist. `tools/build.mjs` áp các gate trước từng copy/generate, dựng trong staging riêng rồi chỉ thay `dist/site` sau khi toàn bộ manifest hợp lệ; build thất bại giữ artifact hoàn chỉnh trước đó và xóa staging dở. Regression test khóa snapshot đủ 43 path, đối chiếu đệ quy artifact thật với manifest và phủ `wrangler.*`, package files, `workers`, `migrations`, SQL, tools/tests/operations, JSON riêng tư, traversal, Windows separator, symlink bypass và negative build cleanup.
+
+Validation hiện tại: `npm run build` tạo đúng **43 file public**; security tests **3/3**, static/CSP regression **2/2**, `npm run check:operations` và `git diff --check` đều exit 0. Hành vi hợp lệ được giữ cho HTML/CSS/JS của site, `_headers`, robots/sitemap và hai JSON public. Không có symlink hoặc path cấm trong `dist/site`.
+
+Handoff local: `.local/continuous/public-output-policy-source-fix-20261021T022513Z/` chứa patch đúng ba file, SHA-256 và receipt; `git apply --check` trên archive sạch của HEAD exit 0. Review độc lập cuối: `SCOPED_ACCEPT / VERIFIED_WORKTREE_ONLY`, không còn P0/P1/P2 trong phạm vi patch. Handoff không phải approval hoặc deploy receipt.
+
+Giới hạn bắt buộc: live receipt cùng ngày vẫn cho `/wrangler.json` và `/workers/api/migrations/0003_seed_admin.sql` trả 200. Patch này chưa có commit/deployed SHA, provider build/output receipt hoặc negative live probe, nên không chứng minh production đã sửa. Việc tự động tiếp theo là đóng gói đúng patch ba file và receipt review cho đường deploy được kiểm soát; chỉ hạ P0 sau khi provider xác nhận build `dist/site` của đúng SHA và live không còn phục vụ các path cấm.
+
 ## Vòng giờ Cursor — public output allowlist local — 21/10/2026, 08:54 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `4e25286`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T01:52:11Z`. Loop PID **53356**. Dirty lanes bảo toàn. 0 VND. Không deploy.
