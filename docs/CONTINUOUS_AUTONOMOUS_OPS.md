@@ -96,9 +96,11 @@ Trạng thái đối chiếu Sóng 0 (`docs/PRODUCT_PORTFOLIO_1_TO_3_YEARS_FOUND
 | 3aq | A08 client-content intake/sandbox handoff/acceptance rehearsal | **Xong local** — `.local/continuous/a08-intake-sandbox-acceptance-20261021T055219Z/` · **15/15** · ≤7 khối + 1 form · secrets scan · visual/a11y/function · vendor deploy cấm · giá 4.990.000 · sale-ready 0 · live `NO_GO` |
 | 3ar | Tái kiểm định portfolio readiness sau các gói S01–S04/A05–A08 | **Xong local** — `.local/continuous/portfolio-readiness-matrix-revalidate-20261021T0607Z/` · **53/53** · 14 SKU · 5 fixture + 8 structure + 1 design + 0 local-blocked · 32 tham chiếu/28 receipt duy nhất · sale-ready 0 · 7 external gate blocked · actuals null |
 | 3as | A09 customer-scope + simulation acceptance + rollback handoff local | **Xong local** — `.local/continuous/a09-scope-sim-rollback-handoff-20261021T065219Z/` · **15/15** · 3 blueprint / 6 contract · sim + rollback 0 connector · live claim cấm · giá 7.990.000 · sale-ready 0 · live `NO_GO` |
-| 3at | A10 seat license IDOR/export/revoke/renewal draft local | Tiếp theo; bỏ qua nhánh deploy nếu thiếu SHA/provider |
+| 3at | A10 renewal + usage export + rollback/revoke handoff local | **Xong local** — `.local/continuous/a10-renewal-usage-export-handoff-20261021T0720Z/` · **35/35** · 10 seat × 90 ngày · 60 SOP/100 mẫu · gia hạn không tự động · aggregate export owner-only · future renewal rollback + revoke · sale-ready 0 · actuals null |
+| 3au | A10 onboarding + seat-transfer + expiry acceptance packet local | **Xong local** — `.local/continuous/a10-onboarding-seat-transfer-expiry-20261021T075219Z/` · **18/18** · inventory gate · 10 seat × 90 ngày · IDOR + owner transfer · expiry/revoke · giá 9.990.000 · sale-ready 0 · live `NO_GO` |
+| 3av | Owner-input / AP-* packet refresh hoặc payment dirty revalidate (không commit Pilot) | Tiếp theo; bỏ qua deploy nếu thiếu SHA/provider |
 | 4 | Staging remote biệt lập trên Cloudflare Free | `BLOCKED` INFO-CF-FREE — **không dừng hàng đợi** |
-| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **53356** · tick `2026-10-21T06:52:11Z` |
+| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **53356** · tick `2026-10-21T07:52:11Z` |
 
 Thứ tự mỗi giờ: việc mở nhỏ nhất số → bỏ qua `BLOCKED` → không commit Pilot dirty trừ khi `AP-PILOT-DIRTY`.
 

@@ -2,6 +2,28 @@
 
 **NO_GO cho live:** public source/migration exposure còn được xác minh ngày 21/10/2026. Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — A10 onboarding/seat-transfer/expiry — 21/10/2026, 14:52 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `e3569db`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T07:52:11Z`. Loop PID **53356**. Dirty lanes bảo toàn. 0 VND. Không deploy.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| 3at A10 renewal/export (Codex) | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a10-renewal-usage-export-handoff-20261021T0720Z/` · **35/35** |
+| 3au A10 onboarding/transfer/expiry | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a10-onboarding-seat-transfer-expiry-20261021T075219Z/` · **18/18** · template `BLOCKED_INVENTORY_APPROVAL` · 60 SOP + 100 mẫu · 10 seat × 90 ngày · IDOR deny · owner-only transfer · expiry/revoke · không auto-renew · giá 9.990.000 · actuals null |
+| Live P0 | `NO_GO` | Không hạ |
+
+**Việc tự động tiếp theo:** owner-input/AP-* refresh hoặc payment dirty revalidate; packet 3al chỉ khi có deployed SHA.
+
+## Vòng Codex — A10 renewal/usage export/offboarding — 21/10/2026, 14:29 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY`; A10 vẫn `DRAFT_NOT_FOR_SALE`, sale-ready 0 và live vẫn `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `e3569db749d89202bcf7a4dc828a35bbd7a3a37a`. Đầu vòng, file `.git` của worktree tạm và nhiều file tracked bị mất cục bộ; Git registration/ref/index vẫn nguyên. Đã phục hồi con trỏ worktree và chỉ các path `diff-filter=D` từ đúng HEAD; các lane modified/untracked khác được bảo toàn. `git fsck --no-dangling` và kiểm tra không còn tracked deletion đều exit 0.
+
+`.local/continuous/a10-renewal-usage-export-handoff-20261021T0720Z/` mở rộng A10 đúng scope **10 seat × 90 ngày, 60 SOP + 100 mẫu**, giá đề xuất **9.990.000 VND**. Gia hạn bị khóa auto-renew, cần receipt đối soát + owner approval + customer acceptance, tạo kỳ 90 ngày kế tiếp không chồng lấn và xử lý replay bằng idempotency. Báo cáo usage chỉ tổng hợp, owner-only, không chứa content body hoặc raw actor identity và có SHA-256. Future renewal rollback, IDOR refusal, revoke và use-after-revoke được mô phỏng fail-closed.
+
+Test đạt **35/35**. Production apply, external actions và commercial effect đều 0/false. Template thật giữ `BLOCKED_REQUIRED_RECEIPTS`; 60 SOP và 100 mẫu vẫn skeleton, approved inventory 0. `target_vnd`, `forecast_vnd`, `pipeline_vnd`, `invoiced_vnd`, `paid_vnd`, `refunds_vnd`, `fees_vnd` và `collected_cash_vnd` đều `null`.
+
+Blocker: Founder/giá, seller, merchant reconciliation, inventory source-rights-review, customer acceptance, Cloudflare Free staging, delivery destination và production mapping chưa có receipt. **Việc tự động tiếp theo:** dựng A10 onboarding, seat-transfer và expiry acceptance packet local; không mở connector, tenant hoặc giao dịch thật.
+
 ## Vòng giờ Cursor — A09 scope/sim/rollback handoff — 21/10/2026, 13:52 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `657be36`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T06:52:11Z`. Loop PID **53356**. Dirty lanes bảo toàn. 0 VND. Không deploy.
