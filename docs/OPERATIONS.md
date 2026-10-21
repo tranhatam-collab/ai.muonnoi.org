@@ -2,6 +2,30 @@
 
 **NO_GO cho live:** public source/migration exposure còn được xác minh ngày 21/10/2026. Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — combined predeploy scope manifest — 21/10/2026, 17:52 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `265d6db`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T10:52:11Z`. Loop PID **53356**. Dirty lanes bảo toàn. 0 VND. Không commit/deploy.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| 3az public-output revalidate (Codex) | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/public-output-patch-revalidate-20261021T1022Z/` · **16/16** |
+| 3ba combined predeploy scope | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/combined-predeploy-scope-20261021T105219Z/` · **13/13** · public 3 file + payment 7 file · Pilot excluded · patch digest khớp · apply-check từng lane + tuần tự trên clean HEAD exit 0 · overlap 0 · live `NO_GO` |
+| Live P0 | `NO_GO` | Không hạ |
+
+**Việc tự động tiếp theo:** payment dirty suite revalidate; deploy chỉ sau Founder AP-* + deployed SHA.
+
+## Vòng Codex — revalidate public-output patch trên HEAD hiện tại — 21/10/2026, 17:24 (UTC+7)
+
+**Verdict: `PATCH_REVALIDATED_CURRENT_HEAD`; source candidate giữ nguyên digest đã review, production/live vẫn `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `265d6db3cba42a79baba84654d2f8095a41d15bc`. Các lane Founder, Pilot và payment dirty được bảo toàn; không commit/push/deploy/DNS/secret/migration; 0 VND.
+
+`.local/continuous/public-output-patch-revalidate-20261021T1022Z/` khóa lại patch SHA-256 `4b581d4cb940be3924fc9525a8a40f1ecc188601f722011133e82c020b937beb` với đúng ba file đã review: `tools/build.mjs`, `tools/public-output-policy.mjs`, `tests/public-output-security.test.mjs`. Cả ba hash worktree khớp receipt trước; patch không có path traversal và `git apply --check --cached` đạt trên index của HEAD hiện tại.
+
+Validation đạt **16/16**. Build tạo đúng **43 file** khớp manifest; public-output security test **3/3**; forbidden public path **0**. Worker source, migration, SQL, tool/test source và source map không nằm trong artifact public. Parser test được sửa để đọc cả định dạng TAP `#` và ký hiệu `ℹ` của Node 24 mà vẫn yêu cầu đúng tests 3, pass 3, fail 0.
+
+Giới hạn: patch chưa được commit/select làm deployment candidate; không có provider build/output receipt gắn đúng deployed SHA; chưa chạy immutable-preview hoặc live negative paths sau deploy. Receipt live trước trong ngày vẫn chứng minh source/migration exposure, nên P0 không hạ. Mọi actual tài chính giữ `null`.
+
+**Việc tự động tiếp theo:** tạo combined predeploy scope manifest cho hai patch public-output và payment, xác minh file scope/hash/apply-check và loại toàn bộ Pilot lane; không commit hoặc deploy.
+
 ## Vòng giờ Cursor — S01/A01 launch-input gate-diff — 21/10/2026, 16:52 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `19043f3`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T09:52:11Z`. Loop PID **53356**. Dirty lanes bảo toàn. 0 VND. Không deploy.
