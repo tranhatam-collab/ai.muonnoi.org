@@ -2,6 +2,28 @@
 
 **NO_GO cho live:** public source/migration exposure còn được xác minh ngày 21/10/2026. Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — A09 scope/sim/rollback handoff — 21/10/2026, 13:52 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `657be36`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T06:52:11Z`. Loop PID **53356**. Dirty lanes bảo toàn. 0 VND. Không deploy.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| 3ar portfolio revalidate (Codex) | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/portfolio-readiness-matrix-revalidate-20261021T0607Z/` · **53/53** · sale-ready 0 |
+| 3as A09 scope/sim/rollback | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a09-scope-sim-rollback-handoff-20261021T065219Z/` · **15/15** · template `BLOCKED_CUSTOMER_SCOPE` · 3 blueprint / 6 contract · sim 3 module · rollback 0 connector · live claim cấm · giá 7.990.000 · actuals null |
+| Live P0 | `NO_GO` | Không hạ |
+
+**Việc tự động tiếp theo:** A10 seat license IDOR/export/revoke; packet 3al chỉ khi có deployed SHA.
+
+## Vòng Codex — tái kiểm định readiness toàn danh mục — 21/10/2026, 13:33 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY`; 14/14 sản phẩm có bằng chứng local nhưng sale-ready vẫn 0 và live vẫn `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `657be3659679d26b0890c3e13358f4fd6b2a14d8`. Các lane Founder, Pilot, payment và public-output dirty được bảo toàn; không commit/push/deploy/DNS/secret/migration/payment/message/publish; 0 VND.
+
+`.local/continuous/portfolio-readiness-matrix-revalidate-20261021T0607Z/` đối soát lại đúng 4 Studio và 10 Agent với catalog/config hiện tại. Validator đạt **53/53**: **5** `LOCAL_FIXTURE_VERIFIED`, **8** `LOCAL_STRUCTURE_VERIFIED`, **1** `LOCAL_DESIGN_VERIFIED`, **0** `LOCAL_BLOCKED`; **32** tham chiếu tới **28 receipt local duy nhất**. Việc giảm local-blocked về 0 chỉ chứng minh mỗi SKU đã có ít nhất cấu trúc, thiết kế hoặc fixture local; không cấp quyền bán, deploy hoặc claim hiệu quả.
+
+Bảy gate chung vẫn `BLOCKED_MISSING_RECEIPT`: Founder approval, seller legal identity, approved price, merchant reconciliation, Cloudflare Free staging, production mapping và owned-channel consent. Từng SKU còn blocker riêng về source/rights, reviewer, customer input, capacity, connector hoặc acceptance. `target_vnd`, `forecast_vnd`, `pipeline_vnd`, `invoiced_vnd`, `paid_vnd`, `refunds_vnd`, `fees_vnd` và `collected_cash_vnd` đều `null`; doanh thu đối soát chưa có.
+
+Live P0 không được hạ: receipt trước trong ngày vẫn chứng minh `wrangler.json` và migration SQL trả 200; vòng này không lặp probe khi chưa có deployed SHA/provider receipt mới. **Việc tự động tiếp theo:** dựng A09 customer-scope, simulation acceptance và rollback handoff local; production connectors tiếp tục tắt.
+
 ## Vòng giờ Cursor — A08 intake/sandbox/acceptance — 21/10/2026, 12:52 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `f3d235f`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T05:52:11Z`. Loop PID **53356**. Dirty lanes bảo toàn. 0 VND. Không deploy.
