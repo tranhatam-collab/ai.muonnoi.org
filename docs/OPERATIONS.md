@@ -2,6 +2,16 @@
 
 **NO_GO cho live:** public source/migration exposure còn được xác minh ngày 21/10/2026. Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng Codex — A07 review/revision/delivery calendar — 21/10/2026, 12:12 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY`; A07 vẫn `DRAFT_NOT_FOR_SALE`, production vẫn `NO_GO`.** Source khóa tại `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `f3d235f26a7592e154365827e0a1667cf60b788c`. Các lane Founder, Pilot, payment và public-output dirty được bảo toàn; không commit/push/deploy/email/publish/payment; 0 VND.
+
+`.local/continuous/a07-review-revision-delivery-20261021T0510Z/` vật hóa calendar đúng **30 post + 8 script + 4 email** trong 30 ngày. Mỗi asset sẵn sàng phải có source ref, rights receipt, reviewer receipt và content digest; riêng email cần opt-in list receipt. Contract khóa brand brief/version, content owner, owned channel và timezone; chỉ một vòng sửa mỗi asset; còn revision mở thì không tạo handoff. Bản handoff test khóa đủ 42 asset vào manifest SHA-256.
+
+Test fixture đạt **10/10**. Ads, inbox messaging, auto-publish, content body trong artifact và production apply đều bị chặn. Template thật giữ `BLOCKED_BRIEF_CHANNEL`; content bodies tạo 0, email gửi 0, publication 0, external actions 0; target/forecast/pipeline/invoiced/paid/refunds/fees/collected cash đều `null`.
+
+Blocker còn lại: brand brief/brand kit thật, source/quyền/reviewer capacity, owned channel + opt-in list, seller/giá/merchant/reconciliation, staging/mapping và acceptance. **Việc tự động tiếp theo:** dựng A08 client-content intake, sandbox handoff và acceptance rehearsal local; hosting/domain/payment tiếp tục tắt.
+
 ## Vòng giờ Cursor — A06 onboarding/support/expiry handoff — 21/10/2026, 11:52 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `f6cc611`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T04:52:11Z`. Loop PID **53356**. Dirty lanes bảo toàn. 0 VND. Không deploy.

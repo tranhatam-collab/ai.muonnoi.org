@@ -92,9 +92,11 @@ Trạng thái đối chiếu Sóng 0 (`docs/PRODUCT_PORTFOLIO_1_TO_3_YEARS_FOUND
 | 3am | S04 handoff/recovery rehearsal hoặc chạy packet 3al khi có exact deployed SHA/provider receipt | **Xong local (handoff)** — `.local/continuous/s04-handoff-recovery-rehearsal-20261021T035219Z/` · **11/11** · D1–D5 + recovery · CTA/auto-post off · capacity unconfirmed · probe vẫn `BLOCKED_MISSING_DEPLOYMENT` · live `NO_GO` |
 | 3an | A05 client delivery/retention entitlement draft local | **Xong local** — `.local/continuous/a05-delivery-retention-entitlement-20261021T0406Z/` · **9/9** · subject-bound · 22-output manifest · revoke/delete/recovery · source body 0 · actuals null |
 | 3ao | A06 learner onboarding/support-capacity/expiry handoff rehearsal | **Xong local** — `.local/continuous/a06-onboarding-support-expiry-handoff-20261021T045219Z/` · **16/16** · support gate · 12+30 · 90 ngày · handoff/expire/revoke · giá 2.490.000 portfolio · sale-ready 0 · live `NO_GO` |
-| 3ap | Portfolio readiness matrix revalidate (sale-ready vẫn 0) hoặc A07 calendar draft local | Tiếp theo; bỏ qua nhánh deploy nếu thiếu SHA/provider |
+| 3ap | A07 review/revision/delivery calendar draft local | **Xong local** — `.local/continuous/a07-review-revision-delivery-20261021T0510Z/` · **10/10** · 30+8+4 · opt-in email gate · 1 revision · 42-asset manifest · publish off · actuals null |
+| 3aq | A08 client-content intake/sandbox handoff/acceptance rehearsal | **Xong local** — `.local/continuous/a08-intake-sandbox-acceptance-20261021T055219Z/` · **15/15** · ≤7 khối + 1 form · secrets scan · visual/a11y/function · vendor deploy cấm · giá 4.990.000 · sale-ready 0 · live `NO_GO` |
+| 3ar | Portfolio readiness matrix revalidate (sale-ready vẫn 0) hoặc A09 blueprint/sim contract draft | Tiếp theo; bỏ qua nhánh deploy nếu thiếu SHA/provider |
 | 4 | Staging remote biệt lập trên Cloudflare Free | `BLOCKED` INFO-CF-FREE — **không dừng hàng đợi** |
-| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **53356** · tick `2026-10-21T04:52:11Z` |
+| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **53356** · tick `2026-10-21T05:52:11Z` |
 
 Thứ tự mỗi giờ: việc mở nhỏ nhất số → bỏ qua `BLOCKED` → không commit Pilot dirty trừ khi `AP-PILOT-DIRTY`.
 
