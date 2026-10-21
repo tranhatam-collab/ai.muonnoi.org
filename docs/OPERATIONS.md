@@ -1,6 +1,45 @@
 # Runbook phát triển và tiếp nhận vận hành — cập nhật 2026-10-21
 
-**HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
+**NO_GO cho live:** public source/migration exposure còn được xác minh ngày 21/10/2026. Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
+
+## Vòng giờ Cursor — public output allowlist local — 21/10/2026, 08:54 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `4e25286`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T01:52:11Z`. Loop PID **53356**. Dirty lanes bảo toàn. 0 VND. Không deploy.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| S02/S03 fixtures | `VERIFIED_WORKTREE_ONLY` | Revalidate entitlement **72/72** · monthly delivery **114/114** |
+| Public output allowlist | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/public-output-allowlist-20261021T015336Z/` · **10/10** · reject wrangler/sql/workers · good site 2 files pass |
+| Live re-probe (phiên này) | `BLOCKED`/`ERR` | Không lấy được HEAD từ môi trường agent; **giữ** prior Codex probe `live-readonly-probe-20261021T0814` → `/wrangler.json` + migration SQL **200** = **NO_GO** |
+| Deploy | false | Allowlist chưa áp production |
+
+**Việc tự động tiếp theo:** gắn allowlist vào publish pipeline worktree (không deploy) hoặc S04 SOW draft. Live vẫn NO_GO đến khi hết lộ source.
+
+## Vòng daily Codex — NO_GO live; monthly acceptance S02/S03 hoàn tất — 21/10/2026, 08:14 (UTC+7)
+
+**Verdict: `NO_GO` cho production/live; `VERIFIED_WORKTREE_ONLY` cho deliverable local.** P0 hiện tại: request `HEAD` ngày 21/10/2026 vẫn nhận `200 application/json` tại `/wrangler.json` và `200 application/x-sql` tại `/workers/api/migrations/0003_seed_admin.sql`. Không đọc body hoặc giá trị nhạy cảm. Receipt: `.local/continuous/live-readonly-probe-20261021T0814/receipt.json`.
+
+Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `4e25286a954c7fb7e3843e54df6bb35d71c8b7f9` · worktree chứa lane Pilot/payment/Founder/docs đã nhận diện và được bảo toàn. Domain `ai.muonnoi.org`: `/` trả `200 text/html`, `/api/health` trả `200 application/json`; đây chỉ là reachability. Deployment ID, deployed source SHA và production mapping vẫn `BLOCKED`; không suy ra readiness từ HTTP 200.
+
+`VERIFIED_WORKTREE_ONLY`: `.local/continuous/s02-s03-monthly-delivery-20261021T0815/` đã tạo monthly delivery acceptance contract cho S02 quota 20 và S03 quota 40. Mỗi asset cần source, rights, SHA-256 digest, claim status và đúng reviewer; tối đa một vòng sửa; chỉ asset `APPROVED_TEST` mới bàn giao; nghiệm thu kỳ yêu cầu đúng 20/40 delivery receipt. Carryover chưa có policy, auto-publish và destination ngoài bị từ chối.
+
+Validator đạt **114/114 checks** với **60 asset hư cấu** và hai kỳ nghiệm thu. Failure path phủ entitlement inactive, period/idempotency conflict, nguồn/quyền/digest thiếu, claim chưa xác minh, reviewer sai, quota asset/revision vượt, delivery trước approval, acceptance thiếu và carryover/publish bị khóa. External actions 0; actuals target/forecast/pipeline/invoiced/paid/refunds/fees/collected cash đều `null`.
+
+Blocker phát hành: public output root còn lộ source/migration; credential từng nằm trong lịch sử cần owner rotation/history decision; seller/pháp lý, giá, merchant, policy refund/cancel, Cloudflare Free staging, production mapping, reviewer/capacity, source-rights và kênh vẫn thiếu receipt. Không commit/push/deploy/DNS/secret/migration/payment/message/social; ngân sách 0 VND.
+
+**Việc tự động tiếp theo:** dựng remediation local cô lập public output root bằng allowlist và regression test từ chối source/config/migration; chưa deploy. Sau đó tiếp tục monthly inventory/acceptance khi P0 ngoài còn blocked.
+
+## Vòng Codex — entitlement định kỳ S02/S03 fail-closed — 21/10/2026, 08:08 (UTC+7)
+
+Source khóa tại `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `4e25286a954c7fb7e3843e54df6bb35d71c8b7f9`. Bảo toàn worktree Pilot, payment và hộp duyệt Founder đang dirty; không commit/push/deploy/billing/payment/email/publish. Ngân sách 0 VND.
+
+`VERIFIED_WORKTREE_ONLY`: `.local/continuous/s02-s03-recurring-entitlement-20261021T0800/` khóa hai plan theo catalog: S02 Creator Studio đề xuất 1.990.000 VND/tháng, quota 20 asset; S03 Team Growth Studio đề xuất 4.990.000 VND/tháng, quota 40 asset và reviewer bắt buộc. Entitlement chỉ được tạo trong môi trường hư cấu bằng `TEST-*` refs và payment reconciliation receipt; kỳ local phải 28–31 ngày.
+
+Validator đạt **72/72 checks**, gồm đối chiếu trực tiếp hai plan với `operations/data/offer-catalog.json`. Lifecycle phủ active, pause cuối kỳ, paused, cancel cuối kỳ, cancelled, expired, manual renewal có reconciliation, revoke, subject authorization, quota 20, idempotent replay và conflict refusal. Pause/cancel vẫn giữ quyền tới hết kỳ đã đối soát; renewal không được chồng kỳ; revoke chặn truy cập nhưng giữ audit state. `billing_provider=null`, automatic billing, production apply và external actions đều tắt.
+
+Giới hạn: chưa có billing provider/merchant, seller, policy cancel/refund được duyệt, reviewer/seat contract, staging hoặc subscriber thật. S02/S03 vẫn `DRAFT_NOT_FOR_SALE`; target/forecast/pipeline/invoiced/paid/refunds/fees/collected cash đều `null`; live/thương mại giữ `HOLD`. Receipt và SHA-256 nằm trong `receipt.json`.
+
+**Việc tự động tiếp theo:** dựng monthly delivery acceptance contract S02/S03 cho 20/40 asset, reviewer, revision quota và quy tắc carryover/refusal; không tạo billing thật.
 
 ## Vòng giờ Cursor — S01/A01 local preview CTA off — 21/10/2026, 07:53 (UTC+7)
 
