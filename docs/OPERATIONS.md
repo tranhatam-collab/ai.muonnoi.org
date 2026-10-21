@@ -2,6 +2,30 @@
 
 **NO_GO cho live:** public source/migration exposure còn được xác minh ngày 21/10/2026. Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — S01/A01 first-order lifecycle — 21/10/2026, 20:52 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `36c9f50`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T13:52:11Z`. Loop PID **53356**. Dirty lanes bảo toàn. 0 VND. Không deploy/provider/email.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| 3bf immutable dry-run (Codex) | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/immutable-preview-dry-run-checklist-20261021T1334Z/` · **16/16** · network 0 |
+| 3bg S01/A01 lifecycle | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/s01-a01-first-order-lifecycle-20261021T135219Z/` · **16/16** · catalog→recon test→private fulfill→accept · S01 1.500.000 catalog-bound · A01 149.000 portfolio · IDOR chặn · provider_ref null · KPI 0 · actuals null |
+| Live P0 | `NO_GO` | Không hạ |
+
+**Việc tự động tiếp theo:** A02/A03 intake rehearsal hoặc provider-spec slot refresh; không gọi mạng.
+
+## Vòng Codex — immutable-preview dry-run checklist — 21/10/2026, 20:34 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY`; dry-run xác định chính xác ba identity còn thiếu, không gọi mạng và live tiếp tục `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `36c9f50bd222e50aa0859ce1d29083763b03b52c`. Các lane Pilot, payment và public-output dirty được bảo toàn; không commit/push/deploy/provider call/probe/payment; 0 VND.
+
+`.local/continuous/immutable-preview-dry-run-checklist-20261021T1334Z/` nối parser `AP-DEPLOY-CANDIDATE` với contract immutable Pages probe hiện có. Input thật giữ trống và trả `BLOCKED_MISSING_DEPLOYMENT` với đúng ba trường thiếu: structured AP deploy receipt, immutable preview hostname và provider probe receipt. Kết quả khóa `network_calls=0`, `probe_executed=false`, `HEAD`/redirect manual cho lần được phép sau này, body reads 0, blind retries 0, deploy/production apply false và external actions 0.
+
+Validation đạt **16/16**. Fixture đủ identity chỉ đạt `READY_FOR_READ_ONLY_PROBE_NOT_EXECUTED`; không tự chạy probe hay cấp quyền deploy. Failure path chặn free prose, AP sai loại, secret material, SHA không tương thích contract, production hostname, hostname lệch deployment, path gắn vào hostname, provider receipt sai và trường ngoài schema. Source checklist không chứa lời gọi `fetch`.
+
+Blocker không đổi: chưa có AP deploy candidate receipt, immutable `pages.dev` hostname, provider probe/build receipt hoặc deployed SHA thật. Live P0 không hạ; sale-ready 0; target/forecast/pipeline/invoiced/paid/refunds/fees/collected cash đều `null`.
+
+**Việc tự động tiếp theo:** chuyển sang S01/A01 first-order lifecycle rehearsal local từ catalog tới reconciliation test, private fulfillment và acceptance; không gọi merchant, email, provider hoặc mạng.
+
 ## Vòng giờ Cursor — predeploy approval receipt parser — 21/10/2026, 19:52 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `53dc1db`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T12:52:11Z`. Loop PID **53356**. Dirty lanes bảo toàn. 0 VND. Không deploy.
