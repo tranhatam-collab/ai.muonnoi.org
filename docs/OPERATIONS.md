@@ -2,6 +2,17 @@
 
 **HOLD cho live.** Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — S01/A01 local preview CTA off — 21/10/2026, 07:53 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `a25746a` → docs `74a1620`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-21T00:52:11Z`. Loop PID **53356**. Payment/Pilot dirty bảo toàn. 0 VND. Không deploy.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| Local preview S01/A01 | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/s01-a01-local-preview-20261021T005321Z/` · render từ launch packet · CTA disabled · CSP `default-src 'none'` · **18/18** |
+| Actuals | null | checkout/publish tắt |
+
+**Việc tự động tiếp theo:** S02/S03 recurring entitlement draft local (pause/cancel; không billing thật). Không chờ Founder.
+
 ## Vòng Codex — launch packet S01/A01 có gate — 21/10/2026, 07:01 (UTC+7)
 
 Source khóa tại `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `a25746a54ff4f814826c70ab9e07de9715312ba4`. Bảo toàn worktree Pilot, payment và hộp duyệt Founder đang dirty; không commit/push/deploy/merchant/publish/message/payment. Ngân sách 0 VND.
