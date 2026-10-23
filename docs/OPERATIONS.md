@@ -2,6 +2,32 @@
 
 **NO_GO cho live:** public source/migration exposure còn được xác minh ngày 21/10/2026. Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — A09 contract/idempotency/recovery review — 23/10/2026, 21:22 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `8238754`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-23T14:22:46Z`. Loop PID **42001**. Dirty lanes bảo toàn. 0 VND. Không connector/deploy/payment.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| 3br A09 blueprint/sim (Codex) | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a09-blueprint-simulation-acceptance-20261023T1322Z/` · **29/29** |
+| 3bs A09 review + acceptance | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a09-review-acceptance-20261023T141919Z/` · **10/10** · 10 check · digest bp/sim/runbook/result khóa · đúng 1 revision · connector/network/production off · actuals null |
+| Live P0 | `NO_GO` | Không hạ |
+| Lịch Cursor phiên này | `ACTIVE` | PID **42001** · sleep 3600 · sentinel `AGENT_LOOP_TICK_muonnoi_hourly` · đã chạy ~3h sau restart 23/10 |
+| Lịch bền (Glass) | `REPORTED_UNVERIFIED` | Cần Founder bật một lần ngoài phiên chat nếu muốn sống khi Cursor đóng |
+
+**Việc tự động tiếp theo:** provider-spec refresh hoặc A10 seat-license acceptance/recovery; không gọi mạng.
+
+## Vòng Codex — A09 blueprint simulation acceptance packet — 23/10/2026, 20:22 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A09_BLUEPRINT_SIMULATION_ACCEPTANCE_TEST_ONLY_NOT_FOR_SALE`; chưa có customer scope/reviewer/connector authority thật và production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `823875430793e8408b8a0fa304601f9f4275be0c`.
+
+`.local/continuous/a09-blueprint-simulation-acceptance-20261023T1322Z/` materialize đúng **3 module** A09 với **6 data contract**, idempotency theo `event_id`, mô phỏng intake/triage, review handoff và recovery rollback. Runbook khóa start gate, quarantine, checkpoint, rollback và handoff. Scope template trống fail closed; fixture hoàn chỉnh chỉ dùng subject hash và reference `TEST-`.
+
+Validation đạt **29/29** với **3 simulation**, một rollback `ROLLED_BACK_TEST_ONLY`, unresolved finding 0. Failure path chặn customer ID thô, target/credential production, revision thứ hai, bật production integration/connector, sai module/contract, event trùng, topic/digest/reference sai, reviewer trùng producer, digest acceptance sai, thiếu module và schema free-text.
+
+Receipt SHA-256 `8bd593008ecb055b40a0796f6d0d7cca99eef79d7babbc4d12219743d3353fdc` khóa 11 artifact hash và 3 source hash. Customer scope/source rights/reviewer/connector/production/buyer authority thật đều 0; connector/network/external action/deploy/payment đều 0; sale-ready 0 và mọi actual tài chính `null`.
+
+**Việc tự động tiếp theo:** review độc lập contract/idempotency/recovery gắn đúng digest A09; giữ connector và production controls tắt.
+
 ## Vòng giờ Cursor — A08 visual/a11y/function review — 23/10/2026, 20:19 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `9d342da`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-23T13:19:06Z`. Loop PID **42001**. Dirty lanes bảo toàn. 0 VND. Không form/deploy/domain.
