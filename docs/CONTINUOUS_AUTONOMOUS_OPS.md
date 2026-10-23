@@ -112,9 +112,15 @@ Trạng thái đối chiếu Sóng 0 (`docs/PRODUCT_PORTFOLIO_1_TO_3_YEARS_FOUND
 | 3bg | S01/A01 first-order lifecycle rehearsal: catalog → reconciliation test → private fulfillment → acceptance | **Xong local** — `.local/continuous/s01-a01-first-order-lifecycle-20261021T135219Z/` · **16/16** · S01 catalog-bound · A01 portfolio price · recon test-only · private fulfill · IDOR · network 0 · sale-ready 0 · live `NO_GO` |
 | 3bh | A02/A03 industry sample intake rehearsal hoặc payment provider-spec evidence slot refresh | **Xong local (intake)** — `.local/continuous/a02-a03-industry-intake-20261021T1435Z/` · **21/21** · A02 một ngành + 10 case source/rights/expert · A03 auth/scope + ≤10 path + SSRF contract · template blocked · network 0 · actuals null |
 | 3bi | A02/A03 output acceptance manifests: 20/40/10 và 10 trang/20 finding/evidence/backlog | **Xong local** — `.local/continuous/a02-a03-output-acceptance-manifests-20261021T145219Z/` · **14/14** · A02 20/40/10 + case evidence · A03 10/20/20 + backlog · generate/crawl off · sale-ready 0 · live `NO_GO` |
-| 3bj | Provider-spec evidence slot refresh (AWAITING_EVIDENCE) hoặc A04 CSV pipeline draft | Tiếp theo; không gọi mạng/provider |
+| 3bj | Provider-spec evidence slot refresh (AWAITING_EVIDENCE) hoặc A04 CSV pipeline draft | **Xong local (A04)** — `.local/continuous/a04-csv-pipeline-20261023T0707Z/` · **38/38** · 20 input/20 output · 20 source + 20 rights ref · schema/lineage/failure path khóa · review/authority 0 · publish/upload/delivery off · actuals null |
+| 3bk | A04 independent-review + one-revision acceptance receipt parser | **Xong local** — `.local/continuous/a04-review-acceptance-20261023T0815Z/` · **35/35** · 20 reviewed · 18 initial accept + 2 sửa · đúng 1 revision · 20 structural test accept · real review/authority 0 · sale-ready 0 · actuals null |
+| 3bl | A05 rights-bound source intake + fidelity QA fixture | **Xong local** — `.local/continuous/a05-rights-fidelity-20261023T0919Z/` · **41/41** · 12 short + 4 long + 6 script + 22 lịch · 36/36 citation bound · unsupported 0 · real rights/review 0 · sale-ready 0 · actuals null |
+| 3bm | A05 independent fidelity review + acceptance receipt parser | **Xong local** — `.local/continuous/a05-review-acceptance-20261023T1023Z/` · **30/30** · 22 asset/36 citation · unsupported/unresolved 0 · real rights/review/buyer 0 · publish/delivery/checkout off · actuals null |
+| 3bn | A07 versioned brand brief + content calendar/publishing fixture | **Xong local** — `.local/continuous/a07-brand-calendar-20261023T1125Z/` · **39/39** · 30 post + 8 script + 4 email + 42 lịch · 54 citation · recipient 0 · real brand/opt-in/channel/review 0 · publish/send off · actuals null |
+| 3bo | A07 independent review + one-revision acceptance gate | **Xong local** — `.local/continuous/a07-review-acceptance-20261023T121919Z/` · **12/12** · 42 asset · brand/package digest khóa · 1 revision · publish/send off · sale-ready 0 · live `NO_GO` |
+| 3bp | Provider-spec evidence slot refresh hoặc A08 landing sandbox visual/a11y gate | Tiếp theo; không gọi mạng/provider |
 | 4 | Staging remote biệt lập trên Cloudflare Free | `BLOCKED` INFO-CF-FREE — **không dừng hàng đợi** |
-| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **53356** · tick `2026-10-21T14:52:11Z` |
+| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **42001** · tick `2026-10-23T12:19:06Z` |
 
 Thứ tự mỗi giờ: việc mở nhỏ nhất số → bỏ qua `BLOCKED` → không commit Pilot dirty trừ khi `AP-PILOT-DIRTY`.
 

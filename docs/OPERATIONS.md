@@ -1,6 +1,78 @@
-# Runbook phát triển và tiếp nhận vận hành — cập nhật 2026-10-21
+# Runbook phát triển và tiếp nhận vận hành — cập nhật 2026-10-23
 
 **NO_GO cho live:** public source/migration exposure còn được xác minh ngày 21/10/2026. Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
+
+## Vòng giờ Cursor — A07 review + one-revision (loop restart) — 23/10/2026, 19:19 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `696bd36`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-23T12:19:06Z`. Loop PID **42001** (restart sau khi PID 53356 aborted 21/10). Dirty lanes bảo toàn. 0 VND. Không publish/send/deploy.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| 3bj–3bn (Codex, trong lúc loop Cursor chết) | `VERIFIED_WORKTREE_ONLY` | A04 pipeline/review · A05 rights/review · A07 brand-calendar |
+| 3bo A07 review + one revision | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a07-review-acceptance-20261023T121919Z/` · **12/12** · 42 asset · digest brand `ad552a03…` + package `3d012239…` · đúng 1 revision · publish/send off · channel/opt-in thật 0 · actuals null |
+| Live P0 | `NO_GO` | Không hạ |
+
+**Việc tự động tiếp theo:** provider-spec refresh hoặc A08 sandbox gate; không gọi mạng.
+
+## Vòng Codex — A07 versioned brand brief + content calendar — 23/10/2026, 18:25 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A07_BRAND_AND_CALENDAR_TEST_FIXTURE_ONLY_NOT_FOR_SALE`; chưa có brand/channel/opt-in authority thật và production giữ `NO_GO`.** Source giữ tại repo `tranhatam-collab/ai.muonnoi.org` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `696bd367466150f2e732dce8166ec1cd574c3472`.
+
+`.local/continuous/a07-brand-calendar-20261023T1125Z/` dựng brand brief `test-brand-a07-v1` với 12 claim allowlist và package **30 post + 8 script + 4 email + 42 lịch**. Mỗi asset chỉ dùng claim trong brief, chờ review độc lập và giới hạn một vòng sửa. Email không có người nhận/opt-in receipt; lịch giữ channel `UNASSIGNED`; publish/send/ads/inbox/delivery tắt.
+
+Validation đạt **39/39** với **54** claim-citation, unsupported claim 0 và recipient record 0. Failure path chặn brand version/count/ID drift, secret, hứa doanh thu, customer ID thô, sai digest, revision thứ hai, copy ngoài claim, email có người nhận, channel được tự gán, trùng lịch và control mở publish.
+
+Receipt SHA-256 `0dc2aa132e13458d220d73631174f0ce7a52650f85f01c4f4db4852a9b359d45` khóa 10 artifact hash và 3 source hash. Source/rights/reviewer/opt-in/channel/buyer receipt thật đều 0; provider/network/external action và sale-ready đều 0; actuals `null`.
+
+**Việc tự động tiếp theo:** dựng A07 independent review + one-revision acceptance gate; không gắn kênh, gửi email hoặc publish.
+
+## Vòng Codex — A05 fidelity review + acceptance gate — 23/10/2026, 17:23 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A05_FIDELITY_REVIEW_AND_ACCEPTANCE_TEST_ONLY_NOT_FOR_SALE`; A05 chưa có quyền/reviewer/buyer thật và production giữ `NO_GO`.** Source giữ tại repo `tranhatam-collab/ai.muonnoi.org` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `696bd367466150f2e732dce8166ec1cd574c3472`.
+
+`.local/continuous/a05-review-acceptance-20261023T1023Z/` khóa review receipt vào digest source `cde07a…`, transform package `e81a76…` và manifest vòng trước `447b73…`. Review phải bao phủ đủ **22 asset**, đúng **36 citation**, unsupported claim 0; acceptance phải khóa digest review/source/package, đủ 22 asset và unresolved 0.
+
+Validation đạt **30/30**. Fixture review và acceptance đều mang `LOCAL_TEST_FIXTURE`/`TEST-`; 22 asset chỉ đạt nghiệm thu cấu trúc trong test. Failure path chặn sai source/package/manifest/review digest, thiếu hoặc trùng asset, sai citation count, unsupported claim, finding trên asset đã accepted, secret, expiry, unresolved item và schema mở rộng.
+
+Receipt SHA-256 `c441f301fee95d6ab1df9af1c64703649bc7134d1a8770d55f7c496c692f1830` khóa 10 artifact hash và 5 source hash. Rights/review/buyer/commercial receipt thật đều 0; publish/delivery/checkout, provider/network/external action và sale-ready đều 0; actuals `null`.
+
+**Việc tự động tiếp theo:** theo dependency wave 2, dựng A07 brand brief versioned + lịch nội dung fixture; kênh và publish tiếp tục tắt.
+
+## Vòng Codex — A05 rights-bound source intake + fidelity QA — 23/10/2026, 16:19 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A05_RIGHTS_AND_FIDELITY_TEST_FIXTURE_ONLY_NOT_FOR_SALE`; A05 chưa có quyền nguồn thật và production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `696bd367466150f2e732dce8166ec1cd574c3472`; lane hiện tại chỉ sửa hai runbook và thêm receipt gitignored.
+
+`.local/continuous/a05-rights-fidelity-20261023T0919Z/` dựng intake fail-closed cho source/ref chủ sở hữu/quyền/reviewer, digest nguồn, thời lượng tối đa 60 phút, scope transform và thời hạn quyền. Fixture hư cấu 177 từ/12 câu tạo đúng **12 short + 4 long + 6 script + 22 lịch**; mỗi câu đầu ra khớp nguyên văn citation nguồn, lịch giữ `UNASSIGNED`, voice/face/style clone tắt.
+
+Validation đạt **41/41** với **36/36** claim-citation được khóa và unsupported claim 0 trong fixture. Failure path chặn source sai scope/count/ID, secret/markup, customer ID thô, quá 60 phút, sai digest/quyền hạn, clone mode, receipt hết hạn, lineage drift, thiếu citation, claim/script thêm mới, lịch mở publish và control gọi mạng.
+
+Receipt SHA-256 `3827f439855319c6be407a8919f8e73c32035d5010deac12c69500d7d70c613d` khóa 10 artifact hash và 3 source hash. Source/right/reviewer/acceptance receipt thật đều 0; publish/delivery/checkout, provider/network/external action và sale-ready đều 0; mọi actual tài chính `null`.
+
+**Việc tự động tiếp theo:** dựng parser review fidelity độc lập cho A05, khóa source/package digest và từ chối mọi claim không có citation; không publish hoặc delivery.
+
+## Vòng Codex — A04 independent review + one-revision gate — 23/10/2026, 15:15 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A04_REVIEW_AND_ONE_REVISION_TEST_ONLY_NOT_FOR_SALE`; A04 vẫn chưa có authority thương mại và production giữ `NO_GO`.** Source giữ tại repo `tranhatam-collab/ai.muonnoi.org` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `696bd367466150f2e732dce8166ec1cd574c3472`; chỉ hai runbook dirty cùng receipt gitignored của lane hiện tại.
+
+`.local/continuous/a04-review-acceptance-20261023T0815Z/` khóa review receipt vào digest draft `a36f0f…` và manifest A04 `54821e…`, bắt buộc đủ 20 product ID, producer/reviewer tách vai trò, hai finding code có phép và thời hạn receipt hợp lệ. Fixture review chấp nhận 18 dòng, yêu cầu sửa đúng P03/P07; pipeline áp dụng đúng một vòng sửa, giữ 18 dòng còn lại và tạo revised output digest `00543b…`. Acceptance receipt phải khóa digest review + revised output, đủ 20 ID, `revision_count=1`, unresolved 0.
+
+Validation đạt **35/35**. Cả review và acceptance đều mang `LOCAL_TEST_FIXTURE`/`TEST-`; 20 sản phẩm chỉ được chấp nhận về cấu trúc trong test. Independent review/source/rights/buyer acceptance/commercial authority receipt thật đều 0; publish/upload/checkout/delivery, network/provider/external action và sale-ready đều 0. Actuals tiếp tục `null`.
+
+Receipt SHA-256 `488d3d3e70f7fef235274ba027259e1e98a0900f12aa5ac4d8ec36abf9639ea0` khóa 12 artifact hash và 5 source hash. Failure path chặn sai digest, reviewer/ref sai, thiếu hoặc trùng product, finding ngoài allowlist, secret material, receipt hết hạn, revision thứ hai và unresolved item.
+
+**Việc tự động tiếp theo:** dựng A05 source-rights intake và fidelity QA bằng fixture có quyền hư cấu; không biến test receipt thành quyền thật, không publish hoặc delivery.
+
+## Vòng Codex — khôi phục worktree và dựng A04 CSV pipeline — 23/10/2026, 14:07 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A04_CSV_PIPELINE_TEST_FIXTURE_ONLY_NOT_FOR_SALE`; production giữ `NO_GO`.** Repo khóa tại `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `696bd367466150f2e732dce8166ec1cd574c3472`. Worktree `/private/tmp/ai-muonnoi-autonomous-ops` đã bị dọn khỏi filesystem; Git metadata xác nhận đúng branch/HEAD nhưng trỏ tới path không tồn tại. Worktree được tạo lại từ committed HEAD. Các thay đổi và receipt chỉ nằm ở worktree cũ không còn hiện diện; không tự tái dựng hoặc coi chúng là evidence hiện tại. Repo chính ở iCloud và hai file dirty của lane đó không bị sửa.
+
+`.local/continuous/a04-csv-pipeline-20261023T0707Z/` materialize pipeline CSV local cho A04: đúng **20** sản phẩm, header khóa, product ID duy nhất, source/rights reference từng dòng, output gồm tiêu đề + mô tả + hai FAQ, lineage giữ nguyên, tất cả bản nháp ở `PENDING_INDEPENDENT_REVIEW`, giới hạn một vòng sửa. Validator chặn thiếu/thừa dòng, đổi schema, ID trùng, thiếu source/rights, CSV formula, markup, credential pattern, customer ID thô và receipt giả dạng authority.
+
+Validation đạt **38/38**. Fixture tạo 20 input và 20 output hư cấu với 20 source ref + 20 rights ref; intake trống trả `BLOCKED_MISSING_EVIDENCE`. Fixture đủ cấu trúc vẫn chỉ là `STRUCTURALLY_COMPLETE_TEST_ONLY_REVIEW_REQUIRED`: independent review receipt 0, external authority receipt 0, publish/upload/delivery tắt, network/provider/external action 0, sale-ready 0. Mọi actual tài chính giữ `null`; giá/target chỉ nằm trong tài liệu kế hoạch và không được ghi thành actual.
+
+Receipt `b0f3c49f448ae97a8fff9a506edf30c53e8f4c3d8eb2378dc867660064b02e54` khóa 10 artifact hash và 3 source hash. Live receipt cùng ngày từng được quan sát với SHA-256 `0ade934bd1c75642278c029eea9ef67ff2dc3c88993e3ebcf386c09d6b30e73b` nhưng file local đã bị dọn cùng worktree; trạng thái hiện tại là `REPORTED_HASH_ONLY_LOCAL_FILE_EVICTED`, không re-probe và không hạ P0.
+
+**Việc tự động tiếp theo:** dựng parser receipt review độc lập + một vòng sửa cho A04; input thật thiếu source, rights, reviewer và acceptance phải tiếp tục fail-closed; không publish, upload, checkout hoặc delivery.
 
 ## Vòng giờ Cursor — A02/A03 output acceptance manifests — 21/10/2026, 21:52 (UTC+7)
 
