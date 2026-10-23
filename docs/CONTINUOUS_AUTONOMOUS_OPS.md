@@ -118,9 +118,11 @@ Trạng thái đối chiếu Sóng 0 (`docs/PRODUCT_PORTFOLIO_1_TO_3_YEARS_FOUND
 | 3bm | A05 independent fidelity review + acceptance receipt parser | **Xong local** — `.local/continuous/a05-review-acceptance-20261023T1023Z/` · **30/30** · 22 asset/36 citation · unsupported/unresolved 0 · real rights/review/buyer 0 · publish/delivery/checkout off · actuals null |
 | 3bn | A07 versioned brand brief + content calendar/publishing fixture | **Xong local** — `.local/continuous/a07-brand-calendar-20261023T1125Z/` · **39/39** · 30 post + 8 script + 4 email + 42 lịch · 54 citation · recipient 0 · real brand/opt-in/channel/review 0 · publish/send off · actuals null |
 | 3bo | A07 independent review + one-revision acceptance gate | **Xong local** — `.local/continuous/a07-review-acceptance-20261023T121919Z/` · **12/12** · 42 asset · brand/package digest khóa · 1 revision · publish/send off · sale-ready 0 · live `NO_GO` |
-| 3bp | Provider-spec evidence slot refresh hoặc A08 landing sandbox visual/a11y gate | Tiếp theo; không gọi mạng/provider |
+| 3bp | Provider-spec evidence slot refresh hoặc A08 landing sandbox visual/a11y gate | **Xong local (A08 structure)** — `.local/continuous/a08-landing-sandbox-20261023T1226Z/` · **34/34** · 7 section · 1 form inert/2 field disabled · responsive/a11y CSS · script/resource/submit/payment 0 · form/deploy/domain off · sale-ready 0 · actuals null |
+| 3bq | A08 independent visual/a11y/function review + digest-bound acceptance gate | **Xong local** — `.local/continuous/a08-review-acceptance-20261023T131919Z/` · **11/11** · 12 check · html/css digest khóa · 1 revision · form/deploy/domain off · sale-ready 0 · live `NO_GO` |
+| 3br | Provider-spec evidence slot refresh hoặc A09 blueprint/sim acceptance gate | Tiếp theo; không gọi mạng/provider |
 | 4 | Staging remote biệt lập trên Cloudflare Free | `BLOCKED` INFO-CF-FREE — **không dừng hàng đợi** |
-| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **42001** · tick `2026-10-23T12:19:06Z` |
+| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **42001** · tick `2026-10-23T13:19:06Z` |
 
 Thứ tự mỗi giờ: việc mở nhỏ nhất số → bỏ qua `BLOCKED` → không commit Pilot dirty trừ khi `AP-PILOT-DIRTY`.
 

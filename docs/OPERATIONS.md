@@ -2,6 +2,30 @@
 
 **NO_GO cho live:** public source/migration exposure còn được xác minh ngày 21/10/2026. Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — A08 visual/a11y/function review — 23/10/2026, 20:19 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `9d342da`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-23T13:19:06Z`. Loop PID **42001**. Dirty lanes bảo toàn. 0 VND. Không form/deploy/domain.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| 3bp A08 sandbox structure (Codex) | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a08-landing-sandbox-20261023T1226Z/` · **34/34** |
+| 3bq A08 review + acceptance | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a08-review-acceptance-20261023T131919Z/` · **11/11** · 12 check visual/a11y/function · digest html `0ae6ce67…` + css `fbcd8d33…` · đúng 1 revision · form/deploy/domain off · actuals null |
+| Live P0 | `NO_GO` | Không hạ |
+
+**Việc tự động tiếp theo:** provider-spec refresh hoặc A09 acceptance; không gọi mạng.
+
+## Vòng Codex — A08 isolated one-page landing sandbox — 23/10/2026, 19:26 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A08_STATIC_SANDBOX_STRUCTURE_ONLY_NOT_FOR_SALE`; form, deploy và domain đều khóa, production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `9d342daa1d399d2a74d90daf1d86a0f95d8020ef`.
+
+`.local/continuous/a08-landing-sandbox-20261023T1226Z/` dựng một trang HTML/CSS local đúng **7 section**, **1 form inert** và **2 field disabled**. Trang có skip link, heading hierarchy, label, focus-visible, responsive layout và reduced-motion; không script, inline handler, external resource, active submit, payment control, form destination, deployment approval hoặc domain mapping.
+
+Validation đạt **34/34**. Failure path chặn quá số section/trùng ID, form thứ hai, external action/resource, script/handler, payment, submit hoạt động, thiếu label, field mở, thiếu viewport, link nội bộ sai, CSS resource ngoài, secret, customer hash sai, target thật và revision vượt một vòng.
+
+Receipt SHA-256 `be50439098ee79fa4bc4e00a07d9803a10560992b867bf20e61b055eefdd9ebc` khóa 10 artifact hash và 3 source hash. External authority/review/buyer/commercial receipt thật đều 0; provider/network/external action và sale-ready đều 0; mọi actual tài chính `null`.
+
+**Việc tự động tiếp theo:** review visual/a11y/function độc lập cho đúng digest A08 và khóa acceptance; không bật form, deploy hoặc domain.
+
 ## Vòng giờ Cursor — A07 review + one-revision (loop restart) — 23/10/2026, 19:19 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `696bd36`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-23T12:19:06Z`. Loop PID **42001** (restart sau khi PID 53356 aborted 21/10). Dirty lanes bảo toàn. 0 VND. Không publish/send/deploy.
