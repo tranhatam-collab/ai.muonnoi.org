@@ -2,6 +2,30 @@
 
 **NO_GO cho live:** public source/migration exposure còn được xác minh ngày 21/10/2026. Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — S01/A01 launch packet current rebuild — 23/10/2026, 23:21 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `e35d5b1`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-23T16:21:34Z`. Loop PID **42001**. Dirty lanes bảo toàn. 0 VND. Không CTA/checkout/publish.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| 3bv portfolio revalidate (Codex) | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/portfolio-readiness-revalidate-20261023T1525Z/` · **26/26** · 6/14 current packet+review · 8 missing |
+| 3bw S01/A01 current launch packet | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/s01-a01-launch-packet-current-20261023T161919Z/` · **19/19** · catalog/agents/portfolio digest-bound · S01 1.500.000 + A01 149.000 · refund `DRAFT_NOT_A_POLICY` · prior report ≠ receipt · actuals null |
+| Live P0 | `NO_GO` | Không hạ |
+
+**Việc tự động tiếp theo:** review độc lập launch-copy/fulfillment/measurement gắn digest packet; CTA/checkout/publish tắt.
+
+## Vòng Codex — portfolio readiness revalidate theo receipt hiện có — 23/10/2026, 22:25 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_PORTFOLIO_CURRENT_LOCAL_EVIDENCE_PARTIAL_NOT_FOR_SALE`; 6/14 SKU có đủ packet + review receipt hiện hành, 8/14 thiếu packet hiện hành, sale-ready 0 và production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `e35d5b1c85e196355536425607234c588facb07a`.
+
+`.local/continuous/portfolio-readiness-revalidate-20261023T1525Z/` kiểm đúng 14 SKU và xác minh nội dung/hash của **12 receipt file** hiện có. A04, A05, A07, A08, A09 và A10 đạt `CURRENT_LOCAL_PACKET_AND_REVIEW_VERIFIED`. S01–S04, A01–A03 và A06 đang `CURRENT_LOCAL_PACKET_MISSING`; các báo cáo cũ về path đã bị dọn không được nâng thành receipt hiện hành.
+
+Validation đạt **26/26**. Failure path chặn sai bộ 14 SKU/7 external gate, map dư hoặc free-text, path thoát scope, receipt/artifact/source hash sai, production verdict khác `NO_GO`, actual khác null, sale-ready/live claim/control mở. Bảy external gate vẫn thiếu: Cloudflare Free staging, merchant reconciliation, managed channel consent, buyer scope/acceptance, remediation production exposure, deployed SHA và Founder sign-off.
+
+Receipt SHA-256 `b40632e707309bc87e516ccd37d72ad0d14d8d05b22458324193400988960cf5` khóa 8 artifact hash và 3 source hash. Provider/network/external action đều 0; target/forecast/pipeline/invoiced/paid/refunds/fees/collected cash đều `null`.
+
+**Việc tự động tiếp theo:** dựng lại packet hiện hành nhỏ nhất trên đường găng S01/A01 từ source truth; không dùng báo cáo cũ thay receipt và không mở external controls.
+
 ## Vòng giờ Cursor — A10 inventory/tenant/export/expiry/revoke/recovery review — 23/10/2026, 22:21 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `6bcae2b`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-23T15:21:39Z`. Loop PID **42001**. Dirty lanes bảo toàn. 0 VND. Không delivery/billing/renewal.

@@ -124,9 +124,11 @@ Trạng thái đối chiếu Sóng 0 (`docs/PRODUCT_PORTFOLIO_1_TO_3_YEARS_FOUND
 | 3bs | A09 independent contract/idempotency/recovery review bound to artifact digest | **Xong local** — `.local/continuous/a09-review-acceptance-20261023T141919Z/` · **10/10** · 10 check contract/idempotency/recovery · digest bp `43e41a28…` / sim `b7e3e5d8…` / runbook `520a9e6c…` / result `8f7c02fb…` · 1 revision · connector/network/production off · sale-ready 0 · live `NO_GO` |
 | 3bt | Provider-spec evidence slot refresh hoặc A10 seat-license acceptance/recovery revalidate | **Xong local (A10)** — `.local/continuous/a10-seat-license-acceptance-recovery-20261023T1422Z/` · **37/37** · 60 SOP + 100 template · 10 seat/90 ngày · tenant/aggregate export/expiry/revoke/recovery · delivery/billing/renewal off · sale-ready 0 · actuals null |
 | 3bu | A10 independent inventory/tenant/export/expiry/revoke/recovery review | **Xong local** — `.local/continuous/a10-review-acceptance-20261023T151919Z/` · **10/10** · 12 check · digest pkg `db1e9b09…` / policy `f3900158…` / entitlement `53867d5a…` / usage `5b68ba06…` / recovery `49c2e931…` / runbook `9c5f765f…` · 1 revision · delivery/billing/renewal off · sale-ready 0 · live `NO_GO` |
-| 3bv | Provider-spec evidence slot refresh hoặc portfolio readiness revalidate sau A01–A10 | Tiếp theo; không gọi mạng/provider |
+| 3bv | Provider-spec evidence slot refresh hoặc portfolio readiness revalidate sau A01–A10 | **Xong local (current receipts)** — `.local/continuous/portfolio-readiness-revalidate-20261023T1525Z/` · **26/26** · 14 SKU · 6 packet+review hiện hành · 8 packet hiện hành thiếu · 12 receipt file hash-verified · 7 external gate blocked · sale-ready 0 · actuals null |
+| 3bw | Dựng lại packet hiện hành S01/A01 từ source truth sau worktree eviction | **Xong local** — `.local/continuous/s01-a01-launch-packet-current-20261023T161919Z/` · **19/19** · 2 SKU · S01 1.500.000 / A01 149.000 catalog-bound · 2 SOP + refund `DRAFT_NOT_A_POLICY` + 2 measurement · CTA/checkout/publish off · prior-report-as-receipt 0 · sale-ready 0 · actuals null |
+| 3bx | S01/A01 independent launch-copy/fulfillment/measurement review bound to packet digest | Tiếp theo; giữ CTA/checkout/publish tắt |
 | 4 | Staging remote biệt lập trên Cloudflare Free | `BLOCKED` INFO-CF-FREE — **không dừng hàng đợi** |
-| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **42001** · tick `2026-10-23T15:21:39Z` |
+| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **42001** · tick `2026-10-23T16:21:34Z` |
 
 Thứ tự mỗi giờ: việc mở nhỏ nhất số → bỏ qua `BLOCKED` → không commit Pilot dirty trừ khi `AP-PILOT-DIRTY`.
 
