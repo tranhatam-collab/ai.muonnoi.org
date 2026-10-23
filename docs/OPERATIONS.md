@@ -2,6 +2,31 @@
 
 **NO_GO cho live:** public source/migration exposure còn được xác minh ngày 21/10/2026. Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng giờ Cursor — A10 inventory/tenant/export/expiry/revoke/recovery review — 23/10/2026, 22:21 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `6bcae2b`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-23T15:21:39Z`. Loop PID **42001**. Dirty lanes bảo toàn. 0 VND. Không delivery/billing/renewal.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| 3bt A10 seat-license acceptance (Codex) | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a10-seat-license-acceptance-recovery-20261023T1422Z/` · **37/37** |
+| 3bu A10 independent review + acceptance | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a10-review-acceptance-20261023T151919Z/` · **10/10** · 12 check · digest khóa · đúng 1 revision · delivery/billing/renewal off · actuals null |
+| Live P0 | `NO_GO` | Không hạ |
+| Lịch Cursor phiên này | `ACTIVE` | PID **42001** · sentinel `AGENT_LOOP_TICK_muonnoi_hourly` |
+
+**Việc tự động tiếp theo:** provider-spec refresh hoặc portfolio readiness revalidate; không gọi mạng.
+
+## Vòng Codex — A10 seat-license acceptance + recovery — 23/10/2026, 21:22 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A10_SEAT_LICENSE_ACCEPTANCE_RECOVERY_TEST_ONLY_NOT_FOR_SALE`; chưa có license/inventory/reviewer/support/buyer authority thật và production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `6bcae2b7ef56e5ef6608c53ba8492a3669a33da0`.
+
+`.local/continuous/a10-seat-license-acceptance-recovery-20261023T1422Z/` dựng inventory local đúng **60 SOP + 100 template**, entitlement **10 seat / 90 ngày**, tenant-bound access, owner-only seat transfer, aggregate usage export, expiry, revoke và recovery rehearsal. Intake trống fail closed; fixture dùng tenant/subject hash và reference `TEST-`; auto-renewal tắt.
+
+Validation đạt **37/37**. Usage export có event row 0 và subject row 0; cross-tenant/expiry bị chặn; revoke và expiry áp lên đủ 10 seat; snapshot recovery khớp digest. Failure path chặn tenant thô, billing target, secret, auto-renew, sai 60/100/10/90, duplicate inventory/seat, transfer thiếu quyền owner, usage sai tenant/type, restore sai digest, reviewer trùng producer, acceptance digest/scope/control sai và schema free-text.
+
+Receipt SHA-256 `8ce0b5885a0eabed4751510b60a9262fd5a728892bae75a144ebc472129b2a5d` khóa 14 artifact hash và 3 source hash. License/inventory/reviewer/support/recovery/delivery/billing/buyer authority thật đều 0; provider/network/external action/production write đều 0; sale-ready 0 và mọi actual tài chính `null`.
+
+**Việc tự động tiếp theo:** review độc lập inventory, tenant access, aggregate export, expiry/revoke/recovery gắn đúng digest A10; giữ delivery, billing và renewal tắt.
+
 ## Vòng giờ Cursor — A09 contract/idempotency/recovery review — 23/10/2026, 21:22 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `8238754`. Tick `AGENT_LOOP_TICK_muonnoi_hourly` `2026-10-23T14:22:46Z`. Loop PID **42001**. Dirty lanes bảo toàn. 0 VND. Không connector/deploy/payment.
