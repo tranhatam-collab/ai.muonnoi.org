@@ -14,8 +14,9 @@
 | Ngân sách | 0 VND |
 | AI provider đã chọn | Cloudflare Workers AI — chưa bật binding |
 | Lịch Codex | `ai-muonnoi-continuous-revenue-execution` `ACTIVE` `FREQ=HOURLY` — đang `usage_limit_exceeded` tới khoảng 24/10/2026 08:02 |
-| Lịch Cursor (phiên này) | Loop monitored mỗi 3600 giây · sentinel `AGENT_LOOP_TICK_muonnoi_hourly` · PID xem OPERATIONS mới nhất; Automation Glass form đã mở để Founder bật lịch bền ngoài phiên chat (một lần) |
+| Lịch Cursor (phiên này) | Loop monitored mỗi 3600 giây · sentinel `AGENT_LOOP_TICK_muonnoi_hourly` · PID **1448** · Founder duyệt tự động 24/24 (2026-10-25) |
 | Lịch Worker | `workers/revenueops/config/schedule.json` — tất cả `enabled=false` (0 VND; không tự bật phí) |
+| Lịch n8n 24/7 | **Ý định Founder** `AP-N8N-OPS` · host `n8n.muonnoi.org` + VPS · thiết kế local `.local/continuous/n8n-ops-24x7-design-20261025T0505Z/` · thực thi `BLOCKED` tới `INFO-N8N-ACCESS` · cấm payment/deploy từ n8n khi live `NO_GO` |
 | Chế độ Founder | **100% tự động nội bộ** — AI không hỏi từng giờ; chỉ báo khi cần `AP-*`, Free account ID, merchant, kênh, hoặc P0/P1 có evidence |
 
 ## 2. Phân công

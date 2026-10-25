@@ -2,6 +2,19 @@
 
 **NO_GO cho live:** public source/migration exposure được xác minh lại ngày 24/10/2026. Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng Cursor — Founder duyệt hàng loạt + lịch 24/7 / n8n — 25/10/2026, 11:56 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_FOUNDER_APPROVALS_RECORDED_LIVE_STILL_NO_GO`; không chứng minh ngày đầu có doanh thu.** Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD trước push xem git. Loop PID **1448**.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| AP-PORTFOLIO/WAVE/PRICE/AUTONOMY/NO-GUARANTEE/PILOT-DIRTY/PUBLIC-OUTPUT/PAYMENT/PUSH | ✅ ghi nhận | `docs/FOUNDER_APPROVAL_ONLY.md` · Founder “Duyệt tất cả” 25/10 |
+| AP-DEPLOY-CANDIDATE | `HOLD` | thiếu SHA/provider receipt · P0 exposure · live `NO_GO` |
+| AP-N8N-OPS ý định | ✅ ý định / thực thi `BLOCKED` | `.local/continuous/n8n-ops-24x7-design-20261025T0505Z/` · chờ `INFO-N8N-ACCESS` |
+| Sale-ready / actuals | 0 / `null` | không bịa doanh thu ngày 1 |
+
+**AI làm tiếp ngay:** push nhánh ops (`AP-PUSH`); giữ loop 24/7; hàng đợi 3df+; khi có INFO-N8N thì tạo workflow fail-closed trên n8n (không payment/deploy).
+
 ## Vòng giờ Cursor — A05 current synthetic content pack — 25/10/2026, 11:45 (UTC+7)
 
 Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `ac78715`. Loop PID **1448**. Dirty lanes bảo toàn. 0 VND.
