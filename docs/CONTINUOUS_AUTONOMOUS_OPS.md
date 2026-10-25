@@ -161,7 +161,7 @@ Trạng thái đối chiếu Sóng 0 (`docs/PRODUCT_PORTFOLIO_1_TO_3_YEARS_FOUND
 | 3dd | A04 package integrity + handoff decision gắn receipts 3cy–3dc | **Xong local** — `.local/continuous/a04-package-integrity-handoff-20261025T0455Z/` · **66/66** · 5 stage / 10 file · package root `3f09e5af…` · 12 handoff blocker · integrity **29/29** · executable/delivery/publish/sale 0 · live `NO_GO` |
 | 3de | A05 current rights-bound content pack (short/long/script) + fidelity/source-rights gate | Tiếp theo; không publish/delivery; actuals null |
 | 4 | Staging remote biệt lập trên Cloudflare Free | `BLOCKED` INFO-CF-FREE — **không dừng hàng đợi** |
-| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **PENDING_RESTART** · tick `2026-10-25T04:44:47Z` |
+| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **1448** · tick `2026-10-25T04:44:47Z` |
 
 Thứ tự mỗi giờ: việc mở nhỏ nhất số → bỏ qua `BLOCKED` → không commit Pilot dirty trừ khi `AP-PILOT-DIRTY`.
 
