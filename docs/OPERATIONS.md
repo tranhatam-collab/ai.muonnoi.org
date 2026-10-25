@@ -1,6 +1,453 @@
-# Runbook phát triển và tiếp nhận vận hành — cập nhật 2026-10-23
+# Runbook phát triển và tiếp nhận vận hành — cập nhật 2026-10-25
 
-**NO_GO cho live:** public source/migration exposure còn được xác minh ngày 21/10/2026. Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
+**NO_GO cho live:** public source/migration exposure được xác minh lại ngày 24/10/2026. Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
+
+## Vòng giờ Cursor — A04 eligibility plan + package integrity handoff — 25/10/2026, 11:44 (UTC+7)
+
+Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d`. Tick continuous batch `2026-10-25`. Loop cũ **42001** đã chết; restart sau commit. Dirty lanes bảo toàn. 0 VND.
+
+| Việc | Trạng thái | Evidence |
+|---|---|---|
+| 3dc A04 eligibility + generation plan format | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a04-receipt-eligibility-generation-plan-20261025T0441Z/` · **83/83** · eligible 0 · plan 0 · authority off · receipt `84ea50bb…` |
+| 3dd A04 package integrity + handoff | `VERIFIED_WORKTREE_ONLY` | `.local/continuous/a04-package-integrity-handoff-20261025T0455Z/` · **66/66** · 5 stage / 10 file · 12 blocker · HOLD · receipt `88b8765a…` |
+| Live P0 | `NO_GO` | Không hạ; exposure remediation vẫn cần deploy có kiểm soát |
+| External gates | `BLOCKED` | INFO-CF-FREE, merchant, channel, buyer, Founder AP-* — không dừng hàng đợi nội bộ |
+
+**Giới hạn kế hoạch:** local packet S01–A04 đã khóa tới HOLD; không thể nâng sale-ready/live khi thiếu managed receipt + AP-*. **Tiếp theo nội bộ:** 3de A05 current content pack.
+
+## Vòng Codex — A04 per-slot readback queue + reconciliation contract — 25/10/2026, 11:03 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A04_READBACK_QUEUE_RECONCILIATION_STRUCTURALLY_ACCEPTED_CURRENT_SYNTHETIC_INELIGIBLE`; đã dựng đủ 64 queue row và 64 reconciliation-contract row, nhưng current synthetic refs đều ineligible nên attempt/retry/verified/gate-closed bằng 0; delivery/publish-ready vẫn 0 và production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty được bảo toàn.
+
+**Blocker:** cả 64 hàng vẫn dùng locator/receipt synthetic, thiếu managed locator, managed receipt, read-authority receipt và verifier identity. Vì vậy queue giữ `BLOCKED_SYNTHETIC_REF_NOT_READABLE` / `PENDING_RECONCILIATION_NO_ATTEMPT`; không có evidence nào đủ điều kiện đọc lại.
+
+**Evidence:** `.local/continuous/a04-readback-queue-reconciliation-20261025T040355Z/` khóa intake result 3da SHA-256 `464b90a7ab7a6aa8ea953180f5cad376e5351cd115704c259f6484f0b0992600`, gate diff `2edd9849273f69b96da447c9e932137c9a182a552b79636ce60dab96cab488f3`, receipt `7b0b0b8392f635f7f533b7c48f703ea3264fcfb0d7edf906e0be512a86f49094` và package root `6d6642cb13342c434058896a502d34347d7f89cf1aebf56d52e07b46a32c8584`.
+
+**Work completed:** contract chỉ cho read-only `GET`, không body/redirect/credential/cookie/auth header, tối đa 65.536 byte, deadline 5 giây, một attempt và retry 0. Reconciliation thuần cục bộ khóa bốn outcome: exact match chỉ thành `VERIFIED_CURRENT_EVIDENCE_ONLY`; mismatch thành `CONTRADICTED_NO_RETRY`; unknown/timeout/error thành `PENDING_RECONCILIATION_NO_RETRY`; ineligible không attempt. Mọi outcome đều không cấp delivery/publish authority.
+
+Validation đạt **159/159** với 64 queue state check, 64 eligibility refusal, managed-shape positive, exact/mismatch/unknown outcomes và tamper-negative. Structural review fixture đạt **28/28**, không thay independent readback. Manifest khóa 12 file, package root SHA-256 `ce11aea2ca5a6eabf7f5ffeecf51b7aa3a788062871aed44052c5cdb70f0b568`; hash verification đạt **20/20**; receipt SHA-256 `caf452a2f87849e026f8768e2bdb35963e793694fa16fd6ec69a83ad1efe75b1`.
+
+Readback execution, HTTP/browser/provider/network/external action/production write, content/QA/revision execution, delivery, publish, checkout, payment và contact đều tắt hoặc 0. Attempt/retry/verified/gate-closed đều 0; target, forecast, pipeline, invoiced, paid, refunds, fees và collected cash đều `null`.
+
+Public/provider không probe lại: receipt đọc-only gần nhất 24/10 lúc 08:01 vẫn là evidence hiện có và không có tín hiệu thay đổi; hai P0 source/migration exposure còn mở, deployed SHA/custom-domain mapping hiện hành và Cloudflare Workers AI binding remote vẫn thiếu receipt.
+
+**Việc tự động tiếp theo:** dựng A04 real-receipt eligibility adapter + non-executable generation/review plan format; current synthetic queue phải cho eligible 0/plan 0 và tách rõ generation, QA/revision, delivery và publish authority.
+
+## Vòng Codex — A04 safe intake + gate-diff merger — 25/10/2026, 09:59 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A04_SAFE_INTAKE_GATE_DIFF_STRUCTURALLY_ACCEPTED_SUBMITTED_UNVERIFIED_ONLY`; intake đã nhận đủ 64 hàng synthetic đúng schema và tạo gate diff, nhưng tất cả chỉ là `SUBMITTED_UNVERIFIED_PENDING_INDEPENDENT_READBACK`; verified/gate-closed/readback-attempt/retry đều 0, readiness không đổi và production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty được bảo toàn.
+
+**Blocker:** 64 locator/receipt hiện dùng namespace `OPAQUE:SYNTHETIC:A04:` nên không phải managed evidence và không thể readback. Cả 60 evidence slot theo 20 sản phẩm cùng 4 slot reviewer-capacity/revision/commercial/delivery vẫn chờ exact managed source, environment, value digest, read authority và verifier identity.
+
+**Evidence:** `.local/continuous/a04-safe-intake-gate-diff-20261025T025955Z/` khóa template 3cz SHA-256 `79023ef2336828acaef381bf60f42cea27322dad730579f4909677afb2e6bfc1`, receipt 3cz `cd475a6ada5c6c4fb156ee7148ea4dec9ad5f98376a8080562bcd5f58c26acf9` và package root `4e53f7731e2e39b5591570f5485386998c45e54a7b5cb1e28432af55626a312f`. Gate diff chuyển 64 slot từ `PENDING_OWNER_INPUT` sang submitted-unverified/pending-readback nhưng verified và gate closed giữ 0; delivery/publish-ready product giữ 0.
+
+**Work completed:** validation đạt **121/121** với exact slot identity/order/source/environment/value schema, digest và opaque-ref enforcement; từ chối URL/email/Bearer/API-key-like value, field credential/raw contact/content, self-verification, readback claim, attempt/retry và intake state giả. Structural review fixture đạt **28/28**, không thay independent readback. Manifest khóa 14 file, package root SHA-256 `6d6642cb13342c434058896a502d34347d7f89cf1aebf56d52e07b46a32c8584`; hash verification đạt **22/22**; receipt SHA-256 `7b0b0b8392f635f7f533b7c48f703ea3264fcfb0d7edf906e0be512a86f49094`.
+
+Independent readback, real-data ingestion, content/QA/revision execution, delivery, publish, marketplace upload, checkout, payment, contact và production deploy đều tắt. Provider/network/external action/production write, attempt và retry đều 0. Target, forecast, pipeline, invoiced, paid, refunds, fees và collected cash đều `null`.
+
+Public/provider không probe lại: receipt đọc-only gần nhất 24/10 lúc 08:01 vẫn là evidence hiện có và không có tín hiệu thay đổi; hai P0 source/migration exposure còn mở, deployed SHA/custom-domain mapping hiện hành và Cloudflare Workers AI binding remote vẫn thiếu receipt.
+
+**Việc tự động tiếp theo:** dựng A04 per-slot readback queue + reconciliation contract gắn gate diff 3da; synthetic refs giữ unreadable/zero-attempt/zero-retry, chỉ exact managed source/environment/value digest kèm read authority và verifier mới được xét độc lập.
+
+## Vòng Codex — A04 owner-input packet cho source/rights/QA/reviewer/revision — 25/10/2026, 08:59 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A04_OWNER_INPUT_PACKET_STRUCTURALLY_ACCEPTED_ALL_EVIDENCE_PENDING`; packet A04 đã ánh xạ đủ 64 evidence slot tới source/environment cụ thể, nhưng managed locator, receipt, independent readback và verified slot hiện đều 0; không product nào delivery/publish-ready và production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty được bảo toàn.
+
+**Blocker:** 20 sản phẩm cần **60 slot** gồm product-facts/source, source-rights và independent QA; toàn gói cần thêm **4 slot** cho reviewer capacity tối thiểu 25 phút, scope đúng một vòng sửa, commercial approval và managed private-delivery destination. Cả 64 slot đang `PENDING_OWNER_INPUT`; không có submission hoặc receipt thật để đọc lại độc lập.
+
+**Evidence:** `.local/continuous/a04-owner-input-packet-20261025T015955Z/` gắn exact receipt 3cy SHA-256 `3aa60d1a40825a92a885e6dbfee3baf4fae2bad9a6119ac8a85a7557a11a3965` và package root `279187c9180570d6ade3a0684d26fcb61273e57d0800cdc88aa7651a0d0746a5`. Mỗi slot khóa authoritative source system, required environment, value-digest schema, opaque managed locator và receipt schema. Packet cấm credential/secret, raw customer contact/content và direct URL; submission không được tự đặt source/environment/receipt thành verified.
+
+**Work completed:** validation đạt **137/137**, gồm coverage 20 sản phẩm, 64 trạng thái pending, packet tamper-negative, synthetic submission shape và refusal cho namespace giả, digest/locator/receipt/time/verifier sai, self-verification, readback claim, attempt/retry và field secret/customer email. Structural review fixture đạt **26/26** nhưng không thay independent readback. Manifest khóa 13 file, package root SHA-256 `4e53f7731e2e39b5591570f5485386998c45e54a7b5cb1e28432af55626a312f`; hash verification đạt **20/20**; receipt SHA-256 `cd475a6ada5c6c4fb156ee7148ea4dec9ad5f98376a8080562bcd5f58c26acf9`.
+
+Managed locator/receipt, verified slot, reviewer/readback receipt, delivery/publish-ready product, readback attempt và retry đều 0. Real data ingestion, content/QA/revision execution, delivery, publish, marketplace upload, checkout, payment, contact và production deploy đều tắt; provider/network/external action/production write đều 0. Target, forecast, pipeline, invoiced, paid, refunds, fees và collected cash đều `null`.
+
+Public/provider không probe lại: receipt đọc-only gần nhất 24/10 lúc 08:01 vẫn là evidence hiện có, không có tín hiệu thay đổi; hai P0 source/migration exposure còn mở, deployed SHA/custom-domain mapping hiện hành và Cloudflare Workers AI binding remote vẫn thiếu receipt.
+
+**Việc tự động tiếp theo:** dựng A04 safe-intake + gate-diff merger cho 64 slot; mọi submission chỉ được `SUBMITTED_UNVERIFIED`, không chứa credential/raw customer data, không attempt/retry và không cấp delivery/publish authority trước independent readback.
+
+## Vòng Codex — A04 current synthetic content pack + fidelity/source-rights gate — 25/10/2026, 08:06 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A04_SYNTHETIC_CONTENT_PACK_STRUCTURALLY_ACCEPTED_EXTERNAL_GATES_BLOCKED`; đã dựng đủ gói hiện hành 20 sản phẩm trên brief tổng hợp và khóa fidelity/CSV/source-rights/QA, nhưng real source, rights, independent QA, reviewer capacity, commercial approval và delivery destination đều chưa có receipt; production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty được bảo toàn.
+
+**Blocker:** 20 sản phẩm đều thiếu đúng ba receipt ngoài: source thật, quyền sử dụng nguồn và QA độc lập; tương ứng **60 evidence slot** còn chặn. Reviewer identity/capacity, customer approval, merchant/destination, commercial approval và delivery/publish authority đều `null` hoặc `false`. Giá **1.290.000 VND** và target danh mục **4.000.000 VND/ngày** chỉ là đề xuất trong plan, không phải actual hoặc approval.
+
+**Evidence:** `.local/continuous/a04-content-pack-current-20261025T010625Z/` khóa ba source canonical tại SHA-256 `bac19aaf…`, `3add56a7…`, `cd8e2735…`. Brief có đúng **20** product ID duy nhất, tất cả gắn `FICTIONAL_SYNTHETIC_PRODUCT_NOT_FOR_CUSTOMER_USE`; renderer tạo **20 title + 20 description + 40 FAQ**, CSV 20 data row theo schema deterministic. Fidelity đạt 20/20 exact template match; unsupported claim, invented benefit, invented customer và invented result đều 0.
+
+**Work completed:** validation đạt **99/99** gồm positive schema/gate, tamper-negative cho brief/pack/CSV và fact binding trên từng sản phẩm. Structural review fixture đạt **24/24** nhưng không được dùng thay independent QA. Manifest khóa 14 file, package root SHA-256 `279187c9180570d6ade3a0684d26fcb61273e57d0800cdc88aa7651a0d0746a5`; hash verification độc lập đạt **20/20**; receipt SHA-256 `3aa60d1a40825a92a885e6dbfee3baf4fae2bad9a6119ac8a85a7557a11a3965`.
+
+Source/rights/QA receipt, verified source/right/QA và delivery/publish-ready product đều 0. Customer data, marketplace upload, auto-publish, delivery, contact, checkout, payment và production deploy đều tắt; provider/network/external action/production write và retry đều 0. Target, forecast, pipeline, invoiced, paid, refunds, fees và collected cash đều `null`.
+
+Provider/live evidence đã review nhưng không probe lại trong vòng này: receipt đọc-only gần nhất vẫn là 24/10 lúc 08:01; chưa có exact deployed SHA/custom-domain mapping hoặc tín hiệu thay đổi. Hai P0 public source/migration exposure vẫn mở; Cloudflare Workers AI đã chọn nhưng binding remote chưa có receipt, staging vẫn `BLOCKED INFO-CF-FREE`.
+
+**Việc tự động tiếp theo:** dựng A04 source-specific owner-input packet cho real product facts/source-rights, reviewer capacity và đúng một vòng sửa; chỉ nhận opaque locator/receipt đúng source/environment, không chứa credential/raw customer data và không cấp delivery/publish authority trước independent readback.
+
+## Vòng Codex — A03 package integrity + handoff decision — 25/10/2026, 07:38 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A03_PACKAGE_INTEGRITY_ACCEPTED_HANDOFF_HOLD`; package A03 đã khóa đủ chuỗi 3cs–3cw và đối chiếu 18/18 file đúng digest, nhưng 16 handoff blocker ngoài vẫn thiếu managed receipt; package non-executable, không deliverable và production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty được bảo toàn.
+
+`.local/continuous/a03-package-integrity-handoff-20261025T003825Z/` khóa exact receipts 3cs `303eb0da…`, 3ct `a82582a1…`, 3cu `6371a981…`, 3cv `46f60f15…` và 3cw `34cefda3…`. Package `0.1.0-local-handoff` gồm **5 stage / 18 JSON file / 103.065 byte**: audit sample, authorization/scope contract, synthetic intake/gate diff, readback queue/reconciliation và eligibility/crawl-plan format. Source/package digest parity đạt 18/18; path package duy nhất, contained và package root deterministic.
+
+Package root SHA-256 `efe0923546059ad24b12a1da9a212ef17b29f06158d422bd5207dcd33e3db50d`. Handoff decision giữ `HOLD_MISSING_MANAGED_RECEIPTS_AUTHORITY_AND_DELIVERY` / `DO_NOT_EXECUTE_CRAWL_OR_DELIVER` với **16 blocker**: 11 managed evidence blocker, separate crawl authority, exact-plan approval, managed delivery destination, customer acceptance và commercial approval. Mọi receipt `null`; crawl authority, plan approval, delivery, acceptance và sale-ready đều `false`.
+
+Validation đạt **108/108**: manifest 15 check, decision 14, source/package hash 36, receipt binding 5, 15 manifest-negative, 17 decision-negative và 4 control-negative. Integrity review fixture đạt **24/24**. Package-manifest SHA-256 `06722af6e84c8e5e48313bab1c8b91cdd7f4acd6e3f31afd918d663cf8ec28f1`; handoff-decision SHA-256 `9e22c00aa0d6c7c89396b916e228f059570fc48ce51ddaacf56566f0571afeac`; integrity-review SHA-256 `a3962bf4867e3a21997d03f6f2b565d460dc5670745a8f863c059e491d3d5d89`; final receipt SHA-256 `02d3b221e5b78113a0c94dc0e476b7a0f7f11c5de240eb9a1050250aec589f82`.
+
+Real managed/crawl-authority/live-execution/delivery receipt đều 0. Package/readback/crawler/live fetch, DNS/HTTP/browser, checkout/payment/delivery/contact/publish/deploy và network/provider/external action/production write đều tắt hoặc 0; financial actual đều `null`. Public/provider không probe lại vì receipt gần nhất 24/10 lúc 08:01 vẫn là evidence hiện có và không có tín hiệu thay đổi; hai P0 exposure vẫn mở, deployed SHA/custom-domain mapping hiện hành vẫn thiếu. A03 chuyển `BLOCKED_PENDING_MANAGED_RECEIPTS_AUTHORITY_AND_DELIVERY`.
+
+**Việc tự động tiếp theo:** chuyển sang A04, dựng current 20-product content pack trên synthetic brief với CSV/fidelity/source-rights gate; không dùng dữ kiện khách thật, không tự thêm công dụng/khách hàng và không giao/publish khi thiếu source-rights/QA receipt.
+
+## Vòng Codex — A03 receipt eligibility adapter + crawl-plan format — 25/10/2026, 06:33 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A03_RECEIPT_ELIGIBILITY_CRAWL_PLAN_STRUCTURALLY_ACCEPTED_CURRENT_INPUT_BLOCKED`; adapter đã kiểm đủ 11 current row nhưng eligible evidence và current crawl plan vẫn 0 vì queue hiện tại hoàn toàn synthetic; plan 10 trang chỉ là format fixture non-executable, production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty được bảo toàn.
+
+`.local/continuous/a03-receipt-eligibility-crawl-plan-20261024T233325Z/` khóa exact receipt 3cv SHA-256 `46f60f15…`, readback queue `6f92c492…`, reconciliation contract `07bf4ad8…`, result `0af4a927…` và structural review `33665b07…`. Adapter đánh giá **11/11 row** theo managed locator/receipt/evidence, exact source/environment/value digest, một readback, retry 0 và timestamp; current eligible row 0, execution-authority row 0, current crawl-plan row 0, adapter attempt/retry/network 0.
+
+Plan contract yêu cầu tất cả 11 evidence row `VERIFIED_CURRENT`, một crawl-execution-authority receipt riêng, một exact-plan-approval receipt riêng và target environment/origin/path khớp. Evidence không tự cấp execution authority. Request boundary giữ HTTPS same-origin `HEAD`/`GET`, không body/redirect/credential/cookie/auth header/query/fragment/browser; tối đa 10 trang, 1 MiB/response, deadline 5 giây, concurrency 1, một attempt/URL và retry 0; DNS public + immediate exact-set recheck.
+
+Format fixture có **10 reserved `.invalid` page**, mỗi row attempts/retries 0, `NOT_EXECUTABLE_TEST_FIXTURE`, scheduled-at `null`; crawl authority, plan approval, destination và customer acceptance receipt đều `null`. Validation đạt **105/105**; structural review fixture đạt **24/24**. Eligibility-result SHA-256 `026ccd23bdb0abf670a380bff88f27a87c4e218a1f30eef82fd9ffe856662bd0`; plan-contract SHA-256 `90c52623212e2c33411db66554f434d567a95abd03170257908b9aa58787c10b`; plan-format SHA-256 `8398f7e9e1573e80a5973199e3c72eaaf2eb42342a4a6bc8400783dc218e47b2`; structural-review SHA-256 `ac70eb11945b46a784611af4bb3a0434026f671545f025cb66a464cdda2057ab`; final receipt SHA-256 `34cefda365e3fba44ef07b1cb608d484f168c916275c7429fdb678e9eb80f2ad`.
+
+Real managed/authority/live-execution receipt đều 0. Eligibility readback/crawler/live fetch, DNS/HTTP/browser, checkout/payment/delivery/contact/publish/deploy và network/provider/external action/production write đều tắt hoặc 0; financial actual đều `null`. Public/provider không probe lại vì receipt gần nhất 24/10 lúc 08:01 vẫn là evidence hiện có và không có tín hiệu thay đổi; hai P0 exposure vẫn mở, deployed SHA/custom-domain mapping hiện hành vẫn thiếu.
+
+**Việc tự động tiếp theo:** review A03 local-package integrity và handoff decision gắn receipts 3cs–3cw; package giữ non-executable và không deliverable tới khi đủ managed receipts, separate crawl authority và destination/acceptance receipt.
+
+## Vòng Codex — A03 readback queue + reconciliation contract — 25/10/2026, 05:34 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A03_READBACK_QUEUE_RECONCILIATION_STRUCTURALLY_ACCEPTED_PENDING_ONLY`; queue và contract đã phủ đúng 11 blocker nhưng refs hiện tại đều synthetic, nên eligible, attempt, retry, verified evidence, crawl authority và execution plan đều 0; production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty được bảo toàn.
+
+`.local/continuous/a03-readback-queue-reconciliation-20261024T223454Z/` khóa exact receipt 3cu SHA-256 `6371a981…`, gate diff `617d1aae…`, synthetic submission `54ebb537…`, intake result `398de71f…` và structural review `78703f2c…`. Queue có **11 row**, giữ exact blocker/source/environment/locator/receipt và digest của submitted value; cả 11 đều `BLOCKED_SYNTHETIC_REF_NOT_READABLE` / `PENDING_RECONCILIATION`, attempt/retry 0, last-attempt/next-retry/verified-evidence `null`.
+
+Per-blocker contract yêu cầu locator và receipt `OPAQUE:MANAGED:A03:`, read-authority receipt, verifier identity, exact source/environment/value digest và một independent readback. Request contract chỉ `GET`, không body/redirect, response tối đa **65.536 byte**, deadline **5 giây**, một attempt và retry 0. Exact match chỉ tạo `VERIFIED_CURRENT_EVIDENCE_ONLY`; mismatch thành `CONTRADICTED_NO_RETRY`; unknown/timeout/error giữ `PENDING_RECONCILIATION_NO_RETRY`. Verified evidence không tự cấp crawl authority hoặc tạo execution plan.
+
+Validation đạt **107/107**: 15 queue check, 18 contract check, 8 outcome check, 17 queue-negative, 15 contract-negative, 7 reconciliation-positive, 6 mismatch, 6 refusal và 10 outcome-negative. Structural review fixture đạt **27/27**. Readback queue SHA-256 `6f92c49255734ac3887bfe672584e7abc7db245a57a4037b442a7c1da934f8c4`; reconciliation contract SHA-256 `07bf4ad828167087e704736f6e951badc51643d6d559ce2883cc8f22e08e2b85`; result SHA-256 `0af4a927dcc74d9728b167834b16ff2e77d1273d0ac062f436f66554a2ee42ee`; structural-review SHA-256 `33665b073fa96b49a7fb9f443e0c8d5b70b62b78818a016f37043ed5d8170920`; final receipt SHA-256 `46f60f159fe911aebdf4d3875cfcf8b9823017f58c22be64fadd1a55fca21bd5`.
+
+Real managed/readback/verified/authority/live-execution receipt đều 0. Readback/crawler/live fetch, DNS/HTTP/browser, checkout/payment/delivery/contact/publish/deploy và network/provider/external action/production write đều tắt hoặc 0; financial actual đều `null`. Public/provider không probe lại vì receipt gần nhất 24/10 lúc 08:01 vẫn là evidence hiện có và không có tín hiệu thay đổi; hai P0 exposure vẫn mở, deployed SHA/custom-domain mapping hiện hành vẫn thiếu.
+
+**Việc tự động tiếp theo:** dựng A03 real-receipt eligibility adapter và non-executable read-only crawl-plan format fixture; current synthetic queue phải ineligible, plan format không được tự chạy hoặc cấp crawl authority.
+
+## Vòng Codex — A03 managed-receipt intake + fail-closed gate diff — 25/10/2026, 04:26 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A03_MANAGED_RECEIPT_INTAKE_GATE_DIFF_STRUCTURALLY_ACCEPTED_SUBMITTED_UNVERIFIED_ONLY`; intake fixture đã nhận đủ 11 hàng nhưng mọi locator/receipt đều synthetic và chỉ chuyển sang `SUBMITTED_UNVERIFIED_PENDING_INDEPENDENT_READBACK`; verified, crawl authority, eligibility, execution plan, attempt và retry đều 0, production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty được bảo toàn.
+
+`.local/continuous/a03-managed-receipt-intake-gate-diff-20261024T212624Z/` khóa exact receipt 3ct SHA-256 `a82582a1…`, owner-input packet `67675879…`, crawl contract `acf6241e…` và structural review `8d1d398b…`. Synthetic submission phủ đúng **11 blocker**, giữ nguyên authoritative source system, required environment, locator/value schema và thứ tự của packet 3ct. Locator, receipt và attestation dùng namespace `OPAQUE:SYNTHETIC:A03:`; target dùng reserved origin `https://audit.example.invalid`; page cap giữ 10 và path traversal/query bị từ chối.
+
+Gate diff giữ trạng thái trước là `PENDING_OWNER_INPUT`, sau là `SUBMITTED_UNVERIFIED_PENDING_INDEPENDENT_READBACK`. Cả 11 hàng có `source_verified=false`, `environment_verified=false`, `receipt_verified=false`, `crawl_authority_granted=false` và `readback_status=BLOCKED_SYNTHETIC_REF_NOT_READABLE`; attempt/retry bằng 0, next-retry `null`. Submission không mutate owner packet hoặc crawl contract 3ct và không tự cấp authority.
+
+Validation đạt **103/103**: 25 submission check, 12 gate-diff check, 9 outcome check, 28 submission-negative, 12 gate-diff-negative và 11 outcome-negative. Structural review fixture đạt **25/25**. Synthetic submission SHA-256 `54ebb537f2d8849c3766808a25e6ec12e79a2a731560d4922ebb640a11e45fef`; gate-diff SHA-256 `617d1aaeca9823f4f39c761d9dcf010ef7378d0d64dfa015df5c1460dd1df7e5`; intake-result SHA-256 `398de71f81c515b2c5fed12d227df679c14ed8b5e767e7802a4211ae19d9109f`; structural-review SHA-256 `78703f2cdbe54f357b860ccf25ce062c593f0dc5a2a2743f07d4ab55b56edd7f`; final receipt SHA-256 `6371a981b7c5edb0425c7bef94fd1c6a5475281501bdf130551b8e6ba89a549f`.
+
+Real managed/verified/authority/live-execution receipt đều 0. Crawler/live fetch, DNS/HTTP/browser, checkout/payment/delivery/contact/publish/deploy và mọi network/provider/external action/production write đều tắt hoặc 0; financial actual đều `null`. Public/provider không probe lại vì receipt gần nhất 24/10 lúc 08:01 vẫn là evidence hiện có và không có tín hiệu thay đổi; hai P0 exposure vẫn mở, deployed SHA/custom-domain mapping hiện hành vẫn thiếu.
+
+**Việc tự động tiếp theo:** dựng A03 per-blocker readback queue và reconciliation contract gắn gate diff 3cu; synthetic refs giữ unreadable, zero-attempt/zero-retry và chỉ exact managed source/environment/receipt mới được xét độc lập.
+
+## Vòng Codex — A03 authorization/scope packet + read-only crawl contract — 25/10/2026, 03:31 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A03_AUTH_SCOPE_CRAWL_CONTRACT_STRUCTURALLY_ACCEPTED_PENDING_INPUT`; packet và crawl boundary đã khóa fail-closed theo 11 input đúng source/environment, nhưng managed receipt thật, current eligibility và execution-plan row đều 0; không live fetch và production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty được bảo toàn.
+
+`.local/continuous/a03-authorization-scope-crawl-contract-20261024T203154Z/` khóa exact receipt sample 3cs SHA-256 `303eb0da…`, audit report `179f14df…`, authorization-scope `1698f29b…` và structural review `bb483a98…`. Owner-input packet có **11 blocker** cho target ownership authorization, crawl scope, exact origin, environment identity, allowed/excluded paths, page cap, DNS baseline, robots/TOS acknowledgement, data handling/retention và execution window. Mỗi blocker khóa authoritative source system, required environment, locator/value schema; locator, value, receipt, observed-at và verifier identity hiện đều `null`, các verified flag và crawl authority đều `false`.
+
+Read-only crawl contract chỉ cho HTTPS same-origin `HEAD`/`GET`, không body, credential, cookie, authorization header, query, fragment, redirect hoặc browser execution. Boundary là tối đa **10 trang**, **1 MiB/response**, deadline **5 giây**, concurrency 1, một attempt/URL và retry 0; chỉ nhận HTTP 200 HTML/XHTML. DNS phải toàn public IPv4/IPv6 và giữ exact set qua immediate recheck; loopback, private, link-local, carrier-grade NAT, benchmark, multicast/reserved, mixed public/private và rebinding đều bị từ chối. Unknown giữ `PENDING_RECONCILIATION_NO_RETRY`; mismatch thành `CONTRADICTED_NO_RETRY`; exact match chỉ là `VERIFIED_CURRENT_EVIDENCE_ONLY`.
+
+Validation đạt **132/132**: packet 18 check, contract 25, 12 URL refusal, 16 DNS refusal, 20 pending-negative, 11 submitted-row positive và 14 submitted-negative. Structural review fixture đạt **28/28**. Current eligible input 0, current execution plan 0, managed receipt 0; DNS/HTTP/browser/network request đều 0. Owner-input packet SHA-256 `6767587964f2e7cb1fb220ac5a8c3b396c73962c545f02287dd1a29e72e4c33f`; crawl contract SHA-256 `acf6241ec937a970607e069e05e04b5dac8b9c193fd0738141e439aa086c30be`; plan-format fixture SHA-256 `0284572356d474cf64bd8c9e7ea56042d56fb32abf89e71357b64af4b5559320`; structural-review SHA-256 `8d1d398ba982d2a84ed4b5b5ee2b2b42d543e43357ebe3d97d14ae0bb224af0b`; final receipt SHA-256 `a82582a1d590ffd442a0d4c29916ec70c2f7cd16f69b35da81d900657ecf293c`.
+
+Checkout/payment/delivery/contact/publish/deploy/crawler execution tắt; provider/network/external action/production write đều 0. Target, forecast, pipeline, invoiced, paid, refunds, fees và collected cash đều `null`. Public/provider không probe lại vì receipt gần nhất 24/10 lúc 08:01 vẫn là evidence hiện có và không có tín hiệu thay đổi; hai P0 exposure vẫn mở, deployed SHA/custom-domain mapping hiện hành vẫn thiếu.
+
+**Việc tự động tiếp theo:** dựng A03 managed-receipt intake và fail-closed gate-diff fixture gắn packet 3ct; submission chỉ được `SUBMITTED_UNVERIFIED`, không tự cấp crawl authority, không live fetch và không retry.
+
+## Vòng Codex — A03 synthetic website-audit sample + SSRF refusal — 25/10/2026, 02:26 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A03_SYNTHETIC_AUDIT_SAMPLE_STRUCTURALLY_ACCEPTED_NOT_FOR_SALE`; sample local đã tạo đúng 10 trang, 20 finding, 20 evidence và 20 backlog, nhưng authorization/scope/target receipt thật đều thiếu; không live fetch, không pentest/SEO guarantee claim và production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty được bảo toàn.
+
+`.local/continuous/a03-local-audit-sample-20261024T192654Z/` khóa ba source canonical: portfolio SHA-256 `bac19aaf…`, agent catalog `3add56a7…` và project plan `cd8e2735…`. Bộ fixture dùng reserved origin `https://fixture.example.invalid`, gồm **10 static page**; analyzer tạo đúng **20 finding**, **20 evidence row** và **20 backlog row** với liên kết một-một. Giá **799.000 VND** chỉ là đề xuất chưa được duyệt; report giữ `SYNTHETIC_LOCAL_SAMPLE_NOT_FOR_SALE`, không nhận là kết quả live, pentest hoặc cam kết SEO.
+
+Validation đạt **92/92**: 30 positive report check, 2 positive SSRF check, 10 URL refusal, 9 DNS refusal, 31 negative failure check và 10 fixture hash check. URL có non-HTTPS, credential, sai port/origin, IP literal, localhost/`.local`, token query hoặc fragment đều bị chặn; private/link-local IP, DNS rebinding và mixed public/private DNS set cũng bị từ chối. Structural review fixture đạt **25/25**. Live fetch `false`; DNS/HTTP/browser request và mọi network/provider/external action/production write đều 0.
+
+Audit-report SHA-256 `179f14df6466bd14ea5a2d528c714406569c017460774e82b2a08b2403b8ae29`; authorization-scope SHA-256 `1698f29b1b3a2d1fb15d4a5a3240d8443b4fe8cb6e78a99162503f663acc768c`; structural-review SHA-256 `bb483a98e8562f2eecd9add77d06d5c9e1b545ab2fc051c5e9f37580102730be`; final receipt SHA-256 `303eb0da3639131b5701fdf26fed106d2b23e2a7f7f2df681ac3e16376d87e2a`. Real authorization, scope và customer-acceptance receipt đều 0; checkout/payment/delivery/contact/publish/deploy/crawler execution tắt; target, forecast, pipeline, invoiced, paid, refunds, fees và collected cash đều `null`.
+
+Public/provider không probe lại: receipt gần nhất 24/10 lúc 08:01 vẫn là evidence hiện có và không có tín hiệu thay đổi. Hai P0 exposure vẫn mở, deployed SHA/custom-domain mapping hiện hành vẫn thiếu.
+
+**Việc tự động tiếp theo:** dựng A03 authorization/scope owner-input packet và read-only crawl execution contract; fail closed theo exact managed receipt/source/environment, không live fetch cho tới khi authority và target receipt thật được xác minh.
+
+## Vòng Codex — A02 versioned package + local recovery rehearsal — 25/10/2026, 01:30 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A02_VERSIONED_PACKAGE_RECOVERY_STRUCTURALLY_ACCEPTED_NOT_DELIVERABLE`; package A02 0.1.0-draft đã được đóng gói và restore local đúng digest, nhưng 12 gate delivery ngoài vẫn thiếu receipt; entitlement, download và delivery tắt, production `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty được bảo toàn.
+
+`.local/continuous/a02-versioned-package-recovery-20261024T183024Z/` khóa exact receipts 3cp `900465db…` và 3cq `b9c7933d…`. Package `A02-retail-0.1.0-draft` gồm **8 file / 107.910 byte**: version, notice, retail pack, handbook, source-rights gates, process citation slots, scenario expert-review packet và decision summary. Package status `LOCAL_VERSIONED_PACKAGE_NOT_DELIVERABLE`; buyer/order/entitlement/destination/delivery/release-authority ref đều `null`.
+
+Package root SHA-256 `71b8f6c3d898b56688836ad3e00fde113278984960b334ad83e210fb4accc3c3`. Recovery rehearsal chép sang sandbox local cô lập, đối chiếu **8/8** file, byte, digest, file set và root digest đều khớp; managed recovery receipt vẫn 0. Delivery gate liệt kê đúng **12 blocker** từ industry/source/rights/expert/license/version tới buyer/order/entitlement/destination/delivery, tất cả `BLOCKED_MISSING_RECEIPT`.
+
+Validation đạt **93/93**; structural review fixture đạt **24/24**. Package manifest SHA-256 `054c9e974b18801c10412f80c0630f8aea53cd4b4febade7489f61df45502ef1`; recovery result SHA-256 `176a58069cb1c6752e0365a58f3ea6fed8ce7d4ee46f237067d348cd263ea689`; delivery gate SHA-256 `d6948ec53d5bec72e795d205d500d5cffba33f0e74558678262bee910ff8f673`; structural-review SHA-256 `c9c9d4d41e216de07f6ef99957cda41263d4c8448895b1ee8e437661d12bf64d`; final receipt SHA-256 `efacce51f0fbe092d5718f870ce7d755462b8eca84007104cdedf03e46897bbc`. Provider/network/external action 0; financial actual đều `null`.
+
+Public/provider không probe lại: receipt gần nhất 24/10 lúc 08:01 vẫn là evidence hiện có và không có tín hiệu thay đổi. Hai P0 exposure vẫn mở, deployed SHA/custom-domain mapping hiện hành vẫn thiếu. A02 giữ externally blocked và package nondeliverable.
+
+**Việc tự động tiếp theo:** chuyển sang A03, dựng current local website-audit sample trên synthetic static fixture với tối đa 10 trang, 20 finding, evidence/backlog và SSRF refusal; không fetch URL thật, không pentest hoặc SEO guarantee claim.
+
+## Vòng Codex — A02 source-rights slots + expert-review decision packet — 25/10/2026, 00:26 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A02_SOURCE_RIGHTS_EXPERT_REVIEW_PACKET_STRUCTURALLY_ACCEPTED_PENDING_ONLY`; đã tạo đủ citation/review contract nhưng 80 citation slot chưa được điền, cả 10 scenario chưa được expert review và release authority vẫn 0; quyết định giữ `HOLD_MISSING_SOURCE_RIGHTS_AND_EXPERT_REVIEW`, production `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty được bảo toàn.
+
+`.local/continuous/a02-source-rights-expert-review-20261024T172624Z/` khóa exact receipt A02 3cp SHA-256 `900465db…`, pack SHA-256 `3a48b804…` và gate packet SHA-256 `2d6ade06…`. Citation packet có **20 process row × 4 claim slot = 80 slot** cho objective, input, output và boundary; source, rights, version, observed-at và independent-readback receipt đều `null`, verified row 0.
+
+Expert-review packet khóa đúng **10 scenario digest**, mỗi scenario có **8 rubric item** cho coherence, retail fit, evidence visibility, claim discipline, policy boundary, external-action control, expected outcome và fictional label. Cả **80 rubric item** đều `NOT_REVIEWED`, decision 10/10 `NOT_REVIEWED`, expert/independent-review receipt và release authority đều 0; nhãn `FICTIONAL_PRACTICE_SCENARIO_NOT_A_CASE_STUDY` được giữ nguyên.
+
+Validation đạt **88/88**; structural review fixture đạt **24/24**. Citation packet SHA-256 `3af981a7b049a922ddf2efc9b980fd5b3a39d1f550d64da84c6af614d2ff1561`; expert packet SHA-256 `e93de240abde9670ece5cc05dfb6305ed54048f55c0c7fc844a0b0885ce805fa`; decision summary SHA-256 `4931dcebee2053a8b6f7042a190273024e9f30531d6fb6ab05e812d28341191d`; structural-review SHA-256 `8eaf369cf8922742e346ba677c0427d9dc7bddb5e3c70f8f799e669885de2b88`; final receipt SHA-256 `b9c7933dc9af49c81f1d5b976db5183f5893bc00c01df7d8d46bf8d228df17a7`. Controls tắt; provider/network/external action 0; financial actual đều `null`.
+
+Public/provider không probe lại: receipt gần nhất 24/10 lúc 08:01 vẫn là evidence hiện có và không có tín hiệu thay đổi. Hai P0 exposure vẫn mở, deployed SHA/custom-domain mapping hiện hành vẫn thiếu.
+
+**Việc tự động tiếp theo:** dựng A02 versioned package manifest và local delivery/recovery rehearsal gắn đúng receipts 3cp–3cq; package giữ nondeliverable, entitlement/download/delivery tắt đến khi đủ source/rights/expert receipts thật.
+
+## Vòng Codex — A02 current retail operating pack — 24/10/2026, 23:24 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A02_RETAIL_OPERATING_PACK_STRUCTURALLY_ACCEPTED_CONTENT_DRAFT_ONLY`; đã materialize đủ 20 quy trình, 40 prompt và 10 tình huống giả định bán lẻ, nhưng ngành chưa được duyệt và source/rights/expert/independent-review receipt thật đều 0; pack giữ `DRAFT_NOT_FOR_SALE`, production `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty được bảo toàn.
+
+`.local/continuous/a02-retail-operating-pack-current-20261024T162424Z/` khóa ba source canonical: portfolio SHA-256 `bac19aaf…`, agent catalog `3add56a7…` và project plan `cd8e2735…`. Pack hiện hành gồm **20 quy trình** từ tồn kho, mua hàng, catalog, khuyến mại, CSKH, đổi trả, bàn giao ca, báo cáo, giá, nhà cung cấp đến cải tiến; mỗi quy trình có 3 input, 4 bước, output, 3 verification và giới hạn hành động. **40 prompt** chia đúng draft/review cho từng quy trình, external action tắt.
+
+Mười tình huống đều gắn nhãn `FICTIONAL_PRACTICE_SCENARIO_NOT_A_CASE_STUDY`, source/rights/expert-review ref `null` và cấm result claim. Tám gate ngành, nguồn, quyền, expert review 10 case, independent content review, final license, buyer fit và version release đều `BLOCKED_MISSING_EXACT_SOURCE_ENVIRONMENT_AND_RECEIPT`; verified/authority gate 0.
+
+Validation đạt **78/78**; structural review fixture đạt **21/21**. Pack SHA-256 `3a48b804f89207e35fa30e0c65c8da4785648d5e079710b1e719dd3181e3290e`; handbook SHA-256 `930388793e0730f3322fbe61e63125afafddd856855e988ebd58fbebd686b322`; gate packet SHA-256 `2d6ade06e685f23f5624115c77f4628dcf4fd8fc81adebfda02c06d397904a7a`; structural-review SHA-256 `df038093906d54f8df77eaf657413915f572a109c199c98ecb31bb22b2599f12`; final receipt SHA-256 `900465dba196af3dc95d06ab1ccf690285d3cbb2bf15c169b7426d21fa40a690`. Checkout/payment/delivery/contact/publish/deploy/provider/network đều tắt; financial actual đều `null`.
+
+Public/provider không probe lại vì receipt HEAD cùng ngày lúc 08:01 vẫn còn hiệu lực và không có tín hiệu thay đổi; hai P0 exposure vẫn mở, deployed SHA/custom-domain mapping hiện hành vẫn thiếu.
+
+**Việc tự động tiếp theo:** dựng A02 per-process source-rights citation slots và expert-review decision packet cho đúng 10 tình huống; giữ scenario practice-only, không tự điền reviewer/source receipt và không mở bán/giao/publish.
+
+## Vòng Codex — A01 real-receipt eligibility adapter + read-only plan fixture — 24/10/2026, 22:26 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A01_REAL_RECEIPT_ELIGIBILITY_ADAPTER_PLAN_FIXTURE_STRUCTURALLY_ACCEPTED_CURRENT_INPUT_BLOCKED`; adapter đã kiểm đủ 16 queue row, nhưng current eligible và current execution-plan row đều 0 vì toàn bộ ref hiện có là synthetic; không readback, không retry, không cấp fulfillment authority và production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty được bảo toàn.
+
+`.local/continuous/a01-real-receipt-eligibility-plan-20261024T152624Z/` khóa receipt 3cn SHA-256 `61a1dfcc…`, queue SHA-256 `2d821dd7…` và reconciliation contract SHA-256 `42ef9bd3…`. Production-mode adapter yêu cầu đúng blocker/source/environment, opaque managed-source locator, non-synthetic receipt, environment identity, read-authority receipt, owner-authorized readback, single attempt và no-retry-on-unknown. Current queue thiếu các receipt thật nên **16/16 ineligible**, attempt/retry/provider/network/external action/production write đều 0.
+
+Plan-format fixture có **16 row** để kiểm schema nhưng tất cả ref mang `OPAQUE:TESTONLY:`, evidence class `TEST_FIXTURE_ONLY`, scheduling `NOT_EXECUTABLE_TEST_FIXTURE`, executable row 0. Mỗi row khóa request body và credential material, redirect tắt, response tối đa 65.536 byte, deadline 5.000 ms, exact match chỉ tạo `VERIFIED_CURRENT_EVIDENCE_ONLY`; mismatch thành `CONTRADICTED_NO_RETRY`, unknown/timeout giữ `PENDING_RECONCILIATION_NO_RETRY`.
+
+Validation đạt **104/104**; structural review fixture đạt **23/23**. Eligibility-result SHA-256 `13f21032ff6a8d08fc45192cdaa4067531bf59626c1285050198428b18b5d087`; plan-format SHA-256 `82f4c7752f25919b621d056c35844361dc244adc8c1bf0dd1a79c941c66b7af8`; structural-review SHA-256 `035dbbd2d6e10504c01f9e5298e14e396891884614112490e3f39d76f2f4287b`; final receipt SHA-256 `53c9d2b595fc875a2326e68478207f88c1691d52a636174ef78c77d554e0b93a`. Real external/authority receipt 0; controls tắt; financial actual đều `null`.
+
+Public/provider không probe lại vì receipt HEAD cùng ngày lúc 08:01 vẫn còn hiệu lực và không có tín hiệu thay đổi; hai P0 exposure vẫn mở, deployed SHA/custom-domain mapping hiện hành vẫn thiếu. A01 chuyển `BLOCKED_PENDING_REAL_MANAGED_RECEIPTS` và giữ queue zero-attempt.
+
+**Việc tự động tiếp theo:** chuyển sang A02 theo dependency, materialize current retail operating pack gồm 20 quy trình, 40 prompt và 10 fictional case, kèm source/rights gate và independent structural review; không publish, delivery hoặc checkout.
+
+## Vòng Codex — A01 receipt-readback queue + reconciliation contract — 24/10/2026, 21:25 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A01_RECEIPT_READBACK_QUEUE_RECONCILIATION_CONTRACT_STRUCTURALLY_ACCEPTED_PENDING_ONLY`; queue và contract đã phủ đúng 16 blocker nhưng đầu vào vẫn hoàn toàn synthetic, nên eligible readback, attempt, retry, verified evidence và fulfillment authority đều 0; production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty của lane này và lane team khác tiếp tục được bảo toàn.
+
+`.local/continuous/a01-receipt-readback-reconciliation-20261024T142553Z/` khóa exact gate-diff 3cm SHA-256 `58ed5efb…` và receipt 3cm SHA-256 `097561ba…`. Queue có **16 row**, giữ đúng blocker, source system, environment và synthetic receipt ref; cả 16 đều `BLOCKED_SYNTHETIC_REF_NOT_READABLE` / `PENDING_RECONCILIATION`, attempt 0, last-attempt và next-retry `null`. Không gọi mạng/provider và không lên lịch retry.
+
+Contract từng blocker yêu cầu source và environment khớp tuyệt đối, receipt opaque không synthetic, một readback độc lập thành công, digest khớp, timestamp và verifier identity trước khi được ghi `VERIFIED_CURRENT_EVIDENCE_ONLY`. Kết quả unknown giữ `PENDING_RECONCILIATION_NO_RETRY`; mismatch/failure thành `CONTRADICTED_NO_RETRY`; evidence verified cũng không tự cấp fulfillment authority. Validation đạt **78/78**, gồm 43 positive contract check và 35 negative failure check; structural review fixture đạt **20/20**.
+
+Readback-queue SHA-256 `2d821dd72fda5adfd56ae6d6db77aa58cd76de19c15f580cd2e91543b37d894a`; contract SHA-256 `42ef9bd3b1df61eb3adfdfd0ab0b788946333ea6a64961352d729557ef5bef5e`; structural-review SHA-256 `d2c66211dc71a7fded3e63846a7fcefa9ae86a5b4e6a35c18842d4d1fba3185d`; final receipt SHA-256 `61a1dfccbfe2a7e66447b381f23f2af5cb2c9eda237cb966898514db568306ca`. Real external receipt và external authority receipt đều 0; entitlement, download, delivery, buyer contact, publish và deploy đều tắt; toàn bộ financial actual giữ `null`.
+
+Public/provider không probe lại vì receipt HEAD cùng ngày lúc 08:01 vẫn còn hiệu lực và không có tín hiệu thay đổi; hai P0 exposure vẫn mở, deployed SHA/custom-domain mapping hiện hành vẫn thiếu.
+
+**Việc tự động tiếp theo:** dựng A01 real-receipt eligibility adapter và read-only execution-plan fixture gắn contract 3cn; chỉ sinh plan sau exact source/environment + non-synthetic receipt, không gọi provider và không tự retry.
+
+## Vòng Codex — A01 safe intake dry-run + gate-diff merger — 24/10/2026, 20:24 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A01_SAFE_INTAKE_GATE_DIFF_STRUCTURALLY_ACCEPTED_SUBMITTED_UNVERIFIED_ONLY`; dry-run đã hợp nhất đủ sáu nhóm và 16 blocker nhưng mọi ref đều là fixture synthetic, source/environment/receipt verification và fulfillment authority vẫn 0; entitlement, download và delivery tiếp tục tắt, production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty của lane này và lane team khác tiếp tục được bảo toàn.
+
+`.local/continuous/a01-safe-intake-gate-diff-20261024T132450Z/` khóa receipt owner-input template 3cl và fulfillment decision 3ck. Merger tạo deterministic synthetic submission cho **6 group**, phủ đúng **16 blocker**; gate diff chuyển mỗi hàng từ `BLOCKED_MISSING_EXACT_SOURCE_ENVIRONMENT_AND_RECEIPT` sang `SUBMITTED_UNVERIFIED_PENDING_INDEPENDENT_READBACK`, không chuyển thành `VERIFIED_CURRENT` hoặc cấp fulfillment authority.
+
+Dry-run chỉ chấp nhận locator, receipt và attestation ref bắt đầu `OPAQUE:SYNTHETIC:`. Missing/duplicate/unknown group, pending hoặc partial template, duplicate blocker, opaque ref không synthetic, source verification, fulfillment authority, entitlement/download control và paid bằng 0 đều bị chặn. Hash fulfillment decision, handoff map và cả sáu template trước/sau merge giữ nguyên; không mutate source input.
+
+Validation đạt **48/48**; structural review fixture đạt **18/18**. Submitted fixture 6/6; source verified 0/16, environment verified 0/16, receipt verified 0/16 và fulfillment authority 0/16. Immutability SHA-256 `9db099d80fe5e4e492b885ce748fb94c5eeda69762da3705250a634e7e98df05`; structural-review SHA-256 `c4a6b19356d45ea778947749dee18b7014e8abcdf086b5878df1e3d7ca26748d`; final receipt SHA-256 `097561badb5a7ae6f8c992737f537646b8d12138c43d11a9e245741b705d544e`.
+
+Real external receipt và external authority receipt đều 0. Entitlement issue, download, delivery, buyer contact, publish và production deploy đều tắt; provider/network/external action/production write đều 0; target, forecast, pipeline, invoiced, paid, refunds, fees và collected cash đều `null`.
+
+Public/provider không probe lại vì receipt HEAD cùng ngày lúc 08:01 vẫn còn hiệu lực và không có tín hiệu thay đổi; hai P0 exposure vẫn mở, deployed SHA/custom-domain mapping hiện hành vẫn thiếu.
+
+**Việc tự động tiếp theo:** dựng A01 receipt-readback queue và per-blocker reconciliation contract gắn gate diff 3cm; fail closed theo exact source/environment, không retry mù và không nâng synthetic submission thành verified evidence.
+
+## Vòng Codex — A01 source-specific owner-input templates — 24/10/2026, 19:23 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A01_SOURCE_SPECIFIC_OWNER_INPUT_TEMPLATES_STRUCTURALLY_ACCEPTED_PENDING_EXTERNAL_INPUT`; sáu template phủ đủ 16 fulfillment blocker nhưng chưa có submission, source/environment/receipt verification hoặc fulfillment authority thật; entitlement, download và delivery tiếp tục tắt, production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty của lane này và lane team khác tiếp tục được bảo toàn.
+
+`.local/continuous/a01-owner-input-templates-20261024T122320Z/` khóa exact fulfillment-decision receipt 3ck SHA-256 `2c437930…`, rồi tạo **6 template**: governance/license/rights; review operations; merchant/transaction; buyer/entitlement; private delivery/acceptance; recovery/revoke. Các template cover đúng **16/16 blocker** một lần, mỗi source input giữ authoritative source system, required environment, exact locator schema và receipt ref riêng.
+
+Validator chỉ cho `PENDING_OWNER_INPUT` hoặc `SUBMITTED_UNVERIFIED`. Pending bắt buộc mọi locator, receipt và attestation là `null`; submitted bắt buộc opaque ref bắt đầu `OPAQUE:` và timestamp parse được, nhưng source/environment/receipt verified cùng fulfillment authority vẫn `false`. URL, email-like value, credential/raw-contact field, partial submission, sai group/blocker/source/environment/locator schema, actual bằng 0 và external control mở đều bị chặn.
+
+Validation đạt **47/47**; 6/6 pending template hợp lệ; submitted 0, source verified 0, environment verified 0, receipt verified 0 và fulfillment authority 0. Structural review fixture đạt **18/18**. Handoff-map SHA-256 `2ab5e838944024291dd857bb441cd8bbe5773c5421a04c384b67ff6607194a38`; structural-review SHA-256 `5cc00a441da7696e140a76551dcf3bb373edfcd2e0627d111df993c256ec3b50`; final receipt SHA-256 `530150250d5bf60e91babd722ad6961c1a194f804b66445ea0f7fe95caa976c7`.
+
+Real external receipt và external authority receipt đều 0. Entitlement issue, download, delivery, buyer contact, publish và production deploy đều tắt; provider/network/external action/production write đều 0; target, forecast, pipeline, invoiced, paid, refunds, fees và collected cash đều `null`.
+
+Public/provider không probe lại vì receipt HEAD cùng ngày lúc 08:01 vẫn còn hiệu lực và không có tín hiệu thay đổi; hai P0 exposure vẫn mở, deployed SHA/custom-domain mapping hiện hành vẫn thiếu.
+
+**Việc tự động tiếp theo:** dựng A01 safe intake và gate-diff merger cho sáu template bằng synthetic opaque refs; chứng minh submission chỉ ở `SUBMITTED_UNVERIFIED`, không mutate input và không mở entitlement/download/delivery.
+
+## Vòng Codex — A01 package-integrity + fulfillment-decision review — 24/10/2026, 18:20 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A01_PACKAGE_INTEGRITY_ACCEPTED_FULFILLMENT_HOLD_MISSING_EXTERNAL_RECEIPTS`; integrity local được tái tính theo đường review riêng và đạt 20/20, nhưng 16 fulfillment gate ngoài vẫn thiếu receipt nên quyết định bắt buộc là `HOLD_MISSING_EXTERNAL_RECEIPTS`, không cấp entitlement hoặc giao gói, production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty của lane này và lane team khác tiếp tục được bảo toàn.
+
+`.local/continuous/a01-package-integrity-fulfillment-review-20261024T112050Z/` khóa exact receipt package/recovery/revoke 3cj SHA-256 `1932c5e8…` và package root `f4eb6731…`. Review recompute trực tiếp **20 kiểm tra**: receipt/manifest artifact hash, source/package/recovery copy hash, file set, file count, package/recovery root, path containment, nondeliverable status, absence của buyer/order/destination/entitlement, synthetic revoke, use-after-revoke denial, controls closed và actuals null. Kết quả **20/20**, unresolved integrity finding 0.
+
+Fulfillment decision xác định **16 blocker** với exact authoritative source system và required environment: final license, source rights, independent content review, reviewer capacity, order, payment event, settlement, reconciliation, buyer identity, entitlement issuance, private destination, released package manifest, managed recovery, managed revoke, delivery và buyer acceptance. Cả 16 đều `BLOCKED_MISSING_RECEIPT`, receipt `null`; disposition là `DO_NOT_ISSUE_ENTITLEMENT_OR_DELIVER`.
+
+Validation đạt **58/58**; decision structural review đạt **16/16**. Failure fixtures chặn integrity check fail, sai bound receipt, bịa independent/commercial approval, đổi decision thành approved, bỏ/duplicate blocker, bịa blocker receipt, cấp external authority, nâng sale/delivery-ready, production `GO`, mở download/provider call hoặc ghi paid bằng 0. Integrity-review SHA-256 `323b2b750aa16cc3670817ee9d1ae4ae457e710c3a31169031328e4eab4f45a8`; decision-review SHA-256 `a887ca5cfdf07785bc434048fb1c4c26e1d7458408b337541c6655ae4a7f08d7`; final receipt SHA-256 `2c4379300a81066f6c0f168c41f37ca5a8f683806b9cacc70425e7fa1df2326b`.
+
+Đây là **role-separated local fixture**: real independent review receipt, real external receipt và external authority receipt đều 0. Entitlement issue, download, delivery, buyer contact, publish và production deploy đều tắt; provider/network/external action/production write đều 0; mọi financial actual giữ `null`.
+
+Public/provider không probe lại vì receipt HEAD cùng ngày lúc 08:01 vẫn còn hiệu lực và không có tín hiệu thay đổi; hai P0 exposure vẫn mở, deployed SHA/custom-domain mapping hiện hành vẫn thiếu.
+
+**Việc tự động tiếp theo:** dựng A01 source-specific owner-input templates cho 16 fulfillment blocker; chỉ nhận opaque refs, cấm credential/raw contact và không cho submission tự cấp authority hoặc mở external controls.
+
+## Vòng Codex — A01 private-download package + recovery/revoke rehearsal — 24/10/2026, 17:19 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A01_PRIVATE_DOWNLOAD_PACKAGE_RECOVERY_REVOKE_REHEARSAL_STRUCTURALLY_ACCEPTED_TEST_ONLY`; package hiện hành đã được materialize và restore đúng digest trong sandbox local, revoke fixture từ chối use-after-revoke, nhưng real entitlement/external receipt vẫn 0, download và delivery đều tắt, production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty của lane này và lane team khác tiếp tục được bảo toàn.
+
+`.local/continuous/a01-private-download-recovery-revoke-20261024T101949Z/` khóa exact receipt closeout 3ci SHA-256 `d3f4666a…`, rồi đóng gói **5 file hiện hành / 61.044 byte**: inventory, 30 prompt, kế hoạch 30 ngày, HTML template và license draft. Mỗi file có source path, package path, byte count và SHA-256; package root digest được tính theo bộ manifest có thứ tự. Package giữ `LOCAL_CANDIDATE_NOT_DELIVERABLE`; buyer identity, order, entitlement, private destination và delivery receipt đều `null`.
+
+Recovery rehearsal chép đủ **5/5 file** vào sandbox cô lập và đối chiếu package root digest khớp tuyệt đối; real destination/recovery receipt vẫn `null`, real recovery receipt count 0. Revoke rehearsal chỉ dùng `SYNTH_SUBJECT`, `SYNTH_ENTITLEMENT` và `SYNTH_RECEIPT`; trạng thái chuyển từ `ALLOW_TEST_ONLY` sang `DENY_REVOKED_TEST_ONLY`, use-after-revoke bị từ chối và reissue bắt buộc managed receipts mới. `real_entitlement_issued=false`, real revoke receipt 0.
+
+Validation đạt **58/58**; structural review fixture đạt **18/18**. Failure fixtures chặn sai closeout binding, thiếu/duplicate file, path traversal, package/recovery digest sai, bịa buyer/entitlement/destination/delivery/recovery receipt, dùng revoke ref không synthetic, cho phép sau revoke, bịa real entitlement, mở download/delivery/provider call và ghi paid bằng 0. Structural-review SHA-256 `1711548120e40f6e52f2a3a3f0f4871444a1428df2e3e47315fd6dfc453c9899`; final receipt SHA-256 `1932c5e81efb9e7306cf4ded21581e3e98bc42f9c18b8115c80a5fecbed3bb6f`. Real entitlement issue, download, delivery, buyer contact, publish và production deploy đều tắt; provider/network/external action/production write đều 0; toàn bộ financial actual giữ `null`.
+
+Public/provider không probe lại vì receipt HEAD cùng ngày lúc 08:01 vẫn còn hiệu lực và không có tín hiệu thay đổi; hai P0 exposure vẫn mở, deployed SHA/custom-domain mapping hiện hành vẫn thiếu.
+
+**Việc tự động tiếp theo:** review độc lập package integrity và fulfillment decision gắn đúng receipt 3cj; không cấp entitlement/download/delivery và không nâng structural fixture thành external authority.
+
+## Vòng Codex — A01 checkout/private-download/license/acceptance closeout — 24/10/2026, 16:08 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A01_CHECKOUT_DOWNLOAD_LICENSE_ACCEPTANCE_CLOSEOUT_STRUCTURALLY_ACCEPTED_BLOCKED_ONLY`; gói closeout đã khóa đúng artifact A01 hiện hành nhưng 23 gate ngoài đều thiếu receipt, checkout tắt, entitlement chưa cấp, license chưa được chấp nhận, sale-ready và delivery-ready đều `false`, production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty của lane này và lane team khác tiếp tục được bảo toàn.
+
+`.local/continuous/a01-checkout-download-license-acceptance-closeout-20261024T090819Z/` khóa đúng ba baseline hiện hành: inventory receipt `306f90d0…`, content/source/license review receipt `1e8a80b0…` và S01/A01 launch receipt `1e37f434…`. Content binding giữ đúng **12 quy trình, 30 prompt, 30 ngày thực hành, 6 bảng HTML** và giá đề xuất **149.000 VND**; license draft digest được khóa nhưng trạng thái vẫn `DRAFT_NOT_A_POLICY`.
+
+Closeout định nghĩa **23 external gate** với authoritative source system và required environment riêng cho seller/tax, giá, refund policy, final license, source rights, independent review, reviewer capacity, merchant, order, provider event, settlement, reconciliation, buyer identity, entitlement, private destination, package manifest, delivery, recovery, revoke, buyer acceptance, Cloudflare Free staging, production exposure remediation và current deployment mapping. Cả 23 gate đều `BLOCKED_MISSING_RECEIPT`, receipt `null`; real external receipt và external authority receipt đều 0.
+
+Checkout contract giữ `CHECKOUT_DISABLED_PENDING_MERCHANT_RECEIPTS`; order, transaction, settlement và reconciliation đều `null`. Entitlement giữ `NOT_ISSUED`; buyer identity, entitlement ID, private destination, package/delivery/recovery/revoke/acceptance receipt đều `null`; access, download và delivery đều tắt. License acceptance giữ `DRAFT_NOT_ACCEPTED`, không có final license version, buyer identity hoặc acceptance timestamp.
+
+Validation đạt **57/57**; structural review fixture đạt **18/18**. Failure fixtures chặn sửa giá, mở checkout/download, bịa merchant/order/transaction/reconciliation/buyer/acceptance receipt, cấp entitlement khi thiếu dependencies, chấp nhận license nháp, ghi paid bằng 0, nâng sale/delivery/revenue readiness hoặc đổi production sang `GO`. Structural-review SHA-256 `3e10c33e44b0fa89dfb55a39f8ac9505b16d41946fbab62dcb01900e2d3a1f36`; final receipt SHA-256 `d3f4666abbdf148ea4193d96ca38ef4365e7ab8d5094acb32bbdcb45f452bb3b`. Checkout, payment, entitlement issue, download, delivery, contact, publish và production deploy đều tắt; provider/network/external action/production write đều 0; target, forecast, pipeline, invoiced, paid, refunds, fees và collected cash đều `null`.
+
+Public/provider không probe lại vì receipt HEAD cùng ngày lúc 08:01 vẫn còn hiệu lực và không có tín hiệu thay đổi; hai P0 exposure vẫn mở, deployed SHA/custom-domain mapping hiện hành vẫn thiếu.
+
+**Việc tự động tiếp theo:** dựng A01 private-download package manifest cùng local recovery/revoke rehearsal gắn đúng receipt 3ci; giữ entitlement, download và delivery tắt, không tự điền buyer/destination/provider receipt.
+
+## Vòng Codex — S01 safe intake dry-run + gate-diff merger — 24/10/2026, 14:56 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_S01_SAFE_INTAKE_GATE_DIFF_STRUCTURALLY_ACCEPTED_SUBMITTED_UNVERIFIED_ONLY`; dry-run đã hợp nhất đủ tám nhóm và 25 slot nhưng mọi đầu vào đều là fixture `SYNTH*`, source/environment/receipt verification và launch authority vẫn 0; production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty của lane này và lane team khác tiếp tục được bảo toàn.
+
+`.local/continuous/s01-safe-intake-gate-diff-20261024T075649Z/` khóa receipt evidence index 3cf và owner-input handoff 3cg. Merger tạo deterministic synthetic submission cho **8 group**, phủ đúng **25 evidence slot** và **42 requirement**; gate diff chuyển mỗi hàng từ `BLOCKED_MISSING_EXACT_SOURCE_ENVIRONMENT_AND_RECEIPT` sang `SUBMITTED_UNVERIFIED_PENDING_INDEPENDENT_READBACK`, không chuyển thành `VERIFIED_CURRENT`.
+
+Dry-run chỉ chấp nhận locator bắt đầu `SYNTH:` và receipt bắt đầu `SYNTH_RECEIPT:`. Missing/duplicate/unknown group, pending hoặc partial template, duplicate slot, ref opaque nhưng không synthetic, launch authority, paid bằng 0 và payment control mở đều bị chặn. Hash evidence index, handoff map và cả tám template trước/sau merge giữ nguyên; không mutate source fixture.
+
+Validation đạt **47/47**; structural review fixture đạt **18/18**. Submitted fixture 8/8, source verified 0/25, environment verified 0/25, receipt verified 0/25 và launch authority 0/25. Structural-review SHA-256 `8ef69c06aa5ef5412f4f97170b7708db1b590c65c17ac9bda87b1aab407336af`; final receipt SHA-256 `a77ebbece7543a043218d7bbde429c69673b03b46555cfe82fb668b606efad33`. Acceptance, payment, reconciliation write, delivery, buyer contact, publish và production deploy đều tắt; provider/network/external action đều 0; mọi financial actual giữ `null`.
+
+Public/provider không probe lại vì receipt HEAD cùng ngày lúc 08:01 vẫn còn hiệu lực và không có tín hiệu thay đổi; hai P0 exposure vẫn mở, deployed SHA/custom-domain mapping hiện hành vẫn thiếu.
+
+**Việc tự động tiếp theo:** chuyển sang A01, dựng current checkout/private-download/license/acceptance closeout packet với cùng kỷ luật receipt; giữ checkout, payment, delivery và publish tắt.
+
+## Vòng Codex — S01 source-specific owner-input handoff — 24/10/2026, 13:53 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_S01_SOURCE_SPECIFIC_OWNER_INPUT_HANDOFF_STRUCTURALLY_ACCEPTED_PENDING_EXTERNAL_INPUT`; tám mẫu receipt đã sẵn sàng để nhận opaque refs nhưng chưa có submission, source/environment verification, receipt verification hoặc launch authority thật; production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty của lane này và lane team khác tiếp tục được bảo toàn.
+
+`.local/continuous/s01-owner-input-handoff-20261024T065349Z/` khóa receipt evidence index 3cf và tạo đúng **8 template** cho owner governance, buyer intake, review operations, communication, private delivery, merchant/order, reconciliation và Cloudflare. Các template cover đủ **25/25 evidence slot** đúng một lần; mỗi source input giữ exact locator schema, required source system, required environment và receipt ref riêng.
+
+Validator chỉ cho hai trạng thái `PENDING_OWNER_INPUT` hoặc `SUBMITTED_UNVERIFIED`. Trạng thái pending bắt buộc mọi locator, receipt và attestation ref là `null`; trạng thái submitted bắt buộc bộ opaque refs đầy đủ và timestamp UTC nhưng vẫn trả source/environment/receipt verified `false`, launch authority `false`. URL, email-like value, raw-contact/credential field, partial submission, locator/slot/environment/source sai, actual bằng 0, control mở và self-issued validation receipt đều bị chặn.
+
+Validation đạt **45/45**; 8/8 template pending hợp lệ; submitted 0, source verified 0, environment verified 0, receipt verified 0 và launch authority 0. Structural review fixture đạt **18/18**. Structural-review SHA-256 `c8a8597bcd75175ec47d46d12e03f22aa6e567135f29a33eac23ef95c160e0fd`; final receipt SHA-256 `52aa1fad62f75aa5fc2eebf1af1df78dbcc932e7f93a4518d8f8fce609a76b58`. Acceptance, payment, reconciliation write, delivery, buyer contact, publish và production deploy đều tắt; provider/network/external action đều 0; mọi financial actual giữ `null`.
+
+Public/provider không probe lại vì receipt HEAD cùng ngày lúc 08:01 vẫn còn hiệu lực và không có tín hiệu thay đổi; hai P0 exposure vẫn mở, deployed SHA/custom-domain mapping hiện hành vẫn thiếu.
+
+**Việc tự động tiếp theo:** dựng safe intake dry-run và gate-diff merger cho cả tám template bằng synthetic opaque refs; chứng minh submission chỉ ở `SUBMITTED_UNVERIFIED` cho đến khi có independent source readback receipt.
+
+## Vòng Codex — S01 launch-gate evidence index — 24/10/2026, 12:43 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_S01_LAUNCH_GATE_EVIDENCE_INDEX_STRUCTURALLY_ACCEPTED_EXTERNAL_BINDINGS_MISSING`; đã định nghĩa đủ source/environment contract cho các gate hiện hành, nhưng exact managed locator và receipt ngoài đều bằng 0 nên S01 chưa thể bán, giao hoặc ghi nhận doanh thu; production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty của lane này và lane team khác tiếp tục được bảo toàn.
+
+`.local/continuous/s01-launch-gate-evidence-index-20261024T054349Z/` khóa đúng receipt launch 3ca, intake/handoff 3cc, reviewer decision 3cd và closeout 3ce. Index hợp nhất **42 requirement** thành **25 evidence slot** không trùng, mỗi slot có authoritative source system, required environment, exact-locator schema, receipt field contract và các gate được cover. Toàn bộ 42/42 requirement từ launch, refund/cancellation draft, fulfillment, intake, review decision, acceptance và reconciliation đều được ánh xạ đúng một lần.
+
+Tám nhóm đầu vào được tách rõ: owner governance; buyer intake; review operations; managed communication; private delivery; merchant/order; reconciliation; Cloudflare. Source/environment contract đạt 25/25, nhưng exact external locator bound 0/25 và real external receipt 0/25. Các locator cho pháp nhân/thuế, buyer, reviewer, channel, destination, merchant, order, reconciliation ledger và Cloudflare account/project/deployment đều giữ `null`; không lưu credential hoặc raw contact.
+
+Validation đạt **45/45**; structural review fixture đạt **18/18**. Failure fixtures chặn thiếu/duplicate slot, thiếu coverage, environment local, bịa locator/receipt, nâng status khi thiếu receipt, ghi paid bằng 0, mở payment, tự nâng sale-ready/revenue-reconciled, cấp external approval hoặc đổi production sang `GO`. Structural-review SHA-256 `feed32156aae44e139504ac186ed93ce05f3c82ef5dcc4875e38943042ff2bd6`; final receipt SHA-256 `af3f6dd0cb0b567620b680f0c69c6f3b92814d48646e23b75a6e4bb5cdf90f5d`. Acceptance, payment, reconciliation write, delivery, buyer contact, publish và production deploy đều tắt; provider/network/external action đều 0; mọi financial actual giữ `null`.
+
+Public/provider không probe lại vì receipt HEAD cùng ngày lúc 08:01 vẫn còn hiệu lực và không có tín hiệu thay đổi; hai P0 exposure vẫn mở, deployed SHA/custom-domain mapping hiện hành vẫn thiếu.
+
+**Việc tự động tiếp theo:** dựng S01 source-specific owner-input handoff gồm tám fillable receipt template và validator gắn đúng index 3cf; chỉ nhận opaque refs, cấm credential/raw contact và không ghi hệ ngoài.
+
+## Vòng Codex — S01 acceptance + reconciliation closeout checklist — 24/10/2026, 11:45 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_S01_ACCEPTANCE_RECONCILIATION_CLOSEOUT_CHECKLIST_STRUCTURALLY_ACCEPTED_BLOCKED_EXTERNALLY`; acceptance giữ `NOT_REVIEWED`, reconciliation giữ `PENDING_RECONCILIATION`, 12 asset chưa được nghiệm thu và production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty của lane này và lane team khác tiếp tục được bảo toàn.
+
+`.local/continuous/s01-acceptance-reconciliation-closeout-20261024T044519Z/` khóa đúng final receipt reviewer-capacity 3cd, buyer-intake/private-handoff 3cc và delivery sample 3cb. Acceptance record để scope, version, manifest, delivery, reviewer và acceptance receipt ở `null`; verification refs và open revisions rỗng. Bảy gate scope acceptance, final manifest, independent review verification, source rights, private delivery, buyer acceptance và acceptance timestamp đều `BLOCKED_MISSING_RECEIPT`.
+
+Reconciliation record không suy diễn giao dịch: proposal, order, period, amount, transaction, provider event, settlement và reconciliation receipt đều thiếu; gross paid, refunds, payment fees, net và other costs đều `null`. Tám gate order, transaction, provider event, settlement, gross paid, refunds, fees và reconciliation receipt đều `BLOCKED_MISSING_RECEIPT`. Ledger tiếp tục tách target, forecast, pipeline, invoiced, paid, refunds, fees và collected cash; toàn bộ actual giữ `null`.
+
+Validation đạt **44/44**; structural review fixture đạt **16/16**. Negative fixtures chặn nghiệm thu sớm, đối soát sớm và ghi net khi thành phần còn unknown. Real acceptance/provider/reconciliation receipt đều 0; 12 asset unresolved, 0 accepted; sale-ready, delivery-ready và revenue-reconciled đều `false`. Structural-review SHA-256 `00ca802cbea2041c215c95322581d40f2840fd241712981f6b5c3632abfa6a48`; final receipt SHA-256 `cd600a66506b08be873bbaa8f7cd994a6d4e0b24d097357a8ce3722a6edaa7bf`. Acceptance write, payment process, reconciliation write, delivery, buyer contact, publish và production deploy đều tắt; provider/network/external action đều 0.
+
+Public/provider không probe lại vì receipt HEAD cùng ngày lúc 08:01 vẫn còn hiệu lực và không có tín hiệu thay đổi; hai P0 exposure vẫn mở, deployed SHA/custom-domain mapping hiện hành vẫn thiếu.
+
+**Việc tự động tiếp theo:** dựng S01 launch-gate evidence index ánh xạ từng receipt ngoài còn thiếu tới đúng source/environment; giữ toàn bộ external control tắt và không điền actuals khi chưa có provider receipt.
+
+## Vòng Codex — S01 reviewer-capacity + one-revision decision gate — 24/10/2026, 10:47 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_S01_REVIEWER_CAPACITY_ONE_REVISION_DECISION_PACKET_STRUCTURALLY_ACCEPTED_BLOCKED_EXTERNALLY`; review chưa thể bắt đầu vì reviewer/capacity/feedback/source-rights receipts đều thiếu, 12 asset và 4 support document vẫn pending, sale-ready và delivery-ready đều `false`, production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty của lane này và lane team khác tiếp tục được bảo toàn.
+
+`.local/continuous/s01-reviewer-capacity-revision-decision-20261024T034749Z/` khóa đúng receipt buyer-intake/private-handoff 3cc, receipt delivery sample và local handoff rehearsal. Capacity contract yêu cầu **120 phút**, nhưng reviewer ref, assignment receipt, capacity receipt, thời gian giữ chỗ và số phút reserved đều `null`; không cho producer tự kiêm reviewer. Real assignment và reservation đều 0.
+
+Decision register giữ đúng **12 asset + 4 support document** ở `PENDING_MANAGED_REVIEW`. Chính sách giới hạn **một consolidated revision round**; used 0, remaining 1; batch feedback, revision và revised-snapshot receipt đều `null`. Sáu gate reviewer assignment, capacity, source-rights, buyer feedback consent, consolidated revision review và buyer acceptance đều `BLOCKED_MISSING_RECEIPT`.
+
+Validation đạt **51/51**; structural review fixture đạt **16/16**. Failure fixtures chặn self-review, bịa reviewer/capacity/feedback receipt, tăng quota revision, dùng revision khi chưa có receipt, tự accept asset, mở feedback/revision controls, ghi actual bằng 0, nâng independent review/delivery approval hoặc đổi production sang `GO`. Structural-review SHA-256 `570dc82297e4e048deae988bee82a03bc6e1af91dec4fb5e5ef8b9302effc822`; final receipt SHA-256 `f51799915a1f1b0e47a5af787e1caec709d9610e7f3321f0a2e991964b614dbf`. Review assignment, buyer contact, feedback ingest, revision apply, delivery, checkout, payment, publish và deploy đều tắt; mọi financial actual giữ `null`.
+
+Public/provider không probe lại vì receipt HEAD cùng ngày lúc 08:01 vẫn còn hiệu lực và không có tín hiệu thay đổi; hai P0 exposure vẫn mở, deployed SHA/custom-domain mapping hiện hành vẫn thiếu.
+
+**Việc tự động tiếp theo:** dựng S01 acceptance và reconciliation closeout checklist gắn đúng final receipt trên; giữ acceptance, payment, delivery và publish tắt đến khi đủ managed/provider receipts.
+
+## Vòng Codex — S01 buyer-intake + private-handoff gate — 24/10/2026, 09:45 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_S01_BUYER_INTAKE_PRIVATE_HANDOFF_GATE_STRUCTURALLY_ACCEPTED_BLOCKED_EXTERNALLY`; local package đã khóa đủ intake/handoff contract nhưng còn thiếu 10 managed intake receipts và 8 external gate, buyer/independent-review receipt thật đều 0, sale-ready và delivery-ready đều `false`, production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty của lane này và lane team khác tiếp tục được bảo toàn.
+
+`tools/pilot-handoff.mjs` đối chiếu snapshot 20 file hiện hành và tạo local rehearsal `.local/pilot-handoffs/handoff-c7zgYg/`: `VERIFIED_LOCAL_LINKS_ONLY`, review gate `REVIEW_REQUIRED`, coverage đúng **12 content + 4 support document**, external action 0 và mọi actual đều `null`. Receipt rehearsal SHA-256 `9e03c4122d64a89d98261932981f4a9d24fe9a0caf4ece8bca2fd5bafe87f31d`; dữ liệu `DEMO-*` trong đó chỉ là fixture liên kết, không phải buyer/order/approval thật.
+
+`.local/continuous/s01-buyer-intake-private-handoff-20261024T024548Z/` thêm buyer-intake template chỉ nhận opaque receipt refs và cấm lưu raw contact/credential. Mười mục chờ gồm buyer identity/scope/consent, brand input, source-rights, reviewer assignment/capacity, managed channel, private destination và merchant reconciliation. Handoff gate khóa đúng receipt S01 3cb, snapshot manifest và local rehearsal; tám gate đều `BLOCKED_MISSING_RECEIPT`. Acceptance giữ `NOT_REVIEWED`, accepted assets rỗng, delivery/destination receipt `null`.
+
+Validation đạt **48/48**; structural review fixture đạt **15/15**. Failure fixtures chặn bật raw-contact/credential field, bịa buyer hoặc gate receipt, mở message/delivery, tự nghiệm thu asset, ghi actual bằng 0, nâng review thật/delivery approval hoặc đổi production sang `GO`. Structural-review SHA-256 `1bf79c1f8764402f5d9c1c886404f2d3158f20b262cefab79847fa0d3bbef01f`; final receipt SHA-256 `6a5c56a12a817676eb22b8f55a2679cea7a65b1a86d1337608610e55b343644a`. Contact, channel, checkout, payment, delivery, publish và deploy đều tắt; mọi financial actual giữ `null`.
+
+Public/provider không probe lại vì receipt HEAD cùng ngày lúc 08:01 vẫn còn hiệu lực và không có tín hiệu thay đổi; hai P0 exposure vẫn mở, deployed SHA/custom-domain mapping hiện hành vẫn thiếu.
+
+**Việc tự động tiếp theo:** dựng S01 reviewer-capacity và one-revision decision packet gắn đúng final receipt trên; không tự gán reviewer, không nhận feedback ngoài managed receipt và không delivery/publish.
+
+## Vòng Codex — S01 current delivery sample + structural review — 24/10/2026, 08:46 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_S01_CURRENT_DELIVERY_SAMPLE_STRUCTURAL_REVIEW_FIXTURE_ACCEPTED_NOT_FOR_DELIVERY_OR_SALE`; đã materialize đủ 12 draft và lịch 14 ngày, nhưng source/rights/reviewer/buyer/channel/delivery receipts thật đều 0, sale-ready và delivery-ready đều `false`, production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report dirty của lane này và lane team khác tiếp tục được bảo toàn.
+
+`npm run prepare:pilot:delivery` tạo snapshot hiện hành `.local/pilot-deliveries/pilot-FS8iQF/`: **20 file**, **12 asset**, manifest SHA-256 `ae29d1df21fe6e0f63a6780b4634e8e3f743266e515e037c9a0e7727be2041b3`; integrity đạt `VERIFIED_LOCAL_INTEGRITY_ONLY`, delivery receipt và reconciled cash đều `null`. Gói `.local/continuous/s01-delivery-sample-current-reviewed-20261024T014648Z/` khóa snapshot này với canonical catalog, sample, workbook và launch receipt hiện hành.
+
+Delivery packet giữ đúng **12 draft** `MG01–MG12`, format **4 caption + 4 short video + 3 carousel + 1 article**, lịch minh họa **14 ngày** và **12 source/rights placeholder** fail-closed. Buyer scope/consent, brand input, reviewer assignment/capacity, managed channel và private destination đều `null`; approval/publication receipt không có. Target, forecast, pipeline, invoiced, paid, refunds, fees và collected cash đều `null`.
+
+Validation đạt **51/51**; structural review fixture đạt **18/18**, real source receipt 0, rights receipt 0, independent review receipt 0. Failure fixtures chặn non-fictional promotion, thiếu draft, fake approval/publication/source receipt, mở channel, bịa delivery destination, ghi paid bằng 0 khi thiếu receipt, tự nâng review độc lập/delivery approval và đổi production sang `GO`. Review receipt SHA-256 `487afffd55d7a1fc7ebfb7dee3109d527743819267571d9ace9e8cda88ff489e`; final receipt SHA-256 `c345dd4b41361bacdb265c26b95f6e95e88b8418624b594213af60906df5ed23`. Không gọi mạng/provider, không liên hệ buyer, không delivery/checkout/payment/publish/deploy.
+
+Public/provider không probe lại vì receipt HEAD cùng ngày lúc 08:01 vẫn là evidence mới nhất và không có tín hiệu thay đổi: hai P0 exposure vẫn mở, deployed SHA/custom-domain mapping hiện hành vẫn thiếu.
+
+**Việc tự động tiếp theo:** dựng S01 buyer-intake và private-handoff acceptance packet gắn đúng final receipt trên; giữ contact, channel, delivery, checkout và publish tắt đến khi có managed receipts.
+
+## Vòng daily Codex — S01/A01 current launch packet + public gate recheck — 24/10/2026, 08:01 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_S01_A01_CURRENT_LAUNCH_PACKET_STRUCTURAL_REVIEW_ONLY_NOT_FOR_SALE`; P0 public exposure còn hiện hữu, current deployed SHA/custom-domain mapping chưa có receipt, 19 external gate đều blocked, sale-ready 0 và production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · remote `git@github.com:tranhatam-collab/ai.muonnoi.org.git` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`. Hai canonical report đang dirty trong lane này; lane `codex/revenueops-publishing` và hai file dirty của lane đó được bảo toàn.
+
+Probe ngày 24/10 dùng đúng **5 HEAD request**, body 0, retry 0. `https://ai.muonnoi.org/` trả `200 text/html`; `/wrangler.json` trả `200 application/json`; `/workers/api/migrations/0003_seed_admin.sql` trả `200 application/x-sql`, nên hai P0 exposure không hạ. Hai immutable URL lịch sử `a6623203…pages.dev` và `7e579cd6…pages.dev` đều trả `200 text/html`; đây chỉ là reachability. Provider dashboard không recheck; deployed receipt của HEAD hiện tại và mapping custom domain đều `null`. Receipt probe SHA-256 `91437db3710bad7a2039024d15604fbe8572086d04c05c473e4f2a3be347b911`.
+
+`.local/continuous/s01-a01-launch-current-reviewed-20261024T010149Z/` dựng lại packet hiện hành cho đúng hai SKU: S01 **1.500.000 VND** và A01 **149.000 VND**, đều `DRAFT_NOT_FOR_SALE`. A01 gắn current inventory receipt `306f90d0…` và content-review receipt `1e8a80b0…`; fulfillment/delivery destination tắt; refund/cancellation giữ `DRAFT_NOT_A_POLICY`; measurement tách đủ target, forecast, pipeline, invoiced, paid, refunds, fees, collected cash và tất cả giữ `null`.
+
+Validation đạt **42/42**; structural review đạt **16/16**, external gate **19**, receipt gate thật 0, real independent review receipt 0. Failure fixture chặn sửa giá, nâng trạng thái sale, mở checkout, ghi actual 0 khi thiếu receipt, giả đóng exposure, bịa mapping, nâng review thật, để structural finding hoặc đổi production sang `GO`. Receipt SHA-256 `1e37f4340b66d1bed2d422177c68c808491586bca85c06ca185c9a55450b9ebe` khóa 7 artifact hash, 3 canonical source hash và 3 bound receipt hash. Không deploy, DNS/secret/migration, payment, publish, delivery hoặc liên hệ ngoài.
+
+**Việc tự động tiếp theo:** materialize current S01 delivery sample gồm 12 draft, lịch 14 ngày, source/rights placeholder và review receipt; giữ buyer scope, channel, delivery, checkout và publish tắt.
+
+## Vòng Codex — A01 content/source/license review + revision 1 — 24/10/2026, 07:46 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A01_CONTENT_SOURCE_LICENSE_REVIEW_TEST_FIXTURE_ACCEPTED_NOT_FOR_SALE`; review fixture phân vai đạt 10/10 rubric và đóng một finding P2 bằng đúng một revision, nhưng real independent review/authority receipt vẫn 0, sale-ready `false` và production giữ `NO_GO`.** Source tiếp tục khóa tại repo `tranhatam-collab/ai.muonnoi.org` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`.
+
+`.local/continuous/a01-content-source-license-review-20261024T004648Z/` giữ bản HTML và receipt trước review, khóa digest pre-review `c66b062fbae45fc5a36ddc14958589cfe43d9fe5ddff11fa4373eaa254b37976`, rồi ghi finding `F-A01-001` P2: sáu bảng có header nhưng thiếu `caption`. Revision 1 chỉ sửa `build.mjs`, `templates.html`, `test.mjs`; kết quả có đúng **6 table + 6 caption**, không thêm script, form, external resource hoặc action.
+
+Packet A01 sau sửa đạt **41/41** và có current receipt SHA-256 `306f90d0e29fee1cea246ee92ca27ebe2e8b5c7f6e4618069ded7f512a1cb120`. Review acceptance đạt **33/33**, **10/10** rubric, initial finding 1, resolved test-fixture 1, unresolved 0, revision 1. Các negative fixture chặn revision thứ hai, finding còn mở, sale-ready/commercial approval, external action, failed rubric và production `GO`.
+
+Review receipt SHA-256 `1e8a80b017425519af40c345936aa85d56301529bf2a6a272f52f24753394b84` khóa pre/current receipt, inventory, prompt, practice, license, HTML và revision digest. Source authority, final license, buyer acceptance, private delivery destination, merchant reconciliation và real independent review vẫn 0; mọi financial actual giữ `null`; không có network/provider/deploy/payment/publish/delivery.
+
+**Việc tự động tiếp theo:** dựng lại launch packet + review S01/A01 hiện hành và giữ artifact cùng receipt; không dùng báo cáo cũ thay artifact, giữ checkout/payment/delivery/publish tắt.
+
+## Vòng Codex — A01 current content inventory — 24/10/2026, 06:46 (UTC+7)
+
+**Verdict: `VERIFIED_WORKTREE_ONLY_LOCAL_A01_CONTENT_INVENTORY_COMPLETE_STRUCTURE_ONLY_NOT_FOR_SALE`; đã materialize đủ 12 quy trình, 30 prompt và kế hoạch 30 ngày nhưng sáu gate giao hàng/thương mại vẫn thiếu receipt, sale-ready `false` và production giữ `NO_GO`.** Source khóa tại repo `tranhatam-collab/ai.muonnoi.org` · nhánh `codex/ai-muonnoi-autonomous-ops` · HEAD `eac361d230aba1373fdf8864ba26769a2d3f96ff`.
+
+Worktree `/private/tmp/ai-muonnoi-autonomous-ops` cũ đã bị eviction và Git đánh dấu `prunable`; checkout được phục hồi biệt lập từ đúng local ref rồi khóa remote về `git@github.com:tranhatam-collab/ai.muonnoi.org.git`. Hai file dirty trên lane `codex/revenueops-publishing` không bị chạm. Các artifact `.local` cũ không được coi là còn hiện hành chỉ từ báo cáo.
+
+`.local/continuous/a01-content-inventory-current-20261023T234648Z/` tạo bộ nội dung A01 hiện hành gồm **12 process**, **30 prompt**, **30 ngày thực hành**, **6 bảng HTML**, license `DRAFT_NOT_A_POLICY` và delivery-gate packet. Mỗi process có input/output/verification/failure path; mỗi prompt có placeholder, acceptance criteria và claim cấm; mọi ngày thực hành đều khóa external action.
+
+Validation hiện đạt **41/41** sau khi sửa một false positive của matcher event-handler và hoàn thành revision accessibility số 1. Sáu gate `SOURCE_AUTHORITY`, `LICENSE_REVIEW`, `INDEPENDENT_CONTENT_REVIEW`, `PRIVATE_DELIVERY_DESTINATION`, `BUYER_ACCEPTANCE`, `MERCHANT_RECONCILIATION` đều `BLOCKED_MISSING_RECEIPT`; recipient/destination/entitlement đều `null`. CTA, checkout, payment, publish và delivery đều tắt; provider/network/external action/production write đều 0; target, forecast, pipeline, invoiced, paid, refunds, fees và collected cash đều `null`.
+
+Receipt pre-review `c66b062fbae45fc5a36ddc14958589cfe43d9fe5ddff11fa4373eaa254b37976` đã được supersede bởi current receipt SHA-256 `306f90d0e29fee1cea246ee92ca27ebe2e8b5c7f6e4618069ded7f512a1cb120`, khóa 12 artifact hash và 2 canonical source hash. Không có deploy, payment, publish, liên hệ ngoài hoặc provider call.
+
+**Việc tự động tiếp theo:** xem mục review mới nhất phía trên; khôi phục launch packet/review S01-A01 hiện hành. Giữ checkout/payment/delivery/publish tắt.
 
 ## Vòng giờ Cursor — S01/A01 launch packet current rebuild — 23/10/2026, 23:21 (UTC+7)
 
