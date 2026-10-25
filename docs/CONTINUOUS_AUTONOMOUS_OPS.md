@@ -159,9 +159,10 @@ Trạng thái đối chiếu Sóng 0 (`docs/PRODUCT_PORTFOLIO_1_TO_3_YEARS_FOUND
 | 3db | A04 per-slot readback queue + reconciliation contract gắn gate diff 3da | **Xong local** — `.local/continuous/a04-readback-queue-reconciliation-20261025T040355Z/` · **159/159** + hash verify **20/20** · 64 queue + 64 contract row · pending 64 / eligible 0 / attempt/retry/verified/gate closed 0 · exact managed source/environment/value digest + read authority/verifier bắt buộc · structural review fixture **28/28** · actuals null · live `NO_GO` |
 | 3dc | A04 real-receipt eligibility adapter + non-executable generation/review plan format | **Xong local** — `.local/continuous/a04-receipt-eligibility-generation-plan-20261025T0441Z/` · **83/83** · 64 row evaluated / eligible 0 / plan 0 · gen/QA/revision/delivery/publish authority 0 · structural review **39/39** · network 0 · actuals null · live `NO_GO` |
 | 3dd | A04 package integrity + handoff decision gắn receipts 3cy–3dc | **Xong local** — `.local/continuous/a04-package-integrity-handoff-20261025T0455Z/` · **66/66** · 5 stage / 10 file · package root `3f09e5af…` · 12 handoff blocker · integrity **29/29** · executable/delivery/publish/sale 0 · live `NO_GO` |
-| 3de | A05 current rights-bound content pack (short/long/script) + fidelity/source-rights gate | Tiếp theo; không publish/delivery; actuals null |
+| 3de | A05 current rights-bound content pack (short/long/script) + fidelity/source-rights gate | **Xong local synthetic** — `.local/continuous/a05-content-pack-current-20261025T0500Z/` · **20/20** · 12 ngắn + 4 dài + 6 kịch bản + lịch 22 · source/rights blocked 22/22 · fidelity verified 0 · giá 1.990.000 DRAFT · publish/delivery off · sale-ready 0 · live `NO_GO` |
+| 3df | A05 source-specific owner-input + fidelity/reviewer capacity packet | Tiếp theo; không publish/delivery |
 | 4 | Staging remote biệt lập trên Cloudflare Free | `BLOCKED` INFO-CF-FREE — **không dừng hàng đợi** |
-| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **1448** · tick `2026-10-25T04:44:47Z` |
+| 5 | Runbook/receipt liên tục; không tạo lịch trùng | Loop PID **1448** · tick `2026-10-25T04:45:42Z` |
 
 Thứ tự mỗi giờ: việc mở nhỏ nhất số → bỏ qua `BLOCKED` → không commit Pilot dirty trừ khi `AP-PILOT-DIRTY`.
 
