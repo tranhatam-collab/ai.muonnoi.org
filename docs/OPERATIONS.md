@@ -2,6 +2,25 @@
 
 **NO_GO cho live:** public source/migration exposure được xác minh lại ngày 27/10/2026. Chủ dự án là Founder; operational/support/security owner, escalation và SLO còn chờ chỉ định. Không coi laptop hoặc receipt local là hệ vận hành 24/7.
 
+## Vòng Cursor — đối chiếu / từ chối giao dịch thật — 28/10/2026, 08:46 (UTC+7)
+
+**Verdict: `REFUSED_REAL_TRANSACTION_GATES_INCOMPLETE` · live `NO_GO` · giao dịch thật = 0.** Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops` · HEAD `c31fb37`.
+
+| Kiểm tra | Trạng thái | Evidence |
+|---|---|---|
+| Live root | `REACHABLE` | `https://ai.muonnoi.org/` HEAD **200** |
+| P0 `wrangler.json` | `CONTRADICTED` an toàn thương mại | HEAD **200** `application/json` — vẫn lộ source config |
+| P0 migration SQL | `CONTRADICTED` an toàn thương mại | `0003_seed_admin.sql` HEAD **200** |
+| AP-PAYMENT-SOURCE | ✅ candidate only | **không** = bật thanh toán live |
+| AP-DEPLOY-CANDIDATE | `HOLD` | thiếu SHA/provider deployment ID |
+| INFO-MERCHANT / CHANNEL | `BLOCKED` | chưa có |
+| Catalog S01/A01… | `DRAFT_NOT_FOR_SALE` | không mở bán |
+| Giao dịch thật tạo trong vòng này | **false** | không gọi provider; invoiced/paid/`collected_cash` = `null` |
+
+Receipt: `.local/continuous/live-commerce-gate-refusal-20261028T0148Z/receipt.json`.
+
+**Không tạo giao dịch thật** khi P0 còn mở và merchant/deploy/catalog chưa đủ. AI tiếp tục remediation local + hàng đợi nội bộ; không idle.
+
 ## Vòng Cursor — 100% auto: restart loop + S03 eligibility + n8n blocked — 28/10/2026, 00:33 (UTC+7)
 
 **Verdict: `VERIFIED_WORKTREE_ONLY`; automation nội bộ tiếp tục; n8n chưa thực thi vì thiếu `INFO-N8N-ACCESS`; Release `HOLD` / live `NO_GO`.** Source: `tranhatam-collab/ai.muonnoi.org` · `codex/ai-muonnoi-autonomous-ops`. Loop PID **34445** (restart sau khi PID 1448 chết).
