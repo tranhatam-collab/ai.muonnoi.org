@@ -18,7 +18,7 @@ Song song, không cần viết mã: đăng 5 cuốn lên Amazon KDP (anh đã c�
 
 - Mã nguồn: repo này, thư mục `apps/store` (Next.js 15), `supabase/migrations`, `engine`, `docs/money-engine`.
 - Cửa hàng chạy trên Vercel, dự án `sach-muonnoi` (đã tạo, liên kết với repo này, thư mục gốc `apps/store`). Đẩy lên nhánh `main` là tự deploy. Địa chỉ tạm: `https://sach-muonnoi.vercel.app`.
-- Sổ cái và kho file: Supabase, dự án `tranhatam-collab's Project` (mã `pyqonagrakxqjgnzaawf`, vùng Singapore). Đã khôi phục từ trạng thái tạm dừng. Schema nằm ở `supabase/migrations/0001_money_engine.sql`.
+- Sổ cái và kho file: Supabase, chưa chọn dự án. Dự án `pyqonagrakxqjgnzaawf` mà bản đầu của tài liệu này nêu đang chạy một hệ thống khác (khoảng 40 bảng gồm đơn hàng, thanh toán, quyền tải, kiểm tra sức khỏe định kỳ; kiểm lại ngày 31/10/2026). Không áp schema vào đó và không đưa khóa service role của dự án đó cho cửa hàng, vì lộ khóa này là lộ dữ liệu của hệ thống kia. Cách an toàn: tạo dự án Supabase riêng cho cửa hàng. Schema nằm ở `supabase/migrations/0001_money_engine.sql` và đã chạy đạt 24 trên 24 phép kiểm trên Postgres cục bộ.
 - Bộ não: một tác vụ Claude chạy mỗi sáng, đọc sổ cái, sinh nội dung, soạn outreach, ghi báo cáo và gửi email cho anh. Chỉ tạo lịch khi cửa hàng đã bán được đơn đầu tiên. Xem `04_VONG_LAP_HANG_NGAY.md`.
 
 ## Trạng thái hôm nay
@@ -26,7 +26,8 @@ Song song, không cần viết mã: đăng 5 cuốn lên Amazon KDP (anh đã c�
 | Hạng mục | Trạng thái |
 |---|---|
 | Mã cửa hàng (trang sách, thanh toán payOS và PayPal, webhook, giao file, bài viết, sitemap) | Xong, `npm run build` và `tsc` đạt |
-| Schema Supabase | Viết xong, chưa áp. Lệnh áp bị từ chối lúc tôi xin phép, nên tôi dừng. Anh áp trong SQL Editor hoặc nhắn tôi áp |
+| Schema Supabase | Viết xong, kiểm thử cục bộ đạt, chưa áp vào đâu. Chờ chủ dự án chọn dự án Supabase riêng |
+| Lỗ hổng PayPal (thu tiền theo mã đơn trên URL, không đối chiếu số tiền) | Đã sửa, có 18 phép kiểm đơn vị gồm kịch bản tấn công. Xem `apps/store/src/lib/paypal-verify.ts` |
 | Dự án Vercel `sach-muonnoi` | Đã tạo, đã đặt biến môi trường công khai và hai khóa bí mật nội bộ |
 | Khóa cần anh cung cấp | Supabase service role, payOS (3 khóa), PayPal (2 khóa). Xem `03_VIEC_ANH_LAM_MOT_LAN.md` |
 | File EPUB trong kho | Chưa có. Anh kéo thả 5 file từ Drive vào bucket `ebooks` |

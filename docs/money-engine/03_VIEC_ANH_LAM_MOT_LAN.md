@@ -2,9 +2,9 @@
 
 Mỗi mục có ghi vì sao tôi không tự làm được: đó là những chỗ cần đăng nhập tài khoản đứng tên anh hoặc đã bị từ chối khi tôi xin phép.
 
-## A. Supabase (5 phút)
+## A. Supabase (10 phút, sau khi chọn dự án)
 
-1. Áp schema. Vào https://supabase.com/dashboard/project/pyqonagrakxqjgnzaawf/sql/new, dán toàn bộ nội dung file `supabase/migrations/0001_money_engine.sql`, bấm Run. Hoặc nhắn tôi "áp schema" và tôi áp qua kết nối đã có. Lệnh này tạo bảng, bật RLS, tạo kho file `ebooks` và nạp sẵn danh mục sách.
+1. Chọn nơi đặt sổ cái. Dự án `pyqonagrakxqjgnzaawf` đang chứa hệ thống khác, không dán schema vào đó. Tạo một dự án Supabase mới chỉ cho cửa hàng (gói Free, vùng Singapore), hoặc cho phép tôi tạo. Có dự án rồi thì vào SQL Editor, dán toàn bộ file `supabase/migrations/0001_money_engine.sql`, bấm Run.
 2. Lấy khóa server. Project Settings, mục API Keys, copy khóa `service_role` (loại secret). Khóa này chỉ đặt trên Vercel, không gửi qua chat.
 3. Tải sách lên kho. Storage, bucket `ebooks`, kéo thả 5 file từ Drive và đổi tên đúng như cột bên phải:
 
@@ -34,6 +34,7 @@ SITE_URL=https://sach-muonnoi.vercel.app ADMIN_SECRET=<xem trong Vercel> npm run
 1. Vào https://developer.paypal.com/dashboard/applications/live, bấm Create App, đặt tên "Sach Tran Ha Tam".
 2. Copy Client ID và Secret.
 3. Nếu tài khoản PayPal còn là cá nhân, nâng lên Business (miễn phí, trong phần cài đặt tài khoản) để nhận thanh toán thương mại không bị giới hạn.
+4. Biến `PAYPAL_ENV` mặc định là sandbox. Chỉ đặt `live` ở môi trường Production và chỉ khi đã dùng khóa live. Thử bằng khóa sandbox trước, lấy ở tab Sandbox của cùng trang.
 
 ## D. Vercel (3 phút)
 
@@ -44,9 +45,10 @@ Vào dự án `sach-muonnoi`, Settings, Environment Variables, thêm cho cả Pr
 | SUPABASE_SERVICE_ROLE_KEY | khóa ở bước A2 |
 | PAYOS_CLIENT_ID, PAYOS_API_KEY, PAYOS_CHECKSUM_KEY | ba khóa ở bước B2 |
 | PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET | hai khóa ở bước C2 |
+| PAYPAL_ENV | `live` chỉ ở Production khi dùng khóa live. Preview và Development để trống, mặc định là sandbox |
 | RESEND_API_KEY hoặc cặp GMAIL_USER và GMAIL_APP_PASSWORD | tùy chọn, để gửi email giao sách. Không có thì khách vẫn tải được trên trang cảm ơn |
 
-Các biến còn lại tôi đã đặt sẵn: địa chỉ Supabase, khóa công khai, địa chỉ site, khóa ký link tải, khóa quản trị. Sau khi thêm biến, bấm Redeploy.
+Các biến còn lại tôi đã đặt sẵn: địa chỉ Supabase, khóa công khai, địa chỉ site, khóa ký link tải, khóa quản trị, và `PAYPAL_ENV=live` chỉ cho Production. Hai biến Supabase công khai đang trỏ dự án cũ, phải đổi sang dự án mới. Hai khóa nội bộ đã hiện trong nhật ký phiên làm việc, nên đổi giá trị mới trước khi mở bán. Sau khi thêm biến, bấm Redeploy.
 
 ## E. Tên miền riêng (tùy chọn, 5 phút)
 

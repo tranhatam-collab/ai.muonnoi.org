@@ -37,7 +37,7 @@ Tài liệu quy trình có sẵn: thẻ nhận dạng từng cuốn, gói sản 
 | Nơi | Có gì |
 |---|---|
 | Vercel (team tranhatam-6714) | 3 dự án đang chạy: visamuonnoi.org, ap.omdalat.com, agent.iai.one. Thêm dự án mới `sach-muonnoi` cho cửa hàng |
-| Supabase | 3 dự án đều đang tạm dừng (omone, computer.iai.one, tranhatam-collab's Project). Đã khôi phục dự án thứ ba để làm sổ cái |
+| Supabase | Ngày 15/10 cả 3 dự án đều tạm dừng (omone, computer.iai.one, tranhatam-collab's Project). Tôi đã khôi phục dự án thứ ba mà chưa kiểm tra nội dung. Ngày 31/10 kiểm lại thì dự án này đang chạy một hệ thống khác với 31 đơn hàng, nên không dùng làm sổ cái của cửa hàng. Hai dự án còn lại vẫn tạm dừng, chưa mở |
 | GitHub | Repo này (ai.muonnoi.org), hiện là trang tĩnh trên Cloudflare Pages |
 | Tên miền trên Vercel | Không có tên miền đăng ký tại Vercel; các tên miền trỏ từ nơi khác (nhiều khả năng Cloudflare) |
 
