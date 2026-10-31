@@ -33,7 +33,8 @@ export const config = {
     };
   },
   get paypal() {
-    const envName = first(process.env.PAYPAL_ENV) === "sandbox" ? "sandbox" : "live";
+    // Ranh giới thử nghiệm và thật: mặc định sandbox, chỉ chạm tiền thật khi PAYPAL_ENV=live được đặt rõ.
+    const envName = first(process.env.PAYPAL_ENV) === "live" ? "live" : "sandbox";
     return {
       clientId: first(process.env.PAYPAL_CLIENT_ID),
       secret: first(process.env.PAYPAL_CLIENT_SECRET),

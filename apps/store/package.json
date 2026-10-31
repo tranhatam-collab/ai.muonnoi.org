@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "payos:confirm-webhook": "node scripts/confirm-payos-webhook.mjs"
+    "payos:confirm-webhook": "node scripts/confirm-payos-webhook.mjs",
+    "test": "tsx --test \"src/**/*.test.ts\""
   },
   "dependencies": {
     "@payos/node": "^2.0.5",
@@ -24,6 +25,7 @@
     "@types/nodemailer": "^8.0.2",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
+    "tsx": "^4.23.15",
     "typescript": "^5.9.3"
   },
   "engines": {

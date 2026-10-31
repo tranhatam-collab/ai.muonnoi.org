@@ -1,4 +1,5 @@
 import { config } from "./env";
+import type { PaypalFacts } from "./paypal-verify";
 
 type TokenCache = { token: string; exp: number };
 let tokenCache: TokenCache | null = null;
@@ -78,6 +79,7 @@ export type PaypalCapture = {
   status: string;
   captureId: string | null;
   payerEmail: string | null;
+  facts: PaypalFacts;
   raw: unknown;
 };
 
@@ -94,7 +96,7 @@ export async function capturePaypalOrder(paypalOrderId: string): Promise<PaypalC
   });
   const json = (await res.json().catch(() => ({}))) as Record<string, unknown>;
   if (!res.ok) {
-    // ORDER_ALREADY_CAPTURED: coi như đã thu, lấy lại trạng thái.
+    // ORDER_ALREADY_CAPTURED: lấy lại trạng thái, việc đối chiếu số tiền vẫn do nơi gọi làm.
     const issue = JSON.stringify(json);
     if (issue.includes("ORDER_ALREADY_CAPTURED")) return getPaypalOrder(paypalOrderId);
     throw new Error(`PayPal capture ${res.status}: ${issue}`);
@@ -112,16 +114,36 @@ export async function getPaypalOrder(paypalOrderId: string): Promise<PaypalCaptu
   return summarize((await res.json()) as Record<string, unknown>);
 }
 
+function str(v: unknown): string | null {
+  return v === undefined || v === null || v === "" ? null : String(v);
+}
+
 function summarize(json: Record<string, unknown>): PaypalCapture {
   const units = (json.purchase_units as Array<Record<string, unknown>> | undefined) ?? [];
-  const payments = (units[0]?.payments as Record<string, unknown> | undefined) ?? {};
+  const unit = units[0] ?? {};
+  const payments = (unit.payments as Record<string, unknown> | undefined) ?? {};
   const captures = (payments.captures as Array<Record<string, unknown>> | undefined) ?? [];
+  const cap = captures[0] ?? {};
+  const amount = (cap.amount as Record<string, unknown> | undefined) ?? {};
   const payer = (json.payer as Record<string, unknown> | undefined) ?? {};
-  return {
-    id: String(json.id ?? ""),
+  const facts: PaypalFacts = {
+    orderId: String(json.id ?? ""),
     status: String(json.status ?? ""),
-    captureId: captures[0]?.id ? String(captures[0].id) : null,
-    payerEmail: payer.email_address ? String(payer.email_address) : null,
+    unitCount: units.length,
+    captureCount: captures.length,
+    captureStatus: str(cap.status),
+    // Số tiền và tiền tệ lấy từ lần thu thực tế, không lấy từ số tiền đặt hàng.
+    currency: str(amount.currency_code),
+    value: str(amount.value),
+    referenceId: str(unit.reference_id),
+    customId: str(cap.custom_id) ?? str(unit.custom_id),
+  };
+  return {
+    id: facts.orderId,
+    status: facts.status,
+    captureId: str(cap.id),
+    payerEmail: str(payer.email_address),
+    facts,
     raw: json,
   };
 }

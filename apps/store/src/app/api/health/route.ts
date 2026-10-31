@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { features } from "@/lib/env";
+import { config, features } from "@/lib/env";
 
 export const dynamic = "force-dynamic";
 
@@ -9,5 +9,6 @@ export function GET() {
     ok: true,
     time: new Date().toISOString(),
     features: { db: features.db, payos: features.payos, paypal: features.paypal, downloads: features.downloads, checkout: features.checkout },
+    modes: { paypal: config.paypal.env },
   });
 }
