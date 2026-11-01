@@ -249,7 +249,7 @@ Mỗi Agent: **một dòng sản phẩm · một target · một giá đề xu�
 - [x] Repo/nhánh/identity đúng (lane `codex/ai-muonnoi-autonomous-ops`).  
 - [x] Zero-budget policy + emergency stop (đã có local).  
 - [x] Studio review path khóa auto-post (đã có local).  
-- [x] **Staging kit local + checklist đọc-only** — `docs/STAGING_KIT_CHECKLIST.md`; generator `npm run prepare:intake:staging`; placeholder `__CLOUDFLARE_FREE_ACCOUNT_ID_REQUIRED__` / `__SEPARATE_STAGING_D1_ID_REQUIRED__`; receipt `.local/continuous/staging-checklist-20261019T145626/`. Bước A local xong; **áp remote vẫn chờ Free account ID**.  
+- [x] **Staging kit local + checklist đọc-only** — `docs/STAGING_KIT_CHECKLIST.md`; generator `npm run prepare:intake:staging`; placeholder `__CLOUDFLARE_FREE_ACCOUNT_ID_REQUIRED__` / `__SEPARATE_STAGING_D1_ID_REQUIRED__`; receipt `.local/continuous/staging-checklist-20261019T145626/` đã mất (đối soát 01/11/2026); generator vẫn ở HEAD và `test:intake:staging` đạt trong `npm run verify` tại `dd3688a`. Bước A local xong; **áp remote vẫn chờ Free account ID**.  
 - [ ] Staging biệt lập trên Cloudflare Free khi có account ID (**chờ Founder** — xem checklist mục B).  
 - [ ] Merchant + bank importer chỉ đọc (**chờ Founder**).  
 - [ ] Một kênh sở hữu + consent (**chờ Founder**).  
