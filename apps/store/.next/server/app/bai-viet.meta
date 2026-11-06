@@ -1,0 +1,15 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/bai-viet/layout,_N_T_/bai-viet/page,_N_T_/bai-viet"
+  },
+  "routeCache": {
+    "key": "/route-cache/APP_PAGE/b7ac22c07fe8593d3306cb3c05fb3191ed45163cc48a0dce9b8d7366e0951f2b/$/bai-viet",
+    "owner": {
+      "kind": "APP_PAGE",
+      "sourceRoute": "/bai-viet/page"
+    },
+    "isFallback": false
+  }
+}

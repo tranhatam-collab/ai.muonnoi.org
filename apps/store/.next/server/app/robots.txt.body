@@ -1,0 +1,7 @@
+User-Agent: *
+Allow: /
+Disallow: /api/
+Disallow: /mua/
+Disallow: /cam-on
+
+Sitemap: http://localhost:3000/sitemap.xml

@@ -1,0 +1,15 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/bai-viet/layout,_N_T_/bai-viet/[slug]/layout,_N_T_/bai-viet/[slug]/page,_N_T_/bai-viet/nam-cuon-sach-dau-tien"
+  },
+  "routeCache": {
+    "key": "/route-cache/APP_PAGE/d2551a18776a6d784d4848b6b4e0b31434201326d956c465dd891f747c5a34fa/$/bai-viet/nam-cuon-sach-dau-tien",
+    "owner": {
+      "kind": "APP_PAGE",
+      "sourceRoute": "/bai-viet/[slug]/page"
+    },
+    "isFallback": false
+  }
+}

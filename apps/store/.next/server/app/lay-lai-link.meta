@@ -1,0 +1,15 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/lay-lai-link/layout,_N_T_/lay-lai-link/page,_N_T_/lay-lai-link"
+  },
+  "routeCache": {
+    "key": "/route-cache/APP_PAGE/6be1742b863e41ca3ddc55218cc3f3b78848c28319295d12677dd1dd868cdacc/$/lay-lai-link",
+    "owner": {
+      "kind": "APP_PAGE",
+      "sourceRoute": "/lay-lai-link/page"
+    },
+    "isFallback": false
+  }
+}
