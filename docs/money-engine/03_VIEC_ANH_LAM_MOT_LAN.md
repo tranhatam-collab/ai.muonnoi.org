@@ -4,7 +4,7 @@ Mỗi mục có ghi vì sao tôi không tự làm được: đó là những ch�
 
 ## A. Supabase (10 phút, sau khi chọn dự án)
 
-1. Chọn nơi đặt sổ cái. Dự án `pyqonagrakxqjgnzaawf` đang chứa hệ thống khác, không dán schema vào đó. Tạo một dự án Supabase mới chỉ cho cửa hàng (gói Free, vùng Singapore), hoặc cho phép tôi tạo. Có dự án rồi thì vào SQL Editor, dán toàn bộ file `supabase/migrations/0001_money_engine.sql`, bấm Run.
+1. Chọn nơi đặt sổ cái. Dự án `pyqonagrakxqjgnzaawf` đang chứa hệ thống khác, không dán schema vào đó. Tạo một dự án Supabase mới chỉ cho cửa hàng (gói Free, vùng Singapore), hoặc cho phép tôi tạo. Có dự án rồi thì vào SQL Editor, dán lần lượt ba file theo đúng thứ tự `supabase/migrations/0001_money_engine.sql`, `0002_rate_limit.sql`, `0003_refunds.sql`, bấm Run sau mỗi file. Thiếu 0002 thì mở đơn trả 503 (giới hạn tốc độ đóng cửa khi không đếm được); thiếu 0003 thì chưa có hoàn tiền.
 2. Lấy khóa server. Project Settings, mục API Keys, copy khóa `service_role` (loại secret). Khóa này chỉ đặt trên Vercel, không gửi qua chat.
 3. Tải sách lên kho. Storage, bucket `ebooks`, kéo thả 5 file từ Drive và đổi tên đúng như cột bên phải:
 
@@ -50,9 +50,23 @@ Vào dự án `sach-muonnoi`, Settings, Environment Variables, thêm cho cả Pr
 
 Các biến còn lại tôi đã đặt sẵn: địa chỉ Supabase, khóa công khai, địa chỉ site, khóa ký link tải, khóa quản trị, và `PAYPAL_ENV=live` chỉ cho Production. Hai biến Supabase công khai đang trỏ dự án cũ, phải đổi sang dự án mới. Hai khóa nội bộ đã hiện trong nhật ký phiên làm việc, nên đổi giá trị mới trước khi mở bán. Sau khi thêm biến, bấm Redeploy.
 
+### Cách lên Vercel mà không cần merge vào `main`
+
+Dự án `sach-muonnoi` đang tắt bản xem trước theo nhánh (để các nhánh của team không sinh bản dựng lỗi), và nhánh `main` còn đỏ vì lý do không thuộc cửa hàng. Cách đi thẳng: Vercel, Settings, Git (hoặc Environments, Production, Branch Tracking), đặt **Production Branch** là `claude/money-engine-e2e`. Mỗi lần đẩy lên nhánh đó là một bản production tại `https://sach-muonnoi.vercel.app`. Khi PR được merge thì đặt lại là `main`. Thư mục gốc của dự án vẫn là `apps/store`.
+
 ## E. Tên miền riêng (tùy chọn, 5 phút)
 
 Thêm tên miền (gợi ý `sach.muonnoi.org`) trong Vercel, Settings, Domains. Vercel sẽ chỉ bản ghi CNAME để anh thêm ở Cloudflare. Xong thì đổi biến `NEXT_PUBLIC_SITE_URL` và chạy lại xác nhận webhook ở bước B3.
+
+## E2. Kiểm tra sẵn sàng (1 phút)
+
+Sau khi deploy, gọi một lần để biết còn thiếu gì:
+
+```
+curl -H "x-admin-secret: <ADMIN_SECRET trên Vercel>" https://<địa chỉ cửa hàng>/api/admin/preflight
+```
+
+`"ok": true` nghĩa là khóa đủ mạnh, migration 0001 đến 0003 đã áp, RLS đang bật, mọi sách đủ file để giao. Mục nào đỏ có ghi cách sửa. Mục "chế độ PayPal" cho biết đang sandbox hay live. Chạy lại sau mỗi lần đổi biến môi trường.
 
 ## F. Mua thử (3 phút)
 
@@ -62,3 +76,16 @@ Mua cuốn 99 Thông Điệp Sống (49.000 VND) bằng chính tài khoản củ
 
 1. Anh đang có kênh nào thu tiền đều, hoặc tệp khách sẵn (email, Zalo, Facebook, TikTok)? Có thì tuần đầu tôi khởi động từ đó.
 2. VCS-EL và AI Accounting Loop là gì, bán cho ai, giá bao nhiêu? Có mô tả một đoạn là tôi dựng động cơ B2B.
+
+## H. Khi cần hoàn tiền cho khách
+
+1. Hoàn tiền trong bảng điều khiển của cổng đã thu (my.payos.vn hoặc PayPal). Hệ thống không tự chuyển tiền.
+2. Ghi nhận trong cửa hàng, chạy ở máy bạn hoặc nhắn tôi "hoàn tiền đơn <mã>":
+
+```
+curl -X POST "https://<địa chỉ cửa hàng>/api/admin/orders/<mã đơn>/refund" \
+  -H "x-admin-secret: <ADMIN_SECRET trên Vercel>" -H "content-type: application/json" \
+  -d '{"reason":"lý do ngắn"}'
+```
+
+Kết quả: link tải ngừng hoạt động ngay, sổ cái có thêm một dòng âm, báo cáo ngày tự trừ. Gọi lại nhiều lần không sao. Chỉ đơn đã trả mới hoàn được.

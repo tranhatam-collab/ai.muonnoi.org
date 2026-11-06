@@ -2,7 +2,7 @@ import { serviceClient } from "./supabase";
 import { createDownloadToken, signOrder } from "./tokens";
 import { deliverableIds, displayTitle, getProducts, type Product } from "./catalog";
 import { config, siteUrl } from "./env";
-import { deliveryEmail, sendMail, type DeliveryLink } from "./mail";
+import { deliveryEmail, resendEmail, sendMail, type DeliveryLink } from "./mail";
 
 export type OrderStatus = "pending" | "paid" | "cancelled" | "expired" | "refunded";
 
@@ -73,8 +73,8 @@ export async function addOrderEvent(orderId: string, kind: string, detail?: unkn
 }
 
 /**
- * Đánh dấu đã thanh toán. Idempotent: chỉ dòng đang chưa 'paid' mới được cập nhật,
- * nên hai webhook trùng nhau không gửi email hai lần.
+ * Đánh dấu đã thanh toán. Idempotent: chỉ đơn còn mở (pending, cancelled, expired) mới được cập nhật,
+ * nên hai webhook trùng nhau không gửi email hai lần, và webhook gửi lại không làm sống lại đơn đã hoàn tiền.
  */
 export async function markOrderPaid(orderCode: number, info: { providerRef?: string; payload?: unknown; buyerEmail?: string }): Promise<{ order: Order | null; firstTime: boolean }> {
   const existing = await getOrderByCode(orderCode);
@@ -83,12 +83,36 @@ export async function markOrderPaid(orderCode: number, info: { providerRef?: str
   if (info.providerRef) patch.provider_ref = info.providerRef;
   if (info.payload !== undefined) patch.provider_payload = info.payload;
   if (!existing.buyer_email && info.buyerEmail) patch.buyer_email = info.buyerEmail;
-  const { data, error } = await db().from("store_orders").update(patch).eq("order_code", orderCode).neq("status", "paid").select("*");
+  const { data, error } = await db().from("store_orders").update(patch).eq("order_code", orderCode).in("status", ["pending", "cancelled", "expired"]).select("*");
   if (error) throw new Error(error.message);
   const rows = (data as Order[]) ?? [];
   if (rows.length === 0) return { order: existing, firstTime: false };
   await addOrderEvent(rows[0].id, "paid", { provider_ref: info.providerRef ?? null });
   return { order: rows[0], firstTime: true };
+}
+
+export type RefundResult = { ok: true; order: Order; already: boolean } | { ok: false; status: 404 | 409; error: string };
+
+/**
+ * Ghi nhận đơn đã hoàn tiền (chủ cửa hàng đã hoàn trong bảng điều khiển payOS hoặc PayPal).
+ * Hàm này không chuyển tiền. Link tải ngừng hoạt động ngay vì chỉ đơn 'paid' mới tải được,
+ * và trigger ở DB ghi một dòng âm vào sổ cái. Gọi lại nhiều lần an toàn.
+ */
+export async function refundOrder(orderCode: number, reason?: string): Promise<RefundResult> {
+  const existing = await getOrderByCode(orderCode);
+  if (!existing) return { ok: false, status: 404, error: "Không tìm thấy đơn." };
+  if (existing.status === "refunded") return { ok: true, order: existing, already: true };
+  if (existing.status !== "paid") return { ok: false, status: 409, error: `Chỉ hoàn tiền được đơn đã trả, đơn này đang ở trạng thái ${existing.status}.` };
+  const { data, error } = await db().from("store_orders").update({ status: "refunded" }).eq("order_code", orderCode).eq("status", "paid").select("*");
+  if (error) throw new Error(error.message);
+  const rows = (data as Order[]) ?? [];
+  if (rows.length === 0) {
+    const now = await getOrderByCode(orderCode);
+    if (now?.status === "refunded") return { ok: true, order: now, already: true };
+    return { ok: false, status: 409, error: "Đơn vừa đổi trạng thái, hãy thử lại." };
+  }
+  await addOrderEvent(rows[0].id, "refunded", { reason: reason?.slice(0, 500) ?? null, by: "admin" });
+  return { ok: true, order: rows[0], already: false };
 }
 
 export function thankYouUrl(orderCode: number): string {
@@ -124,6 +148,8 @@ export async function deliverOrder(order: Order): Promise<void> {
     links,
     ttlHours: config.downloadTtlHours,
     thankYouUrl: thankYouUrl(order.order_code),
+    pageDays: config.orderTokenTtlDays,
+    resendUrl: `${siteUrl()}/lay-lai-link`,
   });
   const result = await sendMail({ to: order.buyer_email, ...mail });
   await addOrderEvent(order.id, result.sent ? "email_sent" : "email_failed", { via: result.via, error: result.error ?? null });
@@ -131,4 +157,33 @@ export async function deliverOrder(order: Order): Promise<void> {
 
 export async function logDownload(orderId: string, productId: string, ip: string | null, userAgent: string | null): Promise<void> {
   await db().from("store_downloads").insert({ order_id: orderId, product_id: productId, ip, user_agent: userAgent });
+}
+
+/** Các đơn đã trả gần nhất của một email (tối đa 3), để gửi lại link tải. */
+export async function paidOrdersByEmail(email: string, limit = 3): Promise<Order[]> {
+  const { data, error } = await db()
+    .from("store_orders")
+    .select("*")
+    .eq("buyer_email", email.trim().toLowerCase())
+    .eq("status", "paid")
+    .order("paid_at", { ascending: false })
+    .limit(limit);
+  if (error) throw new Error(error.message);
+  return (data as Order[]) ?? [];
+}
+
+/** Gửi một email liệt kê trang đơn hàng (link mới) của các đơn đã trả. Ghi kết quả vào nhật ký đơn mới nhất. */
+export async function resendLinks(email: string): Promise<{ orders: number; sent: boolean }> {
+  const orders = await paidOrdersByEmail(email);
+  if (orders.length === 0) return { orders: 0, sent: false };
+  const products = await getProducts();
+  const items = orders.map((o) => {
+    const p = products.find((x) => x.id === o.product_id);
+    return { title: p ? displayTitle(p) : o.product_id, orderCode: o.order_code, url: thankYouUrl(o.order_code) };
+  });
+  const newest = products.find((x) => x.id === orders[0].product_id);
+  const mail = resendEmail({ lang: newest?.lang ?? "vi", items, pageDays: config.orderTokenTtlDays });
+  const result = await sendMail({ to: email.trim().toLowerCase(), ...mail });
+  await addOrderEvent(orders[0].id, result.sent ? "links_resent" : "links_resend_failed", { via: result.via, orders: orders.length, error: result.error ?? null });
+  return { orders: orders.length, sent: result.sent };
 }

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { validateCheckout } from "@/lib/checkout";
 import { features, siteUrl } from "@/lib/env";
 import { newOrderCode } from "@/lib/money";
+import { checkoutRules, limitOrReject } from "@/lib/ratelimit";
 import { createOrder, addOrderEvent, updateOrder } from "@/lib/orders";
 import { createPaypalOrder } from "@/lib/paypal";
 import { signOrder } from "@/lib/tokens";
@@ -10,6 +11,8 @@ export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   if (!features.paypal) return NextResponse.json({ error: "PayPal chưa được bật." }, { status: 503 });
+  const limited = await limitOrReject(checkoutRules(req));
+  if (limited) return limited;
   let body: unknown;
   try {
     body = await req.json();

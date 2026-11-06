@@ -49,6 +49,10 @@ export const config = {
     const n = Number(first(process.env.DOWNLOAD_TTL_HOURS) ?? "72");
     return Number.isFinite(n) && n > 0 ? n : 72;
   },
+  get orderTokenTtlDays() {
+    const n = Number(first(process.env.ORDER_TOKEN_TTL_DAYS) ?? "90");
+    return Number.isFinite(n) && n > 0 ? n : 90;
+  },
   get adminSecret() {
     return first(process.env.ADMIN_SECRET);
   },
