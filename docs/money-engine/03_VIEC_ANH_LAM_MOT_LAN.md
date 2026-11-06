@@ -50,6 +50,10 @@ Vào dự án `sach-muonnoi`, Settings, Environment Variables, thêm cho cả Pr
 
 Các biến còn lại tôi đã đặt sẵn: địa chỉ Supabase, khóa công khai, địa chỉ site, khóa ký link tải, khóa quản trị, và `PAYPAL_ENV=live` chỉ cho Production. Hai biến Supabase công khai đang trỏ dự án cũ, phải đổi sang dự án mới. Hai khóa nội bộ đã hiện trong nhật ký phiên làm việc, nên đổi giá trị mới trước khi mở bán. Sau khi thêm biến, bấm Redeploy.
 
+### Cách lên Vercel mà không cần merge vào `main`
+
+Dự án `sach-muonnoi` đang tắt bản xem trước theo nhánh (để các nhánh của team không sinh bản dựng lỗi), và nhánh `main` còn đỏ vì lý do không thuộc cửa hàng. Cách đi thẳng: Vercel, Settings, Git (hoặc Environments, Production, Branch Tracking), đặt **Production Branch** là `claude/money-engine-e2e`. Mỗi lần đẩy lên nhánh đó là một bản production tại `https://sach-muonnoi.vercel.app`. Khi PR được merge thì đặt lại là `main`. Thư mục gốc của dự án vẫn là `apps/store`.
+
 ## E. Tên miền riêng (tùy chọn, 5 phút)
 
 Thêm tên miền (gợi ý `sach.muonnoi.org`) trong Vercel, Settings, Domains. Vercel sẽ chỉ bản ghi CNAME để anh thêm ở Cloudflare. Xong thì đổi biến `NEXT_PUBLIC_SITE_URL` và chạy lại xác nhận webhook ở bước B3.
