@@ -21,15 +21,25 @@ function safeEqual(a: string, b: string): boolean {
   return ba.length === bb.length && timingSafeEqual(ba, bb);
 }
 
-/** Token gắn với trang cảm ơn: ai có mã đơn mà không có token thì không xem được link tải. */
-export function signOrder(orderCode: number | string): string {
-  return hmac(`order:${orderCode}`).slice(0, 32);
+/**
+ * Token gắn với trang đơn hàng: "<hạn dùng tính bằng giây Unix, hệ 36>.<chữ ký>".
+ * Hạn dùng nằm trong phần được ký nên không sửa được. Hết hạn thì khách lấy lại link qua email (/lay-lai-link).
+ */
+export function signOrder(orderCode: number | string, ttlDays = config.orderTokenTtlDays): string {
+  const exp = Math.floor(Date.now() / 1000 + ttlDays * 86400).toString(36);
+  return `${exp}.${hmac(`order:${orderCode}:${exp}`).slice(0, 32)}`;
 }
 
 export function verifyOrderToken(orderCode: number | string, token: string | null | undefined): boolean {
   if (!token) return false;
+  const dot = token.indexOf(".");
+  if (dot < 1) return false;
+  const exp = token.slice(0, dot);
+  const sig = token.slice(dot + 1);
+  if (!/^[0-9a-z]{1,10}$/.test(exp)) return false;
+  if (parseInt(exp, 36) * 1000 < Date.now()) return false;
   try {
-    return safeEqual(signOrder(orderCode), token);
+    return safeEqual(hmac(`order:${orderCode}:${exp}`).slice(0, 32), sig);
   } catch {
     return false;
   }

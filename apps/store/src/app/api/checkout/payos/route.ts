@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { validateCheckout } from "@/lib/checkout";
 import { features, siteUrl } from "@/lib/env";
 import { newOrderCode } from "@/lib/money";
+import { checkoutRules, limitOrReject } from "@/lib/ratelimit";
 import { createOrder, addOrderEvent, updateOrder, thankYouUrl } from "@/lib/orders";
 import { createPayosLink } from "@/lib/payos";
 
@@ -9,6 +10,8 @@ export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   if (!features.payos) return NextResponse.json({ error: "Chưa bật thanh toán VietQR." }, { status: 503 });
+  const limited = await limitOrReject(checkoutRules(req));
+  if (limited) return limited;
   let body: unknown;
   try {
     body = await req.json();
