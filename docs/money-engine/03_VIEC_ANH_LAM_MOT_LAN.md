@@ -54,6 +54,16 @@ Các biến còn lại tôi đã đặt sẵn: địa chỉ Supabase, khóa côn
 
 Thêm tên miền (gợi ý `sach.muonnoi.org`) trong Vercel, Settings, Domains. Vercel sẽ chỉ bản ghi CNAME để anh thêm ở Cloudflare. Xong thì đổi biến `NEXT_PUBLIC_SITE_URL` và chạy lại xác nhận webhook ở bước B3.
 
+## E2. Kiểm tra sẵn sàng (1 phút)
+
+Sau khi deploy, gọi một lần để biết còn thiếu gì:
+
+```
+curl -H "x-admin-secret: <ADMIN_SECRET trên Vercel>" https://<địa chỉ cửa hàng>/api/admin/preflight
+```
+
+`"ok": true` nghĩa là khóa đủ mạnh, migration 0001 đến 0003 đã áp, RLS đang bật, mọi sách đủ file để giao. Mục nào đỏ có ghi cách sửa. Mục "chế độ PayPal" cho biết đang sandbox hay live. Chạy lại sau mỗi lần đổi biến môi trường.
+
 ## F. Mua thử (3 phút)
 
 Mua cuốn 99 Thông Điệp Sống (49.000 VND) bằng chính tài khoản của anh. Tiền về ngân hàng anh, file về email anh. Tôi ghi đơn này là "thử nghiệm" trong sổ cái và không tính vào doanh thu.

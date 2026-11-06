@@ -111,6 +111,8 @@ export async function boot() {
     resend: (json: unknown, headers?: Record<string, string>) =>
       call(() => h(import("@/app/api/orders/resend/route"), "POST"), "/api/orders/resend", { method: "POST", json, headers }),
     resendRaw: (raw: string) => call(() => h(import("@/app/api/orders/resend/route"), "POST"), "/api/orders/resend", { method: "POST", raw }),
+    preflight: (secret?: string) =>
+      call(() => h(import("@/app/api/admin/preflight/route"), "GET"), "/api/admin/preflight", { headers: secret ? { "x-admin-secret": secret } : {} }),
     health: () => call(() => h(import("@/app/api/health/route"), "GET"), "/api/health"),
   };
 

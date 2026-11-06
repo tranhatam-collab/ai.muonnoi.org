@@ -30,6 +30,7 @@ Các route công khai có giới hạn tốc độ theo IP (mở đơn 10 lần 
 
 - `GET /api/health`: trạng thái cấu hình, không lộ khóa.
 - `GET /api/admin/stats` (header `x-admin-secret`): số liệu cho báo cáo ngày.
+- `GET /api/admin/preflight` (header `x-admin-secret`): kiểm tra sẵn sàng mở bán trong một lần gọi (độ mạnh khóa, cổng thanh toán và chế độ PayPal, migration 0001 đến 0003, RLS, kho file). Không lộ giá trị khóa.
 - `POST /api/admin/payos/confirm-webhook` (header `x-admin-secret`): đăng ký URL webhook với payOS.
 - `POST /api/admin/orders/[mã đơn]/refund` (header `x-admin-secret`, thân tùy chọn `{"reason":"..."}`): ghi nhận đơn đã hoàn tiền. Hoàn tiền trong bảng điều khiển payOS hoặc PayPal trước; route này không chuyển tiền, chỉ thu hồi quyền tải và đảo sổ cái. Gọi lại an toàn.
 - `node scripts/upload-ebooks.mjs ./sach/*.epub`: tải file lên kho bằng khóa service role.
@@ -38,7 +39,7 @@ Các route công khai có giới hạn tốc độ theo IP (mở đơn 10 lần 
 
 ```
 npm test            # kiểm thử đơn vị
-npm run test:e2e    # 47 ca e2e trên Postgres thật (PGlite) với payOS, PayPal, kho file và email giả lập
+npm run test:e2e    # 54 ca e2e trên Postgres thật (PGlite) với payOS, PayPal, kho file và email giả lập
 npm run typecheck
 ```
 
