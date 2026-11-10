@@ -32,6 +32,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               © {new Date().getFullYear()} {config.brand.author}. Sách điện tử định dạng EPUB, không khóa DRM, dùng cho mục đích đọc cá nhân.
             </p>
             <p>Thanh toán trong nước qua VietQR (payOS). Thanh toán quốc tế qua PayPal. Liên hệ: tranhatam@gmail.com</p>
+            <p>
+              <Link href="/lay-lai-link">Mất link tải? Lấy lại tại đây</Link>
+            </p>
           </div>
         </footer>
       </body>

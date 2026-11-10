@@ -4,6 +4,7 @@ import { getOrderByCode, logDownload } from "@/lib/orders";
 import { getProducts, deliverableIds, displayTitle } from "@/lib/catalog";
 import { downloadEbook } from "@/lib/storage";
 import { clientIp } from "@/lib/checkout";
+import { safeFileName } from "@/lib/filename";
 import { features } from "@/lib/env";
 
 export const dynamic = "force-dynamic";
@@ -26,7 +27,7 @@ export async function GET(req: Request, { params }: Ctx) {
   if (!file) return new NextResponse("Không đọc được file.", { status: 500 });
   await logDownload(order.id, product.id, clientIp(req), req.headers.get("user-agent"));
   const ext = product.file_path.endsWith(".pdf") ? "pdf" : "epub";
-  const safeName = displayTitle(product).normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^A-Za-z0-9 _-]/g, "").trim().replace(/\s+/g, "-") || product.id;
+  const safeName = safeFileName(displayTitle(product), product.id);
   return new NextResponse(file.data.stream(), {
     headers: {
       "Content-Type": file.contentType,

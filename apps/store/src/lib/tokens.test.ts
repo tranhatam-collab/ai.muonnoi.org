@@ -17,6 +17,21 @@ test("token đơn hàng gắn đúng mã đơn", () => {
   assert.equal(verifyOrderToken(179000000000001, flip(t)), false);
 });
 
+test("token đơn hàng có hạn: hết hạn, sửa hạn, hoặc định dạng cũ đều bị từ chối", () => {
+  const code = 179000000000001;
+  assert.equal(verifyOrderToken(code, signOrder(code, 30)), true);
+  assert.equal(verifyOrderToken(code, signOrder(code, -1)), false); // đã hết hạn
+  const t = signOrder(code, 1);
+  const [exp, sig] = t.split(".");
+  const longer = (parseInt(exp, 36) + 86400 * 365).toString(36);
+  assert.equal(verifyOrderToken(code, `${longer}.${sig}`), false); // kéo dài hạn mà không có khóa ký
+  assert.equal(verifyOrderToken(code, `${exp}.`), false);
+  assert.equal(verifyOrderToken(code, `.${sig}`), false);
+  assert.equal(verifyOrderToken(code, sig), false); // định dạng cũ không có hạn
+  assert.equal(verifyOrderToken(code, "zzzzzzzzzzzz.abc"), false);
+  assert.match(t, /^[0-9a-z]+\.[A-Za-z0-9_-]{32}$/);
+});
+
 test("đổi khóa bí mật thì token cũ hết hiệu lực", () => {
   const t = signOrder(1);
   process.env.DOWNLOAD_SECRET = "another-secret-another-secret-another-secret-1";

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 type Resp = {
@@ -21,7 +22,7 @@ export function OrderStatus({ code, token }: { code: string; token: string }) {
         const res = await fetch(`/api/orders/${encodeURIComponent(code)}?t=${encodeURIComponent(token)}`, { cache: "no-store" });
         const json = (await res.json()) as Resp;
         if (!stop) setData(json);
-        if (json.status === "paid" || json.status === "cancelled" || json.error) return;
+        if (json.status === "paid" || json.status === "cancelled" || json.status === "expired" || json.status === "refunded" || json.error) return;
       } catch {
         /* thử lại */
       }
@@ -35,7 +36,19 @@ export function OrderStatus({ code, token }: { code: string; token: string }) {
   }, [code, token, tries]);
 
   if (!data) return <div className="status">Đang kiểm tra đơn hàng {code}...</div>;
-  if (data.error) return <div className="status">Không tìm thấy đơn hàng hoặc link không hợp lệ. {data.error}</div>;
+  if (data.error) {
+    return (
+      <div className="status">
+        <p>Link này không hợp lệ hoặc đã hết hạn.</p>
+        <p>
+          Nếu bạn đã mua sách, <Link href="/lay-lai-link">nhận lại link tải qua email</Link>.
+        </p>
+      </div>
+    );
+  }
+  if (data.status === "refunded") {
+    return <div className="status">Đơn hàng này đã được hoàn tiền nên link tải không còn hiệu lực. Cần hỗ trợ, gửi email cho tranhatam@gmail.com kèm mã đơn {code}.</div>;
+  }
   if (data.status === "paid") {
     return (
       <div className="status">
