@@ -21,6 +21,7 @@ Cần Node 22 trở lên. Script trình duyệt cần `playwright` và Chromium.
 |---|---|---|
 | F5 chuỗi migration | `node --disable-warning=ExperimentalWarning apply-d1-chain.mjs /tmp/ops/workers/api/migrations --continue` | 12/13 áp được; `0006_v1_security.sql` lỗi `no such column: password_hash` |
 | F1–F4 lỗi API | `node --disable-warning=ExperimentalWarning audit-repro.mjs /tmp/ops` | xem bảng dưới |
+| A1 chiếm tài khoản bằng đăng ký trước (R5) | `node --disable-warning=ExperimentalWarning audit-repro-auth.mjs /tmp/ops` | cùng một user id cho cả kẻ tấn công và chủ email; cookie cũ và mật khẩu của kẻ tấn công vẫn dùng được |
 | Thư xác nhận (âm tính) | `node --disable-warning=ExperimentalWarning audit-repro-mail.mjs /tmp/ops 400` | 8/8 thư tới nhà cung cấp: không tái hiện được lỗi nghi ngờ |
 | F6 CSP chặn script inline | `node csp-inline.cjs /tmp/ops/dist/site` | 8/20 trang bị chặn |
 | Duyệt toàn bộ trang công khai | `node browser-e2e.cjs /tmp/ops/dist/site` | 40/40 lượt trả 200; 8 trang bị CSP chặn script inline; 3 trang Studio/Intake nhận 404 ở `/api/*` |
@@ -36,5 +37,6 @@ Cần Node 22 trở lên. Script trình duyệt cần `playwright` và Chromium.
 | R3b | `completed` rồi `failed` muộn → `failed` | giữ `completed` |
 | R3c | số tiền 1.000 cho intent 1.500.000 vẫn `completed` | từ chối hoặc đánh dấu lệch tiền |
 | R4 | tạo intent không đăng nhập, `amount: 1`, `returnUrl` lạ được chuyển nguyên cho nhà cung cấp; xem intent không cần đăng nhập | số tiền theo danh mục phía server, `returnUrl` lạ bị 400, xem intent cần xác thực |
+| R5 | đăng ký trước bằng email người khác rồi chủ email đăng nhập bằng magic link: cùng một tài khoản, kẻ tấn công còn phiên và mật khẩu | đăng ký không cấp phiên cho tới khi xác minh email; đăng nhập vào hàng chưa xác minh xóa mật khẩu và phiên cũ |
 
-Sau khi sửa, nên chuyển các dòng R1–R4 thành test hồi quy trong CI (bước 2.1–2.4 của kế hoạch).
+Sau khi sửa, nên chuyển các dòng R1–R5 thành test hồi quy trong CI (bước 2.1–2.4 của kế hoạch).
