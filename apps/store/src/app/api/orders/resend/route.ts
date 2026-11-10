@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { features } from "@/lib/env";
+import { isSafeEmail } from "@/lib/email-address";
 import { resendLinks } from "@/lib/orders";
 import { limitOrReject, resendRules } from "@/lib/ratelimit";
 
@@ -21,7 +22,7 @@ export async function POST(req: Request) {
   }
   const raw = (body as { email?: unknown } | null)?.email;
   const email = typeof raw === "string" ? raw.trim().toLowerCase() : "";
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) return NextResponse.json({ error: "Email không hợp lệ." }, { status: 400 });
+  if (!isSafeEmail(email)) return NextResponse.json({ error: "Email không hợp lệ." }, { status: 400 });
 
   const limited = await limitOrReject(resendRules(req, email));
   if (limited) return limited;

@@ -210,3 +210,34 @@ test("migration chạy lại lần hai không lỗi và không đổi dữ liệ
   assert.equal((await ledger()).length, 2);
   assert.equal((await row(code)).status, "refunded");
 });
+
+// ---------------------------------------------------------------- email đầu vào
+
+// Chuỗi vẫn lọt regex cũ (đúng một dấu @, không khoảng trắng) nhưng bộ phân tích địa chỉ của nodemailer < 10.1.4
+// hiểu thành nhiều người nhận hoặc sai miền. Phải bị chặn ngay ở cổng vào.
+const BAD_EMAILS = ["victim,attacker@evil.co", "x>y@evil.co", 'a"b;c"@evil.co', "a(comment)@evil.co", "tâm@example.com"];
+
+test("email có ký tự tách người nhận bị từ chối khi mở đơn, không tạo đơn", async () => {
+  for (const email of BAD_EMAILS) {
+    const res = await e2e.api.checkoutPayos({ productId: "troi-sinh", email }, ip("203.0.113.40"));
+    assert.equal(res.status, 400, email);
+    assert.match(((await res.json()) as { error: string }).error, /Email không hợp lệ/, email);
+  }
+  assert.equal((await e2e.q(`select 1 from store_orders`)).length, 0);
+});
+
+test("email có ký tự tách người nhận bị từ chối khi lấy lại link, không gửi thư và không tốn hạn mức", async () => {
+  for (const email of BAD_EMAILS) {
+    const res = await e2e.api.resend({ email }, ip("203.0.113.41"));
+    assert.equal(res.status, 400, email);
+  }
+  assert.equal(e2e.world.emails.length, 0);
+  assert.equal((await e2e.q(`select 1 from engine_rate_limits`)).length, 0); // bị từ chối trước khi đếm
+});
+
+test("email hợp lệ có dấu cộng và dấu chấm vẫn mua được", async () => {
+  const res = await e2e.api.checkoutPayos({ productId: "troi-sinh", email: "Doc.Gia+sach@Example.vn" }, ip("203.0.113.42"));
+  assert.equal(res.status, 200);
+  const [o] = await e2e.q<{ buyer_email: string }>(`select buyer_email from store_orders`);
+  assert.equal(o.buyer_email, "doc.gia+sach@example.vn");
+});

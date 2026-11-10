@@ -39,7 +39,7 @@ Các route công khai có giới hạn tốc độ theo IP (mở đơn 10 lần 
 
 ```
 npm test            # kiểm thử đơn vị
-npm run test:e2e    # 54 ca e2e trên Postgres thật (PGlite) với payOS, PayPal, kho file và email giả lập
+npm run test:e2e    # 57 ca e2e trên Postgres thật (PGlite) với payOS, PayPal, kho file và email giả lập
 npm run typecheck
 ```
 

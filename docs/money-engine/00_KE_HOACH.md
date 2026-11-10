@@ -28,7 +28,7 @@ Song song, không cần viết mã: đăng 5 cuốn lên Amazon KDP (anh đã c�
 | Mã cửa hàng (trang sách, thanh toán payOS và PayPal, webhook, giao file, bài viết, sitemap) | Xong, `npm run build` và `tsc` đạt |
 | Schema Supabase | Ba migration viết xong, kiểm thử cục bộ đạt, chưa áp vào đâu. Chờ chủ dự án chọn dự án Supabase riêng |
 | Lỗ hổng PayPal (thu tiền theo mã đơn trên URL, không đối chiếu số tiền) | Đã sửa, có 18 phép kiểm đơn vị gồm kịch bản tấn công. Xem `apps/store/src/lib/paypal-verify.ts` |
-| Kiểm thử e2e (54 ca) | Đạt trên Postgres thật với nhà cung cấp giả lập: luồng payOS, PayPal, hoàn tiền, giới hạn tốc độ, lấy lại link, quyền truy cập. Chưa thay được lần mua thử bằng khóa thật. Xem `05_KIEM_THU_E2E.md` |
+| Kiểm thử e2e (57 ca) | Đạt trên Postgres thật với nhà cung cấp giả lập: luồng payOS, PayPal, hoàn tiền, giới hạn tốc độ, lấy lại link, quyền truy cập. Chưa thay được lần mua thử bằng khóa thật. Xem `05_KIEM_THU_E2E.md` |
 | Dự án Vercel `sach-muonnoi` | Đã tạo, đã đặt biến môi trường công khai và hai khóa bí mật nội bộ |
 | Khóa cần anh cung cấp | Supabase service role, payOS (3 khóa), PayPal (2 khóa). Xem `03_VIEC_ANH_LAM_MOT_LAN.md` |
 | File EPUB trong kho | Chưa có. Anh kéo thả 5 file từ Drive vào bucket `ebooks` |

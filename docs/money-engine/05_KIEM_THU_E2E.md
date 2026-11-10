@@ -1,6 +1,6 @@
 # Kiểm thử e2e: đã chứng minh gì và chưa chứng minh gì
 
-Chạy: `cd apps/store && npm run test:e2e` (54 ca, khoảng 20 giây, không cần khóa hay mạng). Kèm `npm test` (21 ca đơn vị) và `npm run typecheck`.
+Chạy: `cd apps/store && npm run test:e2e` (57 ca, khoảng 20 giây, không cần khóa hay mạng). Kèm `npm test` (25 ca đơn vị) và `npm run typecheck`. Bản kiểm chéo toàn repo (cửa hàng, nhánh ops, cây đã ghép, trình duyệt) nằm ở `06_AUDIT_VA_KE_HOACH_HOAN_THIEN.md`.
 
 ## Cách chạy
 
@@ -22,6 +22,7 @@ Chạy: `cd apps/store && npm run test:e2e` (54 ca, khoảng 20 giây, không c�
 | Hoàn tiền | Thu hồi quyền tải, đảo sổ cái đúng số VND đã ghi lúc bán dù tỷ giá đổi, gọi lại không nhân đôi, chỉ đơn đã trả mới hoàn, webhook gửi lại không làm sống lại đơn đã hoàn |
 | Tầng DB | Chặn paid sang pending, paid sang cancelled, refunded sang bất kỳ, pending sang refunded; cho phép tiền về muộn khi đơn đã hết hạn hoặc bị hủy; chạy lại cả chuỗi migration không lỗi |
 | Preflight | Cần khóa quản trị; xanh khi đủ cấu hình; chỉ ra đúng sản phẩm thiếu file; đỏ đúng mục khi chưa áp 0002 hoặc 0003, khi RLS bị tắt, khi khóa yếu hoặc trùng, khi địa chỉ không phải https, khi không có cổng thanh toán; không lộ giá trị khóa |
+| Email đầu vào | Chuỗi lọt regex cũ nhưng bị nodemailer < 10.1.4 hiểu thành nhiều người nhận (`a,b@x.co`, `x>y@x.co`, nháy kép, ghi chú lồng) bị từ chối ở mở đơn và ở lấy lại link; email hợp lệ có dấu `+` và chữ hoa vẫn mua được và được chuẩn hóa chữ thường |
 | Lấy lại link | Email đúng nhận link trang đơn dùng được; trả lời giống hệt dù email có đơn hay không; chỉ đơn đã trả; gộp tối đa 3 đơn; lỗi email không lộ; giới hạn theo IP và theo email; token hết hạn hoặc bị kéo dài hạn đều bị từ chối |
 
 Kiểm tra đột biến: bỏ đối chiếu mã đơn PayPal, bỏ điều kiện chống ghi trùng ở `markOrderPaid`, đưa điều kiện về `neq`, bỏ lời gọi giới hạn tốc độ, cho hàm đếm luôn trả true. Cả năm đều làm bộ e2e đỏ.

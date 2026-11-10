@@ -1,6 +1,7 @@
 import { getProducts, displayTitle, type Product } from "./catalog";
 import { isDeliverable, listEbookFiles } from "./storage";
 import { features } from "./env";
+import { isSafeEmail } from "./email-address";
 
 export type CheckoutRequest = { productId: string; email: string; name?: string };
 
@@ -15,7 +16,7 @@ export async function validateCheckout(body: unknown): Promise<CheckoutValidatio
   const email = typeof b.email === "string" ? b.email.trim().toLowerCase() : "";
   const name = typeof b.name === "string" && b.name.trim() ? b.name.trim().slice(0, 120) : undefined;
   if (!/^[a-z0-9-]{1,80}$/.test(productId)) return { ok: false, status: 400, error: "Sản phẩm không hợp lệ." };
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) return { ok: false, status: 400, error: "Email không hợp lệ." };
+  if (!isSafeEmail(email)) return { ok: false, status: 400, error: "Email không hợp lệ." };
   const products = await getProducts();
   const product = products.find((p) => p.id === productId);
   if (!product) return { ok: false, status: 404, error: "Không tìm thấy sách." };
