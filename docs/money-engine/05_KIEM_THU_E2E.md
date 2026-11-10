@@ -1,6 +1,6 @@
 # Kiểm thử e2e: đã chứng minh gì và chưa chứng minh gì
 
-Chạy: `cd apps/store && npm run test:e2e` (57 ca, khoảng 20 giây, không cần khóa hay mạng). Kèm `npm test` (25 ca đơn vị) và `npm run typecheck`. Bản kiểm chéo toàn repo (cửa hàng, nhánh ops, cây đã ghép, trình duyệt) nằm ở `06_AUDIT_VA_KE_HOACH_HOAN_THIEN.md`.
+Chạy: `cd apps/store && npm run test:e2e` (57 ca, khoảng 20 giây, không cần khóa hay mạng). Kèm `npm test` (25 ca đơn vị) và `npm run typecheck`. Bản kiểm chéo toàn repo (cửa hàng, nhánh ops, cây đã ghép, trình duyệt) nằm ở `06_KIEM_TRA_CHEO_VA_KE_HOACH_HOP_NHAT.md`.
 
 ## Cách chạy
 
