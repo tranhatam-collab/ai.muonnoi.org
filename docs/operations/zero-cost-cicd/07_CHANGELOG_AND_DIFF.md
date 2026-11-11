@@ -7,6 +7,7 @@ Nhánh: `ops/zero-cost-cicd-20261111` tạo từ `origin/main` @ `3e0cac697cc36a
 - **Chỉ thêm tệp mới.** Không sửa, không xóa tệp nào đã có trên `main`. Không đụng `package.json`, `wrangler.json`, `_headers`, mã nguồn sản phẩm hay cấu hình triển khai.
 - Không có workflow GitHub Actions được thêm, sửa hay vô hiệu hóa (không có workflow nào).
 - Commit mang từ khóa `[CF-Pages-Skip]` và `[skip ci]` để tránh một lần build Pages vô ích (hiệu quả được ghi ở `09`).
+- PR: #5 (nháp, vào `main`). Hai commit: `212f7bc` (toàn bộ tệp thêm) và commit cập nhật bằng chứng sau khi đẩy (chỉ sửa tài liệu trong cùng thư mục).
 
 ## Tệp được thêm
 

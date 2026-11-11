@@ -33,7 +33,7 @@ Lỗi duy nhất ở bảng trên là `root-package-json` trên `main` (lần 1)
 | So sánh hành vi với phiên bản đang chạy | **không áp dụng**: không workflow nào được chuyển, không deploy nào thay đổi | N/A |
 | Trang chính/API/đăng nhập/route quan trọng | e2e cửa hàng bao phủ route cửa hàng; trang tĩnh duyệt bằng Chromium ngày 10/11 (báo cáo 06 trong `docs/money-engine/` của PR #4); **không kiểm được bản đang chạy thật** (mạng bị chặn) | VERIFIED một phần |
 | Preview/staging | xem `09` | BLOCKED |
-| Rollback | xem `11` | xem `11` |
+| Rollback | mô phỏng `git revert` commit `212f7bc`: cây sau revert trùng cây `main`, 0 tệp khác | VERIFIED |
 
 ## 4. Kiểm thử âm tính của chính công cụ
 

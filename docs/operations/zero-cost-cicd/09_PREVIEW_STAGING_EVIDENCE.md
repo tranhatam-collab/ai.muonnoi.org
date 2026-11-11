@@ -22,7 +22,7 @@
 
 ## Hiệu quả từ khóa bỏ qua build (M5 của `06`)
 
-PENDING: được điền sau khi đẩy nhánh. Nội dung cần ghi: có hay không check run `Cloudflare Pages` xuất hiện cho commit mang `[CF-Pages-Skip]` và `[skip ci]`, và trạng thái của nó.
+**Quan sát (không phải chứng minh):** commit `212f7bc` mang `[CF-Pages-Skip]` và `[skip ci]` được đẩy lúc 2026-11-11 08:17:41 UTC. Lúc 08:19:12 UTC (khoảng 90 giây sau), `GET commits/212f7bc.../check-runs` trả `total_count: 0` và commit status rỗng. Với các lần đẩy trước (PR #4, 10/11), check run của Pages xuất hiện trong vài giây. Kết luận: **phù hợp với việc từ khóa có tác dụng** và không tốn một lần build; chưa có nhánh đối chứng không mang từ khóa nên không thể loại trừ việc Pages lọc theo tên nhánh `ops/*`. Không tạo nhánh đối chứng vì mỗi nhánh thử tiêu một lần build và không xóa được.
 
 ## Điều kiện để chuyển thành VERIFIED
 

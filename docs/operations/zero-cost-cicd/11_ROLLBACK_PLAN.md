@@ -16,9 +16,12 @@ Theo `07`: chỉ **thêm** tệp (`scripts/ci/`, `docs/operations/zero-cost-cicd
 
 ## Kiểm tra rollback (mô phỏng, không đụng remote)
 
-Quy trình đã chạy trong một worktree tạm: checkout commit của nhánh này, `git revert --no-edit` cho từng commit của nhánh, rồi so sánh mã băm cây với `origin/main`.
+Quy trình, chạy trong worktree tạm ngoài repo (2026-11-11), hai lần:
 
-Kết quả: **PENDING**, được điền sau khi các commit của nhánh đã có SHA cuối cùng (xem mục "Kết quả mô phỏng" bên dưới khi có).
+1. Khi nhánh chỉ có commit đầu `212f7bc`: `git revert --no-edit 212f7bc`, rồi so mã băm cây với `origin/main`. Kết quả: cây sau revert `72729fdf2eb2b8d0de82dcc14135464770f99f72` **bằng đúng** cây `origin/main`; 0 tệp khác.
+2. Với trạng thái cuối của nhánh (commit đầu cộng commit cập nhật bằng chứng, nội dung giống hệt cây sẽ được commit): `git revert --no-edit origin/main..HEAD` (hoàn tác cả hai theo thứ tự ngược), rồi so mã băm cây. Kết quả được ghi trong mô tả PR #5 kèm SHA cuối cùng (không ghi ở đây để tránh tham chiếu vòng).
+
+Hiểu đúng: revert riêng commit đầu **sau khi** có commit thứ hai sẽ xung đột (hai commit sửa cùng tệp); khi nhánh có nhiều commit, hoàn tác cả dải `origin/main..HEAD` hoặc commit merge.
 
 ## Điều không thể khôi phục bằng Git
 

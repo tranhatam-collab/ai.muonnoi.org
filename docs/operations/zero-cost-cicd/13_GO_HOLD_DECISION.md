@@ -17,7 +17,7 @@ Không tuyên bố GO. Phần việc không cần quyền ngoài (kiểm toán, 
 | 7 | Không có secrets bị lộ | **MET** | quét mã, log, artifact: 0 khớp (`10`); lưu ý định danh trong tài liệu công khai |
 | 8 | Preview/staging hoạt động đúng | **NOT MET** | BLOCKED: mạng chặn, staging chưa tồn tại (`09`) |
 | 9 | Không thay đổi production trái phép | **MET** | không deploy, không đổi DNS/cài đặt/bí mật; chỉ đọc |
-| 10 | Có phương án rollback được kiểm tra | xem `11` | mô phỏng revert |
+| 10 | Có phương án rollback được kiểm tra | **MET** | mô phỏng `git revert` trong worktree tạm: cây sau revert trùng cây `main` (`11`) |
 | 11 | Có bằng chứng nguồn, SHA, run/deployment URL, thời gian | **PARTIAL** | SHA và giờ UTC có đủ; URL dashboard Cloudflare không đọc được |
 | 12 | Đã xử lý hoặc ghi rõ blocker | **MET** | danh sách dưới đây |
 
