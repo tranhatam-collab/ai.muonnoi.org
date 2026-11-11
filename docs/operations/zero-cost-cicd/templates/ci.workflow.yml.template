@@ -1,0 +1,41 @@
+# TEMPLATE, KHÔNG HOẠT ĐỘNG. Tệp này nằm ngoài .github/workflows nên GitHub không chạy nó.
+# Chỉ đưa vào .github/workflows/ khi Owner duyệt bằng văn bản.
+#
+# Điều kiện: repo phải còn CÔNG KHAI thì runner tiêu chuẩn ubuntu-latest mới không tính phí theo chính sách GitHub.
+# Điều này chưa xác minh được từ môi trường kiểm toán (BILLING_UNVERIFIED): đọc lại Billing trước khi bật.
+# Không dùng runner lớn, không macOS/Windows, không lịch chạy, không bí mật, không commit ngược.
+# Bắt buộc sửa trước khi bật: ghim actions theo SHA commit đầy đủ, điều chỉnh paths theo cây thực tế,
+# và thêm cache npm (setup-node với cache-dependency-path trỏ đúng các package-lock.json có mặt, nếu không bước sẽ lỗi).
+name: local-verify (template)
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'apps/store/**'
+      - 'workers/**'
+      - 'tools/**'
+      - 'tests/**'
+      - 'package.json'
+      - 'scripts/ci/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: local-verify-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4 # ghim SHA khi bật
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4 # ghim SHA khi bật
+        with:
+          node-version: '22'
+      - name: Chạy bộ kiểm tra cục bộ (không bí mật, không mạng ngoài registry npm)
+        run: scripts/ci/local-verify.sh --out "$RUNNER_TEMP/local-verify"

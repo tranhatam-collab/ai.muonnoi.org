@@ -1,0 +1,68 @@
+{
+  "sha": "cc8ac689ed80476c2237f20e968b5131e01ceec4",
+  "branch": "(detached)",
+  "dirtyBefore": 0,
+  "node": "v22.22.0",
+  "npm": "10.9.4",
+  "start": "2026-11-11T08:07:08Z",
+  "end": "2026-11-11T08:07:34Z",
+  "overall": "PASS",
+  "steps": [
+    {
+      "name": "root-package-json",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0,
+      "note": "JSON hợp lệ"
+    },
+    {
+      "name": "pages-output-dir",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0,
+      "note": "pages_build_output_dir=dist/site"
+    },
+    {
+      "name": "workflow-policy",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0,
+      "note": "không có workflow GitHub Actions (0 phút runner)"
+    },
+    {
+      "name": "secret-patterns",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0,
+      "note": "không thấy mẫu khóa trong tệp được theo dõi"
+    },
+    {
+      "name": "tracked-env-files",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0,
+      "note": "chỉ có .env.example (nếu có)"
+    },
+    {
+      "name": "ops-verify",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 26,
+      "note": "tests=166 pass=166 fail=0"
+    },
+    {
+      "name": "pages-surface",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0,
+      "note": "dist/site: 43 tệp, không lộ thư mục nội bộ"
+    },
+    {
+      "name": "tracked-files-untouched",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0,
+      "note": "không sửa tệp được theo dõi"
+    }
+  ]
+}

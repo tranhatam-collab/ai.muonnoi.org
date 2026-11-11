@@ -1,0 +1,103 @@
+{
+  "sha": "b643ce73bb521de69fb360019b18b6f7d7a6d191",
+  "branch": "(detached)",
+  "dirtyBefore": 0,
+  "node": "v22.22.0",
+  "npm": "10.9.4",
+  "start": "2026-11-11T08:08:51Z",
+  "end": "2026-11-11T08:09:58Z",
+  "overall": "PASS_WITH_WARNINGS",
+  "steps": [
+    {
+      "name": "root-package-json",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0,
+      "note": "JSON hợp lệ"
+    },
+    {
+      "name": "pages-output-dir",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0,
+      "note": "pages_build_output_dir=dist/site"
+    },
+    {
+      "name": "workflow-policy",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0,
+      "note": "không có workflow GitHub Actions (0 phút runner)"
+    },
+    {
+      "name": "secret-patterns",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0,
+      "note": "không thấy mẫu khóa trong tệp được theo dõi"
+    },
+    {
+      "name": "tracked-env-files",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0,
+      "note": "chỉ có .env.example (nếu có)"
+    },
+    {
+      "name": "ops-verify",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 24,
+      "note": "tests=166 pass=166 fail=0"
+    },
+    {
+      "name": "pages-surface",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0,
+      "note": "dist/site: 43 tệp, không lộ thư mục nội bộ"
+    },
+    {
+      "name": "store-typecheck",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 4,
+      "note": "ok"
+    },
+    {
+      "name": "store-unit",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 1,
+      "note": "tests=25 pass=25 fail=0"
+    },
+    {
+      "name": "store-e2e",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 12,
+      "note": "tests=57 pass=57 fail=0"
+    },
+    {
+      "name": "store-audit",
+      "status": "WARN",
+      "exit": 1,
+      "seconds": 0,
+      "note": "2 vulnerabilities (1 moderate, 1 high)"
+    },
+    {
+      "name": "store-build",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 26,
+      "note": "ok"
+    },
+    {
+      "name": "tracked-files-untouched",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0,
+      "note": "không sửa tệp được theo dõi"
+    }
+  ]
+}
