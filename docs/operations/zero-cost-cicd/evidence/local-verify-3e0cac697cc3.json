@@ -1,0 +1,61 @@
+{
+  "sha": "3e0cac697cc36a923929d76ca63adf86440badb1",
+  "branch": "ops/zero-cost-cicd-20261111",
+  "dirtyBefore": 2,
+  "node": "v22.22.0",
+  "npm": "10.9.4",
+  "start": "2026-11-11T08:07:08Z",
+  "end": "2026-11-11T08:07:08Z",
+  "overall": "FAIL",
+  "steps": [
+    {
+      "name": "root-package-json",
+      "status": "FAIL",
+      "exit": 1,
+      "seconds": 0,
+      "note": "INVALID: Unexpected non-whitespace character after JSON at position 555 (line 27 column 1)"
+    },
+    {
+      "name": "pages-output-dir",
+      "status": "WARN",
+      "exit": 0,
+      "seconds": 0,
+      "note": "wrangler.json không phải JSON (cấu hình Worker dạng TOML?), Pages không đọc được"
+    },
+    {
+      "name": "workflow-policy",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0,
+      "note": "không có workflow GitHub Actions (0 phút runner)"
+    },
+    {
+      "name": "secret-patterns",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0,
+      "note": "không thấy mẫu khóa trong tệp được theo dõi"
+    },
+    {
+      "name": "tracked-env-files",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0,
+      "note": "chỉ có .env.example (nếu có)"
+    },
+    {
+      "name": "lanes",
+      "status": "SKIP",
+      "exit": 0,
+      "seconds": 0,
+      "note": "không chạy được dòng nào vì package.json gốc không hợp lệ"
+    },
+    {
+      "name": "tracked-files-untouched",
+      "status": "PASS",
+      "exit": 0,
+      "seconds": 0,
+      "note": "không sửa tệp được theo dõi"
+    }
+  ]
+}
